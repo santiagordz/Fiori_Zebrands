@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-03-2023 a las 22:43:08
+-- Tiempo de generación: 10-03-2023 a las 05:12:42
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -69,6 +69,33 @@ CREATE TABLE `funcion` (
   `nombre_funcion` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `funcion`
+--
+
+INSERT INTO `funcion` (`id_funcion`, `nombre_funcion`) VALUES
+(1, 'Registrar Retrospectiva'),
+(2, 'Crear Sprint Backlog'),
+(3, 'Asignar Tareas'),
+(4, 'Realizar Pruebas de Integración'),
+(5, 'Escribir Documentación'),
+(6, 'Realizar Pruebas de Aceptación'),
+(7, 'Realizar Revisión de Código'),
+(8, 'Estimar Tareas'),
+(9, 'Planificar Iteraciones'),
+(10, 'Definir Historias de Usuario'),
+(11, 'Desplegar Aplicación'),
+(12, 'Realizar Pruebas Unitarias'),
+(13, 'Realizar Pruebas de Regresión'),
+(14, 'Gestionar Requerimientos'),
+(15, 'Realizar Reuniones de Equipo'),
+(16, 'Gestionar Incidencias'),
+(17, 'Configurar Ambiente de Desarrollo'),
+(18, 'Realizar Capacitación del Equipo'),
+(19, 'Realizar Estudios de Factibilidad'),
+(20, 'Gestionar Cambios de Requerimientos'),
+(21, 'Realizar Pruebas de Usabilidad');
+
 -- --------------------------------------------------------
 
 --
@@ -100,13 +127,23 @@ CREATE TABLE `issue_sprint` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `opcionrespuesta_pregunta`
+--
+
+CREATE TABLE `opcionrespuesta_pregunta` (
+  `id_opcion_respuesta` int(11) NOT NULL,
+  `id_pregunta` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `opcion_respuesta`
 --
 
 CREATE TABLE `opcion_respuesta` (
   `id_opcion_respuesta` int(11) NOT NULL,
-  `opcion_respuesta` varchar(500) NOT NULL,
-  `id_respuesta` int(11) NOT NULL
+  `opcion_respuesta` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -168,7 +205,8 @@ CREATE TABLE `retrospectiva` (
   `id_retrospectiva` int(11) NOT NULL,
   `titulo_retrospectiva` varchar(200) NOT NULL,
   `fecha_inicio` timestamp NOT NULL DEFAULT current_timestamp(),
-  `fecha_fin` timestamp NOT NULL DEFAULT current_timestamp()
+  `fecha_fin` timestamp NOT NULL DEFAULT current_timestamp(),
+  `id_reporte` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -201,7 +239,7 @@ CREATE TABLE `rol_funcion` (
 
 CREATE TABLE `sprint` (
   `id_sprint` int(11) NOT NULL,
-  `nombre_sprint` int(11) NOT NULL,
+  `nombre_sprint` varchar(500) NOT NULL,
   `id_reporte` int(11) NOT NULL,
   `fecha_inicio` timestamp NOT NULL DEFAULT current_timestamp(),
   `fecha_fin` timestamp NOT NULL DEFAULT current_timestamp()
@@ -244,6 +282,32 @@ CREATE TABLE `usuario` (
   `id_usuario_jira` int(11) DEFAULT NULL,
   `id_usuario_google` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `usuario`
+--
+
+INSERT INTO `usuario` (`id_usuario`, `correo`, `nombre`, `apellido`, `foto`, `id_usuario_jira`, `id_usuario_google`) VALUES
+(20, 'ana.castillo@zeb.mx', 'Ana', 'Castillo', 'http://example.com/ana.jpg', 901, 234),
+(8, 'ana.gonzalez@zeb.mx', 'Ana', 'Gonzalez', 'http://example.com/ana.jpg', 789, 12),
+(15, 'ana.rojas@zeb.mx', 'Ana', 'Rojas', 'http://example.com/ana.jpg', 456, 789),
+(10, 'carlos.rodriguez@zeb.mx', 'Carlos', 'Rodriguez', 'http://example.com/carlos.jpg', 901, 234),
+(7, 'david.martinez@zeb.mx', 'David', 'Martinez', 'http://example.com/david.jpg', 678, 901),
+(18, 'emilio.gonzalez@zeb.mx', 'Emilio', 'Gonzalez', 'http://example.com/emilio.jpg', 789, 12),
+(16, 'fernando.lopez@zeb.mx', 'Fernando', 'Lopez', 'http://example.com/fernando.jpg', 567, 890),
+(2, 'jane.doe@zeb.mx', 'Jane', 'Doe', 'http://example.com/jane.jpg', 123, 456),
+(3, 'john.smith@zeb.mx', 'John', 'Smith', 'http://example.com/john.jpg', 234, 567),
+(5, 'jorge.lopez@zeb.mx', 'Jorge', 'Lopez', 'http://example.com/jorge.jpg', 456, 789),
+(9, 'juan.ramirez@zeb.mx', 'Juan', 'Ramirez', 'http://example.com/juan.jpg', 890, 123),
+(11, 'laura.sanchez@zeb.mx', 'Laura', 'Sanchez', 'http://example.com/laura.jpg', 12, 345),
+(19, 'liliana.perez@zeb.mx', 'Liliana', 'Perez', 'http://example.com/liliana.jpg', 890, 123),
+(12, 'luis.hernandez@zeb.mx', 'Luis', 'Hernandez', 'http://example.com/luis.jpg', 123, 456),
+(4, 'maria.garcia@zeb.mx', 'Maria', 'Garcia', 'http://example.com/maria.jpg', 345, 678),
+(14, 'mario.castillo@zeb.mx', 'Mario', 'Castillo', 'http://example.com/mario.jpg', 345, 678),
+(13, 'martha.ortiz@zeb.mx', 'Martha', 'Ortiz', 'http://example.com/martha.jpg', 234, 567),
+(1, 'santi.rodriguez@zeb.mx', 'Santiago', 'Rodriguez', 'http://google.com', NULL, NULL),
+(6, 'sara.perez@zeb.mx', 'Sara', 'Perez', 'http://example.com/sara.jpg', 567, 890),
+(17, 'sofia.ramirez@zeb.mx', 'Sofia', 'Ramirez', 'http://example.com/sofia.jpg', 678, 901);
 
 -- --------------------------------------------------------
 
@@ -323,11 +387,17 @@ ALTER TABLE `issue_sprint`
   ADD UNIQUE KEY `id_sprint` (`id_sprint`);
 
 --
+-- Indices de la tabla `opcionrespuesta_pregunta`
+--
+ALTER TABLE `opcionrespuesta_pregunta`
+  ADD KEY `id_opcion_respuesta` (`id_opcion_respuesta`),
+  ADD KEY `id_pregunta` (`id_pregunta`);
+
+--
 -- Indices de la tabla `opcion_respuesta`
 --
 ALTER TABLE `opcion_respuesta`
-  ADD PRIMARY KEY (`id_opcion_respuesta`),
-  ADD KEY `id_respuesta` (`id_respuesta`);
+  ADD PRIMARY KEY (`id_opcion_respuesta`);
 
 --
 -- Indices de la tabla `pregunta`
@@ -360,7 +430,8 @@ ALTER TABLE `respuesta_pregunta_retrospectiva`
 -- Indices de la tabla `retrospectiva`
 --
 ALTER TABLE `retrospectiva`
-  ADD PRIMARY KEY (`id_retrospectiva`);
+  ADD PRIMARY KEY (`id_retrospectiva`),
+  ADD KEY `id_reporte` (`id_reporte`);
 
 --
 -- Indices de la tabla `rol`
@@ -438,7 +509,7 @@ ALTER TABLE `etiqueta`
 -- AUTO_INCREMENT de la tabla `funcion`
 --
 ALTER TABLE `funcion`
-  MODIFY `id_funcion` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_funcion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT de la tabla `opcion_respuesta`
@@ -486,7 +557,99 @@ ALTER TABLE `tipo_pregunta`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `epic`
+--
+ALTER TABLE `epic`
+  ADD CONSTRAINT `epic_ibfk_1` FOREIGN KEY (`id_reporte`) REFERENCES `reporte` (`id_reporte`);
+
+--
+-- Filtros para la tabla `epic_sprint`
+--
+ALTER TABLE `epic_sprint`
+  ADD CONSTRAINT `epic_sprint_ibfk_1` FOREIGN KEY (`id_epic`) REFERENCES `epic` (`id_epic`),
+  ADD CONSTRAINT `epic_sprint_ibfk_2` FOREIGN KEY (`id_sprint`) REFERENCES `sprint` (`id_sprint`);
+
+--
+-- Filtros para la tabla `issue_sprint`
+--
+ALTER TABLE `issue_sprint`
+  ADD CONSTRAINT `issue_sprint_ibfk_1` FOREIGN KEY (`clave`) REFERENCES `issue` (`clave`),
+  ADD CONSTRAINT `issue_sprint_ibfk_2` FOREIGN KEY (`id_sprint`) REFERENCES `sprint` (`id_sprint`);
+
+--
+-- Filtros para la tabla `opcionrespuesta_pregunta`
+--
+ALTER TABLE `opcionrespuesta_pregunta`
+  ADD CONSTRAINT `opcionrespuesta_pregunta_ibfk_1` FOREIGN KEY (`id_opcion_respuesta`) REFERENCES `opcion_respuesta` (`id_opcion_respuesta`),
+  ADD CONSTRAINT `opcionrespuesta_pregunta_ibfk_2` FOREIGN KEY (`id_pregunta`) REFERENCES `pregunta` (`id_pregunta`);
+
+--
+-- Filtros para la tabla `pregunta`
+--
+ALTER TABLE `pregunta`
+  ADD CONSTRAINT `pregunta_ibfk_1` FOREIGN KEY (`id_tipo_pregunta`) REFERENCES `tipo_pregunta` (`id_tipo_pregunta`);
+
+--
+-- Filtros para la tabla `respuesta_pregunta_retrospectiva`
+--
+ALTER TABLE `respuesta_pregunta_retrospectiva`
+  ADD CONSTRAINT `respuesta_pregunta_retrospectiva_ibfk_1` FOREIGN KEY (`id_respuesta`) REFERENCES `respuesta` (`id_respuesta`),
+  ADD CONSTRAINT `respuesta_pregunta_retrospectiva_ibfk_2` FOREIGN KEY (`id_pregunta`) REFERENCES `pregunta` (`id_pregunta`),
+  ADD CONSTRAINT `respuesta_pregunta_retrospectiva_ibfk_3` FOREIGN KEY (`id_retrospectiva`) REFERENCES `retrospectiva` (`id_retrospectiva`);
+
+--
+-- Filtros para la tabla `retrospectiva`
+--
+ALTER TABLE `retrospectiva`
+  ADD CONSTRAINT `retrospectiva_ibfk_1` FOREIGN KEY (`id_reporte`) REFERENCES `reporte` (`id_reporte`);
+
+--
+-- Filtros para la tabla `rol_funcion`
+--
+ALTER TABLE `rol_funcion`
+  ADD CONSTRAINT `rol_funcion_ibfk_1` FOREIGN KEY (`id_rol`) REFERENCES `rol` (`id_rol`),
+  ADD CONSTRAINT `rol_funcion_ibfk_2` FOREIGN KEY (`id_funcion`) REFERENCES `funcion` (`id_funcion`);
+
+--
+-- Filtros para la tabla `sprint`
+--
+ALTER TABLE `sprint`
+  ADD CONSTRAINT `sprint_ibfk_1` FOREIGN KEY (`id_reporte`) REFERENCES `reporte` (`id_reporte`);
+
+--
+-- Filtros para la tabla `usario_etiqueta`
+--
+ALTER TABLE `usario_etiqueta`
+  ADD CONSTRAINT `usario_etiqueta_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`),
+  ADD CONSTRAINT `usario_etiqueta_ibfk_2` FOREIGN KEY (`id_etiqueta`) REFERENCES `etiqueta` (`id_etiqueta`);
+
+--
+-- Filtros para la tabla `usuario_issue`
+--
+ALTER TABLE `usuario_issue`
+  ADD CONSTRAINT `usuario_issue_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`),
+  ADD CONSTRAINT `usuario_issue_ibfk_2` FOREIGN KEY (`clave`) REFERENCES `issue` (`clave`);
+
+--
+-- Filtros para la tabla `usuario_respuesta`
+--
+ALTER TABLE `usuario_respuesta`
+  ADD CONSTRAINT `usuario_respuesta_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`),
+  ADD CONSTRAINT `usuario_respuesta_ibfk_2` FOREIGN KEY (`id_respuesta`) REFERENCES `respuesta` (`id_respuesta`);
+
+--
+-- Filtros para la tabla `usuario_rol`
+--
+ALTER TABLE `usuario_rol`
+  ADD CONSTRAINT `usuario_rol_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`),
+  ADD CONSTRAINT `usuario_rol_ibfk_2` FOREIGN KEY (`id_rol`) REFERENCES `rol` (`id_rol`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
