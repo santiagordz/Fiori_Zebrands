@@ -1,0 +1,26 @@
+{
+  "name": "retrozeb_backend",
+  "version": "1.0.0",
+  "description": "backend management of the app",
+  "main": "app.ts",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SJBauer0/Fiori_Zebrands.git"
+  },
+  "author": "Fiori",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SJBauer0/Fiori_Zebrands/issues"
+  },
+  "homepage": "https://github.com/SJBauer0/Fiori_Zebrands#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "mysql2": "^3.2.0",
+    "sequelize": "^6.29.3"
+  }
+}

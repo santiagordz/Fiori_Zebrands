@@ -77,7 +77,7 @@ Before starting :checkered_flag:, you need to have [Git](https://git-scm.com) an
 $ git clone https://github.com/SJBauer0/Fiori_Zebrands
 
 # Access
-$ cd retrozeb
+$ cd frontend
 
 # Install dependencies
 $ yarn
