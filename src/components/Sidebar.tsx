@@ -6,7 +6,7 @@ interface SidebarProps {}
 const Sidebar: FC<SidebarProps> = ({}) => {
   return (
     <>
-      <div>
+      <div className="bg-main">
         <Avatar />
       </div>
     </>
