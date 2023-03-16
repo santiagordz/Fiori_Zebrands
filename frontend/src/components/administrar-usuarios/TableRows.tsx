@@ -1,6 +1,8 @@
 import { FC } from 'react';
 import TrashIcon from '@atlaskit/icon/glyph/trash';
 import EditFilledIcon from '@atlaskit/icon/glyph/edit-filled';
+import AppAccessIcon from '@atlaskit/icon/glyph/app-access';
+
 import Avatar from '@atlaskit/avatar';
 
 const createKey = (input: string) => {
@@ -8,6 +10,8 @@ const createKey = (input: string) => {
     ? input.replace(/^(the|a|an)/, '').replace(/\s/g, '')
     : input;
 };
+
+const handleClickResponsable = () => {};
 
 interface Usuario {
   nombre: string;
@@ -90,7 +94,7 @@ const TableRows = usuarios.map((usuario: Usuario, index: number) => ({
       //Va a cambiar
       content: (
         <button>
-          <figure>Corona</figure>
+          <AppAccessIcon label="Responsable Icon" />
         </button>
       ),
     },

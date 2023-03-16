@@ -33,12 +33,12 @@ const head = {
     {
       key: 'borrar',
       isSortable: false,
-      width: 10,
+      width: 5,
     },
     {
       key: 'editar',
       isSortable: false,
-      width: 10,
+      width: 5,
     },
   ],
 };
