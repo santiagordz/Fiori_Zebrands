@@ -1,5 +1,9 @@
+import { DesignTemplate } from "./components";
+
 function App() {
-  return <>App</>;
+  return <>
+  <DesignTemplate></DesignTemplate>
+  </>;
 }
 
 export default App;
