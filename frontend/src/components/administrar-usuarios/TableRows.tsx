@@ -1,4 +1,7 @@
 import { FC } from 'react';
+import TrashIcon from '@atlaskit/icon/glyph/trash';
+import EditFilledIcon from '@atlaskit/icon/glyph/edit-filled';
+import Avatar from '@atlaskit/avatar';
 
 const createKey = (input: string) => {
   return input
@@ -64,8 +67,8 @@ const TableRows = usuarios.map((usuario: Usuario, index: number) => ({
     {
       key: usuario.nombre,
       content: (
-        <span>
-          <p>{usuario.foto}</p>
+        <span className="flex">
+          <Avatar src={usuario.foto} />
           <p>{usuario.nombre}</p>
         </span>
       ),
@@ -96,7 +99,7 @@ const TableRows = usuarios.map((usuario: Usuario, index: number) => ({
       //Va a cambiar
       content: (
         <button>
-          <figure>Lapiz</figure>
+          <EditFilledIcon label="Pencil Icon" />
         </button>
       ),
     },
@@ -105,7 +108,7 @@ const TableRows = usuarios.map((usuario: Usuario, index: number) => ({
       //Va a cambiar
       content: (
         <button>
-          <figure>Basura</figure>
+          <TrashIcon label="Trash Icon" />
         </button>
       ),
     },
