@@ -1,4 +1,7 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
+import { B500, N500 } from '@atlaskit/theme/colors';
+import { token } from '@atlaskit/tokens';
+
 import TrashIcon from '@atlaskit/icon/glyph/trash';
 import EditFilledIcon from '@atlaskit/icon/glyph/edit-filled';
 import AppAccessIcon from '@atlaskit/icon/glyph/app-access';
@@ -10,8 +13,34 @@ const createKey = (input: string) => {
     ? input.replace(/^(the|a|an)/, '').replace(/\s/g, '')
     : input;
 };
-
-const handleClickResponsable = () => {};
+//Componente Corona
+const ResponsableIcon = () => {
+  const [Color, setColor] = useState(true);
+  const handleClickResponsable = (
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    setColor(!Color);
+  };
+  if (Color == true) {
+    return (
+      <button onClick={handleClickResponsable}>
+        <AppAccessIcon
+          label="Responsable Icon Negro"
+          primaryColor={token('color.icon.brand', N500)}
+        />
+      </button>
+    );
+  } else {
+    return (
+      <button onClick={handleClickResponsable}>
+        <AppAccessIcon
+          label="Responsable Icon Azul"
+          primaryColor={token('color.icon.brand', B500)}
+        />
+      </button>
+    );
+  }
+};
 
 interface Usuario {
   nombre: string;
@@ -92,11 +121,7 @@ const TableRows = usuarios.map((usuario: Usuario, index: number) => ({
     {
       key: `responsable-${index}`,
       //Va a cambiar
-      content: (
-        <button>
-          <AppAccessIcon label="Responsable Icon" />
-        </button>
-      ),
+      content: <ResponsableIcon />,
     },
     {
       key: `editar-${index}`,

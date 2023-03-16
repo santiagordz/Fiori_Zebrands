@@ -181,7 +181,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/icon@npm:^21.11.0":
+"@atlaskit/icon@npm:^21.11.0, @atlaskit/icon@npm:^21.11.5":
   version: 21.11.5
   resolution: "@atlaskit/icon@npm:21.11.5"
   dependencies:
@@ -3112,6 +3112,7 @@ __metadata:
     "@atlaskit/css-reset": ^6.3.20
     "@atlaskit/dropdown-menu": ^11.6.0
     "@atlaskit/dynamic-table": ^14.8.12
+    "@atlaskit/icon": ^21.11.5
     "@atlaskit/tokens": ^1.2.4
     "@types/react": ^18.0.27
     "@types/react-dom": ^18.0.10
