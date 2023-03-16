@@ -1,11 +1,5 @@
-import { Sidebar } from './components';
-
 function App() {
-  return (
-    <>
-      <Sidebar>a</Sidebar>
-    </>
-  );
+  return <>App</>;
 }
 
 export default App;
