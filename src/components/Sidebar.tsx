@@ -1,11 +1,9 @@
 import React, { FC } from 'react';
 import Avatar from '@atlaskit/avatar';
 
-interface SidebarProps {
-  children: React.ReactNode;
-}
+interface SidebarProps {}
 
-const Sidebar: FC<SidebarProps> = ({ children }) => {
+const Sidebar: FC<SidebarProps> = ({}) => {
   return (
     <>
       <div>
