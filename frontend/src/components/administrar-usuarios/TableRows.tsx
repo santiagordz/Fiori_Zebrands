@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import { B500, N500 } from '@atlaskit/theme/colors';
+import { B300, N500 } from '@atlaskit/theme/colors';
 import { token } from '@atlaskit/tokens';
 
 import TrashIcon from '@atlaskit/icon/glyph/trash';
@@ -35,7 +35,7 @@ const ResponsableIcon = () => {
       <button onClick={handleClickResponsable}>
         <AppAccessIcon
           label="Responsable Icon Azul"
-          primaryColor={token('color.icon.brand', B500)}
+          primaryColor={token('color.icon.brand', B300)}
         />
       </button>
     );
