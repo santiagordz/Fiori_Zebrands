@@ -1,9 +1,7 @@
-import { DesignTemplate } from "./components";
+import { DesignTemplate } from './components';
 
 function App() {
-  return <>
-  <DesignTemplate></DesignTemplate>
-  </>;
+  return <DesignTemplate>a</DesignTemplate>;
 }
 
 export default App;
