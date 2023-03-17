@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "backend management of the app",
   "main": "app.js",
-  "type": "module",
   "scripts": {
+    "start": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -21,6 +21,7 @@
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "mysql2": "^3.2.0",
+    "nodemon": "^2.0.21",
     "sequelize": "^6.29.3"
   }
 }
