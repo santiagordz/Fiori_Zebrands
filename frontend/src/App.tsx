@@ -10,6 +10,7 @@ function App() {
     <div>
       <Pregunta />
       <Pregunta />
+      <Pregunta />
     </div>
   );
 }
