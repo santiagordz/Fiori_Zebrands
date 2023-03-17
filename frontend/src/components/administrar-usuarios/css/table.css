@@ -1,0 +1,10 @@
+table thead tr th{
+    text-align: center!important;
+}
+
+table thead tr th span{
+    color: #000000;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+}

@@ -91,6 +91,166 @@ const usuarios = [
     etiqueta: 'Fullstack',
     foto: 'https://static.boredpanda.com/blog/wp-content/uploads/2020/12/2-5fe5b1f770d61__700.jpg',
   },
+  {
+    id: 5,
+    nombre: 'Santiago Rodriguez Murialdo',
+    email: 'santi@zeb',
+    rol: 'Admin',
+    etiqueta: 'Fullstack',
+    foto: 'https://static.boredpanda.com/blog/wp-content/uploads/2020/12/2-5fe5b1f770d61__700.jpg',
+  },
+  {
+    id: 5,
+    nombre: 'Santiago Rodriguez Murialdo',
+    email: 'santi@zeb',
+    rol: 'Admin',
+    etiqueta: 'Fullstack',
+    foto: 'https://static.boredpanda.com/blog/wp-content/uploads/2020/12/2-5fe5b1f770d61__700.jpg',
+  },
+  {
+    id: 5,
+    nombre: 'Santiago Rodriguez Murialdo',
+    email: 'santi@zeb',
+    rol: 'Admin',
+    etiqueta: 'Fullstack',
+    foto: 'https://static.boredpanda.com/blog/wp-content/uploads/2020/12/2-5fe5b1f770d61__700.jpg',
+  },
+  {
+    id: 5,
+    nombre: 'Santiago Rodriguez Murialdo',
+    email: 'santi@zeb',
+    rol: 'Admin',
+    etiqueta: 'Fullstack',
+    foto: 'https://static.boredpanda.com/blog/wp-content/uploads/2020/12/2-5fe5b1f770d61__700.jpg',
+  },
+  {
+    id: 5,
+    nombre: 'Santiago Rodriguez Murialdo',
+    email: 'santi@zeb',
+    rol: 'Admin',
+    etiqueta: 'Fullstack',
+    foto: 'https://static.boredpanda.com/blog/wp-content/uploads/2020/12/2-5fe5b1f770d61__700.jpg',
+  },
+  {
+    id: 5,
+    nombre: 'Santiago Rodriguez Murialdo',
+    email: 'santi@zeb',
+    rol: 'Admin',
+    etiqueta: 'Fullstack',
+    foto: 'https://static.boredpanda.com/blog/wp-content/uploads/2020/12/2-5fe5b1f770d61__700.jpg',
+  },
+  {
+    id: 5,
+    nombre: 'Santiago Rodriguez Murialdo',
+    email: 'santi@zeb',
+    rol: 'Admin',
+    etiqueta: 'Fullstack',
+    foto: 'https://static.boredpanda.com/blog/wp-content/uploads/2020/12/2-5fe5b1f770d61__700.jpg',
+  },
+  {
+    id: 5,
+    nombre: 'Santiago Rodriguez Murialdo',
+    email: 'santi@zeb',
+    rol: 'Admin',
+    etiqueta: 'Fullstack',
+    foto: 'https://static.boredpanda.com/blog/wp-content/uploads/2020/12/2-5fe5b1f770d61__700.jpg',
+  },
+  {
+    id: 5,
+    nombre: 'Santiago Rodriguez Murialdo',
+    email: 'santi@zeb',
+    rol: 'Admin',
+    etiqueta: 'Fullstack',
+    foto: 'https://static.boredpanda.com/blog/wp-content/uploads/2020/12/2-5fe5b1f770d61__700.jpg',
+  },
+  {
+    id: 5,
+    nombre: 'Santiago Rodriguez Murialdo',
+    email: 'santi@zeb',
+    rol: 'Admin',
+    etiqueta: 'Fullstack',
+    foto: 'https://static.boredpanda.com/blog/wp-content/uploads/2020/12/2-5fe5b1f770d61__700.jpg',
+  },
+  {
+    id: 5,
+    nombre: 'Santiago Rodriguez Murialdo',
+    email: 'santi@zeb',
+    rol: 'Admin',
+    etiqueta: 'Fullstack',
+    foto: 'https://static.boredpanda.com/blog/wp-content/uploads/2020/12/2-5fe5b1f770d61__700.jpg',
+  },
+  {
+    id: 5,
+    nombre: 'Santiago Rodriguez Murialdo',
+    email: 'santi@zeb',
+    rol: 'Admin',
+    etiqueta: 'Fullstack',
+    foto: 'https://static.boredpanda.com/blog/wp-content/uploads/2020/12/2-5fe5b1f770d61__700.jpg',
+  },
+  {
+    id: 5,
+    nombre: 'Santiago Rodriguez Murialdo',
+    email: 'santi@zeb',
+    rol: 'Admin',
+    etiqueta: 'Fullstack',
+    foto: 'https://static.boredpanda.com/blog/wp-content/uploads/2020/12/2-5fe5b1f770d61__700.jpg',
+  },
+  {
+    id: 5,
+    nombre: 'Santiago Rodriguez Murialdo',
+    email: 'santi@zeb',
+    rol: 'Admin',
+    etiqueta: 'Fullstack',
+    foto: 'https://static.boredpanda.com/blog/wp-content/uploads/2020/12/2-5fe5b1f770d61__700.jpg',
+  },
+  {
+    id: 5,
+    nombre: 'Santiago Rodriguez Murialdo',
+    email: 'santi@zeb',
+    rol: 'Admin',
+    etiqueta: 'Fullstack',
+    foto: 'https://static.boredpanda.com/blog/wp-content/uploads/2020/12/2-5fe5b1f770d61__700.jpg',
+  },
+  {
+    id: 5,
+    nombre: 'Santiago Rodriguez Murialdo',
+    email: 'santi@zeb',
+    rol: 'Admin',
+    etiqueta: 'Fullstack',
+    foto: 'https://static.boredpanda.com/blog/wp-content/uploads/2020/12/2-5fe5b1f770d61__700.jpg',
+  },
+  {
+    id: 5,
+    nombre: 'Santiago Rodriguez Murialdo',
+    email: 'santi@zeb',
+    rol: 'Admin',
+    etiqueta: 'Fullstack',
+    foto: 'https://static.boredpanda.com/blog/wp-content/uploads/2020/12/2-5fe5b1f770d61__700.jpg',
+  },
+  {
+    id: 5,
+    nombre: 'Santiago Rodriguez Murialdo',
+    email: 'santi@zeb',
+    rol: 'Admin',
+    etiqueta: 'Fullstack',
+    foto: 'https://static.boredpanda.com/blog/wp-content/uploads/2020/12/2-5fe5b1f770d61__700.jpg',
+  },
+  {
+    id: 5,
+    nombre: 'Santiago Rodriguez Murialdo',
+    email: 'santi@zeb',
+    rol: 'Admin',
+    etiqueta: 'Fullstack',
+    foto: 'https://static.boredpanda.com/blog/wp-content/uploads/2020/12/2-5fe5b1f770d61__700.jpg',
+  },
+  {
+    id: 5,
+    nombre: 'Santiago Rodriguez Murialdo',
+    email: 'santi@zeb',
+    rol: 'Admin',
+    etiqueta: 'Fullstack',
+    foto: 'https://static.boredpanda.com/blog/wp-content/uploads/2020/12/2-5fe5b1f770d61__700.jpg',
+  },
 ];
 
 const TableRows = usuarios.map((usuario: Usuario, index: number) => ({
@@ -100,7 +260,7 @@ const TableRows = usuarios.map((usuario: Usuario, index: number) => ({
     {
       key: usuario.nombre,
       content: (
-        <span className="flex">
+        <span className="flex justify-center">
           <Avatar src={usuario.foto} />
           <p>{usuario.nombre}</p>
         </span>
@@ -108,37 +268,41 @@ const TableRows = usuarios.map((usuario: Usuario, index: number) => ({
     },
     {
       key: usuario.email,
-      content: usuario.email,
+      content: <div className='text-center'>{usuario.email}</div>,
     },
     {
       key: createKey(usuario.rol),
-      content: usuario.rol, // va a cambiar
+      content: <div className='text-center'>{usuario.rol}</div>, // va a cambiar
     },
     {
       key: createKey(usuario.etiqueta),
-      content: usuario.etiqueta, // va a cambiar
+      content: <div className='text-center'>{usuario.etiqueta}</div>, // va a cambiar
     },
     {
       key: `responsable-${index}`,
       //Va a cambiar
-      content: <ResponsableIcon />,
+      content: (<div className="flex justify-center"><ResponsableIcon/></div>),
     },
     {
       key: `editar-${index}`,
       //Va a cambiar
       content: (
+        <div className="flex justify-center">
         <button>
           <EditFilledIcon label="Pencil Icon" />
         </button>
+        </div>
       ),
     },
     {
       key: `borrar-${index}`,
       //Va a cambiar
       content: (
+        <div className='flex justify-center'>
         <button>
           <TrashIcon label="Trash Icon" />
         </button>
+        </div>
       ),
     },
   ],
