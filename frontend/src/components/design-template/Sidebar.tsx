@@ -9,7 +9,7 @@ import SwitcherIcon from '@atlaskit/icon/glyph/switcher';
 import PeopleIcon from '@atlaskit/icon/glyph/people';
 import SignOutIcon from '@atlaskit/icon/glyph/sign-out';
 import MenuIcon from '@atlaskit/icon/glyph/menu';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import { motion } from 'framer-motion';
 
@@ -53,7 +53,7 @@ interface SidebarProps {
 }
 
 const buttonActiveStyles =
-  'bg-[#E9F2FF] p-1 flex justify-center items-center rounded-md';
+  'bg-[#E9F2FF] px-[2vmin] py-[0.8vmin] flex justify-start w-full items-center rounded-md gap-5';
 
 const buttonAndHover =
   'flex items-center justify-center p-1 rounded-md hover:bg-[#E9F2FF]';
@@ -61,7 +61,7 @@ const buttonAndHover =
 const buttonStyles =
   'px-[2vmin] py-[0.8vmin] flex justify-start w-full items-center rounded-md gap-5 hover:bg-[#E9F2FF]';
 
-const textStyle = 'link font-bold text-[1.8vmin]';
+const textStyle = 'link font-bold text-[0.85rem]';
 
 const textNotActiveStyles = `${textStyle} text-paragraph`;
 
@@ -69,6 +69,7 @@ const textActiveStyles = `${textStyle} text-selectBold`;
 
 const Sidebar: FC<SidebarProps> = ({ idRol, view, name }) => {
   const [toggleSidebar, setToggleSidebar] = useState<boolean>(false);
+  const location = useLocation();
   const pColor = '#44546F';
   const sColor = '#0C66E4';
   const iconSize = 'medium';
@@ -119,24 +120,29 @@ const Sidebar: FC<SidebarProps> = ({ idRol, view, name }) => {
               {name}
             </motion.p>
           </div>
-          <div className="flex flex-col justify-center items-center gap-10 w-full">
+          <div className="flex flex-col justify-center items-center gap-7 w-full">
             {categories.map((category) => {
               const Icon = category.icon;
-              const isActive = view === category.name;
+              const isActive =
+                location.pathname === `/${category.path}`;
               const textStyles = isActive
                 ? textActiveStyles
                 : textNotActiveStyles;
-              const activeStyles = isActive ? buttonActiveStyles : '';
+              const activeStyles = isActive
+                ? buttonActiveStyles
+                : buttonStyles;
+              const iconStyles = isActive ? sColor : pColor;
               const showLink =
                 !category.roleIds || category.roleIds.includes(idRol);
+
               return showLink ? (
                 <Link
-                  className={buttonStyles}
+                  className={activeStyles}
                   to={`/${category.path}`}
                 >
                   <Icon
                     label={category.name}
-                    primaryColor={pColor}
+                    primaryColor={iconStyles}
                     size={iconSize}
                   />
                   <motion.p
@@ -156,7 +162,7 @@ const Sidebar: FC<SidebarProps> = ({ idRol, view, name }) => {
               size={'small'}
             />
             <motion.p
-              className="link font-medium text-[1.7vmin]"
+              className="link font-medium text-[1.7vmin] text-[#44546F]"
               variants={linksVariants}
             >
               Cerrar sesión
