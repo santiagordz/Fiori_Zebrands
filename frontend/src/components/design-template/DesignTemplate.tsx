@@ -4,20 +4,28 @@ import HomeIcon from '@atlaskit/icon/glyph/home';
 
 interface DesignTemplateProps {
   children: React.ReactNode;
+  buttons?: JSX.Element;
+  view: string;
 }
 
-const DesignTemplate: FC<DesignTemplateProps> = ({ children }) => {
+const DesignTemplate: FC<DesignTemplateProps> = ({
+  children,
+  buttons,
+  view,
+}) => {
   const name = 'Santiago';
-  const view = 'Dashboard';
   const iconSize = 'medium';
   const icon = (
     <HomeIcon label="home" primaryColor={'white'} size={iconSize} />
   );
-  const buttons = <button>a</button>;
   return (
     <>
       <div className="flex flex-col items-center gap-7 w-auto h-screen mx-[6vw] my-[6vh] lg:ml-[9vw] lg:mr-[3vw]">
-        <Sidebar idRol={1} />
+        <Sidebar
+          idRol={1}
+          view={'Dashboard'}
+          name={'Santiago Rodríguez'}
+        />
         <p className="font-medium text-xl w-full text-left">
           Hola, {name}
         </p>
@@ -28,7 +36,7 @@ const DesignTemplate: FC<DesignTemplateProps> = ({ children }) => {
             </div>
             <h1 className="font-semibold text-2xl">{view}</h1>
           </div>
-          {buttons}
+          <div className="flex gap-2">{buttons}</div>
         </div>
         <div className="bg-background w-full h-auto rounded-lg p-7">
           {children}

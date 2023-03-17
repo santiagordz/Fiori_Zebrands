@@ -75,6 +75,30 @@
     "@babel/runtime" "^7.0.0"
     "@emotion/react" "^11.7.1"
 
+"@atlaskit/motion@^1.3.0":
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/@atlaskit/motion/-/motion-1.3.1.tgz#1c1e7739f19dffd34ba35305376004ab90de39e7"
+  integrity sha512-mQ9zarob01s3H/8wTOTmpczgkAfp5w85AzBlHAkDr4htR3UHa2dknJIORbxCcOilNGXhSnQxAErnRNS4NPkM3w==
+  dependencies:
+    "@atlaskit/ds-lib" "^2.1.0"
+    "@babel/runtime" "^7.0.0"
+    "@emotion/react" "^11.7.1"
+    bind-event-listener "^2.1.1"
+
+"@atlaskit/tag@^11.4.10":
+  version "11.4.10"
+  resolved "https://registry.yarnpkg.com/@atlaskit/tag/-/tag-11.4.10.tgz#712057a49cf4f72a8ca4f64897368fee952b28be"
+  integrity sha512-zWUkspdkw9XZHkvvW5ZEmqKALxWwQuSddakXZX4nufbwsc9nZreBJ+JTaktML11eWJRhDrVJbDLmHGGzIzGaEQ==
+  dependencies:
+    "@atlaskit/analytics-next" "^9.0.0"
+    "@atlaskit/ds-lib" "^2.1.0"
+    "@atlaskit/icon" "^21.11.0"
+    "@atlaskit/motion" "^1.3.0"
+    "@atlaskit/theme" "^12.2.0"
+    "@atlaskit/tokens" "^1.2.0"
+    "@babel/runtime" "^7.0.0"
+    "@emotion/react" "^11.7.1"
+
 "@atlaskit/theme@^12.2.0":
   version "12.2.9"
   resolved "https://registry.yarnpkg.com/@atlaskit/theme/-/theme-12.2.9.tgz#4cef7b850ce1945e2233ea82a4e36fbc6589a02e"

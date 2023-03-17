@@ -9,13 +9,47 @@ import SwitcherIcon from '@atlaskit/icon/glyph/switcher';
 import PeopleIcon from '@atlaskit/icon/glyph/people';
 import SignOutIcon from '@atlaskit/icon/glyph/sign-out';
 import MenuIcon from '@atlaskit/icon/glyph/menu';
+import { Link } from 'react-router-dom';
 
 import { motion } from 'framer-motion';
 
 import zebrandsLogo from '../../assets/zebrandsLogo.svg';
 
+const categories = [
+  { name: 'Dashboard', icon: HomeIcon, path: '', exact: true },
+  {
+    name: 'Métricas',
+    icon: GraphBarIcon,
+    path: 'metricas',
+  },
+  {
+    name: 'Mis retrospectivas',
+    icon: PdfIcon,
+    path: 'mis-retrospectivas',
+  },
+  {
+    name: 'Mis accionables',
+    icon: StarFilledIcon,
+    path: 'mis-accionables',
+  },
+  {
+    name: 'Gestionar Retrospectivas',
+    icon: SwitcherIcon,
+    path: 'gestionar-retrospectivas',
+    roleIds: [1, 3],
+  },
+  {
+    name: 'Administrar usuarios',
+    icon: PeopleIcon,
+    path: 'administrar-usuarios',
+    roleIds: [1],
+  },
+];
+
 interface SidebarProps {
   idRol: number;
+  view: string;
+  name: string;
 }
 
 const buttonActiveStyles =
@@ -33,14 +67,11 @@ const textNotActiveStyles = `${textStyle} text-paragraph`;
 
 const textActiveStyles = `${textStyle} text-selectBold`;
 
-const Sidebar: FC<SidebarProps> = ({ idRol }) => {
+const Sidebar: FC<SidebarProps> = ({ idRol, view, name }) => {
   const [toggleSidebar, setToggleSidebar] = useState<boolean>(false);
   const pColor = '#44546F';
   const sColor = '#0C66E4';
   const iconSize = 'medium';
-  const views = 'Dashboard';
-
-  const name = 'Santiago Sánchez';
 
   const sidebarVariants = {
     hovered: {
@@ -89,88 +120,34 @@ const Sidebar: FC<SidebarProps> = ({ idRol }) => {
             </motion.p>
           </div>
           <div className="flex flex-col justify-center items-center gap-10 w-full">
-            <button className="bg-[#E9F2FF] px-[2vmin] py-[0.8vmin] flex justify-start items-center w-full rounded-md gap-5 text-[#]">
-              <HomeIcon
-                label="home"
-                primaryColor={sColor}
-                size={iconSize}
-              />
-              <motion.p
-                className={textActiveStyles}
-                variants={linksVariants}
-              >
-                Dashboard
-              </motion.p>
-            </button>
-            <button className={buttonStyles}>
-              <GraphBarIcon
-                label="graph"
-                primaryColor={pColor}
-                size={iconSize}
-              />
-              <motion.p
-                className={textNotActiveStyles}
-                variants={linksVariants}
-              >
-                Métricas
-              </motion.p>
-            </button>
-            <button className={buttonStyles}>
-              <PdfIcon
-                label="pdf"
-                primaryColor={pColor}
-                size={iconSize}
-              />
-              <motion.p
-                className={textNotActiveStyles}
-                variants={linksVariants}
-              >
-                Retrospectiva
-              </motion.p>
-            </button>
-            <button className={buttonStyles}>
-              <StarFilledIcon
-                label="star"
-                primaryColor={pColor}
-                size={iconSize}
-              />
-              <motion.p
-                className={textNotActiveStyles}
-                variants={linksVariants}
-              >
-                Mis accionables
-              </motion.p>
-            </button>
-            {(idRol === 1 || idRol === 3) && (
-              <button className={buttonStyles}>
-                <SwitcherIcon
-                  label="gestionar retrospectivas"
-                  primaryColor={pColor}
-                  size={iconSize}
-                />
-                <motion.p
-                  className={textNotActiveStyles}
-                  variants={linksVariants}
+            {categories.map((category) => {
+              const Icon = category.icon;
+              const isActive = view === category.name;
+              const textStyles = isActive
+                ? textActiveStyles
+                : textNotActiveStyles;
+              const activeStyles = isActive ? buttonActiveStyles : '';
+              const showLink =
+                !category.roleIds || category.roleIds.includes(idRol);
+              return showLink ? (
+                <Link
+                  className={buttonStyles}
+                  to={`/${category.path}`}
                 >
-                  Gestionar Retrospectivas
-                </motion.p>
-              </button>
-            )}
-            {idRol === 1 && (
-              <button className={buttonStyles}>
-                <PeopleIcon
-                  label="administrar usuarios"
-                  primaryColor={pColor}
-                  size={iconSize}
-                />
-                <motion.p
-                  className={textNotActiveStyles}
-                  variants={linksVariants}
-                >
-                  Administrar usuarios
-                </motion.p>
-              </button>
-            )}
+                  <Icon
+                    label={category.name}
+                    primaryColor={pColor}
+                    size={iconSize}
+                  />
+                  <motion.p
+                    className={textStyles}
+                    variants={linksVariants}
+                  >
+                    {category.name}
+                  </motion.p>
+                </Link>
+              ) : null;
+            })}
           </div>
           <button className={`${buttonStyles} justify-center`}>
             <SignOutIcon

@@ -1,1 +1,1 @@
-export {default as DesignTemplate} from './design-template/DesignTemplate';
+export { default as DesignTemplate } from './design-template/DesignTemplate';
