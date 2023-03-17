@@ -6,9 +6,14 @@ import './css/table.css';
 
 const UsersTable = () => {
   return (
-    <>
-      <DynamicTable head={TableHead} rows={TableRows} emptyView={<div className="text-3xl">No hay registros</div>} rowsPerPage={8}/>
-    </>
+    <div className="max-w-[1125px] bg-white rounded-lg border-8 border-white">
+      <DynamicTable
+        head={TableHead}
+        rows={TableRows}
+        emptyView={<div className="text-3xl">No hay registros</div>}
+        rowsPerPage={10}
+      />
+    </div>
   );
 };
 
