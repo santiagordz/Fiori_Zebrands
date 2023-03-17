@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import { B300, N500, Y300 } from '@atlaskit/theme/colors';
+import { B300, N500, Y300, R400 } from '@atlaskit/theme/colors';
 import { token } from '@atlaskit/tokens';
 
 import TrashIcon from '@atlaskit/icon/glyph/trash';
@@ -36,6 +36,40 @@ const ResponsableIcon = () => {
         <AppAccessIcon
           label="Responsable Icon Azul"
           primaryColor={token('color.icon.brand', B300)}
+        />
+      </button>
+    );
+  }
+};
+
+const BorrarIcon = () => {
+  const [color, setColor] = useState(true);
+  const handleHoverBorrar = (
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    setColor(!color);
+  };
+  if (color == true) {
+    return (
+      <button
+        onMouseOver={handleHoverBorrar}
+        onMouseOut={handleHoverBorrar}
+      >
+        <TrashIcon
+          label="Trash Icon No Hover"
+          primaryColor={token('color.icon.brand', N500)}
+        />
+      </button>
+    );
+  } else {
+    return (
+      <button
+        onMouseOver={handleHoverBorrar}
+        onMouseOut={handleHoverBorrar}
+      >
+        <TrashIcon
+          label="Trash Icon Hover"
+          primaryColor={token('color.icon.brand', R400)}
         />
       </button>
     );
@@ -175,9 +209,7 @@ const TableRows = usuarios.map((usuario: Usuario, index: number) => ({
       //Va a cambiar
       content: (
         <div className="flex justify-center">
-          <button>
-            <TrashIcon label="Trash Icon" />
-          </button>
+          <BorrarIcon />
         </div>
       ),
     },
