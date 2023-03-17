@@ -34,7 +34,7 @@ const Sidebar: FC<SidebarProps> = ({ idRol }) => {
         <p
           className={`${
             sidebarHovered ? 'block' : 'hidden'
-          } font-bold text-xs`}
+          } font-bold text-[2vmin]`}
         >
           {name}
         </p>
