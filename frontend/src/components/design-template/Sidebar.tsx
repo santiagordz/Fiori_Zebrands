@@ -20,6 +20,13 @@ const Sidebar: FC<SidebarProps> = ({ idRol }) => {
   const iconSize = 'medium';
 
   const name = 'Santiago Sánchez';
+  const dash = 'Dashboard';
+  const metricas = 'Métricas';
+  const retro = 'Mis Retrospectivas';
+  const accionables = 'Mis Accionables';
+  const gestionarRetrospectivas = 'Gestionar Retrospectivas';
+  const adminUsuarios = 'Administrar Usuarios';
+  const logOut = 'Cerrar Sesión';
 
   return (
     <div
@@ -40,60 +47,123 @@ const Sidebar: FC<SidebarProps> = ({ idRol }) => {
         </p>
       </div>
       <div className="flex flex-col justify-between items-center gap-10">
-        <button className="bg-[#E9F2FF] p-1 flex justify-center items-center rounded-md">
-          <HomeIcon
+          <div>
+            <button className="bg-[#E9F2FF] p-1 flex justify-center items-center rounded-md gap-5">
+            <HomeIcon 
             label="home"
             primaryColor={sColor}
             size={iconSize}
-          />
-        </button>
-        <button>
-          <GraphBarIcon
-            label="graph"
-            primaryColor={pColor}
-            size={iconSize}
-          />
-        </button>
-        <button>
-          <PdfIcon
-            label="pdf"
-            primaryColor={pColor}
-            size={iconSize}
-          />
-        </button>
-        <button>
+            />
+            <p
+              className={`${
+                sidebarHovered ? 'block' : 'hidden'
+              } font-bold text-[2vmin]`}
+            >
+              {dash}
+            </p>
+            </button>
+          </div>
+          <div>
+            <button className="p-1 flex justify-center items-center rounded-md gap-5">
+              <GraphBarIcon
+                label="graph"
+                primaryColor={pColor}
+                size={iconSize}
+              />
+              <p
+                className={`${
+                  sidebarHovered ? 'block' : 'hidden'
+                } font-bold text-[2vmin]`}
+              >
+                {metricas}
+              </p>
+            </button>
+            <div>
+            <button className="p-1 flex justify-center items-center rounded-md gap-5">
+              <PdfIcon
+                label="pdf"
+                primaryColor={pColor}
+                size={iconSize}
+              />
+              <p
+                className={`${
+                  sidebarHovered ? 'block' : 'hidden'
+                } font-bold text-[2vmin]`}
+              >
+                {retro}
+              </p>
+            </button>
+            </div>
+        </div>
+        <div>
+        <button className="p-1 flex justify-center items-center rounded-md gap-5">
           <StarFilledIcon
             label="star"
             primaryColor={pColor}
             size={iconSize}
           />
+          <p
+            className={`${
+              sidebarHovered ? 'block' : 'hidden'
+            } font-bold text-[2vmin]`}
+          >
+            {accionables}
+          </p>
         </button>
+        </div>
         {(idRol === 1 || idRol === 3) && (
-          <button>
+          <div>
+          <button className="p-1 flex justify-center items-center rounded-md gap-5">
             <SwitcherIcon
               label="switcher"
               primaryColor={pColor}
               size={iconSize}
             />
+            <p
+              className={`${
+                sidebarHovered ? 'block' : 'hidden'
+              } font-bold text-[2vmin]`}
+            >
+              {gestionarRetrospectivas}
+            </p>
           </button>
+          </div>
         )}
         {idRol === 1 && (
-          <button>
+          <div>
+          <button className="p-1 flex justify-center items-center rounded-md gap-5">
             <PeopleIcon
               label="people"
               primaryColor={pColor}
               size={iconSize}
             />
+            <p
+              className={`${
+                sidebarHovered ? 'block' : 'hidden'
+              } font-bold text-[2vmin]`}
+            >
+              {adminUsuarios}
+            </p>
           </button>
+          </div>
         )}
       </div>
-      <button>
+      <div>
+      <button className="p-1 flex justify-center items-center rounded-md gap-5">
         <SignOutIcon
           label="signOut"
           primaryColor={pColor}
           size={iconSize}
         />
+        <p
+          className={`${
+            sidebarHovered ? 'block' : 'hidden'
+          } font-bold text-[2vmin]`}
+        >
+          {logOut}
+        </p>
       </button>
+      </div>
     </div>
   );
 };
