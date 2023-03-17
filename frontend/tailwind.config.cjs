@@ -3,13 +3,15 @@ module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
-      color: {
-        text: '#172b4d',
+      colors: {
+        textNormal: '#172b4d',
         accentBolder: '#091E42',
         subtle: '#44546F',
         accentRed: '#AE2A19',
         accentYellow: '#7F5F01',
         accentGreen: '#216E4E',
+        paragraph: '#44546f',
+        selectBold: '#0C66E4',
       },
       backgroundColor: {
         background: 'rgba(233, 242, 255, 0.5)',
