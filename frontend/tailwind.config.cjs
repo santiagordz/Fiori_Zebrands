@@ -9,6 +9,7 @@ module.exports = {
         accentRed: '#AE2A19',
         accentYellow: '#7F5F01',
         accentGreen: '#216E4E',
+        accentBlue: '#E9F2FF',
       },
       backgroundColor: {
         background: 'rgba(233, 242, 255, 0.5)',
