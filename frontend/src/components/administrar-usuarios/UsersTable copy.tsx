@@ -7,6 +7,7 @@ import ResponsableIcon from './ResponsableIcon';
 
 import BorrarIcon from './BorrarIcon';
 import EditarIcon from './EditarIcon';
+import RolIcon from './RolIcon';
 import Avatar from '@atlaskit/avatar';
 
 import TableHead from './TableHead';
@@ -50,7 +51,7 @@ const UsersTableCopy = () => {
       {
         key: usuario.nombre,
         content: (
-          <span className="flex">
+          <span className="flex items-center">
             <Avatar src={usuario.foto} />
             <p>{usuario.nombre}</p>
           </span>
@@ -64,7 +65,7 @@ const UsersTableCopy = () => {
         key: createKey('admin'), // va a cambiar
         content: (
           <div className="text-center">
-            <p>{usuario.rol}</p>
+            <RolIcon rol={usuario.rol} />
           </div>
         ), // va a cambiar
       },
