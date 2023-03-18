@@ -215,6 +215,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@atlaskit/lozenge@npm:^11.3.7":
+  version: 11.3.7
+  resolution: "@atlaskit/lozenge@npm:11.3.7"
+  dependencies:
+    "@atlaskit/codemod-utils": ^4.1.0
+    "@atlaskit/ds-explorations": ^2.0.0
+    "@atlaskit/theme": ^12.2.0
+    "@atlaskit/tokens": ^1.0.0
+    "@babel/runtime": ^7.0.0
+  peerDependencies:
+    react: ^16.8.0
+  checksum: 33d58274171e12df99c09d3291ef2467eac3d76b4b088e6d10204366bcf4671c2b19350119972cfde6b91cf2ed31ddde8be12d01278e10de269d5297ec055ec0
+  languageName: node
+  linkType: hard
+
 "@atlaskit/menu@npm:^1.5.0":
   version: 1.5.0
   resolution: "@atlaskit/menu@npm:1.5.0"
@@ -3114,6 +3129,7 @@ __metadata:
     "@atlaskit/dropdown-menu": ^11.6.0
     "@atlaskit/dynamic-table": ^14.8.12
     "@atlaskit/icon": ^21.11.5
+    "@atlaskit/lozenge": ^11.3.7
     "@atlaskit/tokens": ^1.2.4
     "@types/react": ^18.0.27
     "@types/react-dom": ^18.0.10

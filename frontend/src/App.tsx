@@ -1,10 +1,10 @@
 import TableWrapper from './components/administrar-usuarios/TableWrapper';
-import UsersTable from './components/administrar-usuarios/UsersTable';
+import UsersTableCopy from './components/administrar-usuarios/UsersTable copy';
 
 function App() {
   return (
     <>
-      <TableWrapper />
+      <UsersTableCopy />
     </>
   );
 }

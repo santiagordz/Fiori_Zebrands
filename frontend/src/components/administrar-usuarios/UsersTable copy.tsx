@@ -4,22 +4,24 @@ import axios from 'axios';
 
 import DynamicTable from '@atlaskit/dynamic-table';
 import ResponsableIcon from './ResponsableIcon';
+
 import BorrarIcon from './BorrarIcon';
 import EditarIcon from './EditarIcon';
 import Avatar from '@atlaskit/avatar';
 
 import TableHead from './TableHead';
+// import RolesIcon from './RolesIcon';
 
 import './css/table.css';
 
-const URI = 'http://localhost:8000/usuarios';
+const URI = 'http://localhost:8000/usuarios/roles';
 
 interface Usuario {
   correo: string;
   password: string;
   nombre: string;
   foto: string;
-  // rol: string;
+  rol: string;
   // etiqueta: string;
 }
 
@@ -29,7 +31,7 @@ const createKey = (input: string) => {
     : input;
 };
 
-const UsersTable = () => {
+const UsersTableCopy = () => {
   const [TableRows, setTableRows] = useState([{}]);
 
   useEffect(() => {
@@ -60,7 +62,11 @@ const UsersTable = () => {
       },
       {
         key: createKey('admin'), // va a cambiar
-        content: <div className="text-center">{'Administrador'}</div>, // va a cambiar
+        content: (
+          <div className="text-center">
+            <p>{usuario.rol}</p>
+          </div>
+        ), // va a cambiar
       },
       {
         key: createKey('fullstack'),
@@ -109,4 +115,4 @@ const UsersTable = () => {
   );
 };
 
-export default UsersTable;
+export default UsersTableCopy;
