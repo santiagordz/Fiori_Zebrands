@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import DesignTemplate from '../components/design-template/DesignTemplate';
+import DesignTemplate from '../../components/design-template/DesignTemplate';
 
 interface MetricasProps {}
 
