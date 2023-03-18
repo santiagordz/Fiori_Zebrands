@@ -43,7 +43,7 @@ const pathInfo: pathInfoType = {
     icon: StarFilledIcon,
   },
   '/gestionar-retrospectivas': {
-    view: 'Gestionar Retrospectivas',
+    view: 'Gestionar retrospectivas',
     icon: SwitcherIcon,
   },
   '/administrar-usuarios': {
@@ -82,6 +82,7 @@ const DesignTemplate: FC<DesignTemplateProps> = ({
               <MainIcon
                 label={`${pathInfo[path].view.toLowerCase()}`}
                 primaryColor="white"
+                secondaryColor="#0C66E4"
               />
             </div>
             {/* Mostramos el título de la vista actual */}

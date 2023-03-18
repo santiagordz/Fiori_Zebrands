@@ -40,7 +40,7 @@ const categories = [
     path: 'mis-accionables',
   },
   {
-    name: 'Gestionar Retrospectivas',
+    name: 'Gestionar retrospectivas',
     icon: SwitcherIcon,
     path: 'gestionar-retrospectivas',
     roleIds: [1, 3],
