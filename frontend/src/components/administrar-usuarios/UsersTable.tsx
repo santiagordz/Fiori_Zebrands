@@ -15,7 +15,7 @@ import TableHead from './TableHead';
 
 import './css/table.css';
 
-const URI = 'http://localhost:8000/usuarios/roles';
+const URI = 'http://localhost:8000/usuarios/roles-etiquetas';
 
 interface Usuario {
   correo: string;
@@ -23,7 +23,7 @@ interface Usuario {
   nombre: string;
   foto: string;
   rol: string;
-  etiqueta: Array<string>;
+  etiqueta: string;
 }
 
 const createKey = (input: string) => {
@@ -58,7 +58,7 @@ const UsersTable = () => {
         ),
       },
       {
-        key: usuario.email,
+        key: usuario.correo,
         content: <div className="text-center">{usuario.correo}</div>,
       },
       {
@@ -72,7 +72,9 @@ const UsersTable = () => {
       {
         key: createKey('fullstack'),
         // va a cambiar
-        content: <div className="text-center">{'Fullstack'}</div>, // va a cambiar
+        content: (
+          <div className="text-center">{usuario.etiqueta}</div>
+        ), // va a cambiar
       },
       {
         key: `responsable-${index}`,
