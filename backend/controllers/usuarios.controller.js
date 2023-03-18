@@ -7,3 +7,17 @@ exports.getUsuarios = (req, res, next) => {
     })
     .catch((err) => console.log(err));
 };
+
+exports.getUsuariosConRoles = (req, res, next) => {
+  try {
+    Usuario.getUsuariosConRolesMasImportante()
+      .then(([rows, fieldData]) => {
+        res.json(rows);
+      })
+      .catch((err) => console.log(err));
+  } catch {
+    res
+      .status(500)
+      .json({ message: 'Error al obtener los usuarios con roles' });
+  }
+};
