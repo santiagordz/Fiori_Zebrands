@@ -248,6 +248,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@atlaskit/motion@npm:^1.3.0":
+  version: 1.3.1
+  resolution: "@atlaskit/motion@npm:1.3.1"
+  dependencies:
+    "@atlaskit/ds-lib": ^2.1.0
+    "@babel/runtime": ^7.0.0
+    "@emotion/react": ^11.7.1
+    bind-event-listener: ^2.1.1
+  peerDependencies:
+    react: ^16.8.0
+  checksum: e33735b0720b1de5195213de4d398dfffcb60a23c9de43b70ffb86cc35bc96b8c279e511cd53fe44a62ccabdb36a7f43b83253c898f56fd3d8065007ba13cf67
+  languageName: node
+  linkType: hard
+
 "@atlaskit/pagination@npm:^14.2.0":
   version: 14.2.8
   resolution: "@atlaskit/pagination@npm:14.2.8"
@@ -325,6 +339,36 @@ __metadata:
   peerDependencies:
     react: ^16.8.0
   checksum: 2dfc97a8e7c069bbbf702dfcb3822f57de0ded5f0267449e8fa4c579442e625704db795a96af4c813595f0eec552091954e1f6c3fd1d6f53ed8757002cdcc70b
+  languageName: node
+  linkType: hard
+
+"@atlaskit/tag-group@npm:^10.1.2":
+  version: 10.1.2
+  resolution: "@atlaskit/tag-group@npm:10.1.2"
+  dependencies:
+    "@babel/runtime": ^7.0.0
+    "@emotion/react": ^11.7.1
+  peerDependencies:
+    react: ^16.8.0
+  checksum: 3e564bda616fcde0dadf4ddd5a449031bea307573cf94ba80fe090d37a8d1fd71e4f9b5c0ba552caa8b878ac6266e7ab20feed271a39cd0227161b7c78e5d270
+  languageName: node
+  linkType: hard
+
+"@atlaskit/tag@npm:^11.4.10":
+  version: 11.4.10
+  resolution: "@atlaskit/tag@npm:11.4.10"
+  dependencies:
+    "@atlaskit/analytics-next": ^9.0.0
+    "@atlaskit/ds-lib": ^2.1.0
+    "@atlaskit/icon": ^21.11.0
+    "@atlaskit/motion": ^1.3.0
+    "@atlaskit/theme": ^12.2.0
+    "@atlaskit/tokens": ^1.2.0
+    "@babel/runtime": ^7.0.0
+    "@emotion/react": ^11.7.1
+  peerDependencies:
+    react: ^16.8.0
+  checksum: 12b5edca0f5ea5f9c9c98f8fc4fd5d7799542a285156425c3d89a47c1caaa0cd9633985d5526ae85fbf6fb179f1755d3215f1824c70ea8abca02cc2aff37dbe3
   languageName: node
   linkType: hard
 
@@ -3130,6 +3174,8 @@ __metadata:
     "@atlaskit/dynamic-table": ^14.8.12
     "@atlaskit/icon": ^21.11.5
     "@atlaskit/lozenge": ^11.3.7
+    "@atlaskit/tag": ^11.4.10
+    "@atlaskit/tag-group": ^10.1.2
     "@atlaskit/tokens": ^1.2.4
     "@types/react": ^18.0.27
     "@types/react-dom": ^18.0.10

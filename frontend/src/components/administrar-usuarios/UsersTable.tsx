@@ -14,16 +14,23 @@ import TableHead from './TableHead';
 // import RolesIcon from './RolesIcon';
 
 import './css/table.css';
+import EtiquetaIcon from './EtiquetaIcon';
 
-const URI = 'http://localhost:8000/usuarios/roles-etiquetas';
+const URI = 'http://localhost:8000/usuarios/info';
+
+interface Etiqueta {
+  etiqueta: string;
+  color: string;
+}
 
 interface Usuario {
+  id: number;
   correo: string;
   password: string;
   nombre: string;
   foto: string;
-  rol: string;
-  etiqueta: string;
+  roles: string[];
+  etiquetas: Etiqueta[];
 }
 
 const createKey = (input: string) => {
@@ -41,11 +48,19 @@ const UsersTable = () => {
 
   const getUsers = async () => {
     const res = await axios.get(URI);
-    setTableRows(res.data);
+    const usuariosConPrimerRol = res.data.usuarios.map(
+      (usuario: any) => ({
+        ...usuario,
+        primerRol: usuario.roles.shift(),
+      })
+    );
+    setTableRows(usuariosConPrimerRol);
   };
 
-  const tableRows = TableRows.map((usuario: any, index: number) => ({
-    key: `row-${index}`,
+  console.log(TableRows);
+
+  const tableRows = TableRows.map((usuario: any) => ({
+    key: usuario.id,
     isHighlighted: false,
     cells: [
       {
@@ -62,22 +77,25 @@ const UsersTable = () => {
         content: <div className="text-center">{usuario.correo}</div>,
       },
       {
-        key: createKey('admin'), // va a cambiar
+        key: usuario.rol, // va a cambiar
         content: (
           <div className="text-center">
-            <RolIcon rol={usuario.rol} />
+            <RolIcon rol={usuario.primerRol} />
           </div>
-        ), // va a cambiar
+        ),
       },
       {
-        key: createKey('fullstack'),
+        key: usuario.etiqueta,
         // va a cambiar
         content: (
-          <div className="text-center">{usuario.etiqueta}</div>
-        ), // va a cambiar
+          <div>
+            <EtiquetaIcon etiquetas={usuario.etiquetas} />
+          </div>
+        ),
+        // va a cambiar
       },
       {
-        key: `responsable-${index}`,
+        key: `responsable-${usuario.id}`,
         //Va a cambiar
         content: (
           <div className="flex justify-center">
@@ -86,7 +104,7 @@ const UsersTable = () => {
         ),
       },
       {
-        key: `editar-${index}`,
+        key: `editar-${usuario.id}`,
         //Va a cambiar
         content: (
           <div className="flex justify-center">
@@ -95,7 +113,7 @@ const UsersTable = () => {
         ),
       },
       {
-        key: `borrar-${index}`,
+        key: `borrar-${usuario.id}`,
         //Va a cambiar
         content: (
           <div className="flex justify-center">

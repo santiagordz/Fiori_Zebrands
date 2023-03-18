@@ -10,8 +10,10 @@ const RolIcon: FC<RolIconProps> = ({ rol }) => {
     return <Lozenge appearance="moved">{rol}</Lozenge>;
   } else if (rol == 'Responsable') {
     return <Lozenge appearance="inprogress">{rol}</Lozenge>;
-  } else {
+  } else if (rol == 'Squad Member') {
     return <Lozenge appearance="new">{rol}</Lozenge>;
+  } else {
+    return <Lozenge>NULL</Lozenge>;
   }
 };
 

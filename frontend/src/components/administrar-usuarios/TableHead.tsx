@@ -27,7 +27,6 @@ const head = {
     {
       key: 'responsable',
       content: 'Responsable',
-      isSortable: true,
       width: 10,
     },
     {
