@@ -34,7 +34,7 @@ const pathInfo: pathInfoType = {
     view: 'Métricas',
     icon: GraphBarIcon,
   },
-  'mis-retrospectivas': {
+  '/mis-retrospectivas': {
     view: 'Mis retrospectivas',
     icon: PdfIcon,
   },
