@@ -77,7 +77,7 @@ const UsersTable = () => {
         content: <div className="text-center">{usuario.correo}</div>,
       },
       {
-        key: usuario.rol, // va a cambiar
+        key: usuario.primerRol,
         content: (
           <div className="text-center">
             <RolIcon rol={usuario.primerRol} />
@@ -85,8 +85,7 @@ const UsersTable = () => {
         ),
       },
       {
-        key: usuario.etiquetas,
-        // va a cambiar
+        key: usuario.etiqueta,
         content: (
           <div>
             <EtiquetaIcon etiquetas={usuario.etiquetas} />
