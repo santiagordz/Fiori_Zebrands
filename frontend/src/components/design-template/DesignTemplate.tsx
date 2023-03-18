@@ -1,56 +1,16 @@
 // Importa las dependencias necesarias para el componente DesignTemplate
 import React, { FC } from 'react';
 import Sidebar from './Sidebar';
-import HomeIcon from '@atlaskit/icon/glyph/home';
-import GraphBarIcon from '@atlaskit/icon/glyph/graph-bar';
-import PdfIcon from '@atlaskit/icon/glyph/pdf';
-import StarFilledIcon from '@atlaskit/icon/glyph/star-filled';
-import SwitcherIcon from '@atlaskit/icon/glyph/switcher';
-import PeopleIcon from '@atlaskit/icon/glyph/people';
 import { useLocation } from 'react-router-dom';
 import type { GlyphProps } from '@atlaskit/icon/types';
+
+import { pathInfo } from '../../utils/templateData';
 
 // Definimos las propiedades necesarias para el designtemplate
 interface DesignTemplateProps {
   children: React.ReactNode;
   buttons?: JSX.Element;
 }
-
-// Definimos un tipo de objeto que contiene a desplegar según la ruta
-interface pathInfoType {
-  [key: string]: {
-    view: string;
-    icon: React.ComponentType<GlyphProps>;
-  };
-}
-
-// Definimos los iconos y los nombres para cada ruta
-const pathInfo: pathInfoType = {
-  '/': {
-    view: 'Dashboard',
-    icon: HomeIcon,
-  },
-  '/metricas': {
-    view: 'Métricas',
-    icon: GraphBarIcon,
-  },
-  '/mis-retrospectivas': {
-    view: 'Mis retrospectivas',
-    icon: PdfIcon,
-  },
-  '/mis-accionables': {
-    view: 'Mis accionables',
-    icon: StarFilledIcon,
-  },
-  '/gestionar-retrospectivas': {
-    view: 'Gestionar retrospectivas',
-    icon: SwitcherIcon,
-  },
-  '/administrar-usuarios': {
-    view: 'Administrar usuarios',
-    icon: PeopleIcon,
-  },
-};
 
 // Definimos un componente de tipo función que recibe las props DesignTemplateProps
 const DesignTemplate: FC<DesignTemplateProps> = ({

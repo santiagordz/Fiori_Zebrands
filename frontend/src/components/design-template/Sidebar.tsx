@@ -1,16 +1,12 @@
 // Importamos las librerías y componentes necesarios para el sidebar
 import React, { FC, useState } from 'react';
 import Avatar from '@atlaskit/avatar';
-import HomeIcon from '@atlaskit/icon/glyph/home';
-import GraphBarIcon from '@atlaskit/icon/glyph/graph-bar';
-import PdfIcon from '@atlaskit/icon/glyph/pdf';
-import StarFilledIcon from '@atlaskit/icon/glyph/star-filled';
-import SwitcherIcon from '@atlaskit/icon/glyph/switcher';
-import PeopleIcon from '@atlaskit/icon/glyph/people';
 import SignOutIcon from '@atlaskit/icon/glyph/sign-out';
 import MenuIcon from '@atlaskit/icon/glyph/menu';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
+
+import { categories } from '../../utils/templateData';
 
 // Importamos la imagen del logo de la empresa
 import zebrandsLogo from '../../assets/zebrandsLogo.svg';
@@ -21,44 +17,9 @@ interface SidebarProps {
   name: string;
 }
 
-// Creamos una lista con las categorías y la información necesaria de cada una
-const categories = [
-  { name: 'Dashboard', icon: HomeIcon, path: '' },
-  {
-    name: 'Métricas',
-    icon: GraphBarIcon,
-    path: 'metricas',
-  },
-  {
-    name: 'Mis retrospectivas',
-    icon: PdfIcon,
-    path: 'mis-retrospectivas',
-  },
-  {
-    name: 'Mis accionables',
-    icon: StarFilledIcon,
-    path: 'mis-accionables',
-  },
-  {
-    name: 'Gestionar retrospectivas',
-    icon: SwitcherIcon,
-    path: 'gestionar-retrospectivas',
-    roleIds: [1, 3],
-  },
-  {
-    name: 'Administrar usuarios',
-    icon: PeopleIcon,
-    path: 'administrar-usuarios',
-    roleIds: [1],
-  },
-];
-
 // Definimos los estilos para los botones y texto en el sidebar
 const buttonActiveStyles =
   'bg-[#E9F2FF] px-[2vmin] py-[0.8vmin] flex justify-start w-full items-center rounded-md gap-5';
-
-const buttonAndHover =
-  'flex items-center justify-center p-1 rounded-md hover:bg-[#E9F2FF]';
 
 const buttonStyles =
   'px-[2vmin] py-[0.8vmin] flex justify-start w-full items-center rounded-md gap-5 hover:bg-[#E9F2FF]';
