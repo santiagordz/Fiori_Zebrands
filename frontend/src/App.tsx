@@ -1,16 +1,26 @@
 import Pregunta from './components/preguntas/Pregunta';
+import '@atlaskit/css-reset';
+import { useCallback, useState } from 'react';
+import Button from '@atlaskit/button/standard-button';
+import { css, jsx } from '@emotion/react';
+
+import Modal, {
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+  ModalTitle,
+  ModalTransition,
+} from '@atlaskit/modal-dialog';
+import GestionarRetrospectiva from './components/GestionarRetrospectiva/GestionarRetrospectiva';
+
+const boldStyles = css({
+  fontWeight: 'bold',
+});
 
 function App() {
-  const id = 1;
-  const pred = true;
-  const pregunta = '¿Que mejorarias del proceso de retrospectiva?';
-  const id_preg = 2;
-
   return (
     <div>
-      <Pregunta />
-      <Pregunta />
-      <Pregunta />
+      <GestionarRetrospectiva />
     </div>
   );
 }
