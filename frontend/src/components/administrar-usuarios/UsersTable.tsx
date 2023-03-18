@@ -85,7 +85,7 @@ const UsersTable = () => {
         ),
       },
       {
-        key: usuario.etiqueta,
+        key: usuario.etiquetas,
         // va a cambiar
         content: (
           <div>
