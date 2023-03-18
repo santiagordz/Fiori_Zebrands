@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "@atlaskit/breadcrumbs": "^11.7.12",
+    "@atlaskit/form": "^8.8.4",
+    "@atlaskit/modal-dialog": "^12.4.11",
+    "@atlaskit/textfield": "^5.3.6",
+    "@emotion/react": "^11.10.6"
+  }
+}
