@@ -23,7 +23,7 @@ interface Usuario {
   nombre: string;
   foto: string;
   rol: string;
-  // etiqueta: string;
+  etiqueta: Array<string>;
 }
 
 const createKey = (input: string) => {
@@ -32,7 +32,7 @@ const createKey = (input: string) => {
     : input;
 };
 
-const UsersTableCopy = () => {
+const UsersTable = () => {
   const [TableRows, setTableRows] = useState([{}]);
 
   useEffect(() => {
@@ -116,4 +116,4 @@ const UsersTableCopy = () => {
   );
 };
 
-export default UsersTableCopy;
+export default UsersTable;

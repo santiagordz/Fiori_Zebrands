@@ -1,5 +1,5 @@
 import TableWrapper from './components/administrar-usuarios/TableWrapper';
-import UsersTableCopy from './components/administrar-usuarios/UsersTable copy';
+import UsersTableCopy from './components/administrar-usuarios/UsersTable';
 
 function App() {
   return (
