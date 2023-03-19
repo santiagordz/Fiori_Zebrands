@@ -93,7 +93,7 @@ const Sidebar: FC<SidebarProps> = ({ idRol, name }) => {
 
           {/* Mostramos las categorías del sidebar */}
           <div className="flex flex-col justify-center items-center gap-7 w-full">
-            {categories.map((category) => {
+            {categories.map((category, i) => {
               const Icon = category.icon;
               const isActive =
                 location.pathname === `/${category.path}`;
@@ -112,6 +112,7 @@ const Sidebar: FC<SidebarProps> = ({ idRol, name }) => {
                 <Link
                   className={activeStyles}
                   to={`/${category.path}`}
+                  key={i}
                 >
                   <Icon
                     label={category.name}
