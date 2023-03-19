@@ -4,6 +4,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        jiraBlue: '#0C66E4',
         accentBolder: '#091E42',
         subtle: '#44546F',
         accentRed: '#AE2A19',

@@ -92,6 +92,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@atlaskit/checkbox@npm:^12.4.6":
+  version: 12.4.6
+  resolution: "@atlaskit/checkbox@npm:12.4.6"
+  dependencies:
+    "@atlaskit/analytics-next": ^9.0.0
+    "@atlaskit/ds-lib": ^2.1.0
+    "@atlaskit/icon": ^21.11.0
+    "@atlaskit/theme": ^12.2.0
+    "@atlaskit/tokens": ^1.2.0
+    "@babel/runtime": ^7.0.0
+    "@emotion/react": ^11.7.1
+  peerDependencies:
+    react: ^16.8.0
+  checksum: 328469788dfbca6db80c9de46587d7e700f617eb8ef0c7405614f074d6c212601c5b6a3e8c3d2e59b76a150108810848e25e425613c6372c019b1530dedf0ed7
+  languageName: node
+  linkType: hard
+
 "@atlaskit/codemod-utils@npm:^4.1.0":
   version: 4.1.3
   resolution: "@atlaskit/codemod-utils@npm:4.1.3"
@@ -1673,6 +1690,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"create-react-class@npm:^15.5.3":
+  version: 15.7.0
+  resolution: "create-react-class@npm:15.7.0"
+  dependencies:
+    loose-envify: ^1.3.1
+    object-assign: ^4.1.1
+  checksum: 0c5f43da705fa9f67ec289051dd5780792652d440dfa17cd2c7d8423c1f604609596f895dabf46fda1960ddd93ee96fe1b61ef4d55a94fc4271b07d515486714
+  languageName: node
+  linkType: hard
+
 "cross-fetch@npm:^3.1.5":
   version: 3.1.5
   resolution: "cross-fetch@npm:3.1.5"
@@ -2435,7 +2462,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"loose-envify@npm:^1.0.0, loose-envify@npm:^1.1.0, loose-envify@npm:^1.4.0":
+"loose-envify@npm:^1.0.0, loose-envify@npm:^1.1.0, loose-envify@npm:^1.3.1, loose-envify@npm:^1.4.0":
   version: 1.4.0
   resolution: "loose-envify@npm:1.4.0"
   dependencies:
@@ -2443,6 +2470,17 @@ __metadata:
   bin:
     loose-envify: cli.js
   checksum: 6517e24e0cad87ec9888f500c5b5947032cdfe6ef65e1c1936a0c48a524b81e65542c9c3edc91c97d5bddc806ee2a985dbc79be89215d613b1de5db6d1cfe6f4
+  languageName: node
+  linkType: hard
+
+"lorem-ipsum@npm:^1.0.3":
+  version: 1.0.6
+  resolution: "lorem-ipsum@npm:1.0.6"
+  dependencies:
+    minimist: ~1.2.0
+  bin:
+    lorem-ipsum: bin/lorem-ipsum.bin.js
+  checksum: 393ab55d6353af11eeb1bd94d572f207dd13c621816fb65dc827c334edc9c7aa578db0cd07856afd0263dae5d67485c990198c3a95979951105a9698a34ce74d
   languageName: node
   linkType: hard
 
@@ -2569,7 +2607,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimist@npm:^1.2.6":
+"minimist@npm:^1.2.6, minimist@npm:~1.2.0":
   version: 1.2.8
   resolution: "minimist@npm:1.2.8"
   checksum: 75a6d645fb122dad29c06a7597bddea977258957ed88d7a6df59b5cd3fe4a527e253e9bbf2e783e4b73657f9098b96a5fe96ab8a113655d4109108577ecf85b0
@@ -3093,6 +3131,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-lorem-component@npm:^0.13.0":
+  version: 0.13.0
+  resolution: "react-lorem-component@npm:0.13.0"
+  dependencies:
+    create-react-class: ^15.5.3
+    lorem-ipsum: ^1.0.3
+    object-assign: ^4.1.0
+    seedable-random: 0.0.1
+  peerDependencies:
+    react: 16.x
+  checksum: 175b950ec7009b56994d7b2cccc82a5ea3aadf7370ad82c033e9b89788acd2fbac2ebb6b5e66c4b5fcd521eb01eba6646b4760f6860745b8656deb3af533fc69
+  languageName: node
+  linkType: hard
+
 "react-popper@npm:^2.2.3":
   version: 2.3.0
   resolution: "react-popper@npm:2.3.0"
@@ -3278,6 +3330,7 @@ __metadata:
   dependencies:
     "@atlaskit/avatar": ^21.1.10
     "@atlaskit/button": ^16.5.6
+    "@atlaskit/checkbox": ^12.4.6
     "@atlaskit/css-reset": ^6.3.20
     "@atlaskit/dropdown-menu": ^11.6.0
     "@atlaskit/dynamic-table": ^14.8.12
@@ -3295,6 +3348,7 @@ __metadata:
     postcss: ^8.4.21
     react: ^18.2.0
     react-dom: ^18.2.0
+    react-lorem-component: ^0.13.0
     react-router-dom: ^6.9.0
     styled-components: ^5.3.9
     tailwindcss: ^3.2.7
@@ -3371,6 +3425,13 @@ __metadata:
   dependencies:
     loose-envify: ^1.1.0
   checksum: d79192eeaa12abef860c195ea45d37cbf2bbf5f66e3c4dcd16f54a7da53b17788a70d109ee3d3dde1a0fd50e6a8fc171f4300356c5aee4fc0171de526bf35f8a
+  languageName: node
+  linkType: hard
+
+"seedable-random@npm:0.0.1":
+  version: 0.0.1
+  resolution: "seedable-random@npm:0.0.1"
+  checksum: a9584c6e8197d8a52a942a6012a614c7955bf07f7a347a4cf74df40ae115e2a35b283c184d3521078b2c64e000fbf0c58eb29088f5b1815bae3c1a768c2b4419
   languageName: node
   linkType: hard
 
