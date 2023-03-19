@@ -4,6 +4,7 @@
     "@atlaskit/form": "^8.8.4",
     "@atlaskit/modal-dialog": "^12.4.11",
     "@atlaskit/textfield": "^5.3.6",
-    "@emotion/react": "^11.10.6"
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6"
   }
 }
