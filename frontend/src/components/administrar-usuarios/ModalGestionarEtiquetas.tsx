@@ -5,7 +5,7 @@ import './css/modalGestionarEtiquetas.css';
 
 import CrossIcon from '@atlaskit/icon/glyph/cross';
 import Tag from '@atlaskit/tag';
-import TagGroup from '@atlaskit/tag-group/dist/types/TagGroup';
+import TagGroup from '@atlaskit/tag-group';
 
 interface GestionarEtiquetasProps {
   show: boolean;

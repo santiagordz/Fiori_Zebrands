@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import ModalRegistrarUsuario from '../ModalRegistraUsuario';
+import ModalRegistrarUsuarios from '../ModalRegistrarUsuarios';
 
 interface RegistrarUsuariosProps {}
 
@@ -11,7 +11,7 @@ const RegistrarUsuarios: FC<RegistrarUsuariosProps> = ({}) => {
       <button onClick={() => setIsOpen(true)}>
         Registrar Usuarios
       </button>
-      <ModalRegistrarUsuario
+      <ModalRegistrarUsuarios
         show={isOpen}
         onClose={() => setIsOpen(false)}
       />
