@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import './css/modal.css';
+import './css/ModalRegistrarUsuarios.css';
 
 import DropdownMenu, {
   DropdownItem,

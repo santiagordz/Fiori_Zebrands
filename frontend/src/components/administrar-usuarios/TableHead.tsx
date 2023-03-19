@@ -21,12 +21,13 @@ const head = {
     {
       key: 'etiqueta',
       content: 'Etiqueta',
-      isSortable: true,
+      isSortable: false,
       width: 10,
     },
     {
       key: 'responsable',
       content: 'Responsable',
+      isSortable: false,
       width: 10,
     },
     {

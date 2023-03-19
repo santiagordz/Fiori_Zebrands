@@ -2,7 +2,9 @@ import React, { FC, useState } from 'react';
 import BotonGestionarEtiquetas from '../BotonGestionarEtiquetas';
 import BotonRegistrarUsuario from '../BotonRegistrarUsuario';
 import UsersTable from '../UsersTable';
+
 import ModalRegistrarUsuario from '../ModalRegistraUsuario';
+import ModalGestionarEtiquetas from '../ModalGestionarEtiquetas';
 
 const TableWrapper = () => {
   const [isOpen, setIsOpen] = useState(false);
