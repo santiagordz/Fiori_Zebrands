@@ -8,9 +8,11 @@ app.use(express.json());
 
 const usuariosRoutes = require('./routes/usuarios.routes');
 const rolesRoutes = require('./routes/roles.routes');
+const etiquetasRoutes = require('./routes/etiquetas.routes');
 
 app.use('/usuarios', usuariosRoutes);
 app.use('/roles', rolesRoutes);
+app.use('/etiquetas', etiquetasRoutes);
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
