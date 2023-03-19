@@ -1,11 +1,11 @@
-import TableWrapper from './components/administrar-usuarios/views/AdministrarUsuarios.views'; 
-import RegistrarUsuarios from './components/administrar-usuarios/views/RegistrarUsuarios.views';
+import TableWrapper from './components/administrar-usuarios/views/AdministrarUsuarios';
+import RegistrarUsuarios from './components/administrar-usuarios/views/RegistrarUsuarios';
 
 function App() {
   return (
     <>
       {/* <TableWrapper /> */}
-      <RegistrarUsuarios/>
+      <RegistrarUsuarios />
     </>
   );
 }
