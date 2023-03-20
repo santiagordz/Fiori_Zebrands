@@ -23,32 +23,15 @@ const ModalGestionarEtiquetas: FC<GestionarEtiquetasProps> = ({
 }) => {
   const [correo, setCorreo] = useState('');
   const [rol, setRol] = useState('');
-  const [error, setError] = useState('');
-  const [nombreEtiqueta, setNombreEtiqueta] = useState('');
 
   const handleOut = (e: any) => {
     e.preventDefault();
     show = false;
   };
 
-  const handleNombreEtiquetaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNombreEtiqueta(e.target.value);
-  };
-
-  const handleAgregarEtiqueta = (e: React.MouseEvent) => {
-    e.preventDefault();
-    if (!nombreEtiqueta.trim()) {
-      setError('Debe ingresar un nombre para la etiqueta');
-    } else {
-      setError('');
-      // Aquí puedes agregar el código para agregar la etiqueta
-    }
-  };
-
   if (!show) {
     return null;
   }
-
   return (
     <>
       <div className="modal">
@@ -79,18 +62,10 @@ const ModalGestionarEtiquetas: FC<GestionarEtiquetasProps> = ({
             </p>
             <form>
               <label htmlFor='EtiquetaNombre' id="Etiqueta-nombre" className="text-[0.75rem] text-gray-600 mt-1 mb-4">Nombre</label>
-              <Textfield
-                name='Etiqueta-nombre'
-                id="Etiqueta-nombre"
-                value={nombreEtiqueta}
-                placeholder="Ingrese un nombre para la etiqueta"
-                onChange={handleNombreEtiquetaChange}
-              />
-              {error && <HelperMessage>{error}</HelperMessage>}
+              <Textfield name='Etiqueta-nombre' id="Etiqueta-nombre " value="" placeholder="Ingrese un nombre para la etiqueta" />
               <br></br>
               <label htmlFor='EtiquetaColor' id="Etiqueta-color" className="text-[0.75rem] text-gray-600 mt-1 mb-4">Color</label>
-              <br></br>
-              <select name="Etiqueta-color" id="Etiqueta-color" className="w-44 h-8 bg-slate-100 rounded-md pl-2 hover:bg-gray-200 text-sm text-gray-600 font-medium">
+              <select name="Etiqueta-color" id="Etiqueta-color" className="w-full border border-gray-300 rounded-sm px-2 py-1">
                 <option value="blue">Azul</option>
                 <option value="red">Rojo</option>
                 <option value="green">Verde</option>
@@ -99,9 +74,6 @@ const ModalGestionarEtiquetas: FC<GestionarEtiquetasProps> = ({
                 <option value="pink">Rosa</option>
                 <option value="gray">Gris</option>
               </select>
-              <br></br>
-
-              <Button appearance="primary" className="mt-4" onClick={handleAgregarEtiqueta}>Agregar Etiqueta</Button>
 
             </form>
           </div>
