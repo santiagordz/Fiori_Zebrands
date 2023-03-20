@@ -77,7 +77,7 @@ const Sidebar: FC<SidebarProps> = ({ idRol, name }) => {
         whileHover="hovered"
         transition={{ type: 'spring', stiffness: 50 }}
         variants={sidebarVariants}
-        className={`invisible overflow-hidden whitespace-nowrap flex flex-col bg-white h-[100vh] items-center drop-shadow py-12 fixed left-0 lg:visible top-0`}
+        className={`invisible overflow-hidden whitespace-nowrap flex flex-col bg-white h-[100vh] items-center drop-shadow py-12 fixed left-0 lg:visible top-0 z-50`}
       >
         <div className="flex flex-col justify-between h-full">
           {/* Mostramos el avatar del usuario y su nombre */}

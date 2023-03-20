@@ -34,7 +34,7 @@ const Cuestionario: FC<CuestionarioProps> = ({}) => {
     }
   );
   return (
-    <div className="flex flex-col items-center justify-center gap-8 bg-white w-full h-full px-28 py-5 rounded">
+    <div className="flex flex-col items-center justify-center gap-8 bg-white w-full h-full px-28 py-12 rounded border border-solid border-gray-300">
       <div className="w-1/3 flex items-center justify-center">
         <ProgressTracker items={items} spacing="compact" />
       </div>
