@@ -7,7 +7,7 @@ function App() {
   return (
     <>
       <RegistrarUsuarios />
-      {/* <GestionarEtiquetas /> */}
+      <GestionarEtiquetas /> 
       {/* <AdministrarUsuarios /> */}
     </>
   );
