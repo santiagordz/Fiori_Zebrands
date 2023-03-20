@@ -12,7 +12,7 @@ const RegistrarUsuarios: FC<RegistrarUsuariosProps> = ({}) => {
         Registrar Usuarios
       </button>
       <ModalRegistrarUsuarios
-        show={isOpen}
+        show={false}
         onClose={() => setIsOpen(false)}
       />
     </div>
