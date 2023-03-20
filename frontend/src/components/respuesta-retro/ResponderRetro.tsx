@@ -1,16 +1,22 @@
 import React, { FC } from 'react'
 import RetrospectivaGeneral from './RetrospectivaGeneral'
 import Team from '../../assets/team.png'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import Button, { ButtonGroup } from '@atlaskit/button';
+import Aviso from './Aviso';
+
 
 interface ResponderRetroProps {
   
 }
 
 const ResponderRetro: FC<ResponderRetroProps> = ({  }) => {
-  return (
-      <div className=''>
+
+    const { retroId } = useParams();
+    console.log(retroId);
+    return (
+        <div className=''>
+            {/*<Aviso/>*/}
             <div>
               <RetrospectivaGeneral />
             </div>

@@ -1,16 +1,18 @@
 import React, { FC } from 'react';
-import { DesignTemplate, RetrospectivaGeneral } from '../../components';
+import { DesignTemplate, PanelRetros, RetrospectivaGeneral } from '../../components';
 import ResponderRetro from '../../components/respuesta-retro/ResponderRetro';
+import { retrospective } from '../../components/respuesta-retro/RetroDomi';
+import { Routes, Route } from 'react-router-dom';
 
 interface MisRetrospectivasProps { }
 
 const MisRetrospectivas: FC<MisRetrospectivasProps> = ({ }) => {
   return (
     <DesignTemplate>
-      {/* <h2 className='text-lg font-bold text-information'>Retrospectivas pendientes de responder</h2>
-      <RetrospectivaGeneral /> 
-      <h2 className='text-lg font-bold text-information'> Otras Retrospectivas</h2> */}
-      <ResponderRetro />
+      <Routes>
+        <Route path="/" element={<PanelRetros/>} />
+        <Route path="/responder/:retroId" element={<ResponderRetro/>} />
+      </Routes>
     </DesignTemplate>
   );
 };
