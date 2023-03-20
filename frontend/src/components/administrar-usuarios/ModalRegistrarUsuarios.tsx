@@ -41,7 +41,7 @@ const ModalRegistrarUsuarios: FC<RegistrarUsuariosProps> = ({
     } catch {
       window.alert(
         'Ese correo ya está registrado en el sistema, intenta con otro.'
-      );
+      ); // cambiar eso a algo mas bonito
     }
     setCorreo('');
     setRol('');
