@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 import './css/ModalRegistrarUsuarios.css';
+import 'animate.css';
 
 import CrossIcon from '@atlaskit/icon/glyph/cross';
 import DropdowRoles from './DropdownRoles';
@@ -25,12 +26,15 @@ const ModalRegistrarUsuarios: FC<RegistrarUsuariosProps> = ({
     setRol(rol);
   };
 
-  const store = async (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    window.alert(
-      `Correo: ${correo} Rol: ${rol} Etiquetas: ${etiquetas}`
-    );
-    console.log(etiquetas);
+    const res = {
+      correo: correo,
+      rol: rol,
+      etiquetas: etiquetas,
+    };
+    window.alert(res);
+    console.log(res);
     setCorreo('');
     setRol('');
     onClose();
@@ -60,7 +64,7 @@ const ModalRegistrarUsuarios: FC<RegistrarUsuariosProps> = ({
               Detalles del nuevo usuario
             </p>
             <form
-              onSubmit={store}
+              onSubmit={handleSubmit}
               className="w-full"
               id="RegistrarUsuarioForm"
             >
@@ -71,6 +75,8 @@ const ModalRegistrarUsuarios: FC<RegistrarUsuariosProps> = ({
                 <div className="flex w-full gap-4">
                   <input
                     required
+                    pattern="^[a-zA-Z0-9._-]+" // Only letters, numbers, dots, dashes and underscores
+                    title="Solo se permiten letras, números, puntos, guiones y guiones bajos"
                     value={correo}
                     onChange={(e) => setCorreo(e.target.value)}
                     type="text"

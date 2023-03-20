@@ -22,6 +22,7 @@
     "@atlaskit/tag": "^11.4.10",
     "@atlaskit/tag-group": "^10.1.2",
     "@atlaskit/tokens": "^1.2.4",
+    "animate.css": "^4.1.1",
     "autoprefixer": "^10.4.14",
     "axios": "^1.3.4",
     "bootstrap": "^5.2.3",
