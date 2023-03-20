@@ -28,11 +28,11 @@ const DesignTemplate: FC<DesignTemplateProps> = ({
     pathInfo[path].icon;
   return (
     <>
-      <div className="flex flex-col items-center gap-7 w-auto h-screen mx-[6vw] my-[6vh] lg:ml-[9vw] lg:mr-[3vw]">
+      <div className="flex flex-col items-center gap-7 w-auto mx-[6vw] my-[6vh] lg:ml-[9vw] lg:mr-[3vw]">
         {/* Incluimos el componente Sidebar */}
         <Sidebar idRol={1} name={'Santiago Rodríguez'} />
         {/* Mostramos un saludo con el nombre definido */}
-        <p className="font-medium text-xl w-full text-left text-paragraph">
+        <p className="font-medium text-xl w-full h-fit text-left text-paragraph">
           Hola, {name}
         </p>
         <div className="flex justify-between items-center w-full mt-3">
