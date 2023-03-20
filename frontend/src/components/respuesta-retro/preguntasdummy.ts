@@ -29,7 +29,8 @@ export const preguntas = [
 
 export const retrospective = {
   id_retrospectiva: 12342543425,
-  descripcion: 'Retrospectiva del Sprint 1',
+  descripcion:
+    'La retrospectiva tiene como fin evaluar el rendimiento tanto personal como del equipo en el Sprint 3, tomar en cuenta tu desempeño durante todo el periodo.',
   titulo: '12 de febrero de 2023',
   fechaInicio: '2023-02-12',
   fechaFin: '2023-02-19',
