@@ -15,6 +15,7 @@
     "@atlaskit/css-reset": "^6.3.20",
     "@atlaskit/form": "^8.8.4",
     "@atlaskit/icon": "^21.11.5",
+    "@atlaskit/modal-dialog": "^12.4.11",
     "@atlaskit/progress-tracker": "^8.4.6",
     "@atlaskit/select": "^16.1.5",
     "@atlaskit/tag": "^11.4.10",

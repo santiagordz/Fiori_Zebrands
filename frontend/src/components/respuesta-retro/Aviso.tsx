@@ -1,40 +1,43 @@
-import React, { FC } from 'react'
-import Blanket from '@atlaskit/blanket';
+import React, { FC, useCallback, useState } from 'react'
+import Modal, { ModalTransition } from '@atlaskit/modal-dialog';
+import Button, { ButtonGroup } from '@atlaskit/button';
 
 
 interface AvisoProps {
+
+    isOpen: boolean;
+    setIsOpen: (isOpen: boolean) => void;
   
 }
 
-const Aviso: FC<AvisoProps> = ({  }) => {
+const Aviso: FC<AvisoProps> = ({ isOpen, setIsOpen  }) => {
+
+  const closeModal = useCallback(() => setIsOpen(true), []);
+
   return (
       <div className=''>
-
-     <Blanket 
-        //onBlanketClicked={onBlanketClicked}
-        isTinted={true}
-        //shouldAllowClickThrough={shouldAllowClickThrough}
-        //testId="basic-blanket"
-          >
-              <div>
-                  <div className='flex flex-col h-4/5 w-2/5 rounded bg-white border border-solid border-gray-300 border-collapse justify-center items-center py-10 px-1 gap-10'> {/* Div del rectángulo blanco */}
-                        <div>
-                            <h2 className='flex font-bold w-full'>Algunos recordatorios antes de empezar</h2>
-                        </div>
-                        <div className='flex flex-col gap-5 w-full'>
-                            <h3 className='font-bold'>Accionables</h3>
-                        </div>
-                    </div>
-              </div>
-              
-              
-              
-              
-          
-          
-          
-          
-          </Blanket>
+        <ModalTransition>
+        {isOpen && (
+          <Modal onClose={closeModal}>
+            <div>
+              <h4>Algunos recordatorios antes de comenzar</h4>
+              <p>
+                Switch context, jump between projects, and get back to work
+                quickly with our new look and feel.
+              </p>
+              <p>
+                Take it for a spin and let us know what you think.
+              </p>
+              <ButtonGroup>
+                <Button appearance="subtle-link">Remind me later</Button>
+                <Button onClick={closeModal} appearance="primary" autoFocus>
+                  Switch to the new Jira
+                </Button>
+              </ButtonGroup>
+            </div>
+          </Modal>
+        )}
+      </ModalTransition>
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 import RetrospectivaGeneral from './RetrospectivaGeneral';
 import Team from '../../assets/team.png';
 import { Link, useParams } from 'react-router-dom';
@@ -9,14 +9,16 @@ interface ResponderRetroProps {}
 
 const ResponderRetro: FC<ResponderRetroProps> = ({}) => {
   const { retroId } = useParams();
+  const [isOpen, setIsOpen] = useState <boolean> (false);
+  const openModal = useCallback(() => setIsOpen(true), []);
+
   return (
     <>
-      {/*<Aviso/>*/}
+      <Aviso isOpen={ isOpen } setIsOpen={ setIsOpen }/>
       <div>
         <RetrospectivaGeneral />
       </div>
       <div className="flex flex-col py-8  w-full rounded bg-white border border-solid border-gray-300 border-collapse justify-center items-center px-20 gap-10">
-        {' '}
         {/* Div del rectángulo blanco */}
         <h2 className="flex font-bold w-full">
           Responder pregunta de retrospectiva
@@ -30,11 +32,10 @@ const ResponderRetro: FC<ResponderRetroProps> = ({}) => {
             <p className="text-sm">
               Es hora de mirar hacia atrás y reflexionar sobre lo que
               logramos en el Sprint. Antes de responder algunas
-              preguntas, te recomendamos que{' '}
+              preguntas, te recomendamos que
               <Link to="/metricas" className="text-link underline">
-                {' '}
                 revises tus métricas
-              </Link>{' '}
+              </Link>
               para que puedas responder con confianza y precisión.
               ¡Vamos a ello!
             </p>
@@ -44,7 +45,7 @@ const ResponderRetro: FC<ResponderRetroProps> = ({}) => {
           <Button appearance="link">
             Regresar a mis retrospectivas
           </Button>
-          <Button appearance="primary">Iniciar retrospectiva</Button>
+          <Button appearance="primary" onClick={ openModal }>Iniciar retrospectiva</Button>
         </div>
       </div>
     </>
