@@ -30,7 +30,7 @@ const ModalRegistrarUsuarios: FC<RegistrarUsuariosProps> = ({
   };
 
   const handleSubmit = async (e: any) => {
-    e.preventDefault();
+    // e.preventDefault();
     try {
       await axios.post(URI, {
         correo: `${correo}@zeb.mx`,
@@ -39,8 +39,16 @@ const ModalRegistrarUsuarios: FC<RegistrarUsuariosProps> = ({
       });
       console.log({ correo: correo, rol: rol, etiquetas: etiquetas });
     } catch {
-      window.alert('Error al registrar usuario');
+      window.alert(
+        'Ese correo ya está registrado en el sistema, intenta con otro.'
+      );
     }
+    setCorreo('');
+    setRol('');
+    onClose();
+  };
+
+  const handleClose = () => {
     setCorreo('');
     setRol('');
     onClose();
@@ -56,7 +64,7 @@ const ModalRegistrarUsuarios: FC<RegistrarUsuariosProps> = ({
           <div className="modal-header">
             <div className="modal-title">
               <h4>Registrar usuario</h4>
-              <button className="flex" onClick={onClose}>
+              <button className="flex" onClick={handleClose}>
                 <CrossIcon label="Cross Icon" />
               </button>
             </div>
@@ -129,7 +137,7 @@ const ModalRegistrarUsuarios: FC<RegistrarUsuariosProps> = ({
             <div className="flex gap-10 mt-12">
               <button
                 className="rounded-none hover:text-blue-500 text-sm"
-                onClick={onClose}
+                onClick={handleClose}
               >
                 Cancelar
               </button>

@@ -3,7 +3,7 @@ import BotonGestionarEtiquetas from '../BotonGestionarEtiquetas';
 import BotonRegistrarUsuario from '../BotonRegistrarUsuario';
 import UsersTable from '../UsersTable';
 
-import ModalRegistrarUsuario from '../ModalRegistraUsuario';
+import ModalRegistrarUsuarios from '../ModalRegistrarUsuarios';
 import ModalGestionarEtiquetas from '../ModalGestionarEtiquetas';
 
 const TableWrapper = () => {
@@ -22,7 +22,7 @@ const TableWrapper = () => {
         <br></br>
         <UsersTable />
       </div>
-      <ModalRegistrarUsuario
+      <ModalRegistrarUsuarios
         show={isOpen}
         onClose={() => setIsOpen(false)}
       />
