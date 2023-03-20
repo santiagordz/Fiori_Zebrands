@@ -14,7 +14,8 @@ module.exports = {
         selectBold: '#0C66E4',
         discovery: '#5E4DB2',
         information: '#0055CC',
-        link: '#0B6CFF'
+        link: '#0B6CFF',
+        danger: '#E34935'
       },
       backgroundColor: {
         background: 'rgba(233, 242, 255, 0.5)',

@@ -32,9 +32,9 @@ const ResponderRetro: FC<ResponderRetroProps> = ({}) => {
             <p className="text-sm">
               Es hora de mirar hacia atrás y reflexionar sobre lo que
               logramos en el Sprint. Antes de responder algunas
-              preguntas, te recomendamos que
+              preguntas, te recomendamos que  
               <Link to="/metricas" className="text-link underline">
-                revises tus métricas
+                 revises tus métricas
               </Link>
               para que puedas responder con confianza y precisión.
               ¡Vamos a ello!
