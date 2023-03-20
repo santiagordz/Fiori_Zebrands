@@ -12,7 +12,8 @@ module.exports = {
         accentGreen: '#216E4E',
         paragraph: '#44546f',
         selectBold: '#0C66E4',
-        discovery: '5E4DB2',
+        discovery: '#5E4DB2',
+        information: '#0055CC',
       },
       backgroundColor: {
         background: 'rgba(233, 242, 255, 0.5)',
