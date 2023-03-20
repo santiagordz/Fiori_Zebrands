@@ -1,13 +1,13 @@
 import React, { FC, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 import './css/ModalRegistrarUsuarios.css';
+import 'animate.css';
 
-import DropdownMenu, {
-  DropdownItem,
-  DropdownItemGroup,
-} from '@atlaskit/dropdown-menu';
 import CrossIcon from '@atlaskit/icon/glyph/cross';
+import DropdowRoles from './DropdownRoles';
+import DropdownEtiquetas from './DropdownEtiquetas';
 
 interface RegistrarUsuariosProps {
   show: boolean;
@@ -20,10 +20,24 @@ const ModalRegistrarUsuarios: FC<RegistrarUsuariosProps> = ({
 }) => {
   const [correo, setCorreo] = useState('');
   const [rol, setRol] = useState('');
+  const [etiquetas, setEtiquetas] = useState<string[]>([]);
 
-  const handleOut = (e: any) => {
+  const handleRolSeleccionado = (rol: string) => {
+    setRol(rol);
+  };
+
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    show = false;
+    const res = {
+      correo: correo,
+      rol: Number(rol),
+      etiquetas: etiquetas,
+    };
+    window.alert(res);
+    console.log(res);
+    setCorreo('');
+    setRol('');
+    onClose();
   };
 
   if (!show) {
@@ -50,7 +64,7 @@ const ModalRegistrarUsuarios: FC<RegistrarUsuariosProps> = ({
               Detalles del nuevo usuario
             </p>
             <form
-              action=""
+              onSubmit={handleSubmit}
               className="w-full"
               id="RegistrarUsuarioForm"
             >
@@ -61,6 +75,10 @@ const ModalRegistrarUsuarios: FC<RegistrarUsuariosProps> = ({
                 <div className="flex w-full gap-4">
                   <input
                     required
+                    pattern="^[a-zA-Z0-9._-]+" // Only letters, numbers, dots, dashes and underscores
+                    title="Solo se permiten letras, números, puntos, guiones y guiones bajos"
+                    value={correo}
+                    onChange={(e) => setCorreo(e.target.value)}
                     type="text"
                     name="correo"
                     id="input-correo"
@@ -87,42 +105,17 @@ const ModalRegistrarUsuarios: FC<RegistrarUsuariosProps> = ({
                 <label htmlFor="rol" id="label-rol">
                   Rol
                 </label>
-                <select
-                  name="rol"
-                  id="dropdown-rol"
-                  className="w-44 h-8 bg-slate-100 rounded-md pl-2 hover:bg-gray-200 text-sm text-gray-600 font-medium"
-                >
-                  <option disabled selected>
-                    Seleccione un rol
-                  </option>
-                  <option value="administrador">Administrador</option>
-                  <option value="responsable">Responsable</option>
-                  <option value="profesor">Squad Member</option>{' '}
-                  {/* Va a cambiar*/}
-                </select>
+                <DropdowRoles
+                  onRolSeleccionadoChange={handleRolSeleccionado}
+                />
               </div>
               <div className="flex flex-col mt-4 mb-2">
                 <label htmlFor="etiquetas" id="label-etiquetas">
                   Etiquetas
                 </label>
-                <div className="flex gap-12">
-                  <div>Aqui van a ir las etiquetas</div>
-                  <div>
-                    <select
-                      required
-                      name="etiquetas"
-                      id="dropdown-etiquetas"
-                      className="w-44 h-8 bg-slate-100 rounded-md pl-2 hover:bg-gray-200 text-sm font-medium"
-                    >
-                      <option disabled selected>
-                        Añadir Etiqueta
-                      </option>
-                      <option value="">Full-Stack</option>
-                      <option value="">Front-End</option>
-                      <option value="">Back-End</option>
-                    </select>
-                  </div>
-                </div>
+                <DropdownEtiquetas
+                  onEtiquetasSeleccionadasChange={setEtiquetas}
+                />
               </div>
             </form>
           </div>

@@ -1,4 +1,5 @@
 import React, { FC, useState } from 'react';
+import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
@@ -8,6 +9,8 @@ import 'animate.css';
 import CrossIcon from '@atlaskit/icon/glyph/cross';
 import DropdowRoles from './DropdownRoles';
 import DropdownEtiquetas from './DropdownEtiquetas';
+
+const URI = 'http://localhost:8000/usuarios/createUser';
 
 interface RegistrarUsuariosProps {
   show: boolean;
@@ -28,13 +31,16 @@ const ModalRegistrarUsuarios: FC<RegistrarUsuariosProps> = ({
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    const res = {
-      correo: correo,
-      rol: rol,
-      etiquetas: etiquetas,
-    };
-    window.alert(res);
-    console.log(res);
+    try {
+      await axios.post(URI, {
+        correo: `${correo}@zeb.mx`,
+        rol: Number(rol),
+        etiquetas: etiquetas,
+      });
+      console.log({ correo: correo, rol: rol, etiquetas: etiquetas });
+    } catch {
+      window.alert('Error al registrar usuario');
+    }
     setCorreo('');
     setRol('');
     onClose();

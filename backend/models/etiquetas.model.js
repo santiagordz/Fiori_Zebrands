@@ -5,7 +5,6 @@ module.exports = class Etiquetas {
     this.etiqueta = etiqueta.etiqueta || null;
     this.color = etiqueta.color || null;
   }
-
   static getEtiquetas() {
     return db.execute(
       `
@@ -13,6 +12,18 @@ module.exports = class Etiquetas {
         FROM etiquetas e, colores c
         WHERE e.id_color = c.id
           `
+    );
+  }
+
+  static getEtiquetaById(id) {
+    return db.execute(
+      `
+        SELECT e.*, c.color
+        FROM etiquetas e, colores c
+        WHERE e.id_color = c.id
+          AND e.id = ?
+          `,
+      [id]
     );
   }
 };

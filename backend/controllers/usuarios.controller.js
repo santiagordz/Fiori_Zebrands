@@ -1,12 +1,8 @@
 const Usuario = require('../models/usuarios.model');
-
-exports.getUsuarios = (req, res, next) => {
-  Usuario.getAllUsuarios()
-    .then(([rows, fieldData]) => {
-      res.json(rows);
-    })
-    .catch((err) => console.log(err));
-};
+const Rol = require('../models/roles.model');
+const Etiqueta = require('../models/etiquetas.model');
+const UsuarioEtiqueta = require('../models/usuarios_etiquetas.model');
+const UsuarioRol = require('../models/usuarios_roles.model');
 
 exports.fetchUsuarios = async (req, res, next) => {
   try {
@@ -17,5 +13,27 @@ exports.fetchUsuarios = async (req, res, next) => {
     res
       .status(500)
       .json({ message: 'Error al obtener los usuarios.' });
+  }
+};
+
+exports.createUsuario = async (req, res, next) => {
+  const { correo, rol, etiquetas } = req.body;
+  try {
+    const usuario = await Usuario.createUsuario(correo);
+    const rolObj = await Rol.getRolById(rol);
+    const rolObjeto = rolObj[0][0];
+    await UsuarioRol.createUsuarioRol(usuario.id, rolObjeto.id);
+    for (let etiqueta of etiquetas) {
+      const etiquetaObj = await Etiqueta.getEtiquetaById(etiqueta);
+      const etiquetaObjeto = etiquetaObj[0][0];
+      await UsuarioEtiqueta.createUsuarioEtiqueta(
+        usuario.id,
+        etiquetaObjeto.id
+      );
+    }
+    res.json({ message: 'Usuario creado correctamente.' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al crear el usuario.' });
   }
 };

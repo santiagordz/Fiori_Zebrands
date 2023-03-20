@@ -46,7 +46,7 @@ const DropdowRoles = ({ onRolSeleccionadoChange }: Props) => {
         Selecciona un Rol
       </option>
       {roles.map((role) => (
-        <option key={role.id} value={role.rol}>
+        <option key={role.id} value={role.id}>
           {role.rol}
         </option>
       ))}
