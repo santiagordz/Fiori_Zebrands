@@ -1,10 +1,12 @@
 import React, { FC, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 import './css/ModalRegistrarUsuarios.css';
 
 import CrossIcon from '@atlaskit/icon/glyph/cross';
 import DropdowRoles from './DropdownRoles';
+import DropdownEtiquetas from './DropdownEtiquetas';
 
 interface RegistrarUsuariosProps {
   show: boolean;
@@ -17,6 +19,7 @@ const ModalRegistrarUsuarios: FC<RegistrarUsuariosProps> = ({
 }) => {
   const [correo, setCorreo] = useState('');
   const [rol, setRol] = useState('');
+  const [etiquetas, setEtiquetas] = useState<string[]>([]);
 
   const handleRolSeleccionado = (rol: string) => {
     setRol(rol);
@@ -24,7 +27,10 @@ const ModalRegistrarUsuarios: FC<RegistrarUsuariosProps> = ({
 
   const store = async (e: any) => {
     e.preventDefault();
-    window.alert(`Correo: ${correo} Rol: ${rol}`);
+    window.alert(
+      `Correo: ${correo} Rol: ${rol} Etiquetas: ${etiquetas}`
+    );
+    console.log(etiquetas);
     setCorreo('');
     setRol('');
     onClose();
@@ -101,29 +107,9 @@ const ModalRegistrarUsuarios: FC<RegistrarUsuariosProps> = ({
                 <label htmlFor="etiquetas" id="label-etiquetas">
                   Etiquetas
                 </label>
-                <div className=" flex gap-12">
-                  <div className="grid grid-cols-2 items-start w-full">
-                    <div>1</div>
-                    <div>2</div>
-                    <div>3</div>
-                    <div>4</div>
-                  </div>
-                  <div className="w-full">
-                    <select
-                      required
-                      name="etiquetas"
-                      id="dropdown-etiquetas"
-                      className="w-44 h-8 bg-slate-100 rounded-md pl-2 hover:bg-gray-200 text-sm font-medium"
-                    >
-                      <option disabled selected>
-                        Añadir Etiqueta
-                      </option>
-                      <option value="">Full-Stack</option>
-                      <option value="">Front-End</option>
-                      <option value="">Back-End</option>
-                    </select>
-                  </div>
-                </div>
+                <DropdownEtiquetas
+                  onEtiquetasSeleccionadasChange={setEtiquetas}
+                />
               </div>
             </form>
           </div>
