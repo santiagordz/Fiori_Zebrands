@@ -22,7 +22,7 @@ function App() {
           path="/"
           element={<Navigate to="/dashboard" replace />}
         />
-        <Route path="*" element={<NotFound404 />} />
+        <Route path="*" element={<Navigate to={'/404'} replace />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/metricas/*" element={<Metricas />} />
         <Route
@@ -41,6 +41,7 @@ function App() {
           path="/administrar-usuarios/*"
           element={<AdministrarUsuarios />}
         />
+        <Route path="/404" element={<NotFound404 />} />
       </Routes>
     </Router>
   );
