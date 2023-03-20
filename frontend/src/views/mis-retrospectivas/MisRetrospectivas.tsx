@@ -1,27 +1,27 @@
 import React, { FC } from 'react';
 import {
   DesignTemplate,
+  PanelRetros,
   RetrospectivaGeneral,
 } from '../../components';
-import Cuestionario from '../../components/respuesta-retro/Cuestionario';
-{
-  /* De esta manera mandamos a llamar a los componentes */
-}
+import ResponderRetro from '../../components/respuesta-retro/ResponderRetro';
+import { retrospective } from '../../components/respuesta-retro/RetroDomi';
+import { Routes, Route } from 'react-router-dom';
+import NotFound404 from '../NotFound404';
 
 interface MisRetrospectivasProps {}
 
 const MisRetrospectivas: FC<MisRetrospectivasProps> = ({}) => {
   return (
     <DesignTemplate>
-      {/* <Cuestionario /> */}
-      <h2 className="text-lg font-bold text-information">
-        Retrospectivas pendientes de responder
-      </h2>
-      <RetrospectivaGeneral />
-      <h2 className="text-lg font-bold text-information">
-        {' '}
-        Otras Retrospectivas
-      </h2>
+      <Routes>
+        <Route path="*" element={<NotFound404 />} />
+        <Route path="/" element={<PanelRetros />} />
+        <Route
+          path="/responder/:retroId"
+          element={<ResponderRetro />}
+        />
+      </Routes>
     </DesignTemplate>
   );
 };

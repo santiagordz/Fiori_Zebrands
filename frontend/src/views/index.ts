@@ -4,3 +4,4 @@ export { default as MisRetrospectivas } from './mis-retrospectivas/MisRetrospect
 export { default as MisAccionables } from './mis-accionables/MisAccionables';
 export { default as GestionarRetrospectivas } from './gestionar-retrospectivas/GestionarRetrospectivas';
 export { default as AdministrarUsuarios } from './administrar-usuarios/AdministrarUsuarios';
+export { default as NotFound404 } from './NotFound404';

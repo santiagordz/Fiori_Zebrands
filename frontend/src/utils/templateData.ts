@@ -16,7 +16,7 @@ interface categoriesType {
 
 // Creamos una lista con las categorías y la información necesaria de cada una
 export const categories: Array<categoriesType> = [
-  { name: 'Dashboard', icon: HomeIcon, path: '' },
+  { name: 'Dashboard', icon: HomeIcon, path: 'dashboard' },
   {
     name: 'Métricas',
     icon: GraphBarIcon,
@@ -56,7 +56,7 @@ interface pathInfoType {
 
 // Definimos los iconos y los nombres para cada ruta
 export const pathInfo: pathInfoType = {
-  '/': {
+  '/dashboard': {
     view: 'Dashboard',
     icon: HomeIcon,
   },

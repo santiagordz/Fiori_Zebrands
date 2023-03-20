@@ -40,6 +40,19 @@
     "@emotion/react" "^11.7.1"
     "@emotion/serialize" "^1.1.0"
 
+"@atlaskit/blanket@^12.3.7":
+  version "12.3.7"
+  resolved "https://registry.yarnpkg.com/@atlaskit/blanket/-/blanket-12.3.7.tgz#3b746e440256577b01006f0d233787a52dc8ca32"
+  integrity sha512-NFpr+fTJ9KltTFa7ls3ybI+2CPYjO97ZaHyWzGV0IdODQW8aZdQR7ADv6LqxjXB7sDx7mHvN/Dg8w6bQSDVItQ==
+  dependencies:
+    "@atlaskit/analytics-next" "^9.0.0"
+    "@atlaskit/codemod-utils" "^4.1.0"
+    "@atlaskit/ds-lib" "^2.1.0"
+    "@atlaskit/theme" "^12.2.0"
+    "@atlaskit/tokens" "^1.2.0"
+    "@babel/runtime" "^7.0.0"
+    "@emotion/react" "^11.7.1"
+
 "@atlaskit/button@^16.5.6":
   version "16.5.6"
   resolved "https://registry.yarnpkg.com/@atlaskit/button/-/button-16.5.6.tgz#c06eeaeffa6c6393e0723df5aeb910cf1d460235"

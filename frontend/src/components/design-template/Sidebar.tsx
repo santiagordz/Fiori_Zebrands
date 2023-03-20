@@ -95,8 +95,10 @@ const Sidebar: FC<SidebarProps> = ({ idRol, name }) => {
           <div className="flex flex-col justify-center items-center gap-7 w-full">
             {categories.map((category, i) => {
               const Icon = category.icon;
-              const isActive =
-                location.pathname === `/${category.path}`;
+              const isActive = location.pathname.includes(
+                `/${category.path}`
+              );
+
               const textStyles = isActive
                 ? textActiveStyles
                 : textNotActiveStyles;
