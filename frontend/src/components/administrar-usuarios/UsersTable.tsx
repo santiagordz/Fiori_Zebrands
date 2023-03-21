@@ -19,6 +19,7 @@ import EtiquetaIcon from './EtiquetaIcon';
 const URI = 'http://localhost:8000/usuarios/info';
 
 interface Etiqueta {
+  id: number;
   etiqueta: string;
   color: string;
 }
@@ -29,15 +30,9 @@ interface Usuario {
   password: string;
   nombre: string;
   foto: string;
-  roles: string[];
+  rol: string;
   etiquetas: Etiqueta[];
 }
-
-const createKey = (input: string) => {
-  return input
-    ? input.replace(/^(the|a|an)/, '').replace(/\s/g, '')
-    : input;
-};
 
 const UsersTable = () => {
   const [TableRows, setTableRows] = useState([{}]);
@@ -48,13 +43,10 @@ const UsersTable = () => {
 
   const getUsers = async () => {
     const res = await axios.get(URI);
-    const usuariosConPrimerRol = res.data.usuarios.map(
-      (usuario: any) => ({
-        ...usuario,
-        primerRol: usuario.roles.shift(),
-      })
-    );
-    setTableRows(usuariosConPrimerRol);
+    const usuarios = res.data.usuarios.map((usuario: any) => ({
+      ...usuario,
+    }));
+    setTableRows(usuarios);
   };
 
   const tableRows = TableRows.map((usuario: any) => ({
@@ -78,7 +70,7 @@ const UsersTable = () => {
         key: usuario.primerRol,
         content: (
           <div className="text-center">
-            <RolIcon rol={usuario.primerRol} />
+            <RolIcon rol={usuario.rol} />
           </div>
         ),
       },

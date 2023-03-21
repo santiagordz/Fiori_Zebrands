@@ -6,12 +6,12 @@ interface RolIconProps {
 }
 
 const RolIcon: FC<RolIconProps> = ({ rol }) => {
-  if (rol == 'Administrador') {
-    return <Lozenge appearance="moved">{rol}</Lozenge>;
-  } else if (rol == 'Responsable') {
-    return <Lozenge appearance="inprogress">{rol}</Lozenge>;
-  } else if (rol == 'Squad Member') {
-    return <Lozenge appearance="new">{rol}</Lozenge>;
+  if (rol == 1) {
+    return <Lozenge appearance="moved">Administrador</Lozenge>;
+  } else if (rol == 2) {
+    return <Lozenge appearance="inprogress">Responsable</Lozenge>;
+  } else if (rol == 3) {
+    return <Lozenge appearance="new">Squad Member</Lozenge>;
   } else {
     return <Lozenge>NULL</Lozenge>;
   }
