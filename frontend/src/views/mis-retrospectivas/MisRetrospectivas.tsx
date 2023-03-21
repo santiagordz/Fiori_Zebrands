@@ -7,7 +7,7 @@ import {
 import ResponderRetro from '../../components/respuesta-retro/ResponderRetro';
 import { retrospective } from '../../components/respuesta-retro/RetroDomi';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import Cuestionario from '../../components/respuesta-retro/Cuestionario';
+import Cuestionario from '../../components/respuesta-retro/formulario-retro/Cuestionario';
 
 interface MisRetrospectivasProps {}
 

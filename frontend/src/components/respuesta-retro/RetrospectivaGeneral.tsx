@@ -55,11 +55,13 @@ const RetrospectivaGeneral: FC<RetrospectivaGeneralProps> = ({
           </div>
           <div className="flex flex-row gap-4 ml-auto">
             {/* Div de el tag */}
-            <Tag
-              text="back-end"
-              appearance="rounded"
-              color="yellowLight"
-            />
+            <div id="tag">
+              <Tag
+                text="Back end"
+                appearance="rounded"
+                color="yellowLight"
+              />
+            </div>
           </div>
         </div>
         <div className="flex py-5 text-sm">

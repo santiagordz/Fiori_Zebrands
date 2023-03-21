@@ -6,6 +6,9 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+body {
   font-family: 'Inter', sans-serif;
 }
 
@@ -16,4 +19,15 @@ h4,
 h5,
 h6 {
   color: #091e42;
+}
+
+#tag > span {
+  height: fit-content !important;
+  padding: 0.2rem 0.7rem !important;
+}
+
+#tag > span > span {
+  font-size: 0.85rem !important;
+  font-weight: 500 !important;
+  mix-blend-mode: luminosity;
 }

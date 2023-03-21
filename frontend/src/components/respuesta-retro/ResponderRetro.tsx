@@ -2,8 +2,11 @@ import React, { FC, useCallback, useState } from 'react';
 import RetrospectivaGeneral from './RetrospectivaGeneral';
 import { Route, Routes } from 'react-router-dom';
 import Aviso from './Aviso';
-import Cuestionario from './Cuestionario';
+import Cuestionario from './formulario-retro/Cuestionario';
 import ResponderRetroInfo from './ResponderRetroInfo';
+import FormDataProvider, {
+  formDataContext,
+} from './formulario-retro/FormDataProvider';
 
 interface ResponderRetroProps {}
 
@@ -16,7 +19,11 @@ const ResponderRetro: FC<ResponderRetroProps> = ({}) => {
         <Route path="/:retroId/" element={<ResponderRetroInfo />} />
         <Route
           path="/:retroId/preguntas/"
-          element={<Cuestionario />}
+          element={
+            <FormDataProvider>
+              <Cuestionario />
+            </FormDataProvider>
+          }
         />
       </Routes>
     </>
