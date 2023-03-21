@@ -1,9 +1,9 @@
-import React, { FC, useContext, useState } from 'react';
-import TextField from '@atlaskit/textfield';
+import { ErrorMessage, Field, HelperMessage } from '@atlaskit/form';
 import Select from '@atlaskit/select';
 import TextArea from '@atlaskit/textarea';
+import TextField from '@atlaskit/textfield';
+import { FC, useContext, useEffect } from 'react';
 import { formDataContext } from './formulario-retro/FormDataProvider';
-import { ErrorMessage, Field, HelperMessage } from '@atlaskit/form';
 
 interface TiposPreguntaProps {
   idTipoPregunta: number;
@@ -11,6 +11,7 @@ interface TiposPreguntaProps {
   idPregunta: number;
   onChange: (e: any) => void;
   setIsError: (e: boolean) => void;
+  isError: boolean;
 }
 
 const TiposPregunta: FC<TiposPreguntaProps> = ({
@@ -19,13 +20,14 @@ const TiposPregunta: FC<TiposPreguntaProps> = ({
   idPregunta,
   onChange,
   setIsError,
+  isError,
 }) => {
   const { formData, setFormData } = useContext(formDataContext);
-  const value = formData[idPregunta.toString()];
+  const value = formData[idPregunta.toString()] || '';
 
   const options =
     opciones &&
-    opciones.map((opcion) => {
+    opciones.map((opcion: string) => {
       return {
         label: opcion,
         value: opcion.toLowerCase(),
@@ -45,6 +47,20 @@ const TiposPregunta: FC<TiposPreguntaProps> = ({
     }
   };
 
+  useEffect(() => {
+    if (value) {
+      if (idTipoPregunta === 1 && value.length > 500) {
+        setIsError(true);
+      } else if (idTipoPregunta === 2 && value.length > 100) {
+        setIsError(true);
+      } else {
+        setIsError(false);
+      }
+    } else {
+      setIsError(false);
+    }
+  }, [idTipoPregunta, value]);
+
   return (
     <Field
       aria-required={true}
@@ -55,43 +71,59 @@ const TiposPregunta: FC<TiposPreguntaProps> = ({
         switch (idTipoPregunta) {
           case 1:
             return (
-              <>
+              <div>
                 <TextArea
                   {...fieldProps}
                   resize="vertical"
                   maxHeight="20vh"
-                  placeholder="Escribe tu respuesta aquí"
+                  placeholder="Escribe una respuesta"
                   onChange={onChange}
                   value={value}
                 />
-                <div className="w-full flex justify-end">
-                  <HelperMessage>
-                    Caracteres: {value ? value.length : 0} / 500
-                  </HelperMessage>
-                </div>
-                {value && value.length > 500 ? (
+                <div className="w-full flex flex-col justify-end items-end">
                   <>
-                    {setIsError(true)}
-                    <ErrorMessage>
-                      El texto sobrepasa de los caracteres permitidos
-                    </ErrorMessage>
+                    {isError ? (
+                      <ErrorMessage>
+                        Tu respuesta excede el número de caracteres
+                        permitidos
+                      </ErrorMessage>
+                    ) : (
+                      <HelperMessage>
+                        Caracteres: {value ? value.length : 0} / 500
+                      </HelperMessage>
+                    )}
                   </>
-                ) : (
-                  setIsError(false)
-                )}
-              </>
+                </div>
+              </div>
             );
 
           case 2:
             return (
-              <TextField
-                {...fieldProps}
-                width={'100%'}
-                aria-required={true}
-                defaultValue=""
-                onChange={onChange}
-                value={value}
-              />
+              <div>
+                <TextField
+                  {...fieldProps}
+                  width={'100%'}
+                  placeholder="Escribe una respuesta corta"
+                  aria-required={true}
+                  defaultValue=""
+                  onChange={onChange}
+                  value={value}
+                />
+                <div className="w-full flex flex-col justify-end items-end">
+                  <>
+                    {isError ? (
+                      <ErrorMessage>
+                        Tu respuesta excede el número de caracteres
+                        permitidos
+                      </ErrorMessage>
+                    ) : (
+                      <HelperMessage>
+                        Caracteres: {value ? value.length : 0} / 100
+                      </HelperMessage>
+                    )}
+                  </>
+                </div>
+              </div>
             );
           case 3:
             return (
@@ -109,14 +141,31 @@ const TiposPregunta: FC<TiposPreguntaProps> = ({
             );
           default:
             return (
-              <TextArea
-                {...fieldProps}
-                resize="vertical"
-                maxHeight="20vh"
-                placeholder="Escribe tu respuesta aquí"
-                onChange={onChange}
-                value={value}
-              />
+              // TextArea se renderiza si el tipo de pregunta no es ninguno de los anteriores
+              <div>
+                <TextArea
+                  {...fieldProps}
+                  resize="vertical"
+                  maxHeight="20vh"
+                  placeholder="Escribe una respuesta"
+                  onChange={onChange}
+                  value={value}
+                />
+                <div className="w-full flex flex-col justify-end items-end">
+                  <>
+                    {isError ? (
+                      <ErrorMessage>
+                        Tu respuesta excede el número de caracteres
+                        permitidos
+                      </ErrorMessage>
+                    ) : (
+                      <HelperMessage>
+                        Caracteres: {value ? value.length : 0} / 500
+                      </HelperMessage>
+                    )}
+                  </>
+                </div>
+              </div>
             );
         }
       }}

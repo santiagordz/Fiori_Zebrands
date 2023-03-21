@@ -1,12 +1,12 @@
-import React, { FC, useContext, useState, useEffect } from 'react';
 import Button from '@atlaskit/button';
 import ArrowLeftIcon from '@atlaskit/icon/glyph/arrow-left';
 import ArrowRightIcon from '@atlaskit/icon/glyph/arrow-right';
-import TiposPregunta from '../TiposPregunta';
-import { retrospective } from '../RetroDomi';
-import { formDataContext } from './FormDataProvider';
 import Toggle from '@atlaskit/toggle';
 import Tooltip from '@atlaskit/tooltip';
+import { FC, useContext, useEffect, useState } from 'react';
+import { retrospective } from '../RetroDomi';
+import TiposPregunta from '../TiposPregunta';
+import { formDataContext } from './FormDataProvider';
 
 interface FormStepProps {
   numPregunta: number;
@@ -45,12 +45,14 @@ const FormStep: FC<FormStepProps> = ({
     </Button>
   );
 
-  const handleOnchange = (e: any) => {
+  const handleOnchange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const key: string = idPregunta.toString();
     setFormData((prevFormData: any) => {
       return {
         ...prevFormData,
-        [key]: e.target.value,
+        [key]: event.target.value,
       };
     });
   };
@@ -127,6 +129,7 @@ const FormStep: FC<FormStepProps> = ({
             idPregunta={idPregunta}
             onChange={handleOnchange}
             setIsError={setIsError}
+            isError={isError}
           />
         </div>
         <div className="flex items-center justify-end w-full">

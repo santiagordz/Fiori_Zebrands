@@ -1,37 +1,25 @@
-import React, { FC, useContext, useState, useEffect } from 'react';
-import { ProgressTracker, Stages } from '@atlaskit/progress-tracker';
-import { preguntas, preguntasType } from '../RetroDomi';
-import FormStep from './FormStep';
-import { formDataContext } from './FormDataProvider';
-import Form, { FormSection } from '@atlaskit/form';
 import Button from '@atlaskit/button';
+import Form from '@atlaskit/form';
 import ArrowLeftIcon from '@atlaskit/icon/glyph/arrow-left';
+import { ProgressTracker } from '@atlaskit/progress-tracker';
+import { FC, useContext, useEffect, useState } from 'react';
+import { preguntas } from '../RetroDomi';
+import { formDataContext } from './FormDataProvider';
+import FormStep from './FormStep';
 import { BackMyRetros } from './ModalsForm';
+
+import { useLocation } from 'react-router-dom';
+import { getItems } from './functions';
 
 interface CuestionarioProps {}
 
 const Cuestionario: FC<CuestionarioProps> = ({}) => {
   const [formPage, setFormPage] = useState(0);
-  const { formData, setFormData } = useContext(formDataContext);
+  const { formData } = useContext(formDataContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const location = useLocation();
 
-  const items: Stages = preguntas.map(
-    (pregunta: preguntasType, index: number) => {
-      const isCurrent = index === formPage;
-      const isVisited = index < formPage;
-      return {
-        id: pregunta.id_pregunta.toString(),
-        label: '',
-        percentageComplete: isCurrent ? 0 : isVisited ? 100 : 0,
-        status: isCurrent
-          ? 'current'
-          : isVisited
-          ? 'visited'
-          : 'unvisited',
-        href: '#',
-      };
-    }
-  );
+  const items = getItems(formPage);
 
   useEffect(() => {
     if (isModalOpen) {
@@ -45,8 +33,21 @@ const Cuestionario: FC<CuestionarioProps> = ({}) => {
     };
   }, [isModalOpen]);
 
+  useEffect(() => {
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+      event.returnValue = '';
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [location]);
+
   return (
-    <>
+    <div>
       <div className="flex flex-col items-center justify-center bg-white w-full h-full py-12 px-6 rounded border border-solid border-gray-300">
         <div className="w-full">
           <div>
@@ -92,7 +93,7 @@ const Cuestionario: FC<CuestionarioProps> = ({}) => {
           </Form>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

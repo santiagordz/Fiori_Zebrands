@@ -1,4 +1,4 @@
-import React, { FC, useState, createContext } from 'react';
+import React, { FC, createContext, useState } from 'react';
 
 interface ContextProps {
   formData: { [key: string]: any };

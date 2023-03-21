@@ -1,8 +1,8 @@
 // Importa las dependencias necesarias para el componente DesignTemplate
-import React, { FC } from 'react';
-import Sidebar from './Sidebar';
-import { useLocation } from 'react-router-dom';
 import type { GlyphProps } from '@atlaskit/icon/types';
+import React, { FC } from 'react';
+import { useLocation } from 'react-router-dom';
+import Sidebar from './Sidebar';
 
 import { pathInfo } from '../../utils/templateData';
 

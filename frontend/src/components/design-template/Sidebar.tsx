@@ -1,10 +1,11 @@
 // Importamos las librerías y componentes necesarios para el sidebar
-import React, { FC, useState } from 'react';
 import Avatar from '@atlaskit/avatar';
-import SignOutIcon from '@atlaskit/icon/glyph/sign-out';
 import MenuIcon from '@atlaskit/icon/glyph/menu';
-import { Link, useLocation } from 'react-router-dom';
+import SignOutIcon from '@atlaskit/icon/glyph/sign-out';
 import { motion } from 'framer-motion';
+import { FC, useState } from 'react';
+import { useLocation, useMatch } from 'react-router-dom';
+import ConfirmLink from './ConfirmLink';
 
 import { categories } from '../../utils/templateData';
 
@@ -38,6 +39,9 @@ const Sidebar: FC<SidebarProps> = ({ idRol, name }) => {
   const pColor = '#44546F';
   const sColor = '#0C66E4';
   const iconSize = 'medium';
+  const isOnProtectedRoute = useMatch(
+    '/mis-retrospectivas/responder/:id/preguntas/'
+  );
 
   // Definimos las animaciones necesarias para el sidebar
   const sidebarVariants = {
@@ -111,9 +115,14 @@ const Sidebar: FC<SidebarProps> = ({ idRol, name }) => {
 
               // Mostramos el link solo si el usuario tiene los permisos necesarios
               return showLink ? (
-                <Link
+                <ConfirmLink
                   className={activeStyles}
                   to={`/${category.path}`}
+                  message={
+                    isOnProtectedRoute
+                      ? '¿Estás seguro de que deseas salir? Perderás los cambios no guardados.'
+                      : ''
+                  }
                   key={i}
                 >
                   <Icon
@@ -127,7 +136,7 @@ const Sidebar: FC<SidebarProps> = ({ idRol, name }) => {
                   >
                     {category.name}
                   </motion.p>
-                </Link>
+                </ConfirmLink>
               ) : null;
             })}
           </div>
