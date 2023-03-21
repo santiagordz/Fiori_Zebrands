@@ -1,13 +1,12 @@
 import Button from '@atlaskit/button';
 import Form from '@atlaskit/form';
 import ArrowLeftIcon from '@atlaskit/icon/glyph/arrow-left';
-import { ProgressTracker } from '@atlaskit/progress-tracker';
 import { FC, useContext, useEffect, useState } from 'react';
 import { preguntas } from '../RetroDomi';
 import { formDataContext } from './FormDataProvider';
 import FormStep from './FormStep';
 import { BackMyRetros } from './ModalsForm';
-
+import Stepper from '../../stepper/Stepper';
 import { useLocation } from 'react-router-dom';
 import { getItems } from './functions';
 
@@ -20,6 +19,7 @@ const Cuestionario: FC<CuestionarioProps> = ({}) => {
   const location = useLocation();
 
   const items = getItems(formPage);
+  const [currentStep, setCurrentStep] = useState(1);
 
   useEffect(() => {
     if (isModalOpen) {
@@ -68,7 +68,8 @@ const Cuestionario: FC<CuestionarioProps> = ({}) => {
         </div>
         <div className="w-full px-60 flex flex-col items-center justify-center gap-8">
           <div className="w-1/3 flex items-center justify-center">
-            <ProgressTracker items={items} spacing="compact" />
+            {/* <ProgressTracker items={items} spacing="compact" /> */}
+            <Stepper totalSteps={3} currentStep={currentStep} />
           </div>
           <Form onSubmit={() => console.log(formData)}>
             {({ formProps }) => (

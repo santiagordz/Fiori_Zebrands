@@ -15,14 +15,10 @@ module.exports = {
         discovery: '#5E4DB2',
         information: '#0055CC',
         link: '#0B6CFF',
-<<<<<<< HEAD
-        danger: '#E34935',
         mediumDanger: '#D97008',
-        green: '#22A06B'
-=======
+        green: '#22A06B',
         danger: '#F70000',
         modalSoft: '#424242',
->>>>>>> 46dd72983cc78bcfbcad21cd9851ad04926fd9e2
       },
       backgroundColor: {
         background: 'rgba(233, 242, 255, 0.5)',
