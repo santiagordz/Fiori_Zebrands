@@ -119,6 +119,7 @@ const ModalRegistrarUsuarios: FC<RegistrarUsuariosProps> = ({
                 </label>
                 <DropdowRoles
                   onRolSeleccionadoChange={handleRolSeleccionado}
+                  rolActual={''}
                 />
               </div>
               <div className="flex flex-col mt-4 mb-2">
@@ -127,6 +128,7 @@ const ModalRegistrarUsuarios: FC<RegistrarUsuariosProps> = ({
                 </label>
                 <DropdownEtiquetas
                   onEtiquetasSeleccionadasChange={setEtiquetas}
+                  etiquetasPreseleccionadas={[]}
                 />
               </div>
             </form>

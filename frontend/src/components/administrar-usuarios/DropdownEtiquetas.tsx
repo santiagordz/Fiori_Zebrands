@@ -6,6 +6,7 @@ const URI = 'http://localhost:8000/etiquetas';
 
 interface Props {
   onEtiquetasSeleccionadasChange: (etiquetas: string[]) => void;
+  etiquetasPreseleccionadas: Etiquetas[];
 }
 
 interface Etiquetas {
@@ -16,13 +17,21 @@ interface Etiquetas {
 
 const DropdownEtiquetas = ({
   onEtiquetasSeleccionadasChange,
+  etiquetasPreseleccionadas,
 }: Props) => {
+  const etiquetasPred = etiquetasPreseleccionadas.map((etiqueta) => ({
+    value: etiqueta.id,
+    label: etiqueta.etiqueta,
+    color: etiqueta.color,
+  }));
+
   const [etiquetas, setEtiquetas] = useState<
     { value: number; label: string; color: string }[]
   >([]);
-  const [selectedEtiquetas, setSelectedEtiquetas] = useState<
-    { value: number; label: string; color: string }[]
-  >([]);
+  const [selectedEtiquetas, setSelectedEtiquetas] =
+    useState<{ value: number; label: string; color: string }[]>(
+      etiquetasPred
+    );
 
   useEffect(() => {
     axios
@@ -80,6 +89,7 @@ const DropdownEtiquetas = ({
   return (
     <div>
       <Select
+        defaultValue={etiquetasPred}
         className="mt-1"
         id="etiquetas"
         name="etiquetas"
@@ -89,12 +99,6 @@ const DropdownEtiquetas = ({
         onChange={handleEtiquetasChange}
         styles={colorStyles}
       />
-      {/* <p>
-        Etiquetas seleccionadas:{' '}
-        {selectedEtiquetas
-          .map((etiqueta) => etiqueta.label)
-          .join(', ')}
-      </p> */}
     </div>
   );
 };
