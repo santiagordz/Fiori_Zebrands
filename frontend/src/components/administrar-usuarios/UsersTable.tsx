@@ -107,7 +107,7 @@ const UsersTable = () => {
         //Va a cambiar
         content: (
           <div className="flex justify-center">
-            <EditarIcon />
+            <EditarIcon id={usuario.id} />
           </div>
         ),
       },

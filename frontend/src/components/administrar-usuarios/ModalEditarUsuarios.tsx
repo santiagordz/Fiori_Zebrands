@@ -11,11 +11,13 @@ import SectionMessage from '@atlaskit/section-message';
 interface ModalEditarUsuariosProps {
   show: boolean;
   onClose: () => void;
+  id: any;
 }
 
 const ModalEditarUsuarios: FC<ModalEditarUsuariosProps> = ({
   show,
   onClose,
+  id,
 }) => {
   const [nombre, setNombre] = useState('');
   const [apellido, setApellido] = useState('');
@@ -41,7 +43,7 @@ const ModalEditarUsuarios: FC<ModalEditarUsuariosProps> = ({
 
   return (
     <>
-      <div className="modal">
+      <div className="modal z-[1000000000]">
         <div className="modal-content px-10 py-[18rem]">
           <div className="modal-header">
             <div className="modal-title">

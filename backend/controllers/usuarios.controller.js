@@ -16,6 +16,17 @@ exports.fetchUsuarios = async (req, res, next) => {
   }
 };
 
+exports.fetchUsuarioById = async (req, res, next) => {
+  const usuarioId = req.params.id;
+  try {
+    const usuario = await Usuario.fetchUsuarioById(usuarioId);
+    res.json({ usuario });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al obtener el usuario.' });
+  }
+};
+
 exports.createUsuario = async (req, res, next) => {
   const { correo, rol, etiquetas } = req.body;
   try {

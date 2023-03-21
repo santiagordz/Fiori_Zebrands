@@ -6,8 +6,8 @@ import EditarUsuarios from './components/administrar-usuarios/views/EditarUsuari
 function App() {
   return (
     <>
-      {/* <AdministrarUsuarios /> */}
-      <EditarUsuarios />
+      <AdministrarUsuarios />
+      {/* <EditarUsuarios /> */}
       {/* <BorrarUsuarios /> */}
       {/* <RegistrarUsuarios /> */}
     </>
