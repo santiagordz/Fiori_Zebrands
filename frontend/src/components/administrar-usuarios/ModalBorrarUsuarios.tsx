@@ -2,18 +2,23 @@ import React, { FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import './css/modalBorrarUsuarios.css';
-
+import axios from 'axios';
 import CrossIcon from '@atlaskit/icon/glyph/cross';
 import Button from '@atlaskit/button/standard-button';
+
+
+const URI = 'http://localhost:8000/usuarios/deleteUser/';
 
 interface GestionarEtiquetasProps {
   show: boolean;
   onClose: () => void;
+  id: any;
 }
 
 const ModalBorrarUsuarios: FC<GestionarEtiquetasProps> = ({
   show,
   onClose,
+  id,
 }) => {
   const handleOut = () => {
     onClose();
@@ -22,6 +27,17 @@ const ModalBorrarUsuarios: FC<GestionarEtiquetasProps> = ({
   if (!show) {
     return null;
   }
+
+  const handleDelete =async (id:any) => {
+    try {
+      await axios.delete(`${URI}${id}` );
+      onClose();
+      window.location.reload();
+    } catch {
+      window.alert(
+        'No se pudo borrar el usuario, intenta de nuevo.'
+      ); // cambiar eso a algo mas bonito
+    }}
 
   return (
     <>
@@ -48,6 +64,7 @@ const ModalBorrarUsuarios: FC<GestionarEtiquetasProps> = ({
               <Button
                 appearance='danger'
                 className="rounded-sm bg-jiraBlue text-white px-2 py-1 hover:bg-blue-500"
+                onClick={()=>handleDelete(id)}
               >
                 Confirmar
               </Button>

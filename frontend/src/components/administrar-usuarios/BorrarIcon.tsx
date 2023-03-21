@@ -5,7 +5,7 @@ import TrashIcon from '@atlaskit/icon/glyph/trash';
 import ModalBorrarUsuarios from './ModalBorrarUsuarios';
 
 
-const BorrarIcon = () => {
+const BorrarIcon = ({id}:any) => {
   const [color, setColor] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -33,7 +33,7 @@ const BorrarIcon = () => {
         primaryColor={token('color.icon.brand', color ? N500 : R400)}
       />
     </button>
-    <ModalBorrarUsuarios show={isOpen} onClose={() => setIsOpen(false)} /></>
+    <ModalBorrarUsuarios show={isOpen} onClose={() => setIsOpen(false)} id={id} /></>
   );
 };
 

@@ -94,7 +94,7 @@ const UsersTable = () => {
         // va a cambiar
       },
       {
-        key: `responsable-${usuario.id}`,
+        key: `${usuario.id}`,
         //Va a cambiar
         content: (
           <div className="flex justify-center">
@@ -103,7 +103,7 @@ const UsersTable = () => {
         ),
       },
       {
-        key: `editar-${usuario.id}`,
+        key: `${usuario.id}`,
         //Va a cambiar
         content: (
           <div className="flex justify-center">
@@ -112,11 +112,11 @@ const UsersTable = () => {
         ),
       },
       {
-        key: `borrar-${usuario.id}`,
+        key: usuario.id,
         //Va a cambiar
         content: (
           <div className="flex justify-center">
-            <BorrarIcon />
+            <BorrarIcon id={usuario.id} />
           </div>
         ),
       },
@@ -124,7 +124,7 @@ const UsersTable = () => {
   }));
 
   return (
-    <div className="bg-white rounded-lg border-8 border-white z-0">
+    <div className="bg-white rounded-lg border-8 border-white">
       <DynamicTable
         head={TableHead}
         rows={tableRows}
