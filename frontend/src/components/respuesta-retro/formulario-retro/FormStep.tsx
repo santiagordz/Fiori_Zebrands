@@ -108,7 +108,7 @@ const FormStep: FC<FormStepProps> = ({
   };
 
   return (
-    <>
+    <div className="w-full flex flex-col justify-center items-center gap-9">
       <div className="flex flex-col items-center justify-center gap-3 w-full">
         <div className="flex flex-col items-center justify-center gap-2 w-full ">
           <p className="uppercase text-selectBold text-xs font-bold">
@@ -173,7 +173,7 @@ const FormStep: FC<FormStepProps> = ({
           )}
         </div>
       )}
-    </>
+    </div>
   );
 };
 

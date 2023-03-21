@@ -31,3 +31,7 @@ h6 {
   font-weight: 500 !important;
   mix-blend-mode: luminosity;
 }
+
+.modal-open {
+  overflow: hidden;
+}
