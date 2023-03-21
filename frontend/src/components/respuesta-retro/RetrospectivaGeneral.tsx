@@ -42,7 +42,7 @@ const RetrospectivaGeneral: FC<RetrospectivaGeneralProps> = ({
       onClick={handleOnClick}
     >
       {/* Div de todo lo que va adentro de la parte azul */}
-      <div className="flex flex-col py-3 px-5 w-full rounded bg-white border border-solid border-gray-300 border-collapse">
+      <div className="flex flex-col py-3 px-5 w-full rounded bg-white border border-solid border-gray-300">
         {/* Div del rectángulo blanco */}
         <div className="flex w-full justify-between ">
           {/* Div de la parte superior */}
@@ -56,11 +56,13 @@ const RetrospectivaGeneral: FC<RetrospectivaGeneralProps> = ({
           </div>
           <div className="flex flex-row gap-4 ml-auto">
             {/* Div de el tag */}
-            <Tag
-              text="back-end"
-              appearance="rounded"
-              color="yellowLight"
-            />
+            <div id="tag">
+              <Tag
+                text="Back end"
+                appearance="rounded"
+                color="yellowLight"
+              />
+            </div>
           </div>
         </div>
         <div className="flex py-5 text-sm">

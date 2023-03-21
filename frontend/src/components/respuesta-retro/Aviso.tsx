@@ -1,5 +1,4 @@
 import React, { FC, useCallback, useState } from 'react';
-import Modal, { ModalTransition } from '@atlaskit/modal-dialog';
 import Button, { ButtonGroup } from '@atlaskit/button';
 import ErrorIcon from '@atlaskit/icon/glyph/error';
 import Blanket from '@atlaskit/blanket';
