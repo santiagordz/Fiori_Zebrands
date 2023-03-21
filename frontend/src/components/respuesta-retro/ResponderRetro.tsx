@@ -7,16 +7,20 @@ import Aviso from './Aviso';
 
 interface ResponderRetroProps {}
 
-const ResponderRetro: FC<ResponderRetroProps> = ({}) => {
+const ResponderRetro: FC<ResponderRetroProps> = ({ }) => {
+  
   const { retroId } = useParams();
-  const [isOpen, setIsOpen] = useState <boolean> (false);
-  const openModal = useCallback(() => setIsOpen(true), []);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const openAviso = useCallback(() => setIsOpen(true), []);
+
+  const [goBack, setGoBack] = useState<boolean>(false);
+  const backRetros = useCallback(() => setIsOpen(true), []);
+
 
   return (
     <>
-      <Aviso isOpen={ isOpen } setIsOpen={ setIsOpen }/>
       <div>
-        <RetrospectivaGeneral />
+        <RetrospectivaGeneral titulo={''} descripcion={''} fechaInicio={''} idRetrospectiva={0} />
       </div>
       <div className="flex flex-col py-8  w-full rounded bg-white border border-solid border-gray-300 border-collapse justify-center items-center px-20 gap-10">
         {/* Div del rectángulo blanco */}
@@ -32,9 +36,9 @@ const ResponderRetro: FC<ResponderRetroProps> = ({}) => {
             <p className="text-sm">
               Es hora de mirar hacia atrás y reflexionar sobre lo que
               logramos en el Sprint. Antes de responder algunas
-              preguntas, te recomendamos que  
+              preguntas, te recomendamos que
               <Link to="/metricas" className="text-link underline">
-                 revises tus métricas
+                revises tus métricas
               </Link>
               para que puedas responder con confianza y precisión.
               ¡Vamos a ello!
@@ -42,12 +46,17 @@ const ResponderRetro: FC<ResponderRetroProps> = ({}) => {
           </div>
         </div>
         <div className="flex gap-14">
-          <Button appearance="link">
-            Regresar a mis retrospectivas
+          <Link to="/mis-retrospectivas">
+            <Button appearance="link">
+              Regresar a mis retrospectivas
+            </Button>
+          </Link>
+          <Button appearance="primary" onClick={openAviso}>
+            Iniciar retrospectiva
           </Button>
-          <Button appearance="primary" onClick={ openModal }>Iniciar retrospectiva</Button>
         </div>
       </div>
+      {isOpen && <Aviso isOpen={isOpen} setIsOpen={setIsOpen} />}
     </>
   );
 };

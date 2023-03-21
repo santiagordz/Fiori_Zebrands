@@ -15,7 +15,9 @@ module.exports = {
         discovery: '#5E4DB2',
         information: '#0055CC',
         link: '#0B6CFF',
-        danger: '#E34935'
+        danger: '#E34935',
+        mediumDanger: '#D97008',
+        green: '#22A06B'
       },
       backgroundColor: {
         background: 'rgba(233, 242, 255, 0.5)',

@@ -11,6 +11,7 @@ interface RetrospectivaGeneralProps {
   idRetrospectiva: number;
 }
 
+
 const RetrospectivaGeneral: FC<RetrospectivaGeneralProps> = ({
   titulo,
   descripcion,
