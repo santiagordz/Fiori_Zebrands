@@ -1,8 +1,20 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { token } from '@atlaskit/tokens';
 import { N500, Y300 } from '@atlaskit/theme/colors';
 import EditFilledIcon from '@atlaskit/icon/glyph/edit-filled';
 import ModalEditarUsuarios from './ModalEditarUsuarios';
+
+const URI = 'http://localhost:8000/usuarios/';
+
+interface InfoUsuario {
+  id: number;
+  nombre: string;
+  apellido: string;
+  correo: string;
+  roles: string[];
+  etiquetas: string[];
+}
 
 const EditarIcon = ({ id }: any) => {
   const [color, setColor] = useState(true);
@@ -18,6 +30,11 @@ const EditarIcon = ({ id }: any) => {
   ) => {
     setColor(true);
   };
+
+  // const getUser = async (id: number) => {
+  //   try {
+  //     const response = await axios.get(`${URI}${id}`);
+  //     return response.data.usuario
 
   return (
     <>
@@ -37,7 +54,7 @@ const EditarIcon = ({ id }: any) => {
       <ModalEditarUsuarios
         show={isOpen}
         onClose={() => setIsOpen(false)}
-        id={id}
+        info={id}
       />
     </>
   );

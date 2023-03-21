@@ -57,8 +57,6 @@ const UsersTable = () => {
     setTableRows(usuariosConPrimerRol);
   };
 
-  console.log(TableRows);
-
   const tableRows = TableRows.map((usuario: any) => ({
     key: usuario.id,
     isHighlighted: false,

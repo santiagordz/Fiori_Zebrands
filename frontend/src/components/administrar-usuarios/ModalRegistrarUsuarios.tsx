@@ -35,7 +35,6 @@ const ModalRegistrarUsuarios: FC<RegistrarUsuariosProps> = ({
         rol: Number(rol),
         etiquetas: etiquetas,
       });
-      console.log({ correo: correo, rol: rol, etiquetas: etiquetas });
     } catch {
       window.alert(
         'Ese correo ya está registrado en el sistema, intenta con otro.'
