@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import './css/modalBorrarUsuarios.css';
 
 import CrossIcon from '@atlaskit/icon/glyph/cross';
+import Button from '@atlaskit/button/standard-button';
 
 interface GestionarEtiquetasProps {
   show: boolean;
@@ -14,9 +15,8 @@ const ModalBorrarUsuarios: FC<GestionarEtiquetasProps> = ({
   show,
   onClose,
 }) => {
-  const handleOut = (e: any) => {
-    e.preventDefault();
-    show = false;
+  const handleOut = () => {
+    onClose();
   };
 
   if (!show) {
@@ -25,36 +25,32 @@ const ModalBorrarUsuarios: FC<GestionarEtiquetasProps> = ({
 
   return (
     <>
-      <div className="modal">
+      <div className="modal z-[1000000000]">
         <div className="modal-content px-10">
           <div className="modal-header">
-            <div className="modal-title">
-              <h4>Registrar usuario</h4>
-              <button className="flex">
-                <CrossIcon label="Cross Icon" />
-              </button>
+            <div className="modal-title justify-center">
+              <h4 className='uppercase text-3xl text-center'>Borrar Usuario</h4>
+            
             </div>
-            <div className="modal-subtitle">
-              Registra un nuevo usuario en el sistema, una invitación
-              a iniciar sesión será enviada al correo ingresado.
+            <div className="modal-subtitle text-xl mt-4">
+              ¿Está seguro que desea borrar el usuario?
             </div>
           </div>
-          <div className="modal-body"></div>
-          <div className="modal-footer">
+          
+          <div className="modal-footer justify-center">
             <div className="flex gap-10 mt-12">
-              <button
+              <Button
                 className="rounded-none hover:text-blue-500 text-sm"
-                // onClick={handleClose}
+                onClick={handleOut}
               >
                 Cancelar
-              </button>
-              <button
-                type="submit"
-                form="RegistrarUsuarioForm"
+              </Button>
+              <Button
+                appearance='danger'
                 className="rounded-sm bg-jiraBlue text-white px-2 py-1 hover:bg-blue-500"
               >
-                <p className="text-sm">Registrar Usuario</p>
-              </button>
+                Confirmar
+              </Button>
             </div>
           </div>
         </div>

@@ -5,8 +5,8 @@ import RegistrarUsuarios from './components/administrar-usuarios/views/Registrar
 function App() {
   return (
     <>
-      {/* <AdministrarUsuarios /> */}
-      <BorrarUsuarios />
+      <AdministrarUsuarios />
+      {/* <BorrarUsuarios /> */}
       {/* <RegistrarUsuarios /> */}
     </>
   );

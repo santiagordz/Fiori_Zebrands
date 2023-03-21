@@ -1,10 +1,8 @@
 import React, { FC, useState } from 'react';
 import axios from 'axios';
-import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 import './css/ModalRegistrarUsuarios.css';
-import 'animate.css';
 
 import CrossIcon from '@atlaskit/icon/glyph/cross';
 import DropdowRoles from './DropdownRoles';

@@ -124,7 +124,7 @@ const UsersTable = () => {
   }));
 
   return (
-    <div className="bg-white rounded-lg border-8 border-white">
+    <div className="bg-white rounded-lg border-8 border-white z-0">
       <DynamicTable
         head={TableHead}
         rows={tableRows}
