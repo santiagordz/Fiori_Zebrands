@@ -19,6 +19,7 @@ module.exports = {
         green: '#22A06B',
         danger: '#F70000',
         modalSoft: '#424242',
+        answerA: '#8070DB',
       },
       backgroundColor: {
         background: 'rgba(233, 242, 255, 0.5)',

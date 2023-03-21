@@ -7,7 +7,7 @@ import { FC, useContext, useEffect, useState } from 'react';
 import { retrospective } from '../RetroDomi';
 import TiposPregunta from '../TiposPregunta';
 import { formDataContext } from './FormDataProvider';
-
+import ConfirmacionRetro from '../ConfirmacionRetro';
 interface FormStepProps {
   numPregunta: number;
   totalPreguntas: number;
@@ -30,7 +30,8 @@ const FormStep: FC<FormStepProps> = ({
   const [isAnonymous, setIsAnonymous] = useState(false);
   const [anonymousQuestions, setAnonymousQuestions] = useState<
     Array<string>
-  >([]);
+    >([]);
+  const [isOpen, setIsOpen] = useState(false);
 
   const nextQButton = (
     <Button
@@ -167,7 +168,9 @@ const FormStep: FC<FormStepProps> = ({
               appearance="primary"
               type="submit"
               value="Submit"
-              onClick={handleSubmitwAnon}
+                onClick={() => 
+                setIsOpen(true)
+              }
             >
               Registrar respuestas
             </Button>
@@ -175,6 +178,9 @@ const FormStep: FC<FormStepProps> = ({
             nextQButton
           )}
         </div>
+      )}
+      {isOpen && (
+        <ConfirmacionRetro isOpen={false} setIsOpen={setIsOpen} />
       )}
     </div>
   );

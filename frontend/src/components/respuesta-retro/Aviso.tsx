@@ -92,12 +92,15 @@ const Aviso: FC<AvisoProps> = ({ isOpen, setIsOpen }) => {
             </div>
             <ButtonGroup>
               <Link to="/mis-retrospectivas">
-                <Button appearance="subtle-link">
+                <Button
+                  appearance="subtle-link"
+                  className="flex !items-center !p-2 !text-sm gap-5"
+                >
                   Regresar a mis retrospectivas
                 </Button>
               </Link>
               <Button
-                className="flex items-center"
+                className="flex !items-center !p-2 !text-sm gap-5"
                 appearance="primary"
                 autoFocus
                 onClick={() => {
