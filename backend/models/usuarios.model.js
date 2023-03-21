@@ -28,11 +28,9 @@ module.exports = class Usuarios {
       u.nombre, 
       u.correo, 
       u.foto, 
-      GROUP_CONCAT(DISTINCT r.rol SEPARATOR ',') AS roles, 
+      u.rol,
       GROUP_CONCAT(DISTINCT CONCAT_WS(':', e.etiqueta, c.color) SEPARATOR ';') AS etiquetas
     FROM usuarios u
-    LEFT JOIN usuarios_roles ur ON u.id = ur.id_usuario
-    LEFT JOIN roles r ON r.id = ur.id_rol
     LEFT JOIN usuarios_etiquetas ue ON u.id = ue.id_usuario
     LEFT JOIN etiquetas e ON e.id = ue.id_etiqueta
     LEFT JOIN colores c ON e.id_color = c.id
@@ -40,18 +38,6 @@ module.exports = class Usuarios {
   `);
 
     const usuarios = rows.map((row) => {
-      const roles = row.roles
-        ? row.roles
-            .split(',')
-            .filter((rol) =>
-              [
-                'Administrador',
-                'Responsable',
-                'Squad Member',
-              ].includes(rol)
-            )
-        : [];
-
       const etiquetas = row.etiquetas
         ? row.etiquetas.split(';').map((etiqueta) => {
             const [nombre, color] = etiqueta.split(':');
@@ -64,7 +50,7 @@ module.exports = class Usuarios {
         nombre: row.nombre,
         correo: row.correo,
         foto: row.foto,
-        roles,
+        rol: row.rol,
         etiquetas,
       };
     });
@@ -80,11 +66,10 @@ module.exports = class Usuarios {
       u.nombre, 
       u.correo, 
       u.foto, 
-      GROUP_CONCAT(DISTINCT r.rol SEPARATOR ',') AS roles, 
+      u.rol,
       GROUP_CONCAT(DISTINCT CONCAT_WS(':', e.etiqueta, c.color) SEPARATOR ';') AS etiquetas
     FROM usuarios u
-    LEFT JOIN usuarios_roles ur ON u.id = ur.id_usuario
-    LEFT JOIN roles r ON r.id = ur.id_rol
+    
     LEFT JOIN usuarios_etiquetas ue ON u.id = ue.id_usuario
     LEFT JOIN etiquetas e ON e.id = ue.id_etiqueta
     LEFT JOIN colores c ON e.id_color = c.id
@@ -95,18 +80,6 @@ module.exports = class Usuarios {
     );
 
     const usuarios = rows.map((row) => {
-      const roles = row.roles
-        ? row.roles
-            .split(',')
-            .filter((rol) =>
-              [
-                'Administrador',
-                'Responsable',
-                'Squad Member',
-              ].includes(rol)
-            )
-        : [];
-
       const etiquetas = row.etiquetas
         ? row.etiquetas.split(';').map((etiqueta) => {
             const [nombre, color] = etiqueta.split(':');
@@ -119,7 +92,7 @@ module.exports = class Usuarios {
         nombre: row.nombre,
         correo: row.correo,
         foto: row.foto,
-        roles,
+        rol: row.rol,
         etiquetas,
       };
     });
