@@ -67,7 +67,7 @@ const UsersTable = () => {
         content: <div className="text-center">{usuario.correo}</div>,
       },
       {
-        key: usuario.primerRol,
+        key: usuario.rol,
         content: (
           <div className="text-center">
             <RolIcon rol={usuario.rol} />
