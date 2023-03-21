@@ -2,7 +2,6 @@ const Usuario = require('../models/usuarios.model');
 const Rol = require('../models/roles.model');
 const Etiqueta = require('../models/etiquetas.model');
 const UsuarioEtiqueta = require('../models/usuarios_etiquetas.model');
-const UsuarioRol = require('../models/usuarios_roles.model');
 
 exports.fetchUsuarios = async (req, res, next) => {
   try {
@@ -30,10 +29,8 @@ exports.fetchUsuarioById = async (req, res, next) => {
 exports.createUsuario = async (req, res, next) => {
   const { correo, rol, etiquetas } = req.body;
   try {
-    const usuario = await Usuario.createUsuario(correo);
-    const rolObj = await Rol.getRolById(rol);
-    const rolObjeto = rolObj[0][0];
-    await UsuarioRol.createUsuarioRol(usuario.id, rolObjeto.id);
+    const usuario = await Usuario.createUsuario(correo, rol);
+    console.log(usuario);
     for (let etiqueta of etiquetas) {
       const etiquetaObj = await Etiqueta.getEtiquetaById(etiqueta);
       const etiquetaObjeto = etiquetaObj[0][0];

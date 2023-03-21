@@ -39,7 +39,6 @@ const ModalEditarUsuarios: FC<ModalEditarUsuariosProps> = ({
     try {
       const res = await axios.get(`${URI}${info}`);
       const usuario = res.data.usuario.shift();
-      console.log(usuario);
       setNombre(usuario.nombre);
       setCorreo(usuario.correo);
       setRol(usuario.roles);
@@ -58,7 +57,6 @@ const ModalEditarUsuarios: FC<ModalEditarUsuariosProps> = ({
   if (!show) {
     return null;
   } else {
-    // console.log(nombre);
     return (
       <>
         <div className="modal z-[1000000000]">

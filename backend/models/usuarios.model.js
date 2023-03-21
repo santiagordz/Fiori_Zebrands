@@ -6,16 +6,16 @@ module.exports = class Usuarios {
     this.password = usuario.password || null;
     this.nombre = usuario.nombre || null;
     this.foto = usuario.foto || null;
+    this.rol = usuario.rol || null;
     this.createdAt = usuario.createdAt || null;
     this.updatedAt = usuario.updatedAt || null;
-    this.idRol = usuario.idRol || null;
     this.idEtiqueta = usuario.idEtiqueta || null;
   }
 
-  static async createUsuario(correo) {
+  static async createUsuario(correo, rol) {
     const [result] = await db.execute(
-      `INSERT INTO usuarios (correo) VALUES (?)`,
-      [correo]
+      `INSERT INTO usuarios (correo, rol) VALUES (?, ?)`,
+      [correo, rol]
     );
     const usuarioId = result.insertId;
     return { id: usuarioId, correo };

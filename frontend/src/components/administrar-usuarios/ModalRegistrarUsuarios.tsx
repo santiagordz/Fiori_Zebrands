@@ -28,18 +28,20 @@ const ModalRegistrarUsuarios: FC<RegistrarUsuariosProps> = ({
   };
 
   const handleSubmit = async (e: any) => {
-    // e.preventDefault();
+    e.preventDefault();
     try {
       await axios.post(URI, {
         correo: `${correo}@zeb.mx`,
         rol: Number(rol),
         etiquetas: etiquetas,
       });
+      window.location.reload();
     } catch {
-      window.alert(
-        'Ese correo ya está registrado en el sistema, intenta con otro.'
-      ); // cambiar eso a algo mas bonito
+      window.alert('nel'); // cambiar eso a algo mas bonito
     }
+    // window.alert(
+    //   `Correo: ${correo}, rol: ${rol}, etiquetas: ${etiquetas}`
+    // );
     setCorreo('');
     setRol('');
     onClose();
