@@ -71,4 +71,12 @@ module.exports = class Usuarios {
 
     return usuarios;
   }
+
+  static async deleteUsuarioById(id) {
+    const [result] = await db.execute(
+      `DELETE FROM usuarios WHERE id = ?`,
+      [id]
+    );
+    return result;
+  }
 };

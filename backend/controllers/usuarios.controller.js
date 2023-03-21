@@ -37,3 +37,16 @@ exports.createUsuario = async (req, res, next) => {
     res.status(500).json({ message: 'Error al crear el usuario.' });
   }
 };
+
+exports.deleteUsuarioById = async (req, res, next) => {
+  const usuarioId = req.params.id;
+  try {
+    await Usuario.deleteUsuarioById(usuarioId);
+    res.json({ message: 'Usuario eliminado correctamente.' });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ message: 'Error al eliminar el usuario.' });
+  }
+};
