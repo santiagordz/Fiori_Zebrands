@@ -79,8 +79,8 @@ const DropdownEtiquetas = ({
 
   return (
     <div>
-      <label htmlFor="etiquetas">Etiquetas:</label>
       <Select
+        className="mt-1"
         id="etiquetas"
         name="etiquetas"
         options={etiquetas}
