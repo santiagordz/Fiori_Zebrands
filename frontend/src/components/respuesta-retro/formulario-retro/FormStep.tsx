@@ -163,7 +163,7 @@ const FormStep: FC<FormStepProps> = ({
               appearance="primary"
               type="submit"
               value="Submit"
-              onClick={handleSubmitwAnon}
+              onClick={() => setIsOpen(true)}
             >
               Registrar respuestas
             </Button>
@@ -177,6 +177,9 @@ const FormStep: FC<FormStepProps> = ({
             />
           )}
         </div>
+      )}
+      {isOpen && (
+        <ConfirmacionRetro isOpen={false} setIsOpen={setIsOpen} />
       )}
     </div>
   );

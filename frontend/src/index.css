@@ -35,3 +35,8 @@ h6 {
 .modal-open {
   overflow: hidden;
 }
+
+#quests > div{
+  box-shadow: none !important;
+
+}
