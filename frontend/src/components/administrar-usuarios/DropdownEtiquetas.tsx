@@ -16,7 +16,7 @@ interface EtiquetaPreseleccionada {
 }
 
 interface Etiqueta {
-  value: number;
+  value: string;
   label: string;
   color: string;
 }
@@ -25,11 +25,11 @@ const DropdownEtiquetas = ({
   onEtiquetasSeleccionadasChange,
   etiquetasPreseleccionadas,
 }: Props) => {
+  const [isLoading, setIsLoading] = useState(true);
   const [etiquetas, setEtiquetas] = useState<Etiqueta[]>([]);
-  const [etiquetasPred, setEtiquetasPred] = useState<Etiqueta[]>([]);
-
-  const [selectedEtiquetas, setSelectedEtiquetas] =
-    useState<Etiqueta[]>(etiquetasPred);
+  const [selectedEtiquetas, setSelectedEtiquetas] = useState<
+    Etiqueta[]
+  >([]);
 
   useEffect(() => {
     axios
@@ -41,31 +41,25 @@ const DropdownEtiquetas = ({
           color: etiqueta.color,
         }));
         setEtiquetas(options);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error(error);
+        setIsLoading(false);
       });
   }, []);
 
   useEffect(() => {
     const etiquetaPS = etiquetasPreseleccionadas.map(
       (etiqueta): Etiqueta => ({
-        value: parseInt(etiqueta.id, 10),
+        value: etiqueta.id,
         label: etiqueta.nombre,
         color: etiqueta.color,
       })
     );
 
-    setEtiquetasPred(etiquetaPS);
-  }, [etiquetasPreseleccionadas]);
-
-  etiquetasPreseleccionadas.map((etiqueta: any) => {
-    const eP = {
-      value: etiqueta.id,
-      label: etiqueta.etiqueta,
-      color: etiqueta.color,
-    };
-  });
+    setSelectedEtiquetas(etiquetaPS);
+  }, []);
 
   function handleEtiquetasChange(selected: any) {
     setSelectedEtiquetas(selected);
@@ -104,21 +98,22 @@ const DropdownEtiquetas = ({
     },
   };
 
-  console.log(etiquetasPred);
+  console.log(selectedEtiquetas);
 
   return (
     <div>
-      <Select
-        defaultValue={etiquetasPred}
-        className="mt-1"
-        id="etiquetas"
-        name="etiquetas"
-        options={etiquetas}
-        isMulti={true}
-        value={selectedEtiquetas}
-        onChange={handleEtiquetasChange}
-        styles={colorStyles}
-      />
+      {!isLoading && (
+        <Select
+          className="mt-1"
+          id="etiquetas"
+          name="etiquetas"
+          options={etiquetas}
+          isMulti={true}
+          value={selectedEtiquetas}
+          onChange={handleEtiquetasChange}
+          styles={colorStyles}
+        ></Select>
+      )}
     </div>
   );
 };
