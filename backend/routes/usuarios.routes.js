@@ -9,5 +9,6 @@ router.delete(
   '/deleteUser/:id',
   usuariosController.deleteUsuarioById
 );
+router.post('/updateUser/:id', usuariosController.updateUsuarioById);
 
 module.exports = router;

@@ -107,4 +107,12 @@ module.exports = class Usuarios {
     );
     return result;
   }
+
+  static async updateUsuarioById(id, nombre, rol) {
+    const [result] = await db.execute(
+      `UPDATE usuarios SET nombre = ?, rol = ? WHERE id = ?`,
+      [nombre, rol, id]
+    );
+    return result;
+  }
 };

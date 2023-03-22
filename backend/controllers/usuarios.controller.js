@@ -57,3 +57,26 @@ exports.deleteUsuarioById = async (req, res, next) => {
       .json({ message: 'Error al eliminar el usuario.' });
   }
 };
+
+exports.updateUsuarioById = async (req, res, next) => {
+  const usuarioId = req.params.id;
+  const { nombre, rol, etiquetas } = req.body;
+  try {
+    await Usuario.updateUsuarioById(usuarioId, nombre, rol);
+    await UsuarioEtiqueta.deleteEtiquetasUsuario(usuarioId);
+    for (let etiqueta of etiquetas) {
+      const etiquetaObj = await Etiqueta.getEtiquetaById(etiqueta);
+      const etiquetaObjeto = etiquetaObj[0][0];
+      await UsuarioEtiqueta.createUsuarioEtiqueta(
+        usuarioId,
+        etiquetaObjeto.id
+      );
+    }
+    res.json({ message: 'Usuario actualizado correctamente.' });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ message: 'Error al actualizar el usuario.' });
+  }
+};

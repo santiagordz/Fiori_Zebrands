@@ -13,4 +13,12 @@ module.exports = class UsuarioEtiqueta {
       [id_usuario, id_etiqueta]
     );
   }
+
+  static async deleteEtiquetasUsuario(id_usuario) {
+    const [result] = await db.execute(
+      `DELETE FROM usuarios_etiquetas WHERE id_usuario = ?`,
+      [id_usuario]
+    );
+    return result;
+  }
 };
