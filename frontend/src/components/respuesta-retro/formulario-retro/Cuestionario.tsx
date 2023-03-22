@@ -2,18 +2,18 @@ import Button from '@atlaskit/button';
 import Form from '@atlaskit/form';
 import ArrowLeftIcon from '@atlaskit/icon/glyph/arrow-left';
 import { FC, useContext, useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import Stepper from '../../stepper/Stepper';
 import { preguntas } from '../RetroDomi';
 import { formDataContext } from './FormDataProvider';
 import FormStep from './FormStep';
 import { BackMyRetros } from './ModalsForm';
-import Stepper from '../../stepper/Stepper';
-import { useLocation } from 'react-router-dom';
 
 interface CuestionarioProps {}
 
 const Cuestionario: FC<CuestionarioProps> = ({}) => {
   const [formPage, setFormPage] = useState(1);
-  const { formData } = useContext(formDataContext);
+  const { formData, setFormData } = useContext(formDataContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const location = useLocation();
   const [anonymousQuestions, setAnonymousQuestions] = useState<
@@ -45,8 +45,18 @@ const Cuestionario: FC<CuestionarioProps> = ({}) => {
     };
   }, [location.pathname]);
 
+  const handleSubmitWAnon = () => {
+    setFormData((prevFormData: any) => {
+      return {
+        ...prevFormData,
+        anonymousQuestions,
+      };
+    });
+    console.log(formData, anonymousQuestions);
+  };
+
   return (
-    <div>
+    <>
       <div className="flex flex-col items-center justify-center bg-white w-full h-full py-12 px-6 rounded border border-solid border-gray-300">
         <div className="w-full">
           <div>
@@ -72,7 +82,7 @@ const Cuestionario: FC<CuestionarioProps> = ({}) => {
               currentStep={formPage}
             />
           </div>
-          <Form onSubmit={() => console.log(formData)}>
+          <Form onSubmit={handleSubmitWAnon}>
             {({ formProps }) => (
               <form
                 {...formProps}
@@ -90,7 +100,7 @@ const Cuestionario: FC<CuestionarioProps> = ({}) => {
           </Form>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

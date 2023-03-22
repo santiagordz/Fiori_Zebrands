@@ -1,5 +1,5 @@
 import { ErrorMessage, Field, HelperMessage } from '@atlaskit/form';
-import Select from '@atlaskit/select';
+import Select from 'react-select';
 import TextArea from '@atlaskit/textarea';
 import TextField from '@atlaskit/textfield';
 import { FC, useContext, useEffect } from 'react';
@@ -71,7 +71,7 @@ const TiposPregunta: FC<TiposPreguntaProps> = ({
         switch (idTipoPregunta) {
           case 1:
             return (
-              <div>
+              <>
                 <TextArea
                   {...fieldProps}
                   resize="vertical"
@@ -94,12 +94,12 @@ const TiposPregunta: FC<TiposPreguntaProps> = ({
                     )}
                   </>
                 </div>
-              </div>
+              </>
             );
 
           case 2:
             return (
-              <div>
+              <>
                 <TextField
                   {...fieldProps}
                   width={'100%'}
@@ -123,12 +123,11 @@ const TiposPregunta: FC<TiposPreguntaProps> = ({
                     )}
                   </>
                 </div>
-              </div>
+              </>
             );
           case 3:
             return (
               <Select
-                {...fieldProps}
                 isClearable={true}
                 options={options}
                 placeholder="Selecciona una opción"
@@ -136,13 +135,12 @@ const TiposPregunta: FC<TiposPreguntaProps> = ({
                   const key: string = idPregunta.toString();
                   setFormData({ ...formData, [key]: e?.label });
                 }}
-                value={{ label: value, value: value }}
               />
             );
           default:
             return (
               // TextArea se renderiza si el tipo de pregunta no es ninguno de los anteriores
-              <div>
+              <>
                 <TextArea
                   {...fieldProps}
                   resize="vertical"
@@ -165,7 +163,7 @@ const TiposPregunta: FC<TiposPreguntaProps> = ({
                     )}
                   </>
                 </div>
-              </div>
+              </>
             );
         }
       }}

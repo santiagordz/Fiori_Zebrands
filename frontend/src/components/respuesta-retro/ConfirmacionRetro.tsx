@@ -1,22 +1,19 @@
 import Blanket from '@atlaskit/blanket';
-import React, { FC, useCallback } from 'react';
-import EditorCloseIcon from '@atlaskit/icon/glyph/editor/close';
-import JiraFailedBuildStatusIcon from '@atlaskit/icon/glyph/jira/failed-build-status';
+import Button from '@atlaskit/button';
 import ErrorIcon from '@atlaskit/icon/glyph/error';
-import Button, { ButtonGroup } from '@atlaskit/button';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import JiraFailedBuildStatusIcon from '@atlaskit/icon/glyph/jira/failed-build-status';
+import { FC, useCallback, useContext } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { formDataContext } from './formulario-retro/FormDataProvider';
 
 interface ConfirmacionRetroProps {
-  isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
 }
 
 const ConfirmacionRetro: FC<ConfirmacionRetroProps> = ({
-  isOpen,
   setIsOpen,
 }) => {
   const closeModal = useCallback(() => setIsOpen(false), []);
-  const openResume = useCallback(() => setIsOpen(false), []);
   const navigate = useNavigate();
   const { retroId } = useParams();
 
@@ -44,26 +41,27 @@ const ConfirmacionRetro: FC<ConfirmacionRetroProps> = ({
                 </p>
               </div>
               <div className="flex gap-10">
-                  <Button
-                    appearance="subtle-link"
-                    className="!flex !items-center !p-2 !text-xs gap-6"
-                    onClick={closeModal}
-                  >
-                    Editar mis respuestas
-                  </Button>
-                  <Button
-                    className="!flex !items-center !p-2 !text-xs gap-5"
-                    appearance="primary"
-                    onClick={() => {
-                      closeModal();
-                      navigate(
-                        `/mis-retrospectivas/responder/${retroId}/respuestas/`
-                      );
-                    }}
-                    autoFocus
-                  >
-                    Registrar respuestas
-                  </Button>
+                <Button
+                  appearance="subtle-link"
+                  className="!flex !items-center !p-2 !text-xs gap-6"
+                  onClick={closeModal}
+                >
+                  Editar mis respuestas
+                </Button>
+                <Button
+                  className="!flex !items-center !p-2 !text-xs gap-5"
+                  appearance="primary"
+                  type="submit"
+                  value="submit"
+                  onClick={() => {
+                    closeModal();
+                    navigate(
+                      `/mis-retrospectivas/responder/${retroId}/respuestas/`
+                    );
+                  }}
+                >
+                  Registrar respuestas
+                </Button>
               </div>
             </div>
           </div>

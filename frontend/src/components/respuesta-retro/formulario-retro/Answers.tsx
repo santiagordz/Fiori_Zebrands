@@ -52,7 +52,7 @@ const Answers: FC<AnswersProps> = ({}) => {
                 />
               }
               id="info"
-              key="info"
+              key={1}
               title="¿Qué acciones tomarás para el siguiente Sprint?"
               description=" Mejoraré la comunicación con mi equipo."
             />
@@ -66,7 +66,7 @@ const Answers: FC<AnswersProps> = ({}) => {
                 />
               }
               id="info"
-              key="info"
+              key={2}
               title="¿En que podrías mejorar individualmente?"
               description=" Ser más proactivo en las reuniones."
             />

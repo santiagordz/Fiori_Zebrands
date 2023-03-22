@@ -3,10 +3,17 @@ import ArrowLeftIcon from '@atlaskit/icon/glyph/arrow-left';
 import ArrowRightIcon from '@atlaskit/icon/glyph/arrow-right';
 import Toggle from '@atlaskit/toggle';
 import Tooltip from '@atlaskit/tooltip';
-import { FC, useContext, useEffect, useState } from 'react';
+import {
+  FC,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import { retrospective } from '../RetroDomi';
 import TiposPregunta from '../TiposPregunta';
 import { formDataContext } from './FormDataProvider';
+import ConfirmacionRetro from '../ConfirmacionRetro';
 
 import { AnonymousToggle, NavigationButton } from './form-steps';
 
@@ -38,6 +45,7 @@ const FormStep: FC<FormStepProps> = ({
   const { formData, setFormData } = useContext(formDataContext);
   const [isError, setIsError] = useState<boolean>(false);
   const [isAnonymous, setIsAnonymous] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleOnchange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -93,15 +101,6 @@ const FormStep: FC<FormStepProps> = ({
       );
     }
   }, [formData]);
-
-  const handleSubmitwAnon = () => {
-    setFormData((prevFormData: any) => {
-      return {
-        ...prevFormData,
-        anonymousQuestions,
-      };
-    });
-  };
 
   return (
     <div
@@ -178,9 +177,7 @@ const FormStep: FC<FormStepProps> = ({
           )}
         </div>
       )}
-      {isOpen && (
-        <ConfirmacionRetro isOpen={false} setIsOpen={setIsOpen} />
-      )}
+      {isOpen && <ConfirmacionRetro setIsOpen={setIsOpen} />}
     </div>
   );
 };

@@ -98,6 +98,16 @@
     "@babel/runtime" "^7.0.0"
     fbjs "^3.0.0"
 
+"@atlaskit/ds-explorations@^2.0.0":
+  version "2.0.7"
+  resolved "https://registry.yarnpkg.com/@atlaskit/ds-explorations/-/ds-explorations-2.0.7.tgz#c15ae8b8e29c45f0b1c6db3f627722580b763c78"
+  integrity sha512-2q+20Qa0FF5JnkDr//ktdmtQk6DkkB3cluk7m+hzfun+sRQSscTdzpCjg8+ELYvuT1xegc91di5GzkwU+3xlig==
+  dependencies:
+    "@atlaskit/tokens" "^1.2.0"
+    "@babel/runtime" "^7.0.0"
+    "@emotion/react" "^11.7.1"
+    tiny-invariant "^1.2.0"
+
 "@atlaskit/ds-lib@^2.1.0":
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/@atlaskit/ds-lib/-/ds-lib-2.1.2.tgz#469e9b747a07702fea299c80aeab0cdab2cf193c"
@@ -226,17 +236,15 @@
     "@atlaskit/theme" "^12.2.0"
     "@babel/runtime" "^7.0.0"
 
-"@atlaskit/progress-tracker@^8.4.6":
-  version "8.4.6"
-  resolved "https://registry.yarnpkg.com/@atlaskit/progress-tracker/-/progress-tracker-8.4.6.tgz#e51457fa48df2d81cf116ac0739a368ade340c33"
-  integrity sha512-9TQD2gKgoMz5VRBtBgpF6fnHnMs0jf+EAlPGuCJAf+A+Gn+xWMXYfKZrthZTBAGj/DaslA5NAL0ZQYoJYTwPKw==
+"@atlaskit/primitives@^0.3.0":
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@atlaskit/primitives/-/primitives-0.3.1.tgz#a553df35c4a248651cd73535a0b1b5d9f89411cf"
+  integrity sha512-D/2kq58LgHo1I5nr1PWjn1l0745WnkU8dgdSnryBDi3CUGGgncwAeEvjMwAPIrWIGwshBLIMy5P6WZ8fOqkwdg==
   dependencies:
-    "@atlaskit/ds-explorations" "^2.0.0"
-    "@atlaskit/theme" "^12.2.0"
-    "@atlaskit/tokens" "^1.0.0"
+    "@atlaskit/tokens" "^1.2.0"
     "@babel/runtime" "^7.0.0"
     "@emotion/react" "^11.7.1"
-    react-transition-group "^4.4.1"
+    tiny-invariant "^1.2.0"
 
 "@atlaskit/select@^16.1.5":
   version "16.1.5"
@@ -1788,6 +1796,21 @@ react-select@^5.4.0:
   version "5.7.0"
   resolved "https://registry.yarnpkg.com/react-select/-/react-select-5.7.0.tgz#82921b38f1fcf1471a0b62304da01f2896cd8ce6"
   integrity sha512-lJGiMxCa3cqnUr2Jjtg9YHsaytiZqeNOKeibv6WF5zbK/fPegZ1hg3y/9P1RZVLhqBTs0PfqQLKuAACednYGhQ==
+  dependencies:
+    "@babel/runtime" "^7.12.0"
+    "@emotion/cache" "^11.4.0"
+    "@emotion/react" "^11.8.1"
+    "@floating-ui/dom" "^1.0.1"
+    "@types/react-transition-group" "^4.4.0"
+    memoize-one "^6.0.0"
+    prop-types "^15.6.0"
+    react-transition-group "^4.3.0"
+    use-isomorphic-layout-effect "^1.1.2"
+
+react-select@^5.7.1:
+  version "5.7.1"
+  resolved "https://registry.yarnpkg.com/react-select/-/react-select-5.7.1.tgz#c85afa8a771d75c935ec698726a8fbfece662ed0"
+  integrity sha512-u/brzm3B6vgI+PtxNyE4/18kXgaf6bn5sOAjKhaQ54EItBfW41SRLH1AJC5fefPnGM4JmMcM51t/HAVCi5GrpQ==
   dependencies:
     "@babel/runtime" "^7.12.0"
     "@emotion/cache" "^11.4.0"

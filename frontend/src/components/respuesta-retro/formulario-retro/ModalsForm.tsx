@@ -18,7 +18,7 @@ export const BackMyRetros: FC<BackMyRetrosProps> = ({
   const navigate = useNavigate();
 
   return (
-    <div>
+    <>
       <Blanket isTinted={true}>
         <motion.div
           animate={{ opacity: 1 }}
@@ -69,6 +69,6 @@ export const BackMyRetros: FC<BackMyRetrosProps> = ({
           </div>
         </motion.div>
       </Blanket>
-    </div>
+    </>
   );
 };
