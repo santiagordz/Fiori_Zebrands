@@ -24,11 +24,11 @@ const ModalEditarUsuarios: FC<ModalEditarUsuariosProps> = ({
 }) => {
   const [nombre, setNombre] = useState('');
   const [correo, setCorreo] = useState('');
-  const [roles, setRol] = useState<string[]>([]);
-  const [etiquetas, setEtiquetas] = useState<string[]>([]);
+  const [rol, setRol] = useState('');
+  const [etiquetas, setEtiquetas] = useState<any>([{}]);
 
   const handleRolSeleccionado = (rol: string) => {
-    setRol(roles);
+    setRol(rol);
   };
 
   const handleClose = () => {
@@ -41,7 +41,7 @@ const ModalEditarUsuarios: FC<ModalEditarUsuariosProps> = ({
       const usuario = res.data.usuario.shift();
       setNombre(usuario.nombre);
       setCorreo(usuario.correo);
-      setRol(usuario.roles);
+      setRol(usuario.rol);
       setEtiquetas(usuario.etiquetas);
     } catch (error) {
       console.log(error);
@@ -127,7 +127,7 @@ const ModalEditarUsuarios: FC<ModalEditarUsuariosProps> = ({
                   </label>
                   <DropdowRoles
                     onRolSeleccionadoChange={handleRolSeleccionado}
-                    rolActual={'chef'}
+                    rolActual={rol}
                   />
                 </div>
                 <div className="flex flex-col">
@@ -138,13 +138,7 @@ const ModalEditarUsuarios: FC<ModalEditarUsuariosProps> = ({
                     Etiquetas
                   </label>
                   <DropdownEtiquetas
-                    etiquetasPreseleccionadas={[
-                      {
-                        id: 1,
-                        etiqueta: 'Front-End',
-                        color: 'blueLight',
-                      },
-                    ]}
+                    etiquetasPreseleccionadas={etiquetas}
                     onEtiquetasSeleccionadasChange={setEtiquetas}
                   />
                 </div>

@@ -37,6 +37,14 @@ const DropdowRoles = ({
       });
   }, []);
 
+  if (rolActual == '1') {
+    rolActual = 'Administrador';
+  } else if (rolActual == '2') {
+    rolActual = 'Responsable';
+  } else if (rolActual == '3') {
+    rolActual = 'Squad Member';
+  }
+
   return (
     <select
       required

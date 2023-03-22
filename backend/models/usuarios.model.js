@@ -29,7 +29,7 @@ module.exports = class Usuarios {
       u.correo, 
       u.foto, 
       u.rol,
-      GROUP_CONCAT(DISTINCT CONCAT_WS(':', e.etiqueta, c.color) SEPARATOR ';') AS etiquetas
+      GROUP_CONCAT(DISTINCT CONCAT_WS(':', e.id, e.etiqueta, c.color) SEPARATOR ';') AS etiquetas
     FROM usuarios u
     LEFT JOIN usuarios_etiquetas ue ON u.id = ue.id_usuario
     LEFT JOIN etiquetas e ON e.id = ue.id_etiqueta
@@ -40,8 +40,8 @@ module.exports = class Usuarios {
     const usuarios = rows.map((row) => {
       const etiquetas = row.etiquetas
         ? row.etiquetas.split(';').map((etiqueta) => {
-            const [nombre, color] = etiqueta.split(':');
-            return { nombre, color };
+            const [id, nombre, color] = etiqueta.split(':');
+            return { id, nombre, color };
           })
         : [];
 
@@ -67,7 +67,7 @@ module.exports = class Usuarios {
       u.correo, 
       u.foto, 
       u.rol,
-      GROUP_CONCAT(DISTINCT CONCAT_WS(':', e.etiqueta, c.color) SEPARATOR ';') AS etiquetas
+      GROUP_CONCAT(DISTINCT CONCAT_WS(':', e.id, e.etiqueta, c.color) SEPARATOR ';') AS etiquetas
     FROM usuarios u
     
     LEFT JOIN usuarios_etiquetas ue ON u.id = ue.id_usuario
@@ -82,8 +82,8 @@ module.exports = class Usuarios {
     const usuarios = rows.map((row) => {
       const etiquetas = row.etiquetas
         ? row.etiquetas.split(';').map((etiqueta) => {
-            const [nombre, color] = etiqueta.split(':');
-            return { nombre, color };
+            const [id, nombre, color] = etiqueta.split(':');
+            return { id, nombre, color };
           })
         : [];
 

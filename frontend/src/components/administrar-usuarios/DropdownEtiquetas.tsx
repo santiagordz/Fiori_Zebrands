@@ -6,12 +6,18 @@ const URI = 'http://localhost:8000/etiquetas';
 
 interface Props {
   onEtiquetasSeleccionadasChange: (etiquetas: string[]) => void;
-  etiquetasPreseleccionadas: Etiquetas[];
+  etiquetasPreseleccionadas: EtiquetaPreseleccionada[];
 }
 
-interface Etiquetas {
-  id: number;
-  etiqueta: string;
+interface EtiquetaPreseleccionada {
+  id: string;
+  nombre: string;
+  color: string;
+}
+
+interface Etiqueta {
+  value: number;
+  label: string;
   color: string;
 }
 
@@ -19,19 +25,11 @@ const DropdownEtiquetas = ({
   onEtiquetasSeleccionadasChange,
   etiquetasPreseleccionadas,
 }: Props) => {
-  const etiquetasPred = etiquetasPreseleccionadas.map((etiqueta) => ({
-    value: etiqueta.id,
-    label: etiqueta.etiqueta,
-    color: etiqueta.color,
-  }));
+  const [etiquetas, setEtiquetas] = useState<Etiqueta[]>([]);
+  const [etiquetasPred, setEtiquetasPred] = useState<Etiqueta[]>([]);
 
-  const [etiquetas, setEtiquetas] = useState<
-    { value: number; label: string; color: string }[]
-  >([]);
   const [selectedEtiquetas, setSelectedEtiquetas] =
-    useState<{ value: number; label: string; color: string }[]>(
-      etiquetasPred
-    );
+    useState<Etiqueta[]>(etiquetasPred);
 
   useEffect(() => {
     axios
@@ -48,6 +46,26 @@ const DropdownEtiquetas = ({
         console.error(error);
       });
   }, []);
+
+  useEffect(() => {
+    const etiquetaPS = etiquetasPreseleccionadas.map(
+      (etiqueta): Etiqueta => ({
+        value: parseInt(etiqueta.id, 10),
+        label: etiqueta.nombre,
+        color: etiqueta.color,
+      })
+    );
+
+    setEtiquetasPred(etiquetaPS);
+  }, [etiquetasPreseleccionadas]);
+
+  etiquetasPreseleccionadas.map((etiqueta: any) => {
+    const eP = {
+      value: etiqueta.id,
+      label: etiqueta.etiqueta,
+      color: etiqueta.color,
+    };
+  });
 
   function handleEtiquetasChange(selected: any) {
     setSelectedEtiquetas(selected);
@@ -85,6 +103,8 @@ const DropdownEtiquetas = ({
       }
     },
   };
+
+  console.log(etiquetasPred);
 
   return (
     <div>

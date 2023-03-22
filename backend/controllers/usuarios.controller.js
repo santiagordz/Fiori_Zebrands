@@ -30,7 +30,6 @@ exports.createUsuario = async (req, res, next) => {
   const { correo, rol, etiquetas } = req.body;
   try {
     const usuario = await Usuario.createUsuario(correo, rol);
-    console.log(usuario);
     for (let etiqueta of etiquetas) {
       const etiquetaObj = await Etiqueta.getEtiquetaById(etiqueta);
       const etiquetaObjeto = etiquetaObj[0][0];
