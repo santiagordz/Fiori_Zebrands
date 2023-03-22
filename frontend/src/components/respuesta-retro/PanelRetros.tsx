@@ -1,19 +1,65 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect, useState } from 'react';
 import RetrospectivaGeneral from './RetrospectivaGeneral';
 import { retrospective } from './RetroDomi';
+import axios from 'axios';
+import Spinner from '../design-template/spinner/Spinner';
 
-interface PanelRetrosProps {
-  
+const URI = 'http://localhost:8000/retrospectivas';
+
+interface PanelRetrosProps {}
+
+interface Retrospectiva {
+  id_retrospectiva: number;
+  titulo: string;
+  fecha_inicio: string;
+  fecha_fin: string;
 }
 
-const PanelRetros: FC<PanelRetrosProps> = ({  }) => {
+const PanelRetros: FC<PanelRetrosProps> = ({}) => {
+  const [retroPendientes, setRetroPendientes] = useState<
+    Array<Retrospectiva>
+  >([]);
+  const [otrasRetros, setOtrasRetros] = useState<
+    Array<Retrospectiva>
+  >([]);
+
+  const getRetrospectivas = async () => {
+    const response = await axios.get(`${URI}/panelRetros`);
+    setRetroPendientes(response.data);
+  };
+
+  useEffect(() => {
+    getRetrospectivas();
+    // console.log(retroPendientes);
+  }, []);
+
+  if (retroPendientes.length === 0)
+    return <Spinner message="Cargando retrospectivas..." />;
+
   return (
-    <>
-     <h2 className='text-lg font-bold text-information'>Retrospectivas pendientes de responder</h2>
-      <RetrospectivaGeneral titulo = {retrospective.titulo} descripcion = {retrospective.descripcion} fechaInicio = {retrospective.fechaInicio} idRetrospectiva = {retrospective.id_retrospectiva} /> {/* De esta manera le pasamos los props que ya definimos en el componente hijo*/}
-      <h2 className='text-lg font-bold text-information'> Otras Retrospectivas</h2>
-    </>
-  )
-}
+    <div className="flex flex-col gap-5">
+      <h2 className="text-lg font-bold text-information">
+        Retrospectivas pendientes de responder
+      </h2>
+      <div className="flex flex-col gap-5">
+        {retroPendientes &&
+          retroPendientes.map((retrospectiva: Retrospectiva) => {
+            return (
+              <RetrospectivaGeneral
+                key={retrospectiva.id_retrospectiva}
+                titulo={retrospectiva.titulo}
+                descripcion={'FALTA DESCRIPCION BASE DE DATOS'}
+                fechaInicio={retrospectiva.fecha_inicio}
+                idRetrospectiva={retrospectiva.id_retrospectiva}
+              />
+            );
+          })}
+      </div>
+      <h2 className="text-lg font-bold text-information">
+        Otras Retrospectivas
+      </h2>
+    </div>
+  );
+};
 
 export default PanelRetros;

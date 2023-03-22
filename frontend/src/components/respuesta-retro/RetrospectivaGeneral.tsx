@@ -11,7 +11,6 @@ interface RetrospectivaGeneralProps {
   idRetrospectiva: number;
 }
 
-
 const RetrospectivaGeneral: FC<RetrospectivaGeneralProps> = ({
   titulo,
   descripcion,
@@ -38,16 +37,12 @@ const RetrospectivaGeneral: FC<RetrospectivaGeneralProps> = ({
 
   return (
     <div
-      className={`flex py-6 ${!isInResponder && 'cursor-pointer'}`}
+      className={`flex ${!isInResponder && 'cursor-pointer'}`}
       onClick={handleOnClick}
     >
-      {/* Div de todo lo que va adentro de la parte azul */}
       <div className="flex flex-col py-3 px-5 w-full rounded bg-white border border-solid border-gray-300">
-        {/* Div del rectángulo blanco */}
         <div className="flex w-full justify-between ">
-          {/* Div de la parte superior */}
           <div className="gap-4 flex flex-row">
-            {/* Div del Icono y título */}
             <FlagFilledIcon
               label="retrospectiva-pendiente"
               primaryColor="#8270DB"
@@ -55,7 +50,7 @@ const RetrospectivaGeneral: FC<RetrospectivaGeneralProps> = ({
             <h3 className="font-bold">{titulo}</h3>
           </div>
           <div className="flex flex-row gap-4 ml-auto">
-            {/* Div de el tag */}
+            <p>FALTA RELACION RETROSPECTIVA ETIQUETA</p>
             <div id="tag">
               <Tag
                 text="Back end"
@@ -66,11 +61,9 @@ const RetrospectivaGeneral: FC<RetrospectivaGeneralProps> = ({
           </div>
         </div>
         <div className="flex py-5 text-sm">
-          {/* Div del texto  */}
           <p>{descripcion}</p>
         </div>
         <div className="flex flex-row text-xs justify-between">
-          {/* Div de la parte de hasta abajo */}
           <p>Fecha de inicio: {fechaInicio}</p>
           {!isInResponder && (
             <ChevronRightLargeIcon

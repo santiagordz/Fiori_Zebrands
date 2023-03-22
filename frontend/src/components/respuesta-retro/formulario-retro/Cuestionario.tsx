@@ -3,7 +3,7 @@ import Form from '@atlaskit/form';
 import ArrowLeftIcon from '@atlaskit/icon/glyph/arrow-left';
 import { FC, useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import Stepper from '../../stepper/Stepper';
+import Stepper from '../../design-template/stepper/Stepper';
 import { preguntas } from '../RetroDomi';
 import { formDataContext } from './FormDataProvider';
 import FormStep from './FormStep';
