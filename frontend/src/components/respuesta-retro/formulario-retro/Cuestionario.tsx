@@ -46,12 +46,6 @@ const Cuestionario: FC<CuestionarioProps> = ({}) => {
   }, [location.pathname]);
 
   const handleSubmitWAnon = () => {
-    setFormData((prevFormData: any) => {
-      return {
-        ...prevFormData,
-        anonymousQuestions,
-      };
-    });
     console.log(formData, anonymousQuestions);
   };
 

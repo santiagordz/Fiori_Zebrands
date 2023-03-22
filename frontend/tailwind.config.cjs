@@ -24,6 +24,7 @@ module.exports = {
       backgroundColor: {
         background: 'rgba(233, 242, 255, 0.5)',
         selectBold: '#0C66E4',
+        deepBlue: '#09326C',
       },
     },
   },

@@ -2,9 +2,8 @@ import Blanket from '@atlaskit/blanket';
 import Button from '@atlaskit/button';
 import ErrorIcon from '@atlaskit/icon/glyph/error';
 import JiraFailedBuildStatusIcon from '@atlaskit/icon/glyph/jira/failed-build-status';
-import { FC, useCallback, useContext } from 'react';
+import { FC, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { formDataContext } from './formulario-retro/FormDataProvider';
 
 interface ConfirmacionRetroProps {
   setIsOpen: (isOpen: boolean) => void;

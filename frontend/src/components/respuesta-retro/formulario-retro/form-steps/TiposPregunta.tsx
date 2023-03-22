@@ -3,7 +3,7 @@ import Select from 'react-select';
 import TextArea from '@atlaskit/textarea';
 import TextField from '@atlaskit/textfield';
 import { FC, useContext, useEffect } from 'react';
-import { formDataContext } from './formulario-retro/FormDataProvider';
+import { formDataContext } from '../FormDataProvider';
 
 interface TiposPreguntaProps {
   idTipoPregunta: number;
@@ -78,19 +78,17 @@ const TiposPregunta: FC<TiposPreguntaProps> = ({
                   maxHeight="20vh"
                   placeholder="Escribe una respuesta"
                   onChange={onChange}
-                  value={value}
                 />
                 <div className="w-full flex flex-col justify-end items-end">
                   <>
-                    {isError ? (
+                    <HelperMessage>
+                      Caracteres: {value ? value.length : 0} / 500
+                    </HelperMessage>
+                    {isError && (
                       <ErrorMessage>
                         Tu respuesta excede el número de caracteres
                         permitidos
                       </ErrorMessage>
-                    ) : (
-                      <HelperMessage>
-                        Caracteres: {value ? value.length : 0} / 500
-                      </HelperMessage>
                     )}
                   </>
                 </div>
@@ -107,19 +105,17 @@ const TiposPregunta: FC<TiposPreguntaProps> = ({
                   aria-required={true}
                   defaultValue=""
                   onChange={onChange}
-                  value={value}
                 />
                 <div className="w-full flex flex-col justify-end items-end">
                   <>
-                    {isError ? (
+                    <HelperMessage>
+                      Caracteres: {value ? value.length : 0} / 100
+                    </HelperMessage>
+                    {isError && (
                       <ErrorMessage>
                         Tu respuesta excede el número de caracteres
                         permitidos
                       </ErrorMessage>
-                    ) : (
-                      <HelperMessage>
-                        Caracteres: {value ? value.length : 0} / 100
-                      </HelperMessage>
                     )}
                   </>
                 </div>
@@ -147,7 +143,6 @@ const TiposPregunta: FC<TiposPreguntaProps> = ({
                   maxHeight="20vh"
                   placeholder="Escribe una respuesta"
                   onChange={onChange}
-                  value={value}
                 />
                 <div className="w-full flex flex-col justify-end items-end">
                   <>

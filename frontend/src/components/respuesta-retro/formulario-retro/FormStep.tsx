@@ -1,21 +1,16 @@
 import Button from '@atlaskit/button';
 import ArrowLeftIcon from '@atlaskit/icon/glyph/arrow-left';
 import ArrowRightIcon from '@atlaskit/icon/glyph/arrow-right';
-import Toggle from '@atlaskit/toggle';
-import Tooltip from '@atlaskit/tooltip';
-import {
-  FC,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
-import { retrospective } from '../RetroDomi';
-import TiposPregunta from '../TiposPregunta';
-import { formDataContext } from './FormDataProvider';
+import { FC, useContext, useEffect, useState } from 'react';
 import ConfirmacionRetro from '../ConfirmacionRetro';
+import { retrospective } from '../RetroDomi';
+import { formDataContext } from './FormDataProvider';
 
-import { AnonymousToggle, NavigationButton } from './form-steps';
+import {
+  AnonymousToggle,
+  NavigationButton,
+  TiposPregunta,
+} from './form-steps';
 
 interface FormStepProps {
   numPregunta: number;

@@ -1,7 +1,7 @@
-import React, { FC, useCallback, useState } from 'react';
-import Team from '../../assets/team.png';
+import Button from '@atlaskit/button';
+import { FC, useCallback, useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Button, { ButtonGroup } from '@atlaskit/button';
+import Team from '../../assets/team.png';
 import Aviso from './Aviso';
 
 interface ReponderRetroInfoProps {}
@@ -11,8 +11,17 @@ const ReponderRetroInfo: FC<ReponderRetroInfoProps> = ({}) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const openAviso = useCallback(() => setIsOpen(true), []);
 
-  const [goBack, setGoBack] = useState<boolean>(false);
-  const backRetros = useCallback(() => setIsOpen(true), []);
+  useEffect(() => {
+    if (isOpen) {
+      document.body.classList.add('modal-open');
+    } else {
+      document.body.classList.remove('modal-open');
+    }
+
+    return () => {
+      document.body.classList.remove('modal-open');
+    };
+  }, [isOpen]);
 
   return (
     <>
@@ -20,7 +29,7 @@ const ReponderRetroInfo: FC<ReponderRetroInfoProps> = ({}) => {
         <h2 className="flex font-bold w-full">
           Responder pregunta de retrospectiva
         </h2>
-        <div className="flex w-full bg-purple-100 py-10 px-8 h-fit gap-10 items-center justify-center">
+        <div className="flex w-full bg-purple-100 py-10 px-8 h-fit gap-10 items-center justify-center rounded-sm">
           <img src={Team} className="h-36" />
           <div className="flex gap-5 flex-col">
             <h3 className="font-bold w-full text-discovery">
@@ -47,7 +56,7 @@ const ReponderRetroInfo: FC<ReponderRetroInfoProps> = ({}) => {
           </Button>
         </div>
       </div>
-      {isOpen && <Aviso isOpen={isOpen} setIsOpen={setIsOpen} />}
+      <div>{isOpen && <Aviso setIsOpen={setIsOpen} />}</div>
     </>
   );
 };

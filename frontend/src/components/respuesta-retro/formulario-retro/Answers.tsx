@@ -1,14 +1,9 @@
-import React, { FC } from 'react';
-import { Link } from 'react-router-dom';
+import Flag from '@atlaskit/flag';
 import ArrowLeftIcon from '@atlaskit/icon/glyph/arrow-left';
 import CheckCircleOutlineIcon from '@atlaskit/icon/glyph/check-circle-outline';
 import EditorHelpIcon from '@atlaskit/icon/glyph/editor/help';
-import HipchatChevronDownIcon from '@atlaskit/icon/glyph/hipchat/chevron-down';
-import Flag from '@atlaskit/flag';
-import noop from '@atlaskit/ds-lib/noop';
-import InfoIcon from '@atlaskit/icon/glyph/info';
-import { N500 } from '@atlaskit/theme/colors';
-import { token } from '@atlaskit/tokens';
+import { FC } from 'react';
+import { Link } from 'react-router-dom';
 
 interface AnswersProps {}
 
@@ -41,7 +36,7 @@ const Answers: FC<AnswersProps> = ({}) => {
             <h3 className="">Resumen de tus respuestas</h3>
             <hr></hr>
           </div>
-          <div id="quests" className="flex flex-col gap-6">
+          <div id="quests" className="flex flex-col gap-6 !z-[1]">
             <Flag
               appearance="info"
               icon={
