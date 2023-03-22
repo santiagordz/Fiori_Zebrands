@@ -84,16 +84,6 @@
     "@babel/runtime" "^7.0.0"
     fbjs "^3.0.0"
 
-"@atlaskit/ds-explorations@^2.0.0":
-  version "2.0.6"
-  resolved "https://registry.yarnpkg.com/@atlaskit/ds-explorations/-/ds-explorations-2.0.6.tgz#269412a355b2e0823994aab6a92a7e4b65355b2a"
-  integrity sha512-NPmkIjhnR/Gzk4+wDXst3TO0DvmvRlkomkqrPxeBa2Qsjj98EP7twGaUBnhHxEDfoKdiyAixpkplEBWtSdua5A==
-  dependencies:
-    "@atlaskit/tokens" "^1.2.0"
-    "@babel/runtime" "^7.0.0"
-    "@emotion/react" "^11.7.1"
-    tiny-invariant "^1.2.0"
-
 "@atlaskit/ds-lib@^2.1.0":
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/@atlaskit/ds-lib/-/ds-lib-2.1.2.tgz#469e9b747a07702fea299c80aeab0cdab2cf193c"
@@ -201,18 +191,6 @@
   dependencies:
     "@atlaskit/theme" "^12.2.0"
     "@babel/runtime" "^7.0.0"
-
-"@atlaskit/progress-tracker@^8.4.6":
-  version "8.4.6"
-  resolved "https://registry.yarnpkg.com/@atlaskit/progress-tracker/-/progress-tracker-8.4.6.tgz#e51457fa48df2d81cf116ac0739a368ade340c33"
-  integrity sha512-9TQD2gKgoMz5VRBtBgpF6fnHnMs0jf+EAlPGuCJAf+A+Gn+xWMXYfKZrthZTBAGj/DaslA5NAL0ZQYoJYTwPKw==
-  dependencies:
-    "@atlaskit/ds-explorations" "^2.0.0"
-    "@atlaskit/theme" "^12.2.0"
-    "@atlaskit/tokens" "^1.0.0"
-    "@babel/runtime" "^7.0.0"
-    "@emotion/react" "^11.7.1"
-    react-transition-group "^4.4.1"
 
 "@atlaskit/select@^16.1.5":
   version "16.1.5"
@@ -601,7 +579,7 @@
   resolved "https://registry.yarnpkg.com/@emotion/memoize/-/memoize-0.8.0.tgz#f580f9beb67176fa57aae70b08ed510e1b18980f"
   integrity sha512-G/YwXTkv7Den9mXDO7AhLWkE3q+I92B+VqAE+dYG4NGPaHZGvt3G8Q0p9vmE+sq7rTGphUbAvmQ9YpbfMQGGlA==
 
-"@emotion/react@^11.7.1", "@emotion/react@^11.8.1":
+"@emotion/react@^11.10.6", "@emotion/react@^11.7.1", "@emotion/react@^11.8.1":
   version "11.10.6"
   resolved "https://registry.yarnpkg.com/@emotion/react/-/react-11.10.6.tgz#dbe5e650ab0f3b1d2e592e6ab1e006e75fd9ac11"
   integrity sha512-6HT8jBmcSkfzO7mc+N1L9uwvOnlcGoix8Zn7srt+9ga0MjREo6lRpuVX0kzo6Jp6oTqDhREOFsygN6Ew4fEQbw==
@@ -1764,7 +1742,7 @@ react-select@^5.4.0:
     react-transition-group "^4.3.0"
     use-isomorphic-layout-effect "^1.1.2"
 
-react-transition-group@^4.3.0, react-transition-group@^4.4.1:
+react-transition-group@^4.3.0:
   version "4.4.5"
   resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-4.4.5.tgz#e53d4e3f3344da8521489fbef8f2581d42becdd1"
   integrity sha512-pZcd1MCJoiKiBR2NRxeCRg13uCXbydPnmB4EOeRrY7480qNWO8IIgQG6zlDkm6uRMsURXPuKq0GWtiM59a5Q6g==

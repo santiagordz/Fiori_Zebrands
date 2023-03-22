@@ -8,18 +8,17 @@ import FormStep from './FormStep';
 import { BackMyRetros } from './ModalsForm';
 import Stepper from '../../stepper/Stepper';
 import { useLocation } from 'react-router-dom';
-import { getItems } from './functions';
 
 interface CuestionarioProps {}
 
 const Cuestionario: FC<CuestionarioProps> = ({}) => {
-  const [formPage, setFormPage] = useState(0);
+  const [formPage, setFormPage] = useState(1);
   const { formData } = useContext(formDataContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const location = useLocation();
-
-  const items = getItems(formPage);
-  const [currentStep, setCurrentStep] = useState(1);
+  const [anonymousQuestions, setAnonymousQuestions] = useState<
+    Array<string>
+  >([]);
 
   useEffect(() => {
     if (isModalOpen) {
@@ -44,7 +43,7 @@ const Cuestionario: FC<CuestionarioProps> = ({}) => {
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
     };
-  }, [location]);
+  }, [location.pathname]);
 
   return (
     <div>
@@ -67,9 +66,11 @@ const Cuestionario: FC<CuestionarioProps> = ({}) => {
           </Button>
         </div>
         <div className="w-full px-60 flex flex-col items-center justify-center gap-8">
-          <div className="w-1/3 flex items-center justify-center">
-            {/* <ProgressTracker items={items} spacing="compact" /> */}
-            <Stepper totalSteps={3} currentStep={currentStep} />
+          <div className="w-5/12 flex items-center justify-center">
+            <Stepper
+              totalSteps={preguntas.length}
+              currentStep={formPage}
+            />
           </div>
           <Form onSubmit={() => console.log(formData)}>
             {({ formProps }) => (
@@ -77,18 +78,13 @@ const Cuestionario: FC<CuestionarioProps> = ({}) => {
                 {...formProps}
                 className="flex flex-col items-center justify-center w-full mb-5 text-center"
               >
-                <FormStep
-                  numPregunta={
-                    preguntas.indexOf(preguntas[formPage]) + 1
-                  }
-                  totalPreguntas={items.length}
-                  pregunta={preguntas[formPage].pregunta}
-                  idTipoPregunta={
-                    preguntas[formPage].tipo.id_tipo_pregunta
-                  }
-                  setFormPage={setFormPage}
-                  idPregunta={preguntas[formPage].id_pregunta}
-                />
+                {renderFormSteps(
+                  preguntas,
+                  setFormPage,
+                  formPage,
+                  anonymousQuestions,
+                  setAnonymousQuestions
+                )}
               </form>
             )}
           </Form>
@@ -96,6 +92,39 @@ const Cuestionario: FC<CuestionarioProps> = ({}) => {
       </div>
     </div>
   );
+};
+
+interface Pregunta {
+  id_pregunta: number;
+  pregunta: string;
+  tipo: {
+    id_tipo_pregunta: number;
+  };
+}
+
+const renderFormSteps = (
+  preguntas: Pregunta[],
+  setFormPage: (updater: (prev: number) => number) => void,
+  formPage: number,
+  anonymousQuestions: Array<string>,
+  setAnonymousQuestions: (
+    updater: (prev: Array<string>) => Array<string>
+  ) => void
+): React.ReactNode[] => {
+  return preguntas.map((pregunta, index) => (
+    <FormStep
+      key={pregunta.id_pregunta}
+      numPregunta={index + 1}
+      totalPreguntas={preguntas.length}
+      pregunta={pregunta.pregunta}
+      idTipoPregunta={pregunta.tipo.id_tipo_pregunta}
+      setFormPage={setFormPage}
+      formPage={formPage}
+      idPregunta={pregunta.id_pregunta}
+      anonymousQuestions={anonymousQuestions}
+      setAnonymousQuestions={setAnonymousQuestions}
+    />
+  ));
 };
 
 export default Cuestionario;

@@ -8,13 +8,20 @@ import { retrospective } from '../RetroDomi';
 import TiposPregunta from '../TiposPregunta';
 import { formDataContext } from './FormDataProvider';
 
+import { AnonymousToggle, NavigationButton } from './form-steps';
+
 interface FormStepProps {
   numPregunta: number;
   totalPreguntas: number;
   pregunta: string;
   idTipoPregunta: number;
   setFormPage: (updater: (prev: number) => number) => void;
+  formPage: number;
   idPregunta: number;
+  anonymousQuestions: Array<string>;
+  setAnonymousQuestions: (
+    updater: (prev: Array<string>) => Array<string>
+  ) => void;
 }
 
 const FormStep: FC<FormStepProps> = ({
@@ -23,27 +30,14 @@ const FormStep: FC<FormStepProps> = ({
   pregunta,
   idTipoPregunta,
   setFormPage,
+  formPage,
   idPregunta,
+  anonymousQuestions,
+  setAnonymousQuestions,
 }) => {
   const { formData, setFormData } = useContext(formDataContext);
   const [isError, setIsError] = useState<boolean>(false);
   const [isAnonymous, setIsAnonymous] = useState(false);
-  const [anonymousQuestions, setAnonymousQuestions] = useState<
-    Array<string>
-  >([]);
-
-  const nextQButton = (
-    <Button
-      appearance="primary"
-      iconAfter={<ArrowRightIcon label="pregunta siguiente" />}
-      onClick={() => {
-        setFormPage((prev: number) => prev + 1);
-      }}
-      isDisabled={isError ? true : false}
-    >
-      Siguiente pregunta
-    </Button>
-  );
 
   const handleOnchange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -110,7 +104,11 @@ const FormStep: FC<FormStepProps> = ({
   };
 
   return (
-    <div className="w-full flex flex-col justify-center items-center gap-9">
+    <div
+      className={`w-full flex flex-col justify-center items-center gap-9 ${
+        numPregunta != formPage && 'hidden'
+      }`}
+    >
       <div className="flex flex-col items-center justify-center gap-3 w-full">
         <div className="flex flex-col items-center justify-center gap-2 w-full ">
           <p className="uppercase text-selectBold text-xs font-bold">
@@ -136,32 +134,30 @@ const FormStep: FC<FormStepProps> = ({
           <p className="text-xs font-semibold">
             Enviar como respuesta anónima
           </p>
-          <Tooltip
-            content={
-              !formData[idPregunta]
-                ? 'No puedes enviar una respuesta anónima con un campo vacío'
-                : null
-            }
-          >
-            <Toggle
-              isDisabled={formData[idPregunta] ? false : true}
-              isChecked={isAnonymous}
-              onChange={handleAnonToggle}
-            />
-          </Tooltip>
+          <AnonymousToggle
+            isDisabled={!formData[idPregunta]}
+            isChecked={isAnonymous}
+            onChange={handleAnonToggle}
+          />
         </div>
       </div>
       {numPregunta === 1 ? (
-        nextQButton
+        <NavigationButton
+          appearance="primary"
+          isError={isError}
+          icon={<ArrowRightIcon label="pregunta siguiente" />}
+          label="Siguiente pregunta"
+          onClick={() => setFormPage((prev: number) => prev + 1)}
+        />
       ) : (
         <div className="flex gap-14">
-          <Button
+          <NavigationButton
             appearance="default"
-            iconBefore={<ArrowLeftIcon label="pregunta anterior" />}
+            isError={isError}
+            icon={<ArrowLeftIcon label="pregunta anterior" />}
+            label="Pregunta anterior"
             onClick={() => setFormPage((prev: number) => prev - 1)}
-          >
-            Pregunta anterior
-          </Button>
+          />
           {numPregunta === totalPreguntas ? (
             <Button
               appearance="primary"
@@ -172,7 +168,13 @@ const FormStep: FC<FormStepProps> = ({
               Registrar respuestas
             </Button>
           ) : (
-            nextQButton
+            <NavigationButton
+              appearance="primary"
+              isError={isError}
+              icon={<ArrowRightIcon label="pregunta siguiente" />}
+              label="Siguiente pregunta"
+              onClick={() => setFormPage((prev: number) => prev + 1)}
+            />
           )}
         </div>
       )}
