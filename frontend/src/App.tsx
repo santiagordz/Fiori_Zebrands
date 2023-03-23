@@ -6,8 +6,8 @@ import ModalRegistrarUsuarios from './components/administrar-usuarios/ModalRegis
 function App() {
   return (
     <>
-      <RegistrarUsuarios />
-      <GestionarEtiquetas /> 
+      {/* <RegistrarUsuarios /> */}
+      <GestionarEtiquetas />
       {/* <AdministrarUsuarios /> */}
     </>
   );
