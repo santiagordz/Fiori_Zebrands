@@ -8,7 +8,7 @@ module.exports = class Etiquetas {
   static getEtiquetas() {
     return db.execute(
       `
-        SELECT e.*, c.color
+        SELECT e.id, e.etiqueta AS nombre, e.id_color, c.color
         FROM etiquetas e, colores c
         WHERE e.id_color = c.id
           `
@@ -18,7 +18,7 @@ module.exports = class Etiquetas {
   static getEtiquetaById(id) {
     return db.execute(
       `
-        SELECT e.*, c.color
+        SELECT e.id, e.etiqueta AS nombre, e.id_color, c.color
         FROM etiquetas e, colores c
         WHERE e.id_color = c.id
           AND e.id = ?

@@ -27,8 +27,13 @@ const ModalRegistrarUsuarios: FC<RegistrarUsuariosProps> = ({
     setRol(rol);
   };
 
+  const handleEtiquetasSeleccionadas = (etiquetas: any) => {
+    setEtiquetas(etiquetas);
+  };
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    console.log(etiquetas);
     try {
       await axios.post(URI, {
         correo: `${correo}@zeb.mx`,
@@ -128,8 +133,10 @@ const ModalRegistrarUsuarios: FC<RegistrarUsuariosProps> = ({
                   Etiquetas
                 </label>
                 <DropdownEtiquetas
-                  onEtiquetasSeleccionadasChange={setEtiquetas}
-                  etiquetasPreseleccionadas={[]}
+                  onEtiquetasSeleccionadasChange={
+                    handleEtiquetasSeleccionadas
+                  }
+                  etiquetasActuales={[]}
                 />
               </div>
             </form>

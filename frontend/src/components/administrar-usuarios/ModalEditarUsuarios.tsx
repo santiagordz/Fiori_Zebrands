@@ -8,8 +8,15 @@ import DropdownEtiquetas from './DropdownEtiquetas';
 
 import CrossIcon from '@atlaskit/icon/glyph/cross';
 import SectionMessage from '@atlaskit/section-message';
+import EditarIcon from './EditarIcon';
 
-const URI = 'http://localhost:8000/usuarios/info/';
+const URI = 'http://localhost:8000/usuarios/';
+
+interface Etiqueta {
+  id: string;
+  nombre: string;
+  color: string;
+}
 
 interface ModalEditarUsuariosProps {
   show: boolean;
@@ -25,24 +32,45 @@ const ModalEditarUsuarios: FC<ModalEditarUsuariosProps> = ({
   const [nombre, setNombre] = useState('');
   const [correo, setCorreo] = useState('');
   const [rol, setRol] = useState('');
-  const [etiquetas, setEtiquetas] = useState<any>([{}]);
+  const [etiquetas, setEtiquetas] = useState<Etiqueta[]>();
 
   const handleRolSeleccionado = (rol: string) => {
     setRol(rol);
+  };
+
+  const handleEtiquetasSeleccionadas = (etiquetas: any) => {
+    setEtiquetas(etiquetas);
   };
 
   const handleClose = () => {
     onClose();
   };
 
-  const getUsuario = async () => {
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
     try {
-      const res = await axios.get(`${URI}${info}`);
-      const usuario = res.data.usuario.shift();
-      setNombre(usuario.nombre);
-      setCorreo(usuario.correo);
-      setRol(usuario.rol);
-      setEtiquetas(usuario.etiquetas);
+      const res = axios.post(`${URI}/updateUser/${info}`, {
+        nombre: nombre,
+        rol: rol,
+        etiquetas: etiquetas,
+      });
+      res.then(() => window.location.reload());
+    } catch (error) {
+      window.alert(error);
+    }
+    onClose();
+  };
+
+  const getUsuario = () => {
+    try {
+      const res = axios.get(`${URI}info/${info}`);
+      res.then((response) => {
+        const usuario = response.data.usuario.shift();
+        setNombre(usuario.nombre);
+        setCorreo(usuario.correo);
+        setRol(usuario.rol);
+        setEtiquetas(usuario.etiquetas);
+      });
     } catch (error) {
       console.log(error);
     }
@@ -52,7 +80,7 @@ const ModalEditarUsuarios: FC<ModalEditarUsuariosProps> = ({
     getUsuario();
   }, []);
 
-  //FALTAN: handleSubmit, traer datos del usuario a editar
+  //FALTAN: handleSubmit,
 
   if (!show) {
     return null;
@@ -84,6 +112,7 @@ const ModalEditarUsuarios: FC<ModalEditarUsuariosProps> = ({
                 </p>
               </SectionMessage>
               <form
+                onSubmit={handleSubmit}
                 action=""
                 className="flex flex-col mt-4"
                 id="EditarUsuarioForm"
@@ -101,6 +130,7 @@ const ModalEditarUsuarios: FC<ModalEditarUsuariosProps> = ({
                       name="nombre"
                       className="h-8 border-2 border-gray-300 rounded-sm p-2 focus:outline-gray-400 hover:bg-gray-100"
                       defaultValue={nombre}
+                      onChange={(e) => setNombre(e.target.value)}
                     />
                   </div>
                 </div>
@@ -138,14 +168,19 @@ const ModalEditarUsuarios: FC<ModalEditarUsuariosProps> = ({
                     Etiquetas
                   </label>
                   <DropdownEtiquetas
-                    etiquetasPreseleccionadas={etiquetas}
-                    onEtiquetasSeleccionadasChange={setEtiquetas}
+                    etiquetasActuales={etiquetas}
+                    onEtiquetasSeleccionadasChange={
+                      handleEtiquetasSeleccionadas
+                    }
                   />
                 </div>
               </form>
             </div>
             <div className="modal-footer">
               <div className="flex gap-10 mt-8">
+                <button onClick={() => console.log(etiquetas)}>
+                  etiquetas
+                </button>
                 <button
                   className="rounded-none hover:text-blue-500 text-sm"
                   onClick={handleClose}

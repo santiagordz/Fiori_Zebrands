@@ -31,7 +31,7 @@ exports.createUsuario = async (req, res, next) => {
   try {
     const usuario = await Usuario.createUsuario(correo, rol);
     for (let etiqueta of etiquetas) {
-      const etiquetaObj = await Etiqueta.getEtiquetaById(etiqueta);
+      const etiquetaObj = await Etiqueta.getEtiquetaById(etiqueta.id);
       const etiquetaObjeto = etiquetaObj[0][0];
       await UsuarioEtiqueta.createUsuarioEtiqueta(
         usuario.id,
@@ -58,19 +58,16 @@ exports.deleteUsuarioById = async (req, res, next) => {
   }
 };
 
-exports.updateUsuarioById = async (req, res, next) => {
+exports.updateUsuarioById = (req, res, next) => {
   const usuarioId = req.params.id;
   const { nombre, rol, etiquetas } = req.body;
   try {
-    await Usuario.updateUsuarioById(usuarioId, nombre, rol);
-    await UsuarioEtiqueta.deleteEtiquetasUsuario(usuarioId);
+    Usuario.updateUsuarioById(usuarioId, nombre, rol);
+    UsuarioEtiqueta.deleteEtiquetasUsuario(usuarioId);
     for (let etiqueta of etiquetas) {
-      const etiquetaObj = await Etiqueta.getEtiquetaById(etiqueta);
-      const etiquetaObjeto = etiquetaObj[0][0];
-      await UsuarioEtiqueta.createUsuarioEtiqueta(
-        usuarioId,
-        etiquetaObjeto.id
-      );
+      Etiqueta.getEtiquetaById(etiqueta.id).then((etiquetaObj) => {
+        UsuarioEtiqueta.createUsuarioEtiqueta(usuarioId, etiqueta.id);
+      });
     }
     res.json({ message: 'Usuario actualizado correctamente.' });
   } catch (error) {
