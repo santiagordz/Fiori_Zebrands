@@ -40,7 +40,7 @@ const BackMyRetros: FC<BackMyRetrosProps> = ({
                 size="xlarge"
               />
               <h3 className="font-bold text-modalSoft text-xl">
-                ¿Deseas volver a mis retrospectivas?
+                ¿Deseas volver al panel de retrospectivas?
               </h3>
             </div>
             <div className="flex gap-2 items-center justify-center">
@@ -57,7 +57,7 @@ const BackMyRetros: FC<BackMyRetrosProps> = ({
                 appearance="primary"
                 onClick={() => navigate('/mis-retrospectivas')}
               >
-                Ir a mis retrospectivas
+                Ir al panel de retrospectivas
               </Button>
               <Button
                 appearance="default"

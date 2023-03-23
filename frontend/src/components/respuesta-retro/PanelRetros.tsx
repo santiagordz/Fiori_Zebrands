@@ -10,6 +10,7 @@ interface PanelRetrosProps {}
 interface Retrospectiva {
   id_retrospectiva: number;
   titulo: string;
+  descripcion: string;
   fecha_inicio: string;
   fecha_fin: string;
 }
@@ -44,11 +45,10 @@ const PanelRetros: FC<PanelRetrosProps> = ({}) => {
           retroPendientes.map((retrospectiva: Retrospectiva) => {
             return (
               <RetrospectivaGeneral
-                key={retrospectiva.id_retrospectiva}
-                titulo={retrospectiva.titulo}
-                descripcion={'FALTA DESCRIPCION BASE DE DATOS'}
-                fechaInicio={retrospectiva.fecha_inicio}
-                idRetrospectiva={retrospectiva.id_retrospectiva}
+                idRetrospectiva={retrospectiva.id_retrospectiva || -1}
+                titulo={retrospectiva.titulo || ''}
+                descripcion={retrospectiva.descripcion || ''}
+                fechaInicio={retrospectiva.fecha_inicio || ''}
               />
             );
           })}

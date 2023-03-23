@@ -2,7 +2,7 @@ import Button from '@atlaskit/button';
 import Form from '@atlaskit/form';
 import ArrowLeftIcon from '@atlaskit/icon/glyph/arrow-left';
 import { FC, useContext, useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Stepper from '../../design-template/stepper/Stepper';
 import {
   QuestionDB,
@@ -12,13 +12,16 @@ import {
 import { ConfirmacionRetro, BackMyRetros } from '../modals';
 import FormStep from './FormStep';
 
-interface CuestionarioProps {}
+interface CuestionarioProps {
+  idRetrospectiva: number;
+}
 
-const Cuestionario: FC<CuestionarioProps> = ({}) => {
+const Cuestionario: FC<CuestionarioProps> = ({ idRetrospectiva }) => {
   const [formPage, setFormPage] = useState(1);
   const { formData } = useContext(formDataContext);
   const [isModalBackOpen, setIsModalBackOpen] = useState(false);
   const [isModalNextOpen, setIsModalNextOpen] = useState(false);
+  const navigate = useNavigate();
 
   const location = useLocation();
   const [anonymousQuestions, setAnonymousQuestions] = useState<
@@ -38,7 +41,6 @@ const Cuestionario: FC<CuestionarioProps> = ({}) => {
       document.body.classList.remove('modal-open');
     };
   }, [isModalBackOpen]);
-  console.log('adasds');
 
   useEffect(() => {
     const handleBeforeUnload = (event: BeforeUnloadEvent) => {
@@ -57,6 +59,9 @@ const Cuestionario: FC<CuestionarioProps> = ({}) => {
     console.log(formData, anonymousQuestions);
   };
 
+  if (questions.length === 0)
+    navigate(`/mis-retrospectivas/responder/${idRetrospectiva}`);
+
   return (
     <>
       <div className="flex flex-col items-center justify-center bg-white w-full h-full py-12 px-6 rounded border border-solid border-gray-300">
@@ -70,11 +75,11 @@ const Cuestionario: FC<CuestionarioProps> = ({}) => {
             className="!items-center !text-[0.85rem]"
             appearance="subtle-link"
             iconBefore={
-              <ArrowLeftIcon label="volver a mis retrospectivas" />
+              <ArrowLeftIcon label="volver al panel de retrospectivas" />
             }
             onClick={() => setIsModalBackOpen(true)}
           >
-            Volver a mis retrospectivas
+            Volver al panel de retrospectivas
           </Button>
         </div>
         <div className="w-full px-60 flex flex-col items-center justify-center gap-8">

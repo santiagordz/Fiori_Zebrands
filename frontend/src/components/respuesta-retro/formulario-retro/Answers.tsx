@@ -17,7 +17,7 @@ const Answers: FC<AnswersProps> = ({}) => {
             className="flex flex-row items-center w-fit gap-2"
           >
             <ArrowLeftIcon label="volver" />
-            Volver a mis retrospectivas
+            Volver al panel de retrospectivas
           </Link>
         </div>
         <div className="flex flex-col py-3 px-5 w-full rounded bg-white border border-solid border-gray-300 border-collapse items-center justify-center gap-4">

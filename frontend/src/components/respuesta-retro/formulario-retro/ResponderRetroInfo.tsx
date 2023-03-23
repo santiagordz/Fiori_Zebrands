@@ -1,18 +1,41 @@
 import Button from '@atlaskit/button';
-import { FC, useCallback, useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import {
+  FC,
+  useCallback,
+  useEffect,
+  useState,
+  useContext,
+} from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import Team from '../../../assets/team.png';
 import { Recordatorios } from '../modals';
+import { questionsContext } from '../contexts';
+import axios from 'axios';
+
+const URI = 'http://localhost:8000/retrospectivas';
 
 interface ReponderRetroInfoProps {}
 
 const ReponderRetroInfo: FC<ReponderRetroInfoProps> = ({}) => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const openAviso = useCallback(() => setIsOpen(true), []);
+  const { questions, setQuestions } = useContext(questionsContext);
+  const { retroId } = useParams();
+
+  const getQuestions = async () => {
+    const response = await axios
+      .get(`${URI}/questions/${retroId}`)
+      .then((res) => {
+        setQuestions(res.data);
+        res.data.length !== 0 && setIsOpen(true);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen && questions.length !== 0) {
       document.body.classList.add('modal-open');
     } else {
       document.body.classList.remove('modal-open');
@@ -49,14 +72,18 @@ const ReponderRetroInfo: FC<ReponderRetroInfoProps> = ({}) => {
         </div>
         <div className="flex gap-14">
           <Button appearance="link" onClick={() => navigate(-1)}>
-            Regresar a mis retrospectivas
+            Regresar al panel de retrospectivas
           </Button>
-          <Button appearance="primary" onClick={openAviso}>
+          <Button appearance="primary" onClick={() => getQuestions()}>
             Iniciar retrospectiva
           </Button>
         </div>
       </div>
-      <div>{isOpen && <Recordatorios setIsOpen={setIsOpen} />}</div>
+      <div>
+        {isOpen && questions.length !== 0 && (
+          <Recordatorios setIsOpen={setIsOpen} />
+        )}
+      </div>
     </>
   );
 };

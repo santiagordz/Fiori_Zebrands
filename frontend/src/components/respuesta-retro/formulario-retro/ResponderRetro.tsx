@@ -1,12 +1,11 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import {
+  Navigate,
   Route,
   Routes,
   useLocation,
-  useNavigate,
   useParams,
-  Navigate,
 } from 'react-router-dom';
 import Spinner from '../../design-template/spinner/Spinner';
 import { FormDataProvider, QuestionsProvider } from '../contexts';
@@ -58,25 +57,33 @@ const ResponderRetro = ({}) => {
           <RetrospectivaGeneral
             idRetrospectiva={retrospectivaData.id_retrospectiva || -1}
             titulo={retrospectivaData.titulo || ''}
-            descripcion="FALTA EN DB"
+            descripcion={retrospectivaData.descripcion || ''}
             fechaInicio={retrospectivaData.fecha_inicio || ''}
           />
         )}
         <Routes>
-          {/* <Route path="*" element={<Navigate to="/404" replace />} /> */}
-          <Route path="/" element={<ResponderRetroInfo />} />
+          <Route path="*" element={<Navigate to="/404" replace />} />
           <Route
-            path={`/:retroId/preguntas/`}
+            path="/"
             element={
-              <FormDataProvider>
-                <Cuestionario />
-              </FormDataProvider>
+              <>
+                <ResponderRetroInfo />
+              </>
             }
           />
           <Route
-            path={`/:retroId/respuestas/`}
-            element={<Answers />}
+            path="/preguntas/"
+            element={
+              <FormDataProvider>
+                <Cuestionario
+                  idRetrospectiva={
+                    retrospectivaData.id_retrospectiva || -1
+                  }
+                />
+              </FormDataProvider>
+            }
           />
+          <Route path="/respuestas/" element={<Answers />} />
         </Routes>
       </div>
     </QuestionsProvider>

@@ -21,12 +21,12 @@ const Recordatorios: FC<RecordatoriosProps> = ({ setIsOpen }) => {
   const navigate = useNavigate();
   const { retroId } = useParams();
 
-  const { setQuestions } = useContext(questionsContext);
+  const { questions, setQuestions } = useContext(questionsContext);
 
-  const getQuestions = async () => {
-    const { data } = await axios.get(`${URI}/questions/${retroId}`);
-    setQuestions(data);
-  };
+  // const getQuestions = async () => {
+  //   const { data } = await axios.get(`${URI}/questions/${retroId}`);
+  //   setQuestions(data);
+  // };
 
   return (
     <Blanket isTinted={true}>
@@ -102,15 +102,15 @@ const Recordatorios: FC<RecordatoriosProps> = ({ setIsOpen }) => {
                 appearance="subtle-link"
                 className="flex !items-center !p-2 !text-sm gap-5"
               >
-                Regresar a mis retrospectivas
+                Regresar al panel de retrospectivas
               </Button>
             </Link>
             <Button
+              isDisabled={questions.length === 0}
               className="flex !items-center !p-2 !text-sm gap-5"
               appearance="primary"
               autoFocus
               onClick={() => {
-                getQuestions();
                 closeModal();
                 navigate(
                   `/mis-retrospectivas/responder/${retroId}/preguntas/`

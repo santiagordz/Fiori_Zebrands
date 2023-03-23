@@ -1,5 +1,6 @@
 import Button from '@atlaskit/button';
 import ArrowRightIcon from '@atlaskit/icon/glyph/arrow-right';
+import ArrowLeftIcon from '@atlaskit/icon/glyph/arrow-left';
 import { FC, useContext, useEffect, useState } from 'react';
 import {
   QuestionDB,
@@ -155,7 +156,7 @@ const FormStep: FC<FormStepProps> = ({
         <div className="flex gap-14">
           <Button
             appearance="default"
-            iconBefore={<ArrowRightIcon label="pregunta siguiente" />}
+            iconBefore={<ArrowLeftIcon label="pregunta siguiente" />}
             label="Pregunta anterior"
             onClick={() => setFormPage((prev: number) => prev - 1)}
           >

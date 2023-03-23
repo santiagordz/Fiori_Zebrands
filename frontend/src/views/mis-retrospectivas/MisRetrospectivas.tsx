@@ -9,10 +9,10 @@ const MisRetrospectivas: FC<MisRetrospectivasProps> = ({}) => {
   return (
     <DesignTemplate>
       <Routes>
-        {/* <Route path="*" element={<Navigate to="/404" replace />} /> */}
+        <Route path="*" element={<Navigate to="/404" replace />} />
         <Route path="/" element={<PanelRetros />} />
         <Route
-          path="/responder/:retroId"
+          path="/responder/:retroId/*"
           element={<ResponderRetro />}
         />
       </Routes>
