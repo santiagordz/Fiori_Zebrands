@@ -8,7 +8,10 @@ import {
   useParams,
 } from 'react-router-dom';
 import Spinner from '../../design-template/spinner/Spinner';
-import { FormDataProvider, QuestionsProvider } from '../contexts';
+import {
+  FormDataProvider,
+  QuestionsProvider,
+} from '../local_contexts';
 import RetrospectivaGeneral from '../reusable/RetrospectivaGeneral';
 import Answers from './Answers';
 import Cuestionario from './Cuestionario';

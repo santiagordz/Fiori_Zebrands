@@ -1,4 +1,4 @@
-const Retrospectiva = require('../models/retrospectivaModel');
+const Retrospectiva = require('../models/retrospectiva.model');
 
 exports.getAllRetrospectivas = async (req, res) => {
   try {

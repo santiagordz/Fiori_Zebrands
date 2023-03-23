@@ -9,7 +9,7 @@ import {
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import Team from '../../../assets/team.png';
 import { Recordatorios } from '../modals';
-import { questionsContext } from '../contexts';
+import { questionsContext } from '../local_contexts';
 import axios from 'axios';
 
 const URI = 'http://localhost:8000/retrospectivas';

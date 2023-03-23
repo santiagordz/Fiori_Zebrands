@@ -7,7 +7,7 @@ import WarningIcon from '@atlaskit/icon/glyph/warning';
 import axios from 'axios';
 import { FC, useCallback, useContext } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { questionsContext } from '../contexts';
+import { questionsContext } from '../local_contexts';
 import BannerRetro from '../reusable/BannerRetro';
 
 const URI = 'http://localhost:8000/retrospectivas';

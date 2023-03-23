@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const retrospectivaController = require('../controllers/retrospectivaController');
+const retrospectivaController = require('../controllers/retrospectiva.controller');
 
 router.get('/', retrospectivaController.getAllRetrospectivas);
 router.get('/panelRetros', retrospectivaController.getPanelRetros);

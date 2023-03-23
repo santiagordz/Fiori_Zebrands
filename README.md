@@ -1,12 +1,12 @@
 <div align="center" id="top"> 
-  <!-- <img src="./.github/app.gif" alt="Retrozeb" />
+  <!-- <img src="./.github/app.gif" alt="RetroZeb" />
 
 &#xa0; -->
 
   <!-- <a href="https://retrozeb.netlify.app">Demo</a> -->
 </div>
 
-<h1 align="center">Retrozeb</h1>
+<h1 align="center">RetroZeb</h1>
 
 <p align="center">
   <img alt="Github top language" src="https://img.shields.io/github/languages/top/SJBauer0/Fiori_Zebrands?color=56BEB8">
@@ -27,7 +27,7 @@
 <!-- Status -->
 
 <h4 align="center"> 
-	🚧  Retrozeb 🚀 Under construction...  🚧
+	🚧  RetroZeb 🚀 Under construction...  🚧
 </h4>
 
 <hr>

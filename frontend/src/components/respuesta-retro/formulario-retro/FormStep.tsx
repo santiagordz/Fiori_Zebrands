@@ -6,7 +6,7 @@ import {
   QuestionDB,
   formDataContext,
   questionsContext,
-} from '../contexts';
+} from '../local_contexts';
 
 import { AnonymousToggle, TiposPregunta } from './form-steps';
 
