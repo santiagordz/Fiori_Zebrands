@@ -77,3 +77,15 @@ exports.updateUsuarioById = (req, res, next) => {
       .json({ message: 'Error al actualizar el usuario.' });
   }
 };
+
+exports.updateRolUsuarioById = async (req, res, next) => {
+  const usuarioId = req.params.id;
+  const { rol } = req.body;
+  try {
+    await Usuario.updateRolUsuarioById(usuarioId, rol);
+    res.json({ message: 'Rol actualizado correctamente.' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al actualizar el rol.' });
+  }
+};

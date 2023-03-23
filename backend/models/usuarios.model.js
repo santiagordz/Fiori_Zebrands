@@ -114,4 +114,11 @@ module.exports = class Usuarios {
       [nombre, rol, id]
     );
   }
+
+  static updateRolUsuarioById(id, rol) {
+    return db.execute(`UPDATE usuarios SET rol = ? WHERE id = ?`, [
+      rol,
+      id,
+    ]);
+  }
 };
