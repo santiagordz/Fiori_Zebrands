@@ -1,8 +1,8 @@
-import React, { FC, useEffect, useState } from 'react';
+import ChevronRightLargeIcon from '@atlaskit/icon/glyph/chevron-right-large';
 import FlagFilledIcon from '@atlaskit/icon/glyph/flag-filled';
 import { SimpleTag as Tag } from '@atlaskit/tag';
-import ChevronRightLargeIcon from '@atlaskit/icon/glyph/chevron-right-large';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { FC, useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 interface RetrospectivaGeneralProps {
   titulo: string;

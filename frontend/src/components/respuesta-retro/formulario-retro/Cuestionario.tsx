@@ -4,24 +4,31 @@ import ArrowLeftIcon from '@atlaskit/icon/glyph/arrow-left';
 import { FC, useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Stepper from '../../design-template/stepper/Stepper';
-import { preguntas } from '../RetroDomi';
-import { formDataContext } from './FormDataProvider';
+import {
+  QuestionDB,
+  formDataContext,
+  questionsContext,
+} from '../contexts';
+import { ConfirmacionRetro, BackMyRetros } from '../modals';
 import FormStep from './FormStep';
-import { BackMyRetros } from './ModalsForm';
 
 interface CuestionarioProps {}
 
 const Cuestionario: FC<CuestionarioProps> = ({}) => {
   const [formPage, setFormPage] = useState(1);
-  const { formData, setFormData } = useContext(formDataContext);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { formData } = useContext(formDataContext);
+  const [isModalBackOpen, setIsModalBackOpen] = useState(false);
+  const [isModalNextOpen, setIsModalNextOpen] = useState(false);
+
   const location = useLocation();
   const [anonymousQuestions, setAnonymousQuestions] = useState<
     Array<string>
   >([]);
 
+  const { questions } = useContext(questionsContext);
+
   useEffect(() => {
-    if (isModalOpen) {
+    if (isModalBackOpen) {
       document.body.classList.add('modal-open');
     } else {
       document.body.classList.remove('modal-open');
@@ -30,7 +37,8 @@ const Cuestionario: FC<CuestionarioProps> = ({}) => {
     return () => {
       document.body.classList.remove('modal-open');
     };
-  }, [isModalOpen]);
+  }, [isModalBackOpen]);
+  console.log('adasds');
 
   useEffect(() => {
     const handleBeforeUnload = (event: BeforeUnloadEvent) => {
@@ -54,8 +62,8 @@ const Cuestionario: FC<CuestionarioProps> = ({}) => {
       <div className="flex flex-col items-center justify-center bg-white w-full h-full py-12 px-6 rounded border border-solid border-gray-300">
         <div className="w-full">
           <div>
-            {isModalOpen && (
-              <BackMyRetros setIsModalOpen={setIsModalOpen} />
+            {isModalBackOpen && (
+              <BackMyRetros setIsModalBackOpen={setIsModalBackOpen} />
             )}
           </div>
           <Button
@@ -64,7 +72,7 @@ const Cuestionario: FC<CuestionarioProps> = ({}) => {
             iconBefore={
               <ArrowLeftIcon label="volver a mis retrospectivas" />
             }
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => setIsModalBackOpen(true)}
           >
             Volver a mis retrospectivas
           </Button>
@@ -72,22 +80,30 @@ const Cuestionario: FC<CuestionarioProps> = ({}) => {
         <div className="w-full px-60 flex flex-col items-center justify-center gap-8">
           <div className="w-5/12 flex items-center justify-center">
             <Stepper
-              totalSteps={preguntas.length}
+              totalSteps={questions.length}
               currentStep={formPage}
             />
           </div>
           <Form onSubmit={handleSubmitWAnon}>
-            {({ formProps }) => (
+            {({ formProps, submitting }) => (
               <form
                 {...formProps}
                 className="flex flex-col items-center justify-center w-full mb-5 text-center"
               >
                 {renderFormSteps(
-                  preguntas,
+                  questions,
                   setFormPage,
                   formPage,
                   anonymousQuestions,
-                  setAnonymousQuestions
+                  setAnonymousQuestions,
+                  setIsModalNextOpen
+                )}
+                {isModalNextOpen && (
+                  <ConfirmacionRetro
+                    setIsModalNextOpen={setIsModalNextOpen}
+                    submitting={submitting}
+                    onSubmit={formProps.onSubmit}
+                  />
                 )}
               </form>
             )}
@@ -98,35 +114,26 @@ const Cuestionario: FC<CuestionarioProps> = ({}) => {
   );
 };
 
-interface Pregunta {
-  id_pregunta: number;
-  pregunta: string;
-  tipo: {
-    id_tipo_pregunta: number;
-  };
-}
-
 const renderFormSteps = (
-  preguntas: Pregunta[],
+  questions: QuestionDB[],
   setFormPage: (updater: (prev: number) => number) => void,
   formPage: number,
   anonymousQuestions: Array<string>,
   setAnonymousQuestions: (
     updater: (prev: Array<string>) => Array<string>
-  ) => void
+  ) => void,
+  setIsModalNextOpen: (value: boolean) => void
 ): React.ReactNode[] => {
-  return preguntas.map((pregunta, index) => (
+  return questions.map((question, index) => (
     <FormStep
-      key={pregunta.id_pregunta}
+      key={question.id_pregunta}
       numPregunta={index + 1}
-      totalPreguntas={preguntas.length}
-      pregunta={pregunta.pregunta}
-      idTipoPregunta={pregunta.tipo.id_tipo_pregunta}
+      totalPreguntas={questions.length}
       setFormPage={setFormPage}
       formPage={formPage}
-      idPregunta={pregunta.id_pregunta}
       anonymousQuestions={anonymousQuestions}
       setAnonymousQuestions={setAnonymousQuestions}
+      setIsModalNextOpen={setIsModalNextOpen}
     />
   ));
 };

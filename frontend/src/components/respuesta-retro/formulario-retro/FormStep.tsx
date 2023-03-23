@@ -1,51 +1,47 @@
 import Button from '@atlaskit/button';
-import ArrowLeftIcon from '@atlaskit/icon/glyph/arrow-left';
 import ArrowRightIcon from '@atlaskit/icon/glyph/arrow-right';
 import { FC, useContext, useEffect, useState } from 'react';
-import ConfirmacionRetro from '../ConfirmacionRetro';
-import { retrospective } from '../RetroDomi';
-import { formDataContext } from './FormDataProvider';
-
 import {
-  AnonymousToggle,
-  NavigationButton,
-  TiposPregunta,
-} from './form-steps';
+  QuestionDB,
+  formDataContext,
+  questionsContext,
+} from '../contexts';
+
+import { AnonymousToggle, TiposPregunta } from './form-steps';
 
 interface FormStepProps {
   numPregunta: number;
   totalPreguntas: number;
-  pregunta: string;
-  idTipoPregunta: number;
   setFormPage: (updater: (prev: number) => number) => void;
   formPage: number;
-  idPregunta: number;
   anonymousQuestions: Array<string>;
   setAnonymousQuestions: (
     updater: (prev: Array<string>) => Array<string>
   ) => void;
+  setIsModalNextOpen: (value: boolean) => void;
 }
 
 const FormStep: FC<FormStepProps> = ({
   numPregunta,
   totalPreguntas,
-  pregunta,
-  idTipoPregunta,
   setFormPage,
   formPage,
-  idPregunta,
   anonymousQuestions,
   setAnonymousQuestions,
+  setIsModalNextOpen,
 }) => {
   const { formData, setFormData } = useContext(formDataContext);
   const [isError, setIsError] = useState<boolean>(false);
-  const [isAnonymous, setIsAnonymous] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isAnonymous, setIsAnonymous] = useState<boolean>(false);
+
+  const { questions } = useContext(questionsContext);
+
+  const question: QuestionDB = questions[numPregunta - 1];
 
   const handleOnchange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const key: string = idPregunta.toString();
+    const key: string = question.id_pregunta.toString();
     setFormData((prevFormData: any) => {
       return {
         ...prevFormData,
@@ -57,45 +53,65 @@ const FormStep: FC<FormStepProps> = ({
   const handleAnonToggle = () => {
     if (
       !isAnonymous &&
-      !anonymousQuestions.includes(idPregunta.toString())
+      !anonymousQuestions.includes(question.id_pregunta.toString())
     ) {
       setAnonymousQuestions((prev) => [
         ...prev,
-        idPregunta.toString(),
+        question.id_pregunta.toString(),
       ]);
     }
 
     if (
       isAnonymous &&
-      anonymousQuestions.includes(idPregunta.toString())
+      anonymousQuestions.includes(question.id_pregunta.toString())
     ) {
       setAnonymousQuestions((prev) =>
         prev.filter(
-          (value: string) => value !== idPregunta.toString()
+          (value: string) => value !== question.id_pregunta.toString()
         )
       );
     }
   };
 
   useEffect(() => {
-    anonymousQuestions.includes(idPregunta.toString())
+    anonymousQuestions.includes(question.id_pregunta.toString())
       ? setIsAnonymous(true)
       : setIsAnonymous(false);
-  }, [idPregunta, anonymousQuestions]);
+  }, [question.id_pregunta, anonymousQuestions]);
 
   useEffect(() => {
     if (
       isAnonymous &&
-      anonymousQuestions.includes(idPregunta.toString()) &&
-      !formData[idPregunta]
+      anonymousQuestions.includes(question.id_pregunta.toString()) &&
+      !formData[question.id_pregunta]
     ) {
       setAnonymousQuestions((prev) =>
         prev.filter(
-          (value: string) => value !== idPregunta.toString()
+          (value: string) => value !== question.id_pregunta.toString()
         )
       );
     }
   }, [formData]);
+
+  const getOpciones = () => {
+    const opciones = question.opciones_respuesta;
+    if (opciones) {
+      const opcionesArray = opciones.split(',');
+      return opcionesArray;
+    }
+  };
+
+  const nextButton = (
+    <Button
+      appearance="primary"
+      isDisabled={isError}
+      iconBefore={<ArrowRightIcon label="pregunta siguiente" />}
+      label="Siguiente pregunta"
+      onClick={() => setFormPage((prev: number) => prev + 1)}
+    >
+      Siguiente pregunta
+    </Button>
+  );
 
   return (
     <div
@@ -109,16 +125,14 @@ const FormStep: FC<FormStepProps> = ({
             Pregunta {numPregunta}/{totalPreguntas}
           </p>
           <h2 className="text-[#5E4DB2] text-2xl font-bold">
-            {pregunta}
+            {question.pregunta}
           </h2>
         </div>
         <div className="w-full text-left">
           <TiposPregunta
-            idTipoPregunta={idTipoPregunta}
-            opciones={
-              retrospective.preguntas[numPregunta - 1].tipo?.opciones
-            }
-            idPregunta={idPregunta}
+            idTipoPregunta={question.id_tipo_pregunta}
+            opciones={getOpciones()}
+            idPregunta={question.id_pregunta}
             onChange={handleOnchange}
             setIsError={setIsError}
             isError={isError}
@@ -129,50 +143,36 @@ const FormStep: FC<FormStepProps> = ({
             Enviar como respuesta anónima
           </p>
           <AnonymousToggle
-            isDisabled={!formData[idPregunta]}
+            isDisabled={!formData[question.id_pregunta]}
             isChecked={isAnonymous}
             onChange={handleAnonToggle}
           />
         </div>
       </div>
       {numPregunta === 1 ? (
-        <NavigationButton
-          appearance="primary"
-          isError={isError}
-          icon={<ArrowRightIcon label="pregunta siguiente" />}
-          label="Siguiente pregunta"
-          onClick={() => setFormPage((prev: number) => prev + 1)}
-        />
+        nextButton
       ) : (
         <div className="flex gap-14">
-          <NavigationButton
+          <Button
             appearance="default"
-            isError={isError}
-            icon={<ArrowLeftIcon label="pregunta anterior" />}
+            iconBefore={<ArrowRightIcon label="pregunta siguiente" />}
             label="Pregunta anterior"
             onClick={() => setFormPage((prev: number) => prev - 1)}
-          />
+          >
+            Pregunta anterior
+          </Button>
           {numPregunta === totalPreguntas ? (
             <Button
               appearance="primary"
-              type="submit"
-              value="Submit"
-              onClick={() => setIsOpen(true)}
+              onClick={() => setIsModalNextOpen(true)}
             >
               Registrar respuestas
             </Button>
           ) : (
-            <NavigationButton
-              appearance="primary"
-              isError={isError}
-              icon={<ArrowRightIcon label="pregunta siguiente" />}
-              label="Siguiente pregunta"
-              onClick={() => setFormPage((prev: number) => prev + 1)}
-            />
+            nextButton
           )}
         </div>
       )}
-      {isOpen && <ConfirmacionRetro setIsOpen={setIsOpen} />}
     </div>
   );
 };

@@ -1,8 +1,8 @@
 import Button from '@atlaskit/button';
-import { FC, useCallback, useState, useEffect } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Team from '../../assets/team.png';
-import Aviso from './Aviso';
+import Team from '../../../assets/team.png';
+import { Recordatorios } from '../modals';
 
 interface ReponderRetroInfoProps {}
 
@@ -56,7 +56,7 @@ const ReponderRetroInfo: FC<ReponderRetroInfoProps> = ({}) => {
           </Button>
         </div>
       </div>
-      <div>{isOpen && <Aviso setIsOpen={setIsOpen} />}</div>
+      <div>{isOpen && <Recordatorios setIsOpen={setIsOpen} />}</div>
     </>
   );
 };

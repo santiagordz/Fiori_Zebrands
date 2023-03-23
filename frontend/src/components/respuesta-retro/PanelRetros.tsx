@@ -1,8 +1,7 @@
-import React, { FC, useEffect, useState } from 'react';
-import RetrospectivaGeneral from './RetrospectivaGeneral';
-import { retrospective } from './RetroDomi';
 import axios from 'axios';
+import { FC, useEffect, useState } from 'react';
 import Spinner from '../design-template/spinner/Spinner';
+import RetrospectivaGeneral from './reusable/RetrospectivaGeneral';
 
 const URI = 'http://localhost:8000/retrospectivas';
 
@@ -30,7 +29,6 @@ const PanelRetros: FC<PanelRetrosProps> = ({}) => {
 
   useEffect(() => {
     getRetrospectivas();
-    // console.log(retroPendientes);
   }, []);
 
   if (retroPendientes.length === 0)

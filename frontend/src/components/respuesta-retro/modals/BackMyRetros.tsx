@@ -9,11 +9,11 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
 interface BackMyRetrosProps {
-  setIsModalOpen: (isOpen: boolean) => void;
+  setIsModalBackOpen: (isOpen: boolean) => void;
 }
 
-export const BackMyRetros: FC<BackMyRetrosProps> = ({
-  setIsModalOpen,
+const BackMyRetros: FC<BackMyRetrosProps> = ({
+  setIsModalBackOpen,
 }) => {
   const navigate = useNavigate();
 
@@ -27,7 +27,7 @@ export const BackMyRetros: FC<BackMyRetrosProps> = ({
           <div className="flex flex-col bg-white rounded p-10 gap-7 items-center justify-center drop-shadow-lg">
             <div
               className="flex w-full absolute top-0 justify-end p-4"
-              onClick={() => setIsModalOpen(false)}
+              onClick={() => setIsModalBackOpen(false)}
             >
               <div className="flex items-center justify-center rounded- cursor-pointer hover:bg-slate-200 p-1">
                 <CrossIcon label="cerrar modal" size="small" />
@@ -61,7 +61,7 @@ export const BackMyRetros: FC<BackMyRetrosProps> = ({
               </Button>
               <Button
                 appearance="default"
-                onClick={() => setIsModalOpen(false)}
+                onClick={() => setIsModalBackOpen(false)}
               >
                 Continuar respondiendo
               </Button>
@@ -72,3 +72,5 @@ export const BackMyRetros: FC<BackMyRetrosProps> = ({
     </>
   );
 };
+
+export default BackMyRetros;

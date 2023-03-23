@@ -4,18 +4,29 @@ import EditorCloseIcon from '@atlaskit/icon/glyph/editor/close';
 import ErrorIcon from '@atlaskit/icon/glyph/error';
 import HipchatMediaAttachmentCountIcon from '@atlaskit/icon/glyph/hipchat/media-attachment-count';
 import WarningIcon from '@atlaskit/icon/glyph/warning';
-import { FC, useCallback } from 'react';
+import axios from 'axios';
+import { FC, useCallback, useContext } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import BannerRetro from './BannerRetro';
+import { questionsContext } from '../contexts';
+import BannerRetro from '../reusable/BannerRetro';
 
-interface AvisoProps {
+const URI = 'http://localhost:8000/retrospectivas';
+
+interface RecordatoriosProps {
   setIsOpen: (isOpen: boolean) => void;
 }
 
-const Aviso: FC<AvisoProps> = ({ setIsOpen }) => {
+const Recordatorios: FC<RecordatoriosProps> = ({ setIsOpen }) => {
   const closeModal = useCallback(() => setIsOpen(false), []);
   const navigate = useNavigate();
   const { retroId } = useParams();
+
+  const { setQuestions } = useContext(questionsContext);
+
+  const getQuestions = async () => {
+    const { data } = await axios.get(`${URI}/questions/${retroId}`);
+    setQuestions(data);
+  };
 
   return (
     <Blanket isTinted={true}>
@@ -99,6 +110,7 @@ const Aviso: FC<AvisoProps> = ({ setIsOpen }) => {
               appearance="primary"
               autoFocus
               onClick={() => {
+                getQuestions();
                 closeModal();
                 navigate(
                   `/mis-retrospectivas/responder/${retroId}/preguntas/`
@@ -114,4 +126,4 @@ const Aviso: FC<AvisoProps> = ({ setIsOpen }) => {
   );
 };
 
-export default Aviso;
+export default Recordatorios;

@@ -1,18 +1,22 @@
 import Blanket from '@atlaskit/blanket';
-import Button from '@atlaskit/button';
+import Button, { LoadingButton } from '@atlaskit/button';
 import ErrorIcon from '@atlaskit/icon/glyph/error';
 import JiraFailedBuildStatusIcon from '@atlaskit/icon/glyph/jira/failed-build-status';
 import { FC, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 interface ConfirmacionRetroProps {
-  setIsOpen: (isOpen: boolean) => void;
+  setIsModalNextOpen: (isOpen: boolean) => void;
+  submitting: boolean;
+  onSubmit: () => void;
 }
 
 const ConfirmacionRetro: FC<ConfirmacionRetroProps> = ({
-  setIsOpen,
+  setIsModalNextOpen,
+  submitting,
+  onSubmit,
 }) => {
-  const closeModal = useCallback(() => setIsOpen(false), []);
+  const closeModal = useCallback(() => setIsModalNextOpen(false), []);
   const navigate = useNavigate();
   const { retroId } = useParams();
 
@@ -47,20 +51,21 @@ const ConfirmacionRetro: FC<ConfirmacionRetroProps> = ({
                 >
                   Editar mis respuestas
                 </Button>
-                <Button
+                <LoadingButton
                   className="!flex !items-center !p-2 !text-xs gap-5"
                   appearance="primary"
                   type="submit"
-                  value="submit"
                   onClick={() => {
+                    onSubmit();
                     closeModal();
                     navigate(
                       `/mis-retrospectivas/responder/${retroId}/respuestas/`
                     );
                   }}
+                  isLoading={submitting}
                 >
                   Registrar respuestas
-                </Button>
+                </LoadingButton>
               </div>
             </div>
           </div>

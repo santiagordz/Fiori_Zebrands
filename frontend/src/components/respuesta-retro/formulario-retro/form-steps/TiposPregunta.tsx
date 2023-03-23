@@ -3,7 +3,7 @@ import Select from 'react-select';
 import TextArea from '@atlaskit/textarea';
 import TextField from '@atlaskit/textfield';
 import { FC, useContext, useEffect } from 'react';
-import { formDataContext } from '../FormDataProvider';
+import { formDataContext } from '../../contexts/FormDataProvider';
 
 interface TiposPreguntaProps {
   idTipoPregunta: number;

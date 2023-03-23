@@ -17,3 +17,26 @@ exports.getPanelRetros = async (req, res) => {
     console.log(err);
   }
 };
+
+exports.getOne = async (req, res) => {
+  try {
+    const [retrospectiva] = await Retrospectiva.fetchOne(
+      req.params.id
+    );
+    res.json(retrospectiva[0]);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+exports.getQuestions = async (req, res) => {
+  try {
+    const [questions] = await Retrospectiva.fetchQuestions(
+      req.params.id
+    );
+
+    res.json(questions);
+  } catch (err) {
+    console.log(err);
+  }
+};
