@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import Geometry from '../assets/geometry.png';
 import zebrandsLogo from '../assets/zebrandsLogo.svg';
 interface LoginProps {}
@@ -37,7 +37,7 @@ const Login: FC<LoginProps> = ({}) => {
         <img
           src={Geometry}
           alt="Geometry"
-          className="w-full h-full scale-[1.5] relative object-cover object-center"
+          className="w-full h-full scale-[1.6] relative object-cover object-center"
         />
       </div>
     </div>
