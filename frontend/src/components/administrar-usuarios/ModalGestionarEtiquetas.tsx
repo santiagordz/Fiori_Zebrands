@@ -6,6 +6,12 @@ import './css/modalGestionarEtiquetas.css';
 import CrossIcon from '@atlaskit/icon/glyph/cross';
 import Tag from '@atlaskit/tag';
 import TagGroup from '@atlaskit/tag-group';
+import Button from '@atlaskit/button/standard-button';
+import Form, {
+  Field,
+  FormFooter,
+  HelperMessage,
+} from '@atlaskit/form';
 
 interface GestionarEtiquetasProps {
   show: boolean;
@@ -48,8 +54,52 @@ const ModalGestionarEtiquetas: FC<GestionarEtiquetasProps> = ({
             </p>
             <TagGroup>
               <Tag text="Etiqueta 1" />
+              <Tag text="Etiqueta 1" />
+              <Tag text="Etiqueta 1" />
             </TagGroup>
+            <br></br>
+            <p className="font-bold text-left mb-4">
+              Crear nueva etiqueta
+            </p>
+            <form>
+              <label
+                htmlFor="EtiquetaNombre"
+                id="Etiqueta-nombre"
+                className="text-[0.75rem] text-gray-600 mt-1 mb-4"
+              >
+                Nombre
+              </label>
+              <input
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                name="Etiqueta-nombre"
+                id="Etiqueta-nombre "
+                value=""
+                placeholder="Ingrese un nombre para la etiqueta"
+              />
+              <br></br>
+              <label
+                htmlFor="EtiquetaColor"
+                id="Etiqueta-color"
+                className="text-[0.75rem] text-gray-600 mt-1 mb-4"
+              >
+                Color
+              </label>
+              <select
+                name="Etiqueta-color"
+                id="Etiqueta-color"
+                className="w-full border border-gray-300 rounded-sm px-2 py-1"
+              >
+                <option value="blue">Azul</option>
+                <option value="red">Rojo</option>
+                <option value="green">Verde</option>
+                <option value="yellow">Amarillo</option>
+                <option value="purple">Morado</option>
+                <option value="pink">Rosa</option>
+                <option value="gray">Gris</option>
+              </select>
+            </form>
           </div>
+
           <div className="modal-footer">
             <div className="flex gap-10 mt-12">
               <button
