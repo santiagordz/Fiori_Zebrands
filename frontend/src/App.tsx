@@ -12,12 +12,14 @@ import {
   GestionarRetrospectivas,
   AdministrarUsuarios,
   NotFound404,
+  Login,
 } from './views';
 
 function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/login" element={<Login />} />
         <Route
           path="/"
           element={<Navigate to="/dashboard" replace />}
