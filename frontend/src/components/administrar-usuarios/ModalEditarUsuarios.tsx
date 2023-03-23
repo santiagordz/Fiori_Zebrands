@@ -126,6 +126,7 @@ const ModalEditarUsuarios: FC<ModalEditarUsuariosProps> = ({
                       Nombre
                     </label>
                     <input
+                      autoComplete="off"
                       type="text"
                       name="nombre"
                       className="h-8 border-2 border-gray-300 rounded-sm p-2 focus:outline-gray-400 hover:bg-gray-100"
@@ -178,9 +179,6 @@ const ModalEditarUsuarios: FC<ModalEditarUsuariosProps> = ({
             </div>
             <div className="modal-footer">
               <div className="flex gap-10 mt-8">
-                <button onClick={() => console.log(etiquetas)}>
-                  etiquetas
-                </button>
                 <button
                   className="rounded-none hover:text-blue-500 text-sm"
                   onClick={handleClose}

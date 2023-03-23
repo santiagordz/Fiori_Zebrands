@@ -80,14 +80,20 @@ const DropdownEtiquetas = ({
     setEtiquetasSeleccionadas(selected);
   };
 
-  useEffect(() => {
-    getOptionsEtiquetas();
-  }, []);
+  getOptionsEtiquetas();
 
   const colorStyles = {
-    control: (styles: any) => ({
+    control: (styles: any, state: any) => ({
       ...styles,
-      backgroundColor: 'white',
+      border: 0,
+      boxShadow: 'none',
+      backgroundColor: '#F1F2F4',
+      '&:hover': { backgroundColor: '#e5e7eb' },
+    }),
+    option: (styles: any, { data }: any) => ({
+      ...styles,
+      backgroundColor: '#F1F2F4',
+      '&:hover': { backgroundColor: '#e5e7eb' },
     }),
     multiValue: (
       styles: any,
@@ -114,8 +120,9 @@ const DropdownEtiquetas = ({
   return (
     <>
       <Select
-        className="mt-1"
+        className="mt-1 text-sm"
         id="etiquetas"
+        placeholder="Selecciona etiquetas"
         isMulti={true}
         options={etiquetasOptions}
         onChange={handleEtiquetasChange}
