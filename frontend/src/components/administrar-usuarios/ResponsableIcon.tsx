@@ -20,7 +20,6 @@ const ResponsableIcon = (idUsuario: any) => {
       res.then((response) => {
         const usuario = response.data.usuario.shift();
         setRolActual(usuario.rol);
-        console.log(rolActual);
       });
     } catch (error) {
       console.log(error);

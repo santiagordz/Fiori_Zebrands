@@ -33,7 +33,6 @@ const ModalRegistrarUsuarios: FC<RegistrarUsuariosProps> = ({
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    console.log(etiquetas);
     try {
       await axios.post(URI, {
         correo: `${correo}@zeb.mx`,

@@ -10,10 +10,10 @@ import EditarIcon from './EditarIcon';
 import RolIcon from './RolIcon';
 import Avatar from '@atlaskit/avatar';
 
-import TableHead from './TableHead';
+import TableHead from './UsersTableHead';
 // import RolesIcon from './RolesIcon';
 
-import './css/table.css';
+import './css/usersTable.css';
 import EtiquetaIcon from './EtiquetaIcon';
 
 const URI = 'http://localhost:8000/usuarios/info';

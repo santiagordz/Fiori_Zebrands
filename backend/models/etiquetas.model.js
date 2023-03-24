@@ -26,4 +26,15 @@ module.exports = class Etiquetas {
       [id]
     );
   }
+
+  static updateEtiqueta(id, etiqueta, color) {
+    return db.execute(
+      `
+        UPDATE etiquetas
+        SET etiqueta = ? , id_color = (SELECT id from colores WHERE colores.color = ?)
+        WHERE id = ?
+          `,
+      [etiqueta, color, id]
+    );
+  }
 };

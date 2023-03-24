@@ -4,19 +4,20 @@ import { token } from '@atlaskit/tokens';
 import { N500, Y300 } from '@atlaskit/theme/colors';
 import EditFilledIcon from '@atlaskit/icon/glyph/edit-filled';
 import ModalEditarUsuarios from './ModalEditarUsuarios';
+import ModalEditarEtiqueta from './ModalEditarEtiqueta';
 
 const URI = 'http://localhost:8000/usuarios/';
 
-interface InfoUsuario {
-  id: number;
-  nombre: string;
-  apellido: string;
-  correo: string;
-  roles: string[];
-  etiquetas: string[];
-}
+// interface InfoUsuario {
+//   id: number;
+//   nombre: string;
+//   apellido: string;
+//   correo: string;
+//   roles: string[];
+//   etiquetas: string[];
+// }
 
-const EditarIcon = ({ id }: any) => {
+const EditarEtiquetaIcon = ({ etiqueta }: any) => {
   const [color, setColor] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -46,13 +47,13 @@ const EditarIcon = ({ id }: any) => {
           )}
         />
       </button>
-      <ModalEditarUsuarios
+      <ModalEditarEtiqueta
         show={isOpen}
         onClose={() => setIsOpen(false)}
-        info={id}
+        info={etiqueta}
       />
     </>
   );
 };
 
-export default EditarIcon;
+export default EditarEtiquetaIcon;
