@@ -27,3 +27,13 @@ exports.updateEtiqueta = (req, res, next) => {
     })
     .catch((err) => console.log(err));
 };
+
+exports.createEtiqueta = (req, res, next) => {
+  const etiqueta = req.body.etiqueta;
+  const color = req.body.color;
+  Etiquetas.createEtiqueta(etiqueta, color)
+    .then(([rows, fieldData]) => {
+      res.json(rows);
+    })
+    .catch((err) => console.log(err));
+};

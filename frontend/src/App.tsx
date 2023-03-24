@@ -9,11 +9,11 @@ function App() {
   return (
     <>
       {/* <AdministrarUsuarios /> */}
-      {/* <GestionarEtiquetas /> */}
+      <GestionarEtiquetas />
       {/* <EditarUsuarios /> */}
       {/* <BorrarUsuarios /> */}
       {/* <RegistrarUsuarios /> */}
-      <EtiquetasTable />
+      {/* <EtiquetasTable /> */}
     </>
   );
 }

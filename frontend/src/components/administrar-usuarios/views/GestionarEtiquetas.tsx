@@ -1,17 +1,23 @@
 import React, { FC, useState } from 'react';
-import ModalGestionarEtiquetas from '../ModalGestionarEtiquetas';
+import BotonGestionarEtiquetas from '../BotonGestionarEtiquetas';
+import BotonRegistrarEtiqueta from '../BotonRegistrarEtiqueta';
+import EtiquetasTable from '../EtiquetasTable';
 
-interface GestionarEtiquetasProps {}
+import ModalRegistrarEtiqueta from '../ModalRegistrarEtiqueta';
 
-const GestionarEtiquetas: FC<GestionarEtiquetasProps> = ({}) => {
+const GestionarEtiquetas = () => {
   const [isOpen, setIsOpen] = useState(false);
-
   return (
-    <div>
+    <div className="flex justify-center mt-10 flex-col">
+      <h4>Gestionar Etiquetas</h4>
+      <BotonGestionarEtiquetas />
       <button onClick={() => setIsOpen(true)}>
-        Gestionar Etiquetas
+        <BotonRegistrarEtiqueta />
       </button>
-      <ModalGestionarEtiquetas
+      <div className="w-5/6 mt-20">
+        <EtiquetasTable />
+      </div>
+      <ModalRegistrarEtiqueta
         show={isOpen}
         onClose={() => setIsOpen(false)}
       />

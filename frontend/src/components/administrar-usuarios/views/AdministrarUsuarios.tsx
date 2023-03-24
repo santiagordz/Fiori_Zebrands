@@ -4,7 +4,6 @@ import BotonRegistrarUsuario from '../BotonRegistrarUsuario';
 import UsersTable from '../UsersTable';
 
 import ModalRegistrarUsuarios from '../ModalRegistrarUsuarios';
-import ModalGestionarEtiquetas from '../ModalGestionarEtiquetas';
 
 const TableWrapper = () => {
   const [isOpen, setIsOpen] = useState(false);

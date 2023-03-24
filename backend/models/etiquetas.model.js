@@ -37,4 +37,24 @@ module.exports = class Etiquetas {
       [etiqueta, color, id]
     );
   }
+
+  static createEtiqueta(etiqueta, color) {
+    return db.execute(
+      `
+        INSERT INTO etiquetas (etiqueta, id_color)
+        VALUES (?, (SELECT id from colores WHERE colores.color = ?))
+          `,
+      [etiqueta, color]
+    );
+  }
+
+  static deleteEtiqueta(id) {
+    return db.execute(
+      `
+        DELETE FROM etiquetas
+        WHERE id = ?
+          `,
+      [id]
+    );
+  }
 };

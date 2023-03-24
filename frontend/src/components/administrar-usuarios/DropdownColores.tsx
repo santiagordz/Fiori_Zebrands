@@ -46,6 +46,12 @@ const DropdownColores: FC<DropdownColoresProps> = ({
       id="dropdown-colores"
       className={`w-44 h-8 bg-slate-100 rounded-md pl-2 hover:bg-gray-200 text-sm text-gray-600 font-medium focus:border-0`}
     >
+      {!colorActual && (
+        <option disabled={true} value="">
+          Selecciona un color
+        </option>
+      )}
+
       {colores.map((color) => (
         <option key={color.id} value={color.color}>
           {color.color}

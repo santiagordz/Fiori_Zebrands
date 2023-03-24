@@ -4,12 +4,8 @@ import { useState, useEffect } from 'react';
 
 import './css/ModalEditarUsuarios.css';
 import DropdownColores from './DropdownColores';
-import DropdowRoles from './DropdownRoles';
-import DropdownEtiquetas from './DropdownEtiquetas';
 
 import CrossIcon from '@atlaskit/icon/glyph/cross';
-import SectionMessage from '@atlaskit/section-message';
-import EditarIcon from './EditarIcon';
 import Tag from '@atlaskit/tag';
 
 const URI = 'http://localhost:8000/etiquetas/';
