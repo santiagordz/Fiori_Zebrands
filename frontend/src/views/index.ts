@@ -5,4 +5,5 @@ export { default as MisAccionables } from './mis-accionables/MisAccionables';
 export { default as GestionarRetrospectivas } from './gestionar-retrospectivas/GestionarRetrospectivas';
 export { default as AdministrarUsuarios } from './administrar-usuarios/AdministrarUsuarios';
 export { default as NotFound404 } from './NotFound404';
-export { default as Login } from './Login';
+export { default as LoginView } from './iniciar-sesion/LoginView';
+export { default as LoginSuccess } from './iniciar-sesion/LoginSuccess';

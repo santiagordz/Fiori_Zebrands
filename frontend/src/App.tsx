@@ -1,21 +1,13 @@
+import { useContext } from 'react';
 import {
-  Routes,
   Route,
+  Routes,
   BrowserRouter as Router,
   Navigate,
 } from 'react-router-dom';
-import { useContext } from 'react';
-import {
-  Dashboard,
-  Metricas,
-  MisAccionables,
-  MisRetrospectivas,
-  GestionarRetrospectivas,
-  AdministrarUsuarios,
-  NotFound404,
-  Login,
-} from './views';
+import { Login, Main } from './containers';
 import { UserContext, userDataContext } from './contexts';
+import { LoginSuccess, NotFound404 } from './views';
 
 function App() {
   const { user } = useContext(userDataContext);
@@ -24,42 +16,33 @@ function App() {
     <UserContext>
       <Router>
         <Routes>
+          <Route
+            path="/"
+            element={
+              <Navigate
+                to={!user ? '/login' : '/dashboard'}
+                replace
+              />
+            }
+          />
           <Route path="/login" element={<Login />} />
-          {!user ? (
-            <Route
-              path="/*"
-              element={<Navigate to="/login" replace />}
-            />
-          ) : (
+          <Route path="/*" element={<Main />} />
+          {!user && (
             <>
               <Route
-                path="/"
-                element={<Navigate to="/dashboard" replace />}
+                path="/login/success"
+                element={<LoginSuccess />}
               />
-              <Route
-                path="*"
-                element={<Navigate to={'/404'} replace />}
-              />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/metricas/*" element={<Metricas />} />
-              <Route
-                path="/mis-retrospectivas/*"
-                element={<MisRetrospectivas />}
-              />
-              <Route
-                path="/mis-accionables/*"
-                element={<MisAccionables />}
-              />
-              <Route
-                path="/gestionar-retrospectivas/*"
-                element={<GestionarRetrospectivas />}
-              />
-              <Route
-                path="/administrar-usuarios/*"
-                element={<AdministrarUsuarios />}
-              />
+              <Route path="/login/error">
+                Error al iniciar sesión, por favor intente nuevamente
+                o contacte al administrador.
+              </Route>
             </>
           )}
+          <Route
+            path="*"
+            element={<Navigate to={'/404'} replace />}
+          />
           <Route path="/404" element={<NotFound404 />} />
         </Routes>
       </Router>

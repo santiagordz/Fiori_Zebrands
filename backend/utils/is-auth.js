@@ -2,6 +2,6 @@ module.exports = (req, res, next) => {
   if (req.user) {
     next();
   } else {
-    res.sendStatus(401);
+    res.status(401).send('Es necesario iniciar sesión');
   }
 };

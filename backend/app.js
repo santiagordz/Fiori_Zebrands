@@ -1,100 +1,53 @@
-const express = require('express');
-const cors = require('cors');
 require('dotenv').config();
-const isAuth = require('./utils/is-auth');
-const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth2').Strategy;
-const session = require('express-session');
-
-const usuariosRoutes = require('./routes/usuarios.routes');
+require('./auth/passportGoogleSSO');
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 const retrospectivaRoutes = require('./routes/retrospectivas.routes');
+const usuariosRoutes = require('./routes/usuarios.routes');
+const passport = require('passport');
+const authRoutes = require('./auth/index');
+const cookieSession = require('cookie-session');
 const app = express();
 
-// require('./passport');
-app.use(cors());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 app.use(express.json());
 
-app.use('/retrospectivas', retrospectivaRoutes);
-
 app.use(
-  session({
-    secret: 'secret',
-    resave: false,
-    saveUninitialized: true,
+  cookieSession({
+    maxAge: 3600000, // The cookie will be valid for 1 hour
+    keys: [process.env.COOKIE_KEY_1, process.env.COOKIE_KEY_2],
   })
 );
 
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: 'http://localhost:8000/auth/google/callback',
-      passReqToCallback: true,
-    },
-    function (request, accessToken, refreshToken, profile, done) {
-      return done(null, profile);
-      // User.findOrCreate(
-      //   { googleId: profile.id },
-      //   function (err, user) {
-      //     return done(err, user);
-      //   }
-      // );
-    }
-  )
-);
-
-app.get(
-  '/auth/google',
-  passport.authenticate('google', { scope: ['email', 'profile'] })
-);
-
-app.get(
-  '/auth/google/callback',
-  passport.authenticate('google', {
-    successRedirect: 'http://localhost:3000/dashboard',
-    failureRedirect: '/auth/google/failure',
-  })
-);
-
-passport.serializeUser((user, done) => {
-  // console.log(`\n--------> Serialize User:`);
-  // console.log(user.email);
-
-  done(null, user);
+app.get('/', (req, res, next) => {
+  res.json({ message: 'Fiori' });
 });
 
-passport.deserializeUser((user, done) => {
-  // console.log('\n--------- Deserialized User:');
-  // console.log(user);
+app.use(authRoutes);
 
-  done(null, user);
+app.use((err, req, res, next) => {
+  if (err.message === 'UserNotFound') {
+    req.session.destroy();
+    res.redirect('/');
+  } else {
+    next(err);
+  }
 });
 
-// app.get('/', (req, res) => {
-//   res.send('Hello World!');
-// });}
+app.use('/user', usuariosRoutes);
 
-app.get('/', (req, res) => {
-  res.json({ message: 'You are not logged in' });
-});
-
-app.get('/auth/google/failed', (req, res) => {
-  res.send('Failed');
-});
-
-app.get('/user404', (req, res) => {
-  req.session = null;
-  res.send('User not found');
-});
-
-app.use('/auth/google/success', isAuth, usuariosRoutes);
+app.use('/retrospectivas', retrospectivaRoutes);
 
 app.get('/logout', (req, res) => {
-  req.session = null;
+  req.logout();
+  res.clearCookie('connect.sid');
   res.redirect('/');
 });
 

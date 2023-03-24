@@ -6,7 +6,7 @@ interface ContextProps {
 }
 
 export const userDataContext = createContext<ContextProps>({
-  user: null!,
+  user: null,
   setUser: (data: any) => {},
 });
 
@@ -15,7 +15,7 @@ interface UserContextProps {
 }
 
 const UserContext: FC<UserContextProps> = ({ children }) => {
-  const [user, setUser] = useState(null!);
+  const [user, setUser] = useState(null);
 
   return (
     <userDataContext.Provider value={{ user, setUser }}>

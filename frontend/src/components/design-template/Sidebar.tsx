@@ -1,40 +1,29 @@
-// Importamos las librerías y componentes necesarios para el sidebar
 import Avatar from '@atlaskit/avatar';
-import MenuIcon from '@atlaskit/icon/glyph/menu';
 import SignOutIcon from '@atlaskit/icon/glyph/sign-out';
 import { motion } from 'framer-motion';
-import { FC, useState } from 'react';
-import { useLocation, useMatch } from 'react-router-dom';
-import ConfirmLink from './ConfirmLink';
-
+import { useContext } from 'react';
+import { useLocation, useMatch, useNavigate } from 'react-router-dom';
+import { userDataContext } from '../../contexts';
 import { categories } from '../../utils/templateData';
-
-// Importamos la imagen del logo de la empresa
+import ConfirmLink from './ConfirmLink';
+import axios from 'axios';
 import zebrandsLogo from '../../assets/zebrandsLogo.svg';
 
-// Definimos las propiedades necesarias para el sidebar
-interface SidebarProps {
-  idRol: number;
-  name: string;
-}
+const URI = 'http://localhost:8000/logout';
 
-// Definimos los estilos para los botones y texto en el sidebar
 const buttonActiveStyles =
   'bg-[#E9F2FF] px-[2vmin] py-[0.8vmin] flex justify-start w-full items-center rounded-md gap-5';
-
 const buttonStyles =
   'px-[2vmin] py-[0.8vmin] flex justify-start w-full items-center rounded-md gap-5 hover:bg-[#E9F2FF]';
-
 const textStyle = 'link font-bold text-[0.85rem]';
-
 const textNotActiveStyles = `${textStyle} text-paragraph`;
-
 const textActiveStyles = `${textStyle} text-selectBold`;
 
-// Creamos el componente Sidebar
-const Sidebar: FC<SidebarProps> = ({ idRol, name }) => {
-  // Definimos los estados necesarios para el sidebar
-  const [toggleSidebar, setToggleSidebar] = useState<boolean>(false);
+const Sidebar = ({}) => {
+  const { user, setUser } = useContext(userDataContext);
+  const navigate = useNavigate();
+  const idRol = 1;
+  const name = `${user?.nombre} ${user?.apellido}` || 'Usuario';
   const location = useLocation();
   const pColor = '#44546F';
   const sColor = '#0C66E4';
@@ -43,7 +32,14 @@ const Sidebar: FC<SidebarProps> = ({ idRol, name }) => {
     '/mis-retrospectivas/responder/:id/preguntas/'
   );
 
-  // Definimos las animaciones necesarias para el sidebar
+  const handleLogout = async () => {
+    await axios.get(URI, {
+      withCredentials: true,
+    });
+    setUser(null);
+    navigate('/login');
+  };
+
   const sidebarVariants = {
     hovered: {
       width: '21vw',
@@ -64,17 +60,8 @@ const Sidebar: FC<SidebarProps> = ({ idRol, name }) => {
     collapsed: { width: '70%' },
   };
 
-  // Renderizamos el componente Sidebar
   return (
     <>
-      {/* Creamos un botón que se muestra solo en dispositivos móviles */}
-      <button
-        className="lg:hidden w-full"
-        onClick={() => setToggleSidebar(true)}
-      >
-        <MenuIcon label="menu" primaryColor={pColor} size={'large'} />
-      </button>
-      {/* Creamos el sidebar con animaciones */}
       <motion.div
         layout
         initial="collapsed"
@@ -84,9 +71,12 @@ const Sidebar: FC<SidebarProps> = ({ idRol, name }) => {
         className={`invisible overflow-hidden whitespace-nowrap flex flex-col bg-white h-[100vh] items-center drop-shadow py-12 fixed left-0 lg:visible top-0 z-50`}
       >
         <div className="flex flex-col justify-between h-full">
-          {/* Mostramos el avatar del usuario y su nombre */}
           <div className="flex items-center justify-center gap-3 border-gray-100 border-solid border-2 bg-white rounded-full py-[0.2vmin] w-full">
-            <Avatar />
+            <Avatar
+              src={user?.foto || null}
+              appearance="circle"
+              name={name}
+            />
             <motion.p
               className={textNotActiveStyles}
               variants={linksVariants}
@@ -95,7 +85,6 @@ const Sidebar: FC<SidebarProps> = ({ idRol, name }) => {
             </motion.p>
           </div>
 
-          {/* Mostramos las categorías del sidebar */}
           <div className="flex flex-col justify-center items-center gap-7 w-full">
             {categories.map((category, i) => {
               const Icon = category.icon;
@@ -113,7 +102,6 @@ const Sidebar: FC<SidebarProps> = ({ idRol, name }) => {
               const showLink =
                 !category.roleIds || category.roleIds.includes(idRol);
 
-              // Mostramos el link solo si el usuario tiene los permisos necesarios
               return showLink ? (
                 <ConfirmLink
                   className={activeStyles}
@@ -141,8 +129,10 @@ const Sidebar: FC<SidebarProps> = ({ idRol, name }) => {
             })}
           </div>
 
-          {/* Creamos un botón para cerrar sesión */}
-          <button className={`${buttonStyles} justify-center`}>
+          <button
+            className={`${buttonStyles} justify-center`}
+            onClick={handleLogout}
+          >
             <SignOutIcon
               label="cerrar sesión"
               primaryColor={pColor}
@@ -157,7 +147,6 @@ const Sidebar: FC<SidebarProps> = ({ idRol, name }) => {
           </button>
         </div>
 
-        {/* Mostramos el logo de la empresa */}
         <motion.img
           src={zebrandsLogo}
           alt="zebrands"
@@ -169,5 +158,4 @@ const Sidebar: FC<SidebarProps> = ({ idRol, name }) => {
   );
 };
 
-// Exportamos el componente Sidebar
 export default Sidebar;

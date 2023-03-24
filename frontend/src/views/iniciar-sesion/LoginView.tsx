@@ -1,32 +1,62 @@
-import { FC, useCallback, useContext, useEffect } from 'react';
-import Geometry from '../assets/geometry.png';
-import zebrandsLogo from '../assets/zebrandsLogo.svg';
-import GoogleLogo from '../assets/Google__G__Logo.svg';
+import { FC, useContext, useEffect } from 'react';
+import GoogleLogo from '../../assets/Google__G__Logo.svg';
+import Geometry from '../../assets/geometry.png';
+import zebrandsLogo from '../../assets/zebrandsLogo.svg';
+import { userDataContext } from '../../contexts';
 import axios from 'axios';
-import { userDataContext } from '../contexts';
 import { useNavigate } from 'react-router-dom';
 
 interface LoginProps {}
 
-const URI = 'http://localhost:8000/auth/google';
+const URI = 'http://localhost:8000/login/google';
+const URI_LOGIN = 'http://localhost:8000/user';
 
 const Login: FC<LoginProps> = ({}) => {
-  // const navigate = useNavigate();
-  // const handleLogin = useCallback(
-  //   (e: React.FormEvent<HTMLFormElement>) => {
-  //     e.preventDefault();
-  //     const width = 600;
-  //     const height = 600;
-  //     const left = window.innerWidth / 2 - width / 2;
-  //     const top = window.innerHeight / 2 - height / 2;
-  //     window.open(
-  //       URI,
-  //       'popup',
-  //       `width=${width}, height=${height}, left=${left}, top=${top}`
-  //     );
-  //   },
-  //   []
-  // );
+  const navigate = useNavigate();
+  const { user, setUser } = useContext(userDataContext);
+
+  const redirectToGoogleSSO = async () => {
+    let timer: ReturnType<typeof setTimeout> | null = null;
+    const width = 600;
+    const height = 600;
+    const left = window.innerWidth / 2 - width / 2;
+    const top = window.innerHeight / 2 - height / 2;
+    const popUp = window.open(
+      URI,
+      '_blank',
+      `width=${width}, height=${height}, left=${left}, top=${top}`
+    );
+    if (popUp) {
+      timer = setInterval(() => {
+        if (popUp.closed) {
+          getUser();
+          console.log('User: ', user);
+          if (timer) {
+            clearInterval(timer);
+          }
+        }
+      }, 500);
+    }
+  };
+
+  const getUser = async () => {
+    const response = await axios
+      .get(`${URI_LOGIN}/auth/`, {
+        withCredentials: true,
+      })
+      .catch((err) => {
+        console.log('No se autenticó correctamente');
+      });
+
+    if (response && response.data) {
+      setUser(response.data);
+      navigate('/dashboard');
+    }
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
 
   return (
     <div
@@ -56,9 +86,9 @@ const Login: FC<LoginProps> = ({}) => {
             para continuar.
           </p>
         </div>
-        <form action={URI} className="w-full">
+        <div className="w-full">
           <button
-            type="submit"
+            onClick={redirectToGoogleSSO}
             className="flex items-center justify-evenly rounded-full w-full  border border-solid border-slate-300 text-sm py-2 px-3 text-slate-900 hover:bg-[#f8faff] hover:border-[#d2e3fc]"
           >
             <div className="w-fit">
@@ -72,7 +102,7 @@ const Login: FC<LoginProps> = ({}) => {
               Continuar con Google
             </div>
           </button>
-        </form>
+        </div>
       </div>
 
       <div className="h-full overflow-hidden pointer-events-none">
