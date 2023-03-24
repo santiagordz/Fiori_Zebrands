@@ -13,15 +13,18 @@ import {
 
 const Main = ({}) => {
   const { user } = useContext(userDataContext);
+  const idRol = user?.id_rol || -1;
+
+  /*  11 = admin
+      12 = responsable
+  */
+  const adminAllowed = idRol === 11 || false;
+  const responsableAllowed = idRol === 12 || false;
 
   return (
     <Routes>
-      {user ? (
+      {user && (
         <>
-          <Route
-            path="*"
-            element={<Navigate to={'/404'} replace />}
-          />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/metricas/*" element={<Metricas />} />
           <Route
@@ -34,20 +37,27 @@ const Main = ({}) => {
           />
           <Route
             path="/gestionar-retrospectivas/*"
-            element={<GestionarRetrospectivas />}
+            element={
+              adminAllowed || responsableAllowed ? (
+                <GestionarRetrospectivas />
+              ) : (
+                <Navigate to={'/404'} replace />
+              )
+            }
           />
           <Route
             path="/administrar-usuarios/*"
-            element={<AdministrarUsuarios />}
+            element={
+              adminAllowed ? (
+                <AdministrarUsuarios />
+              ) : (
+                <Navigate to={'/404'} replace />
+              )
+            }
           />
-          <Route path="/404" element={<NotFound404 />} />
         </>
-      ) : (
-        <Route
-          path="*"
-          element={<Navigate to={'/login'} replace />}
-        />
       )}
+      <Route path="*" element={<Navigate to={'/404'} replace />} />
     </Routes>
   );
 };

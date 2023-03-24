@@ -7,7 +7,12 @@ import {
 } from 'react-router-dom';
 import { Login, Main } from './containers';
 import { UserContext, userDataContext } from './contexts';
-import { LoginSuccess, NotFound404 } from './views';
+import {
+  LoginSuccess,
+  NotFound404,
+  LoginError,
+  NotRegistered,
+} from './views';
 
 function App() {
   const { user } = useContext(userDataContext);
@@ -33,16 +38,15 @@ function App() {
                 path="/login/success"
                 element={<LoginSuccess />}
               />
-              <Route path="/login/error">
-                Error al iniciar sesión, por favor intente nuevamente
-                o contacte al administrador.
-              </Route>
+              <Route path="/login/error" element={<LoginError />} />
             </>
           )}
           <Route
-            path="*"
-            element={<Navigate to={'/404'} replace />}
+            path="/usernotregistered"
+            element={<NotRegistered />}
           />
+          {/* {user === -2 && (
+          )} */}
           <Route path="/404" element={<NotFound404 />} />
         </Routes>
       </Router>

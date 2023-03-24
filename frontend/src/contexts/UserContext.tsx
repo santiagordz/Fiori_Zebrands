@@ -1,7 +1,7 @@
 import React, { FC, createContext, useState } from 'react';
 
 interface ContextProps {
-  user: { [key: string]: any } | null;
+  user: { [key: string]: any } | null | -2;
   setUser: (data: any) => void;
 }
 

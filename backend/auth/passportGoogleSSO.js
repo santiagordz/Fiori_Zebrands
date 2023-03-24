@@ -18,7 +18,7 @@ passport.use(
       const user = await Usuario.fetchOne(profile.email).catch(
         (err) => {
           console.log(err);
-          cb(err, null);
+          throw new Error('USER_NOT_FOUND');
         }
       );
 
@@ -62,7 +62,7 @@ passport.use(
 passport.serializeUser((user, cb) => {
   // console.log(`\n--------> Serialize User:`, user);
 
-  cb(null, user.correo);
+  if (user) cb(null, user.correo);
 });
 
 passport.deserializeUser(async (correo, cb) => {

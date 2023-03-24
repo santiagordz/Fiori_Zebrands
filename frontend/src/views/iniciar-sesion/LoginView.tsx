@@ -1,10 +1,11 @@
+import axios from 'axios';
 import { FC, useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import GoogleLogo from '../../assets/Google__G__Logo.svg';
 import Geometry from '../../assets/geometry.png';
 import zebrandsLogo from '../../assets/zebrandsLogo.svg';
 import { userDataContext } from '../../contexts';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 interface LoginProps {}
 
@@ -30,7 +31,6 @@ const Login: FC<LoginProps> = ({}) => {
       timer = setInterval(() => {
         if (popUp.closed) {
           getUser();
-          console.log('User: ', user);
           if (timer) {
             clearInterval(timer);
           }
@@ -45,7 +45,8 @@ const Login: FC<LoginProps> = ({}) => {
         withCredentials: true,
       })
       .catch((err) => {
-        console.log('No se autenticó correctamente');
+        console.log('No se autenticó correctamente', err);
+        // handleFetchOneError(err);
       });
 
     if (response && response.data) {
@@ -54,12 +55,20 @@ const Login: FC<LoginProps> = ({}) => {
     }
   };
 
+  const handleFetchOneError = (err: any) => {
+    console.error(err);
+    navigate('/usernotregister');
+  };
+
   useEffect(() => {
     getUser();
   }, []);
 
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5, delay: 0.2 }}
       className="grid items-center w-screen h-screen overflow-hidden"
       style={{ gridTemplateColumns: '1fr 2fr' }}
     >
@@ -112,7 +121,7 @@ const Login: FC<LoginProps> = ({}) => {
           className="w-full h-full scale-[1.6] relative object-cover object-center"
         />
       </div>
-    </div>
+    </motion.div>
   );
 };
 

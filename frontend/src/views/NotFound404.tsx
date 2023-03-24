@@ -12,7 +12,7 @@ const NotFound404: FC<NotFound404Props> = ({}) => {
   const navigate = useNavigate();
   return (
     <div className="flex flex-col items-center gap-7 w-auto h-screen mx-[6vw] lg:ml-[9vw] lg:mr-[3vw]">
-      <Sidebar idRol={1} name="Santiago Rodriguez" />
+      <Sidebar />
       <div className="flex items-center justify-center w-full h-screen gap-8">
         <div className="w-full">
           <Lottie
@@ -38,7 +38,7 @@ const NotFound404: FC<NotFound404Props> = ({}) => {
           <div>
             <Button
               onClick={() => {
-                navigate('/dashboard');
+                navigate('/login');
               }}
               appearance="primary"
               iconBefore={

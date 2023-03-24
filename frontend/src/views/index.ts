@@ -7,3 +7,5 @@ export { default as AdministrarUsuarios } from './administrar-usuarios/Administr
 export { default as NotFound404 } from './NotFound404';
 export { default as LoginView } from './iniciar-sesion/LoginView';
 export { default as LoginSuccess } from './iniciar-sesion/LoginSuccess';
+export { default as LoginError } from './iniciar-sesion/LoginError';
+export { default as NotRegistered } from './iniciar-sesion/NotRegistered';

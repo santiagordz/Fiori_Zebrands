@@ -22,9 +22,13 @@ module.exports = class Usuarios {
   }
 
   static async fetchOne(correo) {
-    return db.execute(`SELECT * FROM usuario WHERE correo = ?`, [
-      correo,
-    ]);
+    return db.execute(
+      `SELECT correo, nombre, apellido, foto, id_usuario_jira, id_usuario_google, id_rol
+        FROM usuario U, usuario_rol UR
+        WHERE U.correo = UR.id_usuario
+        AND U.correo = ?`,
+      [correo]
+    );
   }
 
   static async updateData(

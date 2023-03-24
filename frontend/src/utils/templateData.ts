@@ -6,6 +6,16 @@ import SwitcherIcon from '@atlaskit/icon/glyph/switcher';
 import PeopleIcon from '@atlaskit/icon/glyph/people';
 import type { GlyphProps } from '@atlaskit/icon/types';
 
+interface rolesType {
+  [key: number]: string;
+}
+
+export const roles: rolesType = {
+  11: 'Administrador',
+  12: 'Responsable',
+  13: 'Squad Member',
+};
+
 // Definimos un tipo de objeto que contiene los datos para la sidebar
 interface categoriesType {
   name: string;
@@ -36,13 +46,13 @@ export const categories: Array<categoriesType> = [
     name: 'Gestionar retrospectivas',
     icon: SwitcherIcon,
     path: 'gestionar-retrospectivas',
-    roleIds: [1, 3],
+    roleIds: [11, 12],
   },
   {
     name: 'Administrar usuarios',
     icon: PeopleIcon,
     path: 'administrar-usuarios',
-    roleIds: [1],
+    roleIds: [11],
   },
 ];
 

@@ -19,8 +19,15 @@ router.get(
     successRedirect: successRedirect,
   }),
   (req, res) => {
-    // console.log('User: ', req.user);
-    res.send('You have successfully logged in with Google');
+    try {
+      res.send('You have successfully logged in with Google');
+    } catch (err) {
+      if (err.message === 'USER_NOT_FOUND') {
+        res.status(401).json({ error: 'User not found in database' });
+      } else {
+        res.status(500).json({ error: 'Internal server error' });
+      }
+    }
   }
 );
 

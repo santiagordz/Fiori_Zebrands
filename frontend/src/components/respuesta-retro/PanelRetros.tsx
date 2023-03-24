@@ -45,6 +45,7 @@ const PanelRetros: FC<PanelRetrosProps> = ({}) => {
           retroPendientes.map((retrospectiva: Retrospectiva) => {
             return (
               <RetrospectivaGeneral
+                key={retrospectiva.id_retrospectiva}
                 idRetrospectiva={retrospectiva.id_retrospectiva || -1}
                 titulo={retrospectiva.titulo || ''}
                 descripcion={retrospectiva.descripcion || ''}

@@ -1,13 +1,13 @@
 import Avatar from '@atlaskit/avatar';
 import SignOutIcon from '@atlaskit/icon/glyph/sign-out';
+import axios from 'axios';
 import { motion } from 'framer-motion';
 import { useContext } from 'react';
 import { useLocation, useMatch, useNavigate } from 'react-router-dom';
+import zebrandsLogo from '../../assets/zebrandsLogo.svg';
 import { userDataContext } from '../../contexts';
 import { categories } from '../../utils/templateData';
 import ConfirmLink from './ConfirmLink';
-import axios from 'axios';
-import zebrandsLogo from '../../assets/zebrandsLogo.svg';
 
 const URI = 'http://localhost:8000/logout';
 
@@ -22,8 +22,8 @@ const textActiveStyles = `${textStyle} text-selectBold`;
 const Sidebar = ({}) => {
   const { user, setUser } = useContext(userDataContext);
   const navigate = useNavigate();
-  const idRol = 1;
-  const name = `${user?.nombre} ${user?.apellido}` || 'Usuario';
+  const idRol = user?.id_rol || -1;
+  const name = `${user?.nombre} ${user?.apellido}`;
   const location = useLocation();
   const pColor = '#44546F';
   const sColor = '#0C66E4';
@@ -81,7 +81,7 @@ const Sidebar = ({}) => {
               className={textNotActiveStyles}
               variants={linksVariants}
             >
-              {name}
+              {name || (user?.name === undefined && 'Usuario')}
             </motion.p>
           </div>
 
