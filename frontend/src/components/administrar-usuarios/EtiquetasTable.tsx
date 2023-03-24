@@ -7,7 +7,7 @@ import Tag from '@atlaskit/tag';
 
 import './css/etiquetasTable.css';
 import EditarEtiquetaIcon from './EditarEtiquetaIcon';
-import BorrarEtiquetaIcon from './BorrarEtiquetarIcon';
+import BorrarEtiquetaIcon from './BorrarEtiquetaIcon';
 
 const URI = 'http://localhost:8000/etiquetas';
 

@@ -37,3 +37,12 @@ exports.createEtiqueta = (req, res, next) => {
     })
     .catch((err) => console.log(err));
 };
+
+exports.deleteEtiqueta = (req, res, next) => {
+  const id = req.params.id;
+  Etiquetas.deleteEtiqueta(id)
+    .then(([rows, fieldData]) => {
+      res.json(rows);
+    })
+    .catch((err) => console.log(err));
+};

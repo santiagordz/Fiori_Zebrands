@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { token } from '@atlaskit/tokens';
 import { N500, R400 } from '@atlaskit/theme/colors';
 import TrashIcon from '@atlaskit/icon/glyph/trash';
-import ModalBorrarUsuarios from './ModalBorrarUsuarios';
+
+import ModalBorrarEtiqueta from './ModalBorrarEtiqueta';
 
 const BorrarEditarIcon = ({ etiqueta }: any) => {
   const [color, setColor] = useState(true);
@@ -34,6 +35,11 @@ const BorrarEditarIcon = ({ etiqueta }: any) => {
           )}
         />
       </button>
+      <ModalBorrarEtiqueta
+        show={isOpen}
+        onClose={() => setIsOpen(false)}
+        id={etiqueta}
+      />
     </>
   );
 };
