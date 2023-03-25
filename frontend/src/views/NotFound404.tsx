@@ -1,15 +1,17 @@
-import React, { FC } from 'react';
-import { Sidebar } from '../components';
+import React, { FC, useContext } from 'react';
+import { Sidebar } from '../../components';
 import Lottie from 'lottie-react';
 import Astronaut from '../assets/lotties/astronaut_empty.json';
 import Button from '@atlaskit/button';
 import ArrowLeftIcon from '@atlaskit/icon/glyph/arrow-left';
 import { useNavigate } from 'react-router-dom';
+import { userDataContext } from '../../contexts';
 
 interface NotFound404Props {}
 
 const NotFound404: FC<NotFound404Props> = ({}) => {
   const navigate = useNavigate();
+  const { user } = useContext(userDataContext);
   return (
     <div className="flex flex-col items-center gap-7 w-auto h-screen mx-[6vw] lg:ml-[9vw] lg:mr-[3vw]">
       <Sidebar />
@@ -38,7 +40,11 @@ const NotFound404: FC<NotFound404Props> = ({}) => {
           <div>
             <Button
               onClick={() => {
-                navigate('/login');
+                if (user) {
+                  navigate(-1);
+                } else {
+                  navigate('/login');
+                }
               }}
               appearance="primary"
               iconBefore={

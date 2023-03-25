@@ -6,11 +6,18 @@ import Geometry from '../../assets/geometry.png';
 import zebrandsLogo from '../../assets/zebrandsLogo.svg';
 import { userDataContext } from '../../contexts';
 import { motion } from 'framer-motion';
+import Cookies from 'js-cookie';
+import CryptoJS from 'crypto-js';
 
 interface LoginProps {}
 
 const URI = 'http://localhost:8000/login/google';
 const URI_LOGIN = 'http://localhost:8000/user';
+
+const SECRET_KEY_1 =
+  import.meta.env.VITE_APP_COOKIE_KEY_1 || 'secret1';
+const SECRET_KEY_2 =
+  import.meta.env.VITE_APP_COOKIE_KEY_2 || 'secret2';
 
 const Login: FC<LoginProps> = ({}) => {
   const navigate = useNavigate();
@@ -39,6 +46,23 @@ const Login: FC<LoginProps> = ({}) => {
     }
   };
 
+  // Enfoque de cifrado en cascada, en el que los datos se cifran con varias claves de cifrado en secuencia.
+  const encryptData = (
+    data: string,
+    key1: string,
+    key2: string
+  ): string => {
+    const encryptedData1 = CryptoJS.AES.encrypt(
+      data,
+      key1
+    ).toString();
+    const encryptedData2 = CryptoJS.AES.encrypt(
+      encryptedData1,
+      key2
+    ).toString();
+    return encryptedData2;
+  };
+
   const getUser = async () => {
     const response = await axios
       .get(`${URI_LOGIN}/auth/`, {
@@ -49,9 +73,22 @@ const Login: FC<LoginProps> = ({}) => {
         // handleFetchOneError(err);
       });
 
-    if (response && response.data) {
-      setUser(response.data);
-      navigate('/dashboard');
+      if (response && response.data) {
+        setUser(response.data);
+
+        const encryptedData = encryptData(
+          JSON.stringify(response.data),
+          SECRET_KEY_1,
+          SECRET_KEY_2
+        );
+        Cookies.set('user', encryptedData);
+
+        navigate('/dashboard');
+      }
+    } catch (err) {
+      console.log('No se autenticó correctamente', err);
+    } finally {
+      setHasAttemptedFetch(true);
     }
   };
 
