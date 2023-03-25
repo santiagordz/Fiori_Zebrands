@@ -1,15 +1,20 @@
-import React, { FC } from 'react';
-import { Sidebar } from '../../components';
-import Lottie from 'lottie-react';
-import Astronaut from '../../assets/lotties/nodata.json';
 import Button from '@atlaskit/button';
 import ArrowLeftIcon from '@atlaskit/icon/glyph/arrow-left';
+import Lottie from 'lottie-react';
+import { FC, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Astronaut from '../../assets/lotties/nodata.json';
+import { Sidebar } from '../../components';
+import { userDataContext } from '../../contexts';
 
 interface Unauthorized401Props {}
 
 const Unauthorized401: FC<Unauthorized401Props> = ({}) => {
   const navigate = useNavigate();
+  const { user } = useContext(userDataContext);
+  if (!user) {
+    navigate('/404');
+  }
   return (
     <div className="flex flex-col items-center justify-center text-center gap-7 w-auto h-screen mx-[9vw] ml-[9vw]">
       <Sidebar />

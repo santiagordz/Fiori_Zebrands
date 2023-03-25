@@ -8,6 +8,7 @@ import zebrandsLogo from '../../assets/zebrandsLogo.svg';
 import { userDataContext } from '../../contexts';
 import { categories } from '../../utils/templateData';
 import ConfirmLink from './ConfirmLink';
+import Cookies from 'js-cookie';
 
 const URI = 'http://localhost:8000/logout';
 
@@ -37,7 +38,7 @@ const Sidebar = ({}) => {
       withCredentials: true,
     });
     setUser(null);
-    localStorage.removeItem('user');
+    Cookies.remove('user');
     navigate('/login');
   };
 
