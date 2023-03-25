@@ -13,21 +13,39 @@ router.get(
 
 router.get(
   '/auth/google/callback',
-  passport.authenticate('google', {
-    failureMessage: 'Failed to authenticate with Google',
-    failureRedirect: errorRedirect,
-    successRedirect: successRedirect,
-  }),
-  (req, res) => {
-    try {
-      res.send('You have successfully logged in with Google');
-    } catch (err) {
-      if (err.message === 'USER_NOT_FOUND') {
-        res.status(401).json({ error: 'User not found in database' });
-      } else {
-        res.status(500).json({ error: 'Internal server error' });
+  (req, res, next) => {
+    passport.authenticate('google', (err, user, info) => {
+      if (err) {
+        req.session.error = 'Failed to authenticate with Google';
+        return res.redirect(errorRedirect);
       }
-    }
+      if (!user) {
+        if (info.message === 'User not registered') {
+          return res.send(`
+      <script>
+        window.opener.postMessage({ error: 'User not registered' }, '*');
+        window.close();
+      </script>
+    `);
+        }
+        return res.send(`
+    <script>
+      window.opener.postMessage({ error: 'Failed to authenticate with Google' }, '*');
+      window.close();
+    </script>
+  `);
+      }
+
+      req.logIn(user, (err) => {
+        if (err) {
+          return next(err);
+        }
+        return res.redirect(successRedirect);
+      });
+    })(req, res, next);
+  },
+  (req, res) => {
+    res.send('You have successfully logged in with Google');
   }
 );
 

@@ -1,11 +1,12 @@
 import axios from 'axios';
-import { FC, useContext, useEffect } from 'react';
+import { FC, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import GoogleLogo from '../../assets/Google__G__Logo.svg';
 import Geometry from '../../assets/geometry.png';
 import zebrandsLogo from '../../assets/zebrandsLogo.svg';
 import { userDataContext } from '../../contexts';
 import { motion } from 'framer-motion';
+import Cookies from 'js-cookie';
 
 interface LoginProps {}
 
@@ -14,7 +15,9 @@ const URI_LOGIN = 'http://localhost:8000/user';
 
 const Login: FC<LoginProps> = ({}) => {
   const navigate = useNavigate();
-  const { user, setUser } = useContext(userDataContext);
+  const { user, setUser, setHasAttemptedFetch } =
+    useContext(userDataContext);
+  const [error, setError] = useState(false);
 
   const redirectToGoogleSSO = async () => {
     let timer: ReturnType<typeof setTimeout> | null = null;
@@ -40,29 +43,43 @@ const Login: FC<LoginProps> = ({}) => {
   };
 
   const getUser = async () => {
-    const response = await axios
-      .get(`${URI_LOGIN}/auth/`, {
+    try {
+      const response = await axios.get(`${URI_LOGIN}/auth/`, {
         withCredentials: true,
-      })
-      .catch((err) => {
-        console.log('No se autenticó correctamente', err);
-        // handleFetchOneError(err);
       });
 
-    if (response && response.data) {
-      setUser(response.data);
-      navigate('/dashboard');
+      if (response && response.data) {
+        setUser(response.data);
+        navigate('/dashboard');
+      }
+    } catch (err) {
+      console.log('No se autenticó correctamente', err);
+    } finally {
+      setHasAttemptedFetch(true);
     }
   };
 
-  const handleFetchOneError = (err: any) => {
-    console.error(err);
-    navigate('/usernotregister');
-  };
-
   useEffect(() => {
-    getUser();
+    const handleAuthMessage = (event: MessageEvent) => {
+      if (event.data.error === 'User not registered') {
+        navigate('/usernotregistered');
+      } else if (event.data.error) {
+        setError(true);
+      } else {
+        getUser();
+      }
+    };
+
+    window.addEventListener('message', handleAuthMessage);
+
+    return () => {
+      window.removeEventListener('message', handleAuthMessage);
+    };
   }, []);
+
+  if (user) {
+    navigate('/dashboard');
+  }
 
   return (
     <motion.div

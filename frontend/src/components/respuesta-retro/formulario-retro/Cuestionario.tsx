@@ -8,7 +8,7 @@ import {
   QuestionDB,
   formDataContext,
   questionsContext,
-} from '../local_contexts';
+} from '../local-contexts';
 import { ConfirmacionRetro, BackMyRetros } from '../modals';
 import FormStep from './FormStep';
 

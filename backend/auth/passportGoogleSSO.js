@@ -18,7 +18,7 @@ passport.use(
       const user = await Usuario.fetchOne(profile.email).catch(
         (err) => {
           console.log(err);
-          throw new Error('USER_NOT_FOUND');
+          cb(err, null);
         }
       );
 
@@ -53,7 +53,7 @@ passport.use(
 
         return cb(null, userExists);
       } else {
-        return cb(null, null);
+        return cb(null, false, { message: 'User not registered' });
       }
     }
   )

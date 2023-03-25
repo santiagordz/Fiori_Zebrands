@@ -37,6 +37,7 @@ const Sidebar = ({}) => {
       withCredentials: true,
     });
     setUser(null);
+    localStorage.removeItem('user');
     navigate('/login');
   };
 

@@ -11,7 +11,7 @@ import Spinner from '../../design-template/spinner/Spinner';
 import {
   FormDataProvider,
   QuestionsProvider,
-} from '../local_contexts';
+} from '../local-contexts';
 import RetrospectivaGeneral from '../reusable/RetrospectivaGeneral';
 import Answers from './Answers';
 import Cuestionario from './Cuestionario';
