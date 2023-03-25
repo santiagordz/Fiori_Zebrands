@@ -8,13 +8,17 @@ const SECRET_KEY_2 =
   import.meta.env.VITE_APP_COOKIE_KEY_2 || 'secret2';
 
 interface ContextProps {
-  user: { [key: string]: any } | null | -2;
+  user: { [key: string]: any } | null;
   setUser: (data: any) => void;
+  hasAttemptedFetch: boolean;
+  setHasAttemptedFetch: (attempted: boolean) => void;
 }
 
 export const userDataContext = createContext<ContextProps>({
   user: null,
   setUser: (data: any) => {},
+  hasAttemptedFetch: false,
+  setHasAttemptedFetch: (attempted: boolean) => {},
 });
 
 interface UserContextProps {
@@ -59,7 +63,14 @@ const UserContext: FC<UserContextProps> = ({ children }) => {
   }, []);
 
   return (
-    <userDataContext.Provider value={{ user, setUser }}>
+    <userDataContext.Provider
+      value={{
+        user,
+        setUser,
+        hasAttemptedFetch,
+        setHasAttemptedFetch,
+      }}
+    >
       {children}
     </userDataContext.Provider>
   );

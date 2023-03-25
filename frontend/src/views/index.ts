@@ -4,8 +4,9 @@ export { default as MisRetrospectivas } from './mis-retrospectivas/MisRetrospect
 export { default as MisAccionables } from './mis-accionables/MisAccionables';
 export { default as GestionarRetrospectivas } from './gestionar-retrospectivas/GestionarRetrospectivas';
 export { default as AdministrarUsuarios } from './administrar-usuarios/AdministrarUsuarios';
-export { default as NotFound404 } from './NotFound404';
-export { default as LoginView } from './iniciar-sesion/LoginView';
+export { default as NotFound404 } from './error/NotFound404';
+export { default as Unauthorized401 } from './error/Unauthorized401';
+export { default as Login } from './iniciar-sesion/Login';
 export { default as LoginSuccess } from './iniciar-sesion/LoginSuccess';
 export { default as LoginError } from './iniciar-sesion/LoginError';
 export { default as NotRegistered } from './iniciar-sesion/NotRegistered';

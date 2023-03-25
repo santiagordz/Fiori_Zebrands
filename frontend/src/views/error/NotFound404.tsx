@@ -1,7 +1,7 @@
 import React, { FC, useContext } from 'react';
 import { Sidebar } from '../../components';
 import Lottie from 'lottie-react';
-import Astronaut from '../assets/lotties/astronaut_empty.json';
+import Astronaut from '../../assets/lotties/astronaut_empty.json';
 import Button from '@atlaskit/button';
 import ArrowLeftIcon from '@atlaskit/icon/glyph/arrow-left';
 import { useNavigate } from 'react-router-dom';
@@ -13,8 +13,7 @@ const NotFound404: FC<NotFound404Props> = ({}) => {
   const navigate = useNavigate();
   const { user } = useContext(userDataContext);
   return (
-    <div className="flex flex-col items-center gap-7 w-auto h-screen mx-[6vw] lg:ml-[9vw] lg:mr-[3vw]">
-      <Sidebar />
+    <div className="flex flex-col items-center gap-7 w-auto h-screen mx-[9vw] ml-[9vw]">
       <div className="flex items-center justify-center w-full h-screen gap-8">
         <div className="w-full">
           <Lottie
@@ -49,12 +48,12 @@ const NotFound404: FC<NotFound404Props> = ({}) => {
               appearance="primary"
               iconBefore={
                 <ArrowLeftIcon
-                  label="volver al dashboard"
+                  label="volver a zona segura"
                   primaryColor="white"
                 />
               }
             >
-              Volver al Dashboard
+              Volver a una zona segura
             </Button>
           </div>
         </div>

@@ -116,6 +116,18 @@
     "@babel/runtime" "^7.0.0"
     bind-event-listener "^2.1.1"
 
+"@atlaskit/empty-state@^7.4.9":
+  version "7.4.9"
+  resolved "https://registry.yarnpkg.com/@atlaskit/empty-state/-/empty-state-7.4.9.tgz#aed572673f543fc19aa863f5c10b772c660fb0c9"
+  integrity sha512-hUSs0ec8R2xbKzrZNUpcH0g1o3Jd0NWfF1uXn+3ajiPkH1JASAXfdJssi1UHzldZqHk/842rO2zdl1HAzHAdaA==
+  dependencies:
+    "@atlaskit/button" "^16.5.0"
+    "@atlaskit/spinner" "^15.4.0"
+    "@atlaskit/theme" "^12.2.0"
+    "@atlaskit/tokens" "^1.2.0"
+    "@babel/runtime" "^7.0.0"
+    "@emotion/react" "^11.7.1"
+
 "@atlaskit/flag@^15.0.8":
   version "15.0.8"
   resolved "https://registry.yarnpkg.com/@atlaskit/flag/-/flag-15.0.8.tgz#acb65807604e69efc3db002d0d4fd455b202b6e4"
@@ -1478,6 +1490,11 @@ is-number@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/is-number/-/is-number-7.0.0.tgz#7535345b896734d5f80c4d06c50955527a14f12b"
   integrity sha512-41Cifkg6e8TylSpdtTpeLVMqvSBEVzTttHvERD741+pnZ8ANv0004MRL43QKPDlK9cGvNp6NZWZUBlbGXYxxng==
+
+js-cookie@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/js-cookie/-/js-cookie-3.0.1.tgz#9e39b4c6c2f56563708d7d31f6f5f21873a92414"
+  integrity sha512-+0rgsUXZu4ncpPxRL+lNEptWMOWl9etvPHc/koSRp6MPwpRYAhmk0dUG00J4bxVV3r9uUzfo24wW0knS07SKSw==
 
 "js-tokens@^3.0.0 || ^4.0.0", js-tokens@^4.0.0:
   version "4.0.0"

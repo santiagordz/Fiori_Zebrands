@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FC, useContext, useEffect } from 'react';
+import { FC, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import GoogleLogo from '../../assets/Google__G__Logo.svg';
 import Geometry from '../../assets/geometry.png';
@@ -21,7 +21,9 @@ const SECRET_KEY_2 =
 
 const Login: FC<LoginProps> = ({}) => {
   const navigate = useNavigate();
-  const { user, setUser } = useContext(userDataContext);
+  const { user, setUser, setHasAttemptedFetch } =
+    useContext(userDataContext);
+  const [error, setError] = useState(false);
 
   const redirectToGoogleSSO = async () => {
     let timer: ReturnType<typeof setTimeout> | null = null;
@@ -64,13 +66,9 @@ const Login: FC<LoginProps> = ({}) => {
   };
 
   const getUser = async () => {
-    const response = await axios
-      .get(`${URI_LOGIN}/auth/`, {
+    try {
+      const response = await axios.get(`${URI_LOGIN}/auth/`, {
         withCredentials: true,
-      })
-      .catch((err) => {
-        console.log('No se autenticó correctamente', err);
-        // handleFetchOneError(err);
       });
 
       if (response && response.data) {
@@ -92,14 +90,27 @@ const Login: FC<LoginProps> = ({}) => {
     }
   };
 
-  const handleFetchOneError = (err: any) => {
-    console.error(err);
-    navigate('/usernotregister');
-  };
-
   useEffect(() => {
-    getUser();
+    const handleAuthMessage = (event: MessageEvent) => {
+      if (event.data.error === 'User not registered') {
+        navigate('/usernotregistered');
+      } else if (event.data.error) {
+        setError(true);
+      } else {
+        getUser();
+      }
+    };
+
+    window.addEventListener('message', handleAuthMessage);
+
+    return () => {
+      window.removeEventListener('message', handleAuthMessage);
+    };
   }, []);
+
+  if (user) {
+    navigate('/dashboard');
+  }
 
   return (
     <motion.div
