@@ -62,7 +62,7 @@ const ModalRegistrarUsuarios: FC<RegistrarUsuariosProps> = ({
   }
   return (
     <>
-      <div className="modal">
+      <div className="modal z-[1000]">
         <div className="modal-content px-10">
           <div className="modal-header">
             <div className="modal-title">

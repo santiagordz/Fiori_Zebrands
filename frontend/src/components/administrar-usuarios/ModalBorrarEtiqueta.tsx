@@ -42,7 +42,7 @@ const ModalBorrarEtiqueta: FC<GestionarEtiquetasProps> = ({
   return (
     <>
       <Blanket isTinted={true}>
-        <div className="modal-content px-10">
+        <div className="modal-content px-10 z-[1000]">
           <div className="modal-header">
             <div className="modal-title justify-center">
               <h4 className="uppercase text-3xl text-center">
