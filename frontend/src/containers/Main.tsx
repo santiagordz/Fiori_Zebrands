@@ -19,8 +19,8 @@ const Main = () => {
   /*  11 = admin
       12 = responsable
   */
-  const adminAllowed = idRol === 11 || false;
-  const responsableAllowed = idRol === 12 || false;
+  const adminAllowed = idRol === 1 || false;
+  const responsableAllowed = idRol === 2 || false;
 
   if (!hasAttemptedFetch) {
     return (
