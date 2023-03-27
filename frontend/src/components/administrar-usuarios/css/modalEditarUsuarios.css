@@ -1,0 +1,91 @@
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background-color: #fff;
+  max-width: 50%;
+  min-width: 300px;
+  max-height: 500px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modal-title {
+  width: 100%;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modal-subtitle {
+  width: 100%;
+  font-size: 11px;
+  color: #44546f;
+  margin-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.modal-body {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  justify-content: center;
+}
+
+#label-rol,
+#label-etiquetas {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #626f86;
+}
+
+#input-correo {
+  width: 50%;
+  height: 2rem;
+}
+
+#input-dominio-correo {
+  width: 50%;
+  height: 2rem;
+}
+
+#input-correo::placeholder {
+  font-size: 0.75rem;
+  line-height: 0.75rem;
+  vertical-align: middle;
+  color: #626f86;
+}
+
+.modal-footer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.css-chp70c {
+  align-items: center !important;
+}

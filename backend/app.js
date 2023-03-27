@@ -41,8 +41,15 @@ app.use((err, req, res, next) => {
   }
 });
 
-app.use('/user', usuariosRoutes);
+const rolesRoutes = require('./routes/roles.routes');
+const etiquetasRoutes = require('./routes/etiquetas.routes');
+const coloresRoutes = require('./routes/colores.routes');
 
+app.use('/usuarios', usuariosRoutes);
+app.use('/roles', rolesRoutes);
+app.use('/etiquetas', etiquetasRoutes);
+app.use('/colores', coloresRoutes);
+app.use('/user', usuariosRoutes);
 app.use('/retrospectivas', retrospectivaRoutes);
 
 app.get('/logout', (req, res) => {

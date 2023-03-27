@@ -1,0 +1,129 @@
+import React from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+
+import DynamicTable from '@atlaskit/dynamic-table';
+import ResponsableIcon from './ResponsableIcon';
+
+import BorrarIcon from './BorrarIcon';
+import EditarIcon from './EditarIcon';
+import RolIcon from './RolIcon';
+import Avatar from '@atlaskit/avatar';
+
+import TableHead from './UsersTableHead';
+// import RolesIcon from './RolesIcon';
+
+import './css/usersTable.css';
+import EtiquetaIcon from './EtiquetaIcon';
+
+const URI = 'http://localhost:8000/usuarios/info';
+
+interface Etiqueta {
+  id: number;
+  etiqueta: string;
+  color: string;
+}
+
+interface Usuario {
+  id: number;
+  correo: string;
+  password: string;
+  nombre: string;
+  foto: string;
+  rol: string;
+  etiquetas: Etiqueta[];
+}
+
+const UsersTable = () => {
+  const [TableRows, setTableRows] = useState([{}]);
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
+  const getUsers = async () => {
+    const res = await axios.get(URI);
+    console.log(res.data);
+    const usuarios = res.data.usuarios.map((usuario: any) => ({
+      ...usuario,
+    }));
+    setTableRows(usuarios);
+  };
+
+  const tableRows = TableRows.map((usuario: any) => ({
+    key: usuario.id,
+    isHighlighted: false,
+    cells: [
+      {
+        key: usuario.nombre,
+        content: (
+          <span className="flex items-center">
+            <Avatar src={usuario.foto} />
+            <p>{usuario.nombre}</p>
+          </span>
+        ),
+      },
+      {
+        key: usuario.correo,
+        content: <div className="text-center">{usuario.correo}</div>,
+      },
+      {
+        key: usuario.rol,
+        content: (
+          <div className="text-center">
+            <RolIcon rol={usuario.rol} />
+          </div>
+        ),
+      },
+      {
+        key: usuario.etiqueta,
+        content: (
+          <div>
+            <EtiquetaIcon etiquetas={usuario.etiquetas} />
+          </div>
+        ),
+        // va a cambiar
+      },
+      {
+        key: `${usuario.id}`,
+        //Va a cambiar
+        content: (
+          <div className="flex justify-center">
+            <ResponsableIcon idUsuario={usuario.id} />
+          </div>
+        ),
+      },
+      {
+        key: `${usuario.id}`,
+        //Va a cambiar
+        content: (
+          <div className="flex justify-center">
+            <EditarIcon id={usuario.id} />
+          </div>
+        ),
+      },
+      {
+        key: usuario.id,
+        //Va a cambiar
+        content: (
+          <div className="flex justify-center">
+            <BorrarIcon id={usuario.id} />
+          </div>
+        ),
+      },
+    ],
+  }));
+
+  return (
+    <div className="bg-white rounded-lg border-8 border-white">
+      <DynamicTable
+        head={TableHead}
+        rows={tableRows}
+        emptyView={<div className="text-3xl">No hay registros</div>}
+        rowsPerPage={10}
+      />
+    </div>
+  );
+};
+
+export default UsersTable;
