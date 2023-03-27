@@ -11,18 +11,18 @@ module.exports = class Retrospectiva {
   }
 
   static fetchAll() {
-    return db.execute('SELECT * FROM retrospectiva');
+    return db.execute('SELECT * FROM retrospectivas');
   }
 
   static fetchPanelRetros() {
     return db.execute(
-      'SELECT id_retrospectiva, titulo, fecha_inicio, fecha_fin, descripcion FROM `retrospectiva`;'
+      'SELECT id, titulo, fecha_inicio, fecha_fin, descripcion, id_reporte, updatedAt, createdAt FROM `retrospectivas`;'
     );
   }
 
   static fetchOne(id) {
     return db.execute(
-      'SELECT id_retrospectiva, titulo, fecha_inicio, fecha_fin, descripcion FROM `retrospectiva` WHERE id_retrospectiva = ?;',
+      'SELECT id, titulo, fecha_inicio, fecha_fin, descripcion, id_reporte, updatedAt, createdAt FROM `retrospectivas` WHERE id_retrospectiva = ?;',
       [id]
     );
   }
@@ -30,19 +30,19 @@ module.exports = class Retrospectiva {
   static fetchQuestions(id) {
     // Utilizando subconsultas
     return db.execute(
-      `SELECT P.id_pregunta, P.pregunta, P.id_tipo_pregunta,
+      `SELECT P.id AS id_pregunta, P.pregunta, P.id_tipo_pregunta,
        (SELECT GROUP_CONCAT(opcion_respuesta)
-        FROM opcion_respuesta
-        WHERE id_opcion_respuesta IN (
+        FROM opciones_respuestas
+        WHERE id IN (
             SELECT id_opcion
-            FROM opcionrespuesta_pregunta
-            WHERE id_pregunta = P.id_pregunta
+            FROM preguntas_opciones_respuestas
+            WHERE id_pregunta = P.id
         )
        ) AS opciones_respuesta
-        FROM pregunta AS P
-        JOIN respuesta_pregunta_retrospectiva AS RPR ON P.id_pregunta = RPR.id_pregunta
-        WHERE RPR.id_retrospectiva = ?
-        GROUP BY P.id_pregunta;
+FROM preguntas AS P
+JOIN preguntas_retrospectivas AS PR ON P.id = PR.id_pregunta
+WHERE PR.id_retrospectiva = ?
+GROUP BY P.id;
       `,
       [id]
     );
