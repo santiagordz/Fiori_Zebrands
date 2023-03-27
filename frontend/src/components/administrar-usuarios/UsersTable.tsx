@@ -57,7 +57,7 @@ const UsersTable = () => {
       {
         key: usuario.nombre,
         content: (
-          <span className="flex items-center">
+          <span className="flex items-center gap-5 ml-5">
             <Avatar src={usuario.foto} />
             <p>{usuario.nombre}</p>
           </span>

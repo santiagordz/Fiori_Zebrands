@@ -14,7 +14,7 @@ const AdministradorUsuarios = () => {
       buttons={
         <>
           <Link to={'/administrar-usuarios/gestionar-etiquetas'}>
-            <BotonGestionarEtiquetas />
+            <BotonGestionarEtiquetas texto="Etiquetas" />
           </Link>
           <button onClick={() => setIsOpen(true)}>
             <BotonRegistrarUsuario />
@@ -22,7 +22,7 @@ const AdministradorUsuarios = () => {
         </>
       }
     >
-      <div className="flex justify-center mt-10">
+      <div className="flex justify-center">
         <div className="w-5/6">
           <div className="flex justify-end gap-10"></div>
           <br></br>

@@ -1,4 +1,5 @@
 import React, { FC, useState } from 'react';
+import { Link } from 'react-router-dom';
 import DesignTemplate from '../../design-template/DesignTemplate';
 import BotonGestionarEtiquetas from '../BotonGestionarEtiquetas';
 import BotonRegistrarEtiqueta from '../BotonRegistrarEtiqueta';
@@ -9,15 +10,23 @@ import ModalRegistrarEtiqueta from '../ModalRegistrarEtiqueta';
 const GestionarEtiquetas = () => {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <DesignTemplate>
-      <div className="flex justify-center mt-10 flex-col">
-        <h4>Gestionar Etiquetas</h4>
-        <BotonGestionarEtiquetas />
-        <button onClick={() => setIsOpen(true)}>
-          <BotonRegistrarEtiqueta />
-        </button>
-        <div className="w-5/6 mt-20">
+    <DesignTemplate
+      buttons={
+        <>
+          <Link to={'/administrar-usuarios'}>
+            <BotonGestionarEtiquetas texto={'Usuarios'} />
+          </Link>
+          <button>
+            <BotonRegistrarEtiqueta />
+          </button>
+        </>
+      }
+    >
+      <div className="flex justify-center">
+        <div className="flex">
+          <div>.</div>
           <EtiquetasTable />
+          <div>.</div>
         </div>
         <ModalRegistrarEtiqueta
           show={isOpen}
