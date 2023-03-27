@@ -22,7 +22,7 @@ module.exports = class Retrospectiva {
 
   static fetchOne(id) {
     return db.execute(
-      'SELECT id, titulo, fecha_inicio, fecha_fin, descripcion, id_reporte, updatedAt, createdAt FROM `retrospectivas` WHERE id_retrospectiva = ?;',
+      'SELECT id, titulo, fecha_inicio, fecha_fin, descripcion, id_reporte, updatedAt, createdAt FROM `retrospectivas` WHERE id = ?;',
       [id]
     );
   }
