@@ -44,7 +44,7 @@ const Unauthorized401: FC<Unauthorized401Props> = ({}) => {
           <div>
             <Button
               onClick={() => {
-                navigate('/dashboard');
+                navigate(-1);
               }}
               appearance="primary"
               iconBefore={

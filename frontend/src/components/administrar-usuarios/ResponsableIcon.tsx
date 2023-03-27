@@ -1,18 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-
 import { token } from '@atlaskit/tokens';
 import { N200, N500, B300, Y300, B200 } from '@atlaskit/theme/colors';
 import AppAccessIcon from '@atlaskit/icon/glyph/app-access';
+import { userDataContext } from '../../contexts';
 
 const URI = 'http://localhost:8000/usuarios/';
 
 const ResponsableIcon = (idUsuario: any) => {
+  const { user } = useContext(userDataContext);
   const [color, setColor] = useState(true);
   const [colorHover, setColorHover] = useState(true);
   const [clicked, setClicked] = useState(false);
 
-  const [rolActual, setRolActual] = useState('');
+  const [rolActual, setRolActual] = useState(0);
 
   const getUsuario = (id: number) => {
     try {
@@ -26,7 +27,7 @@ const ResponsableIcon = (idUsuario: any) => {
     }
   };
 
-  const changeRol = (id: number, rol: string) => {
+  const changeRol = (id: number, rol: number) => {
     try {
       const res = axios.post(`${URI}/updateUserRole/${id}`, {
         rol: rol,
@@ -45,10 +46,10 @@ const ResponsableIcon = (idUsuario: any) => {
     e: React.MouseEvent<HTMLButtonElement>
   ) => {
     try {
-      if (rolActual == '3') {
-        changeRol(idUsuario.idUsuario, '2');
-      } else if (rolActual == '2') {
-        changeRol(idUsuario.idUsuario, '3');
+      if (rolActual === 3) {
+        changeRol(idUsuario.idUsuario, 2);
+      } else if (rolActual === 2) {
+        changeRol(idUsuario.idUsuario, 3);
       }
     } catch {
       console.log('Error');
@@ -67,7 +68,7 @@ const ResponsableIcon = (idUsuario: any) => {
   };
 
   const iconColor = () => {
-    if (rolActual == '3') {
+    if (rolActual === 3) {
       if (clicked) {
         return color ? N500 : B300;
       } else {
@@ -82,16 +83,16 @@ const ResponsableIcon = (idUsuario: any) => {
     }
   };
 
-  if (rolActual == '1') {
+  if (rolActual === 1) {
     return (
       <button disabled>
         <AppAccessIcon
-          label="Trash Icon"
+          label="responsable"
           primaryColor={token('color.icon.brand', Y300)}
         />
       </button>
     );
-  } else if (rolActual == '3') {
+  } else if (rolActual === 3) {
     return (
       <button
         onMouseOver={handleMouseOverResponsable}
@@ -99,7 +100,7 @@ const ResponsableIcon = (idUsuario: any) => {
         onClick={handleClickResponsable}
       >
         <AppAccessIcon
-          label="Trash Icon"
+          label="responsable"
           primaryColor={token('color.icon.brand', iconColor())}
         />
       </button>
@@ -112,7 +113,7 @@ const ResponsableIcon = (idUsuario: any) => {
         onClick={handleClickResponsable}
       >
         <AppAccessIcon
-          label="Trash Icon"
+          label="responsable"
           primaryColor={token('color.icon.brand', iconColor())}
         />
       </button>

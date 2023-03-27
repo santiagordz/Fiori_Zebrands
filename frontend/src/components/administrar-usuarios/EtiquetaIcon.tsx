@@ -14,11 +14,13 @@ const EtiquetaIcon: FC<EtiquetaIconProps> = ({ etiquetas }) => {
     const etiquetasRender =
       etiquetas &&
       etiquetas.map((etiqueta, index) => (
-        <Tag
-          key={index}
-          text={etiqueta.nombre}
-          color={etiqueta.color}
-        />
+        <div id="tag">
+          <Tag
+            key={index}
+            text={etiqueta.nombre}
+            color={etiqueta.color}
+          />
+        </div>
       ));
     return <TagGroup>{etiquetasRender}</TagGroup>;
   } else {
