@@ -9,7 +9,12 @@ const LoginError: FC<LoginErrorProps> = ({}) => {
     }, 900);
   }, []);
 
-  return <div className="">Usuario no existe...</div>;
+  return (
+    <div className="">
+      Se presentó un error en la autentificación, intenta de nuevo más
+      tarde...
+    </div>
+  );
 };
 
 export default LoginError;

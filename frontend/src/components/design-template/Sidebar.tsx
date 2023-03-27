@@ -24,7 +24,8 @@ const Sidebar = ({}) => {
   const { user, setUser } = useContext(userDataContext);
   const navigate = useNavigate();
   const idRol = user?.id_rol || -1;
-  const name = `${user?.nombre} ${user?.apellido}`;
+  console.log('idRol', typeof idRol);
+  const name = user?.nombre || 'Usuario';
   const location = useLocation();
   const pColor = '#44546F';
   const sColor = '#0C66E4';

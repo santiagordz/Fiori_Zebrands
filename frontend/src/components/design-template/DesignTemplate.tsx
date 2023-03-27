@@ -18,7 +18,7 @@ const DesignTemplate: FC<DesignTemplateProps> = ({
   const { user } = useContext(userDataContext);
   const location = useLocation().pathname;
   const path = '/' + location.split('/')[1];
-  const name = user?.nombre || 'Usuario';
+  const name = user?.nombre.split(' ')[0] || 'Usuario';
   const MainIcon: React.ComponentType<GlyphProps> =
     pathInfo[path].icon;
 

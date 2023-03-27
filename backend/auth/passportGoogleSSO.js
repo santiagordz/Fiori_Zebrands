@@ -27,21 +27,18 @@ passport.use(
       if (userExists) {
         const needUpdate =
           !userExists.nombre ||
-          !userExists.apellido ||
           !userExists.foto ||
-          !userExists.id_usuario_google;
+          !userExists.id_google;
 
         if (needUpdate) {
           try {
             await Usuario.updateData(
-              profile.name.givenName,
-              profile.name.familyName,
+              profile.displayName,
               profile.photos[0].value,
               profile.id,
               profile.email
             );
-            userExists.nombre = profile.name.givenName;
-            userExists.apellido = profile.name.familyName;
+            userExists.nombre = profile.displayName;
             userExists.foto = profile.photos[0].value;
             userExists.id_usuario_google = profile.id;
           } catch (err) {

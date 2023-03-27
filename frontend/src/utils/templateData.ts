@@ -11,9 +11,9 @@ interface rolesType {
 }
 
 export const roles: rolesType = {
-  11: 'Administrador',
-  12: 'Responsable',
-  13: 'Squad Member',
+  1: 'Administrador',
+  2: 'Responsable',
+  3: 'Squad Member',
 };
 
 // Definimos un tipo de objeto que contiene los datos para la sidebar
@@ -46,13 +46,13 @@ export const categories: Array<categoriesType> = [
     name: 'Gestionar retrospectivas',
     icon: SwitcherIcon,
     path: 'gestionar-retrospectivas',
-    roleIds: [11, 12],
+    roleIds: [1, 2],
   },
   {
     name: 'Administrar usuarios',
     icon: PeopleIcon,
     path: 'administrar-usuarios',
-    roleIds: [11],
+    roleIds: [1],
   },
 ];
 
