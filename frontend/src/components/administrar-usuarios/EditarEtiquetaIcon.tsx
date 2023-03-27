@@ -35,6 +35,7 @@ const EditarEtiquetaIcon = ({ etiqueta }: any) => {
   return (
     <>
       <button
+        className="w-7"
         onMouseOver={handleMouseOverEditar}
         onMouseOut={handleMouseOutEditar}
         onClick={() => setIsOpen(true)}

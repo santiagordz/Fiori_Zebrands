@@ -31,7 +31,7 @@ module.exports = class Etiquetas {
     return db.execute(
       `
         UPDATE etiquetas
-        SET etiqueta = ? , id_color = (SELECT id from colores WHERE colores.color = ?)
+        SET etiqueta = ? , id_color = (SELECT id from colores WHERE colores.color = ?), updatedAt = CURTIME()
         WHERE id = ?
           `,
       [etiqueta, color, id]

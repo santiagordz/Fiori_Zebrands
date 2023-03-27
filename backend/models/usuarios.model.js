@@ -14,7 +14,7 @@ module.exports = class Usuarios {
 
   static async createUsuario(correo, rol) {
     const [result] = await db.execute(
-      `INSERT INTO usuarios (correo, rol) VALUES (?, ?)`,
+      `INSERT INTO usuarios (correo, id_rol) VALUES (?, ?)`,
       [correo, rol]
     );
     const usuarioId = result.insertId;
@@ -28,7 +28,7 @@ module.exports = class Usuarios {
       u.nombre, 
       u.correo, 
       u.foto, 
-      u.rol,
+      u.id_rol,
       GROUP_CONCAT(DISTINCT CONCAT_WS(':', e.id, e.etiqueta, c.color) SEPARATOR ';') AS etiquetas
     FROM usuarios u
     LEFT JOIN usuarios_etiquetas ue ON u.id = ue.id_usuario
@@ -50,7 +50,7 @@ module.exports = class Usuarios {
         nombre: row.nombre,
         correo: row.correo,
         foto: row.foto,
-        rol: row.rol,
+        rol: row.id_rol,
         etiquetas,
       };
     });
@@ -66,7 +66,7 @@ module.exports = class Usuarios {
       u.nombre, 
       u.correo, 
       u.foto, 
-      u.rol,
+      u.id_rol,
       GROUP_CONCAT(DISTINCT CONCAT_WS(':', e.id, e.etiqueta, c.color) SEPARATOR ';') AS etiquetas
     FROM usuarios u
     
@@ -92,7 +92,7 @@ module.exports = class Usuarios {
         nombre: row.nombre,
         correo: row.correo,
         foto: row.foto,
-        rol: row.rol,
+        rol: row.id_rol,
         etiquetas,
       };
     });
@@ -110,15 +110,37 @@ module.exports = class Usuarios {
 
   static updateUsuarioById(id, nombre, rol) {
     return db.execute(
-      `UPDATE usuarios SET nombre = ?, rol = ? WHERE id = ?`,
+      `UPDATE usuarios SET nombre = ?, id_rol = ?, updatedAt = CURTIME() WHERE id = ?`,
       [nombre, rol, id]
     );
   }
 
   static updateRolUsuarioById(id, rol) {
-    return db.execute(`UPDATE usuarios SET rol = ? WHERE id = ?`, [
-      rol,
-      id,
-    ]);
+    return db.execute(
+      `UPDATE usuarios SET id_rol = ?, updatedAt = CURTIME() WHERE id = ?`,
+      [rol, id]
+    );
+  }
+
+  static async fetchOne(correo) {
+    return db.execute(
+      `SELECT correo, nombre, foto, id_jira, id_rol
+        FROM usuarios
+        WHERE correo = ?`,
+      [correo]
+    );
+  }
+
+  static async updateData(
+    nombre,
+    foto,
+    id_google,
+    correo,
+    fechaActual
+  ) {
+    return db.execute(
+      `UPDATE usuarios SET nombre = ?, foto = ?, id_google = ?, updatedAt = ? WHERE correo = ?;`,
+      [nombre, foto, id_google, correo, fechaActual]
+    );
   }
 };

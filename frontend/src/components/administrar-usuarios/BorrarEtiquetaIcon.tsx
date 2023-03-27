@@ -23,6 +23,7 @@ const BorrarEditarIcon = ({ etiqueta }: any) => {
   return (
     <>
       <button
+        className="w-7"
         onMouseOver={handleMouseOverBorrar}
         onMouseOut={handleMouseOutBorrar}
         onClick={() => setIsOpen(true)}
