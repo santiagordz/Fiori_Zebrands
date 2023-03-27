@@ -41,13 +41,8 @@ __metadata:
   linkType: hard
 
 "@atlaskit/avatar@npm:^21.1.10":
-<<<<<<< HEAD
-  version: 21.1.10
-  resolution: "@atlaskit/avatar@npm:21.1.10"
-=======
   version: 21.2.0
   resolution: "@atlaskit/avatar@npm:21.2.0"
->>>>>>> administrar-usuarios
   dependencies:
     "@atlaskit/analytics-next": ^9.0.0
     "@atlaskit/icon": ^21.11.0
@@ -58,19 +53,11 @@ __metadata:
     "@emotion/serialize": ^1.1.0
   peerDependencies:
     react: ^16.8.0
-<<<<<<< HEAD
-  checksum: c3aa20471ef59b37cff2cd2cbd7f949796920f28bbc8d3810cefdcbdec89e671d52d8c294bb46031a99e131642042d5394cfbb9d56b2dec14dc50b93a40cef32
-  languageName: node
-  linkType: hard
-
-"@atlaskit/blanket@npm:^12.3.0, @atlaskit/blanket@npm:^12.3.7":
-=======
   checksum: 19058e25a3bf562b20f330a98ad9f3bc190197746eac94732173da61c7021883f996cecfa02b8c9b0f23b4bc55eb02607f78dd005310fbd9386aa4856d22e5ad
   languageName: node
   linkType: hard
 
-"@atlaskit/blanket@npm:^12.3.0":
->>>>>>> administrar-usuarios
+"@atlaskit/blanket@npm:^12.3.0, @atlaskit/blanket@npm:^12.3.7":
   version: 12.3.7
   resolution: "@atlaskit/blanket@npm:12.3.7"
   dependencies:
@@ -87,11 +74,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-"@atlaskit/button@npm:^16.5.0":
-=======
 "@atlaskit/button@npm:^16.5.0, @atlaskit/button@npm:^16.5.6":
->>>>>>> administrar-usuarios
   version: 16.5.7
   resolution: "@atlaskit/button@npm:16.5.7"
   dependencies:
@@ -109,16 +92,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-"@atlaskit/button@npm:^16.5.6":
-  version: 16.5.6
-  resolution: "@atlaskit/button@npm:16.5.6"
-  dependencies:
-    "@atlaskit/analytics-next": ^9.0.0
-    "@atlaskit/ds-lib": ^2.1.0
-    "@atlaskit/interaction-context": ^2.0.0
-    "@atlaskit/spinner": ^15.3.0
-=======
 "@atlaskit/checkbox@npm:^12.4.6":
   version: 12.4.6
   resolution: "@atlaskit/checkbox@npm:12.4.6"
@@ -126,18 +99,13 @@ __metadata:
     "@atlaskit/analytics-next": ^9.0.0
     "@atlaskit/ds-lib": ^2.1.0
     "@atlaskit/icon": ^21.11.0
->>>>>>> administrar-usuarios
     "@atlaskit/theme": ^12.2.0
     "@atlaskit/tokens": ^1.2.0
     "@babel/runtime": ^7.0.0
     "@emotion/react": ^11.7.1
   peerDependencies:
     react: ^16.8.0
-<<<<<<< HEAD
-  checksum: b75154698651e79e32b1a674197cdac43ef544283e8f8fb1a5da66633f5b4ff6eb782a37b941d2534dbe91679750969f21795e085832fda14aa4d8cf97573dc7
-=======
   checksum: 328469788dfbca6db80c9de46587d7e700f617eb8ef0c7405614f074d6c212601c5b6a3e8c3d2e59b76a150108810848e25e425613c6372c019b1530dedf0ed7
->>>>>>> administrar-usuarios
   languageName: node
   linkType: hard
 
@@ -164,8 +132,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-=======
 "@atlaskit/dropdown-menu@npm:^11.6.0":
   version: 11.7.1
   resolution: "@atlaskit/dropdown-menu@npm:11.7.1"
@@ -190,10 +156,9 @@ __metadata:
   languageName: node
   linkType: hard
 
->>>>>>> administrar-usuarios
 "@atlaskit/ds-explorations@npm:^2.0.0":
-  version: 2.0.7
-  resolution: "@atlaskit/ds-explorations@npm:2.0.7"
+  version: 2.0.8
+  resolution: "@atlaskit/ds-explorations@npm:2.0.8"
   dependencies:
     "@atlaskit/tokens": ^1.2.0
     "@babel/runtime": ^7.0.0
@@ -201,7 +166,7 @@ __metadata:
     tiny-invariant: ^1.2.0
   peerDependencies:
     react: ^16.8.0
-  checksum: eae33d84b7f1da1236b7fed30b26410c97ffd31584e6ddb94d627c93e5016bc90c7b2f95ed470b500d18aa1ddcfd30c62982f9d6098f115cf6839e9e10be6f70
+  checksum: 9b6c6b39260502cae06e1b3fabba6ed052652307fd6031c9e01b557cfd4bf6f6b2a0fb96cd3879869a77d213035bdb6d7dea2362e76cb509529008fb9fc2689d
   languageName: node
   linkType: hard
 
@@ -217,45 +182,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-"@atlaskit/empty-state@npm:^7.4.9":
-  version: 7.4.9
-  resolution: "@atlaskit/empty-state@npm:7.4.9"
-  dependencies:
-    "@atlaskit/button": ^16.5.0
-    "@atlaskit/spinner": ^15.4.0
-    "@atlaskit/theme": ^12.2.0
-    "@atlaskit/tokens": ^1.2.0
-    "@babel/runtime": ^7.0.0
-    "@emotion/react": ^11.7.1
-  peerDependencies:
-    react: ^16.8.0
-  checksum: 22589c02933977737ec090d5c587b2642e818243b62b775bf3e28e485ff90c831fdf32a59e8bdd14c1c1eded785d3fbc5448f5cd39071e3a111dfc879e1782da
-  languageName: node
-  linkType: hard
-
-"@atlaskit/flag@npm:^15.0.8":
-  version: 15.0.8
-  resolution: "@atlaskit/flag@npm:15.0.8"
-  dependencies:
-    "@atlaskit/analytics-next": ^9.0.0
-    "@atlaskit/button": ^16.5.0
-    "@atlaskit/ds-explorations": ^2.0.0
-    "@atlaskit/ds-lib": ^2.1.0
-    "@atlaskit/focus-ring": ^1.2.0
-    "@atlaskit/icon": ^21.11.0
-    "@atlaskit/motion": ^1.3.0
-    "@atlaskit/portal": ^4.0.0
-    "@atlaskit/primitives": ^0.3.0
-    "@atlaskit/theme": ^12.2.0
-    "@atlaskit/tokens": ^1.2.0
-    "@atlaskit/visually-hidden": ^1.1.0
-    "@babel/runtime": ^7.0.0
-    "@emotion/react": ^11.7.1
-  peerDependencies:
-    react: ^16.8.0
-  checksum: b7e798d1822d0fd058458c69f4de91f67b6631b92e0586a92847bd070badeb1e51c60ffd2d003875b05247f2f6ddd517b8b8c186d6492a784928dc3ca44d5461
-=======
 "@atlaskit/dynamic-table@npm:^14.8.12":
   version: 14.8.12
   resolution: "@atlaskit/dynamic-table@npm:14.8.12"
@@ -273,7 +199,46 @@ __metadata:
     react: ^16.8.0
     react-dom: ^16.8.0
   checksum: b8525aca2d37782bc7ca2acc18f700472b9d3696e46263895a1575569169e647b976025260dd058f7d8d6ab0de6464adba8485a7a53042e5865eae29ae31cd26
->>>>>>> administrar-usuarios
+  languageName: node
+  linkType: hard
+
+"@atlaskit/empty-state@npm:^7.4.9":
+  version: 7.4.10
+  resolution: "@atlaskit/empty-state@npm:7.4.10"
+  dependencies:
+    "@atlaskit/button": ^16.5.0
+    "@atlaskit/spinner": ^15.4.0
+    "@atlaskit/theme": ^12.2.0
+    "@atlaskit/tokens": ^1.2.0
+    "@babel/runtime": ^7.0.0
+    "@emotion/react": ^11.7.1
+  peerDependencies:
+    react: ^16.8.0
+  checksum: 62f2793d2e7c2c5ecd766939aa210793a4472807f0f82c72b890b3d6fce2e6e4377dea904c1e70ce01b0e99bd64fb238cc41fa27973402e38be4b0955e85de66
+  languageName: node
+  linkType: hard
+
+"@atlaskit/flag@npm:^15.0.8":
+  version: 15.0.10
+  resolution: "@atlaskit/flag@npm:15.0.10"
+  dependencies:
+    "@atlaskit/analytics-next": ^9.0.0
+    "@atlaskit/button": ^16.5.0
+    "@atlaskit/ds-explorations": ^2.0.0
+    "@atlaskit/ds-lib": ^2.1.0
+    "@atlaskit/focus-ring": ^1.2.0
+    "@atlaskit/icon": ^21.11.0
+    "@atlaskit/motion": ^1.3.0
+    "@atlaskit/portal": ^4.0.0
+    "@atlaskit/primitives": ^0.3.0
+    "@atlaskit/theme": ^12.2.0
+    "@atlaskit/tokens": ^1.2.0
+    "@atlaskit/visually-hidden": ^1.1.0
+    "@babel/runtime": ^7.0.0
+    "@emotion/react": ^11.7.1
+  peerDependencies:
+    react: ^16.8.0
+  checksum: 76c58aaa62757e7a04a8551d1d0cb6f6547336a9084a7f76f93fac4d7109bb15c978438ef0e2b9bf1f0fe3e2e0001c6a6a8e90e12a3d2f1baf7c94e3ff87fca4
   languageName: node
   linkType: hard
 
@@ -291,12 +256,12 @@ __metadata:
   linkType: hard
 
 "@atlaskit/form@npm:^8.8.4":
-  version: 8.8.4
-  resolution: "@atlaskit/form@npm:8.8.4"
+  version: 8.8.5
+  resolution: "@atlaskit/form@npm:8.8.5"
   dependencies:
     "@atlaskit/icon": ^21.11.0
     "@atlaskit/theme": ^12.2.0
-    "@atlaskit/tokens": ^1.0.0
+    "@atlaskit/tokens": ^1.2.0
     "@babel/runtime": ^7.0.0
     "@emotion/react": ^11.7.1
     final-form: ^4.20.1
@@ -306,12 +271,10 @@ __metadata:
     tiny-invariant: ^1.2.0
   peerDependencies:
     react: ^16.8.0
-  checksum: 810e37d3daec2441e7e9be4633f691ff79c0f8f39b2cfd3df5d6a853dd08f48c99b289e78e7c09eb261d7754da630db942ccba29f05990a826d17d2a3ef21b4e
+  checksum: 820ad7e88433ae80f00944abb52de5647ffa97dfac635032e9ec12d6f76e269bf5e0b503444752b34b34cff56d988031e9a9871f664701699d0c61ac4ba9dd01
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-=======
 "@atlaskit/heading@npm:^1.1.0":
   version: 1.1.4
   resolution: "@atlaskit/heading@npm:1.1.4"
@@ -325,7 +288,6 @@ __metadata:
   languageName: node
   linkType: hard
 
->>>>>>> administrar-usuarios
 "@atlaskit/icon@npm:^21.11.0, @atlaskit/icon@npm:^21.11.5":
   version: 21.11.5
   resolution: "@atlaskit/icon@npm:21.11.5"
@@ -340,8 +302,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-=======
 "@atlaskit/in-product-testing@npm:^0.1.5":
   version: 0.1.5
   resolution: "@atlaskit/in-product-testing@npm:0.1.5"
@@ -351,7 +311,6 @@ __metadata:
   languageName: node
   linkType: hard
 
->>>>>>> administrar-usuarios
 "@atlaskit/interaction-context@npm:^2.0.0":
   version: 2.0.0
   resolution: "@atlaskit/interaction-context@npm:2.0.0"
@@ -363,20 +322,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-=======
 "@atlaskit/lozenge@npm:^11.3.7":
-  version: 11.3.7
-  resolution: "@atlaskit/lozenge@npm:11.3.7"
+  version: 11.3.8
+  resolution: "@atlaskit/lozenge@npm:11.3.8"
   dependencies:
     "@atlaskit/codemod-utils": ^4.1.0
     "@atlaskit/ds-explorations": ^2.0.0
     "@atlaskit/theme": ^12.2.0
-    "@atlaskit/tokens": ^1.0.0
+    "@atlaskit/tokens": ^1.2.0
     "@babel/runtime": ^7.0.0
   peerDependencies:
     react: ^16.8.0
-  checksum: 33d58274171e12df99c09d3291ef2467eac3d76b4b088e6d10204366bcf4671c2b19350119972cfde6b91cf2ed31ddde8be12d01278e10de269d5297ec055ec0
+  checksum: 5eaf2d144e8b024231e6cb29180f5f2596bb1c42a5e16af0123aade264922607b53ce8e982e7b810ecbd03201e6e6e96a6b47eae50ed8f74da3edf150d381289
   languageName: node
   linkType: hard
 
@@ -398,7 +355,6 @@ __metadata:
   languageName: node
   linkType: hard
 
->>>>>>> administrar-usuarios
 "@atlaskit/modal-dialog@npm:^12.4.11":
   version: 12.4.11
   resolution: "@atlaskit/modal-dialog@npm:12.4.11"
@@ -427,8 +383,8 @@ __metadata:
   linkType: hard
 
 "@atlaskit/motion@npm:^1.3.0":
-  version: 1.3.1
-  resolution: "@atlaskit/motion@npm:1.3.1"
+  version: 1.3.2
+  resolution: "@atlaskit/motion@npm:1.3.2"
   dependencies:
     "@atlaskit/ds-lib": ^2.1.0
     "@babel/runtime": ^7.0.0
@@ -436,15 +392,13 @@ __metadata:
     bind-event-listener: ^2.1.1
   peerDependencies:
     react: ^16.8.0
-  checksum: e33735b0720b1de5195213de4d398dfffcb60a23c9de43b70ffb86cc35bc96b8c279e511cd53fe44a62ccabdb36a7f43b83253c898f56fd3d8065007ba13cf67
+  checksum: 90115ebcedef4ce3352633afedaf92fa9f0927a2c85f7720fe7ab95d22932dc2cbcc3fb0e215b7387eb8b622e9976543215831a6d6f23f149f197824fa5b2b7e
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-=======
 "@atlaskit/pagination@npm:^14.2.0":
-  version: 14.2.8
-  resolution: "@atlaskit/pagination@npm:14.2.8"
+  version: 14.2.9
+  resolution: "@atlaskit/pagination@npm:14.2.9"
   dependencies:
     "@atlaskit/analytics-next": ^9.0.0
     "@atlaskit/button": ^16.5.0
@@ -452,11 +406,12 @@ __metadata:
     "@atlaskit/ds-explorations": ^2.0.0
     "@atlaskit/ds-lib": ^2.1.0
     "@atlaskit/icon": ^21.11.0
+    "@atlaskit/primitives": ^0.3.0
     "@babel/runtime": ^7.0.0
     memoize-one: ^6.0.0
   peerDependencies:
     react: ^16.8.0
-  checksum: e7baf8573291a452dd8605c0c5d37c9f5577a13140e212c9e66a25264531c1080e72db087d01739e4417789bfc97cb373aa157b632905b497a61de76acd1de7c
+  checksum: 509c878bf50ba8de300bad353fe9738a389d07058c47a726165b2d1702112e7ad2f4b8067a1a409201afcaad7bcd5e16e976131316c726d913683e03b8ae2984
   languageName: node
   linkType: hard
 
@@ -494,7 +449,6 @@ __metadata:
   languageName: node
   linkType: hard
 
->>>>>>> administrar-usuarios
 "@atlaskit/portal@npm:^4.0.0, @atlaskit/portal@npm:^4.1.0":
   version: 4.2.12
   resolution: "@atlaskit/portal@npm:4.2.12"
@@ -509,13 +463,8 @@ __metadata:
   linkType: hard
 
 "@atlaskit/primitives@npm:^0.3.0":
-<<<<<<< HEAD
-  version: 0.3.1
-  resolution: "@atlaskit/primitives@npm:0.3.1"
-=======
   version: 0.3.2
   resolution: "@atlaskit/primitives@npm:0.3.2"
->>>>>>> administrar-usuarios
   dependencies:
     "@atlaskit/tokens": ^1.2.0
     "@babel/runtime": ^7.0.0
@@ -523,28 +472,6 @@ __metadata:
     tiny-invariant: ^1.2.0
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
-<<<<<<< HEAD
-  checksum: 1c319c7b62b03a9982eb4beaa5ceed15c415408566b52b8d7d796577f79264202af836fc0178ad594d500c3d63ec83124d850177aad31cd7dd2d7228d4d9a13e
-  languageName: node
-  linkType: hard
-
-"@atlaskit/spinner@npm:^15.3.0":
-  version: 15.3.4
-  resolution: "@atlaskit/spinner@npm:15.3.4"
-  dependencies:
-    "@atlaskit/interaction-context": ^2.0.0
-    "@atlaskit/theme": ^12.2.0
-    "@atlaskit/tokens": ^1.0.0
-    "@babel/runtime": ^7.0.0
-    "@emotion/react": ^11.7.1
-  peerDependencies:
-    react: ^16.8.0
-  checksum: 2dfc97a8e7c069bbbf702dfcb3822f57de0ded5f0267449e8fa4c579442e625704db795a96af4c813595f0eec552091954e1f6c3fd1d6f53ed8757002cdcc70b
-  languageName: node
-  linkType: hard
-
-"@atlaskit/spinner@npm:^15.4.0":
-=======
   checksum: 902cf3effd2ca4bf8b998e9b39dad52f7f18baafd5d0f0180212e17cc7dd8c49824b2a1c5d227f4c337ffd968e2242bf171083ff8819bec7a266f4146b4474ed
   languageName: node
   linkType: hard
@@ -569,7 +496,6 @@ __metadata:
   linkType: hard
 
 "@atlaskit/spinner@npm:^15.3.0, @atlaskit/spinner@npm:^15.4.0":
->>>>>>> administrar-usuarios
   version: 15.4.0
   resolution: "@atlaskit/spinner@npm:15.4.0"
   dependencies:
@@ -584,8 +510,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-=======
 "@atlaskit/tag-group@npm:^10.1.2":
   version: 10.1.2
   resolution: "@atlaskit/tag-group@npm:10.1.2"
@@ -598,7 +522,6 @@ __metadata:
   languageName: node
   linkType: hard
 
->>>>>>> administrar-usuarios
 "@atlaskit/tag@npm:^11.4.10":
   version: 11.4.10
   resolution: "@atlaskit/tag@npm:11.4.10"
@@ -617,7 +540,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
 "@atlaskit/textarea@npm:^4.5.6":
   version: 4.5.6
   resolution: "@atlaskit/textarea@npm:4.5.6"
@@ -633,8 +555,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-=======
->>>>>>> administrar-usuarios
 "@atlaskit/textfield@npm:^5.3.6":
   version: 5.3.6
   resolution: "@atlaskit/textfield@npm:5.3.6"
@@ -664,7 +584,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
 "@atlaskit/toggle@npm:^12.5.8":
   version: 12.5.8
   resolution: "@atlaskit/toggle@npm:12.5.8"
@@ -682,14 +601,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/tokens@npm:^1.0.0, @atlaskit/tokens@npm:^1.2.0":
-  version: 1.2.3
-  resolution: "@atlaskit/tokens@npm:1.2.3"
-=======
 "@atlaskit/tokens@npm:^1.0.0, @atlaskit/tokens@npm:^1.2.0, @atlaskit/tokens@npm:^1.2.4":
-  version: 1.2.4
-  resolution: "@atlaskit/tokens@npm:1.2.4"
->>>>>>> administrar-usuarios
+  version: 1.2.6
+  resolution: "@atlaskit/tokens@npm:1.2.6"
   dependencies:
     "@atlaskit/ds-lib": ^2.1.0
     "@babel/runtime": ^7.0.0
@@ -698,11 +612,7 @@ __metadata:
     bind-event-listener: ^2.1.1
   peerDependencies:
     react: ^16.8.0
-<<<<<<< HEAD
-  checksum: acea7b183a83b00a6a72f9b98b71129150afe8f4d129e3de4cbcfad017f64745d20e58df18a8fef12d1226f7a771a23220d54c1324e5adb9c93c44a1a80c7507
-=======
-  checksum: 7297667219d2c01d4c980fdefaea387b755a47eb220278dc197ad9d4b6b54b6157264441871d3d6f4c0d7b07010280721f197268b517e7c27f41c87170f171a1
->>>>>>> administrar-usuarios
+  checksum: d1c23f6ba6c7f1a77d1040db584bcd1c87435ed6d98b89d53b098196ecda72e882959c00d40c42b89354e6166f20ff70c9b7244bda94d3482f17285f147a1cc9
   languageName: node
   linkType: hard
 
@@ -943,9 +853,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.10.0, @babel/runtime@npm:^7.12.0, @babel/runtime@npm:^7.12.13, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.8.7":
-=======
 "@babel/runtime-corejs2@npm:^7.6.3":
   version: 7.21.0
   resolution: "@babel/runtime-corejs2@npm:7.21.0"
@@ -957,7 +864,6 @@ __metadata:
   linkType: hard
 
 "@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.10.0, @babel/runtime@npm:^7.12.0, @babel/runtime@npm:^7.12.13, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.15.4, @babel/runtime@npm:^7.17.2, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.21.0, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.6.3, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
->>>>>>> administrar-usuarios
   version: 7.21.0
   resolution: "@babel/runtime@npm:7.21.0"
   dependencies:
@@ -1045,7 +951,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
 "@emotion/is-prop-valid@npm:^0.8.2":
   version: 0.8.8
   resolution: "@emotion/is-prop-valid@npm:0.8.8"
@@ -1055,8 +960,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-=======
->>>>>>> administrar-usuarios
 "@emotion/is-prop-valid@npm:^1.1.0":
   version: 1.2.0
   resolution: "@emotion/is-prop-valid@npm:1.2.0"
@@ -1066,7 +969,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
 "@emotion/memoize@npm:0.7.4":
   version: 0.7.4
   resolution: "@emotion/memoize@npm:0.7.4"
@@ -1074,8 +976,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-=======
->>>>>>> administrar-usuarios
 "@emotion/memoize@npm:^0.8.0":
   version: 0.8.0
   resolution: "@emotion/memoize@npm:0.8.0"
@@ -1083,11 +983,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
 "@emotion/react@npm:^11.10.6, @emotion/react@npm:^11.7.1, @emotion/react@npm:^11.8.1":
-=======
-"@emotion/react@npm:^11.7.1, @emotion/react@npm:^11.8.1":
->>>>>>> administrar-usuarios
   version: 11.10.6
   resolution: "@emotion/react@npm:11.10.6"
   dependencies:
@@ -1172,316 +1068,168 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-"@esbuild/android-arm64@npm:0.16.17":
-  version: 0.16.17
-  resolution: "@esbuild/android-arm64@npm:0.16.17"
-=======
-"@esbuild/android-arm64@npm:0.17.12":
-  version: 0.17.12
-  resolution: "@esbuild/android-arm64@npm:0.17.12"
->>>>>>> administrar-usuarios
+"@esbuild/android-arm64@npm:0.17.14":
+  version: 0.17.14
+  resolution: "@esbuild/android-arm64@npm:0.17.14"
   conditions: os=android & cpu=arm64
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-"@esbuild/android-arm@npm:0.16.17":
-  version: 0.16.17
-  resolution: "@esbuild/android-arm@npm:0.16.17"
-=======
-"@esbuild/android-arm@npm:0.17.12":
-  version: 0.17.12
-  resolution: "@esbuild/android-arm@npm:0.17.12"
->>>>>>> administrar-usuarios
+"@esbuild/android-arm@npm:0.17.14":
+  version: 0.17.14
+  resolution: "@esbuild/android-arm@npm:0.17.14"
   conditions: os=android & cpu=arm
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-"@esbuild/android-x64@npm:0.16.17":
-  version: 0.16.17
-  resolution: "@esbuild/android-x64@npm:0.16.17"
-=======
-"@esbuild/android-x64@npm:0.17.12":
-  version: 0.17.12
-  resolution: "@esbuild/android-x64@npm:0.17.12"
->>>>>>> administrar-usuarios
+"@esbuild/android-x64@npm:0.17.14":
+  version: 0.17.14
+  resolution: "@esbuild/android-x64@npm:0.17.14"
   conditions: os=android & cpu=x64
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-"@esbuild/darwin-arm64@npm:0.16.17":
-  version: 0.16.17
-  resolution: "@esbuild/darwin-arm64@npm:0.16.17"
-=======
-"@esbuild/darwin-arm64@npm:0.17.12":
-  version: 0.17.12
-  resolution: "@esbuild/darwin-arm64@npm:0.17.12"
->>>>>>> administrar-usuarios
+"@esbuild/darwin-arm64@npm:0.17.14":
+  version: 0.17.14
+  resolution: "@esbuild/darwin-arm64@npm:0.17.14"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-"@esbuild/darwin-x64@npm:0.16.17":
-  version: 0.16.17
-  resolution: "@esbuild/darwin-x64@npm:0.16.17"
-=======
-"@esbuild/darwin-x64@npm:0.17.12":
-  version: 0.17.12
-  resolution: "@esbuild/darwin-x64@npm:0.17.12"
->>>>>>> administrar-usuarios
+"@esbuild/darwin-x64@npm:0.17.14":
+  version: 0.17.14
+  resolution: "@esbuild/darwin-x64@npm:0.17.14"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-"@esbuild/freebsd-arm64@npm:0.16.17":
-  version: 0.16.17
-  resolution: "@esbuild/freebsd-arm64@npm:0.16.17"
-=======
-"@esbuild/freebsd-arm64@npm:0.17.12":
-  version: 0.17.12
-  resolution: "@esbuild/freebsd-arm64@npm:0.17.12"
->>>>>>> administrar-usuarios
+"@esbuild/freebsd-arm64@npm:0.17.14":
+  version: 0.17.14
+  resolution: "@esbuild/freebsd-arm64@npm:0.17.14"
   conditions: os=freebsd & cpu=arm64
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-"@esbuild/freebsd-x64@npm:0.16.17":
-  version: 0.16.17
-  resolution: "@esbuild/freebsd-x64@npm:0.16.17"
-=======
-"@esbuild/freebsd-x64@npm:0.17.12":
-  version: 0.17.12
-  resolution: "@esbuild/freebsd-x64@npm:0.17.12"
->>>>>>> administrar-usuarios
+"@esbuild/freebsd-x64@npm:0.17.14":
+  version: 0.17.14
+  resolution: "@esbuild/freebsd-x64@npm:0.17.14"
   conditions: os=freebsd & cpu=x64
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-"@esbuild/linux-arm64@npm:0.16.17":
-  version: 0.16.17
-  resolution: "@esbuild/linux-arm64@npm:0.16.17"
-=======
-"@esbuild/linux-arm64@npm:0.17.12":
-  version: 0.17.12
-  resolution: "@esbuild/linux-arm64@npm:0.17.12"
->>>>>>> administrar-usuarios
+"@esbuild/linux-arm64@npm:0.17.14":
+  version: 0.17.14
+  resolution: "@esbuild/linux-arm64@npm:0.17.14"
   conditions: os=linux & cpu=arm64
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-"@esbuild/linux-arm@npm:0.16.17":
-  version: 0.16.17
-  resolution: "@esbuild/linux-arm@npm:0.16.17"
-=======
-"@esbuild/linux-arm@npm:0.17.12":
-  version: 0.17.12
-  resolution: "@esbuild/linux-arm@npm:0.17.12"
->>>>>>> administrar-usuarios
+"@esbuild/linux-arm@npm:0.17.14":
+  version: 0.17.14
+  resolution: "@esbuild/linux-arm@npm:0.17.14"
   conditions: os=linux & cpu=arm
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-"@esbuild/linux-ia32@npm:0.16.17":
-  version: 0.16.17
-  resolution: "@esbuild/linux-ia32@npm:0.16.17"
-=======
-"@esbuild/linux-ia32@npm:0.17.12":
-  version: 0.17.12
-  resolution: "@esbuild/linux-ia32@npm:0.17.12"
->>>>>>> administrar-usuarios
+"@esbuild/linux-ia32@npm:0.17.14":
+  version: 0.17.14
+  resolution: "@esbuild/linux-ia32@npm:0.17.14"
   conditions: os=linux & cpu=ia32
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-"@esbuild/linux-loong64@npm:0.16.17":
-  version: 0.16.17
-  resolution: "@esbuild/linux-loong64@npm:0.16.17"
-=======
-"@esbuild/linux-loong64@npm:0.17.12":
-  version: 0.17.12
-  resolution: "@esbuild/linux-loong64@npm:0.17.12"
->>>>>>> administrar-usuarios
+"@esbuild/linux-loong64@npm:0.17.14":
+  version: 0.17.14
+  resolution: "@esbuild/linux-loong64@npm:0.17.14"
   conditions: os=linux & cpu=loong64
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-"@esbuild/linux-mips64el@npm:0.16.17":
-  version: 0.16.17
-  resolution: "@esbuild/linux-mips64el@npm:0.16.17"
-=======
-"@esbuild/linux-mips64el@npm:0.17.12":
-  version: 0.17.12
-  resolution: "@esbuild/linux-mips64el@npm:0.17.12"
->>>>>>> administrar-usuarios
+"@esbuild/linux-mips64el@npm:0.17.14":
+  version: 0.17.14
+  resolution: "@esbuild/linux-mips64el@npm:0.17.14"
   conditions: os=linux & cpu=mips64el
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-"@esbuild/linux-ppc64@npm:0.16.17":
-  version: 0.16.17
-  resolution: "@esbuild/linux-ppc64@npm:0.16.17"
-=======
-"@esbuild/linux-ppc64@npm:0.17.12":
-  version: 0.17.12
-  resolution: "@esbuild/linux-ppc64@npm:0.17.12"
->>>>>>> administrar-usuarios
+"@esbuild/linux-ppc64@npm:0.17.14":
+  version: 0.17.14
+  resolution: "@esbuild/linux-ppc64@npm:0.17.14"
   conditions: os=linux & cpu=ppc64
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-"@esbuild/linux-riscv64@npm:0.16.17":
-  version: 0.16.17
-  resolution: "@esbuild/linux-riscv64@npm:0.16.17"
-=======
-"@esbuild/linux-riscv64@npm:0.17.12":
-  version: 0.17.12
-  resolution: "@esbuild/linux-riscv64@npm:0.17.12"
->>>>>>> administrar-usuarios
+"@esbuild/linux-riscv64@npm:0.17.14":
+  version: 0.17.14
+  resolution: "@esbuild/linux-riscv64@npm:0.17.14"
   conditions: os=linux & cpu=riscv64
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-"@esbuild/linux-s390x@npm:0.16.17":
-  version: 0.16.17
-  resolution: "@esbuild/linux-s390x@npm:0.16.17"
-=======
-"@esbuild/linux-s390x@npm:0.17.12":
-  version: 0.17.12
-  resolution: "@esbuild/linux-s390x@npm:0.17.12"
->>>>>>> administrar-usuarios
+"@esbuild/linux-s390x@npm:0.17.14":
+  version: 0.17.14
+  resolution: "@esbuild/linux-s390x@npm:0.17.14"
   conditions: os=linux & cpu=s390x
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-"@esbuild/linux-x64@npm:0.16.17":
-  version: 0.16.17
-  resolution: "@esbuild/linux-x64@npm:0.16.17"
-=======
-"@esbuild/linux-x64@npm:0.17.12":
-  version: 0.17.12
-  resolution: "@esbuild/linux-x64@npm:0.17.12"
->>>>>>> administrar-usuarios
+"@esbuild/linux-x64@npm:0.17.14":
+  version: 0.17.14
+  resolution: "@esbuild/linux-x64@npm:0.17.14"
   conditions: os=linux & cpu=x64
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-"@esbuild/netbsd-x64@npm:0.16.17":
-  version: 0.16.17
-  resolution: "@esbuild/netbsd-x64@npm:0.16.17"
-=======
-"@esbuild/netbsd-x64@npm:0.17.12":
-  version: 0.17.12
-  resolution: "@esbuild/netbsd-x64@npm:0.17.12"
->>>>>>> administrar-usuarios
+"@esbuild/netbsd-x64@npm:0.17.14":
+  version: 0.17.14
+  resolution: "@esbuild/netbsd-x64@npm:0.17.14"
   conditions: os=netbsd & cpu=x64
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-"@esbuild/openbsd-x64@npm:0.16.17":
-  version: 0.16.17
-  resolution: "@esbuild/openbsd-x64@npm:0.16.17"
-=======
-"@esbuild/openbsd-x64@npm:0.17.12":
-  version: 0.17.12
-  resolution: "@esbuild/openbsd-x64@npm:0.17.12"
->>>>>>> administrar-usuarios
+"@esbuild/openbsd-x64@npm:0.17.14":
+  version: 0.17.14
+  resolution: "@esbuild/openbsd-x64@npm:0.17.14"
   conditions: os=openbsd & cpu=x64
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-"@esbuild/sunos-x64@npm:0.16.17":
-  version: 0.16.17
-  resolution: "@esbuild/sunos-x64@npm:0.16.17"
-=======
-"@esbuild/sunos-x64@npm:0.17.12":
-  version: 0.17.12
-  resolution: "@esbuild/sunos-x64@npm:0.17.12"
->>>>>>> administrar-usuarios
+"@esbuild/sunos-x64@npm:0.17.14":
+  version: 0.17.14
+  resolution: "@esbuild/sunos-x64@npm:0.17.14"
   conditions: os=sunos & cpu=x64
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-"@esbuild/win32-arm64@npm:0.16.17":
-  version: 0.16.17
-  resolution: "@esbuild/win32-arm64@npm:0.16.17"
-=======
-"@esbuild/win32-arm64@npm:0.17.12":
-  version: 0.17.12
-  resolution: "@esbuild/win32-arm64@npm:0.17.12"
->>>>>>> administrar-usuarios
+"@esbuild/win32-arm64@npm:0.17.14":
+  version: 0.17.14
+  resolution: "@esbuild/win32-arm64@npm:0.17.14"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-"@esbuild/win32-ia32@npm:0.16.17":
-  version: 0.16.17
-  resolution: "@esbuild/win32-ia32@npm:0.16.17"
-=======
-"@esbuild/win32-ia32@npm:0.17.12":
-  version: 0.17.12
-  resolution: "@esbuild/win32-ia32@npm:0.17.12"
->>>>>>> administrar-usuarios
+"@esbuild/win32-ia32@npm:0.17.14":
+  version: 0.17.14
+  resolution: "@esbuild/win32-ia32@npm:0.17.14"
   conditions: os=win32 & cpu=ia32
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-"@esbuild/win32-x64@npm:0.16.17":
-  version: 0.16.17
-  resolution: "@esbuild/win32-x64@npm:0.16.17"
-=======
-"@esbuild/win32-x64@npm:0.17.12":
-  version: 0.17.12
-  resolution: "@esbuild/win32-x64@npm:0.17.12"
->>>>>>> administrar-usuarios
+"@esbuild/win32-x64@npm:0.17.14":
+  version: 0.17.14
+  resolution: "@esbuild/win32-x64@npm:0.17.14"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-"@floating-ui/core@npm:^1.2.2, @floating-ui/core@npm:^1.2.4":
-=======
 "@floating-ui/core@npm:^1.2.4":
->>>>>>> administrar-usuarios
-  version: 1.2.4
-  resolution: "@floating-ui/core@npm:1.2.4"
-  checksum: 1c163ea1804e2b0a28fda6e32efed0e242d0db8081fd24aab9d1cbb100f94a558709231c483bf74bf09a9204ea6e7845813d43b5322ceb6ee63285308f68f65b
+  version: 1.2.5
+  resolution: "@floating-ui/core@npm:1.2.5"
+  checksum: 6cda151bb098e0dbd5ac0db141715e00879bf08b21553a8895232ccf429d774e30019295b5a6d2da19dd927a34540fb49b55d926b82820e6002eac7b97405f76
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-"@floating-ui/dom@npm:1.2.3":
-  version: 1.2.3
-  resolution: "@floating-ui/dom@npm:1.2.3"
-  dependencies:
-    "@floating-ui/core": ^1.2.2
-  checksum: b2428e1fda01d5cba59960bb8c04d7a5f2400200855f206267589533a67303a62fbdf85dc7747fe83c21bb15f4eda67feaaf51ef4a41bb132fd2b785612f1bb4
-  languageName: node
-  linkType: hard
-
-=======
->>>>>>> administrar-usuarios
-"@floating-ui/dom@npm:^1.0.1":
+"@floating-ui/dom@npm:^1.0.0, @floating-ui/dom@npm:^1.0.1":
   version: 1.2.5
   resolution: "@floating-ui/dom@npm:1.2.5"
   dependencies:
@@ -1596,12 +1344,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-=======
 "@popperjs/core@npm:^2.11.6, @popperjs/core@npm:^2.9.1":
-  version: 2.11.6
-  resolution: "@popperjs/core@npm:2.11.6"
-  checksum: 47fb328cec1924559d759b48235c78574f2d71a8a6c4c03edb6de5d7074078371633b91e39bbf3f901b32aa8af9b9d8f82834856d2f5737a23475036b16817f0
+  version: 2.11.7
+  resolution: "@popperjs/core@npm:2.11.7"
+  checksum: 5b6553747899683452a1d28898c1b39173a4efd780e74360bfcda8eb42f1c5e819602769c81a10920fc68c881d07fb40429604517d499567eac079cfa6470f19
   languageName: node
   linkType: hard
 
@@ -1616,7 +1362,6 @@ __metadata:
   languageName: node
   linkType: hard
 
->>>>>>> administrar-usuarios
 "@remix-run/router@npm:1.4.0":
   version: 1.4.0
   resolution: "@remix-run/router@npm:1.4.0"
@@ -1624,8 +1369,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-=======
 "@restart/hooks@npm:^0.4.6, @restart/hooks@npm:^0.4.9":
   version: 0.4.9
   resolution: "@restart/hooks@npm:0.4.9"
@@ -1666,7 +1409,6 @@ __metadata:
   languageName: node
   linkType: hard
 
->>>>>>> administrar-usuarios
 "@tootallnate/once@npm:2":
   version: 2.0.0
   resolution: "@tootallnate/once@npm:2.0.0"
@@ -1674,7 +1416,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
 "@types/crypto-js@npm:^4.1.1":
   version: 4.1.1
   resolution: "@types/crypto-js@npm:4.1.1"
@@ -1691,6 +1432,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/hoist-non-react-statics@npm:^3.3.0":
+  version: 3.3.1
+  resolution: "@types/hoist-non-react-statics@npm:3.3.1"
+  dependencies:
+    "@types/react": "*"
+    hoist-non-react-statics: ^3.3.0
+  checksum: 2c0778570d9a01d05afabc781b32163f28409bb98f7245c38d5eaf082416fdb73034003f5825eb5e21313044e8d2d9e1f3fe2831e345d3d1b1d20bcd12270719
+  languageName: node
+  linkType: hard
+
 "@types/js-cookie@npm:^3.0.3":
   version: 3.0.3
   resolution: "@types/js-cookie@npm:3.0.3"
@@ -1699,18 +1450,9 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:^18.15.8":
-  version: 18.15.8
-  resolution: "@types/node@npm:18.15.8"
-  checksum: 795695b9f5bbfaea864261d3179da530dbe8c615bd525d6afcaa0d508f0b73f252507b54c735b1d744932677e30f55161bbe9b78487a60bd6a93b2d03027d30d
-=======
-"@types/hoist-non-react-statics@npm:^3.3.0":
-  version: 3.3.1
-  resolution: "@types/hoist-non-react-statics@npm:3.3.1"
-  dependencies:
-    "@types/react": "*"
-    hoist-non-react-statics: ^3.3.0
-  checksum: 2c0778570d9a01d05afabc781b32163f28409bb98f7245c38d5eaf082416fdb73034003f5825eb5e21313044e8d2d9e1f3fe2831e345d3d1b1d20bcd12270719
->>>>>>> administrar-usuarios
+  version: 18.15.10
+  resolution: "@types/node@npm:18.15.10"
+  checksum: 9aeae0b683eda82892def5315812bdee3f1a28c4898b7e70f8e2514564538b16c4dccbe8339c1266f8fc1d707a48f152689264a854f5ebc2eba5011e793612d9
   languageName: node
   linkType: hard
 
@@ -1737,9 +1479,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-"@types/react-transition-group@npm:^4.4.0":
-=======
 "@types/react-redux@npm:^7.1.20":
   version: 7.1.25
   resolution: "@types/react-redux@npm:7.1.25"
@@ -1753,7 +1492,6 @@ __metadata:
   linkType: hard
 
 "@types/react-transition-group@npm:^4.4.0, @types/react-transition-group@npm:^4.4.4":
->>>>>>> administrar-usuarios
   version: 4.4.5
   resolution: "@types/react-transition-group@npm:4.4.5"
   dependencies:
@@ -1762,30 +1500,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-"@types/react@npm:*, @types/react@npm:^18.0.27":
-=======
-"@types/react@npm:*, @types/react@npm:>=16.9.11, @types/react@npm:>=18.0.28, @types/react@npm:^18.0.27":
->>>>>>> administrar-usuarios
-  version: 18.0.28
-  resolution: "@types/react@npm:18.0.28"
+"@types/react@npm:*, @types/react@npm:>=16.9.11, @types/react@npm:>=18.0.28, @types/react@npm:^18.0.30":
+  version: 18.0.30
+  resolution: "@types/react@npm:18.0.30"
   dependencies:
     "@types/prop-types": "*"
     "@types/scheduler": "*"
     csstype: ^3.0.2
-  checksum: e752df961105e5127652460504785897ca6e77259e0da8f233f694f9e8f451cde7fa0709d4456ade0ff600c8ce909cfe29f9b08b9c247fa9b734e126ec53edd7
+  checksum: 3ca13fd10a1ee92826e37cd8c2fe563bff65d4bdb3ff53f632bc46c8fba2e94e24247b4b77ce957677a54e592299782e1235f7a3dfcfea327cb3213ddc98e968
   languageName: node
   linkType: hard
 
 "@types/scheduler@npm:*":
-  version: 0.16.2
-  resolution: "@types/scheduler@npm:0.16.2"
-  checksum: b6b4dcfeae6deba2e06a70941860fb1435730576d3689225a421280b7742318d1548b3d22c1f66ab68e414f346a9542f29240bc955b6332c5b11e561077583bc
+  version: 0.16.3
+  resolution: "@types/scheduler@npm:0.16.3"
+  checksum: 2b0aec39c24268e3ce938c5db2f2e77f5c3dd280e05c262d9c2fe7d890929e4632a6b8e94334017b66b45e4f92a5aa42ba3356640c2a1175fa37bef2f5200767
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-=======
 "@types/warning@npm:^3.0.0":
   version: 3.0.0
   resolution: "@types/warning@npm:3.0.0"
@@ -1793,7 +1525,6 @@ __metadata:
   languageName: node
   linkType: hard
 
->>>>>>> administrar-usuarios
 "@vitejs/plugin-react@npm:^3.1.0":
   version: 3.1.0
   resolution: "@vitejs/plugin-react@npm:3.1.0"
@@ -1873,8 +1604,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-=======
 "animate.css@npm:^4.1.1":
   version: 4.1.1
   resolution: "animate.css@npm:4.1.1"
@@ -1882,7 +1611,6 @@ __metadata:
   languageName: node
   linkType: hard
 
->>>>>>> administrar-usuarios
 "ansi-regex@npm:^5.0.1":
   version: 5.0.1
   resolution: "ansi-regex@npm:5.0.1"
@@ -2030,8 +1758,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-=======
 "bootstrap@npm:^5.2.3":
   version: 5.2.3
   resolution: "bootstrap@npm:5.2.3"
@@ -2041,7 +1767,6 @@ __metadata:
   languageName: node
   linkType: hard
 
->>>>>>> administrar-usuarios
 "brace-expansion@npm:^1.1.7":
   version: 1.1.11
   resolution: "brace-expansion@npm:1.1.11"
@@ -2132,15 +1857,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.30001449, caniuse-lite@npm:^1.0.30001464":
-<<<<<<< HEAD
-  version: 1.0.30001466
-  resolution: "caniuse-lite@npm:1.0.30001466"
-  checksum: d81d0801f72162ebb7edb222cb48702f351e1a2d6acc9f340913f5b07e28c2105d1d2de9f0633c9b89e1aa1cd14f5d9154e270bf7b61296a7209745b32bdb01c
-=======
-  version: 1.0.30001468
-  resolution: "caniuse-lite@npm:1.0.30001468"
-  checksum: 39f23ce5af90fee37004bee334cd809a20f8aa46ef08244f75e33d2e32b53cfebee205018769a2712937fa05ea5a1c0249175771ffee561acd1e8e05c54f9a67
->>>>>>> administrar-usuarios
+  version: 1.0.30001470
+  resolution: "caniuse-lite@npm:1.0.30001470"
+  checksum: 14ce3cf17c90960309b82256b991c546a53aa321efae973578954faf5256a88dec1eaebe6bea516cfca04ea146787a89664a09b254df72da5c3ec4a95b5f319f
   languageName: node
   linkType: hard
 
@@ -2181,11 +1900,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-"classnames@npm:^2.3.2":
-=======
-"classnames@npm:^2.3.1":
->>>>>>> administrar-usuarios
+"classnames@npm:^2.3.0, classnames@npm:^2.3.1":
   version: 2.3.2
   resolution: "classnames@npm:2.3.2"
   checksum: 2c62199789618d95545c872787137262e741f9db13328e216b093eea91c85ef2bfb152c1f9e63027204e2559a006a92eb74147d46c800a9f96297ae1d9f96f4e
@@ -2261,8 +1976,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-=======
 "core-js@npm:^2.6.12":
   version: 2.6.12
   resolution: "core-js@npm:2.6.12"
@@ -2270,7 +1983,6 @@ __metadata:
   languageName: node
   linkType: hard
 
->>>>>>> administrar-usuarios
 "cosmiconfig@npm:^7.0.0":
   version: 7.1.0
   resolution: "cosmiconfig@npm:7.1.0"
@@ -2284,8 +1996,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-=======
 "create-react-class@npm:^15.5.3":
   version: 15.7.0
   resolution: "create-react-class@npm:15.7.0"
@@ -2296,7 +2006,6 @@ __metadata:
   languageName: node
   linkType: hard
 
->>>>>>> administrar-usuarios
 "cross-fetch@npm:^3.1.5":
   version: 3.1.5
   resolution: "cross-fetch@npm:3.1.5"
@@ -2306,19 +2015,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
 "crypto-js@npm:^4.1.1":
   version: 4.1.1
   resolution: "crypto-js@npm:4.1.1"
   checksum: b3747c12ee3a7632fab3b3e171ea50f78b182545f0714f6d3e7e2858385f0f4101a15f2517e033802ce9d12ba50a391575ff4638c9de3dd9b2c4bc47768d5425
-=======
+  languageName: node
+  linkType: hard
+
 "css-box-model@npm:^1.2.0":
   version: 1.2.1
   resolution: "css-box-model@npm:1.2.1"
   dependencies:
     tiny-invariant: ^1.0.6
   checksum: 4d113f26fed6b9150e2c314502d00dabe06f12ae43a01a7e9b6e57f3de49b4281dbb0dc46a1158a7349618f8f34d9250af57cb43d7337e9485e73e6b821e470e
->>>>>>> administrar-usuarios
   languageName: node
   linkType: hard
 
@@ -2396,8 +2105,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-=======
 "dequal@npm:^2.0.2, dequal@npm:^2.0.3":
   version: 2.0.3
   resolution: "dequal@npm:2.0.3"
@@ -2405,7 +2112,6 @@ __metadata:
   languageName: node
   linkType: hard
 
->>>>>>> administrar-usuarios
 "detect-node-es@npm:^1.1.0":
   version: 1.1.0
   resolution: "detect-node-es@npm:1.1.0"
@@ -2440,11 +2146,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-"dom-helpers@npm:^5.0.1":
-=======
 "dom-helpers@npm:^5.0.1, dom-helpers@npm:^5.2.0, dom-helpers@npm:^5.2.1":
->>>>>>> administrar-usuarios
   version: 5.2.1
   resolution: "dom-helpers@npm:5.2.1"
   dependencies:
@@ -2454,7 +2156,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
 "dotenv@npm:*":
   version: 16.0.3
   resolution: "dotenv@npm:16.0.3"
@@ -2463,15 +2164,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.4.284":
-  version: 1.4.330
-  resolution: "electron-to-chromium@npm:1.4.330"
-  checksum: aace45fdfc082489f4bd4222f78b495cddbd9cda10100149d42221042053e1ae3c9c651ca39e6c9906939c9e544e6fa6a64058954a6f4075281cd5eecc65b571
-=======
-"electron-to-chromium@npm:^1.4.284":
-  version: 1.4.338
-  resolution: "electron-to-chromium@npm:1.4.338"
-  checksum: 73f58d75ee7071db3c239b70f17c0cedfc097c0f8f39e77a6cc1ba7ad769b3153fd9e7644109a3af4ee5b3e30f121539ab7af2c4d56776fb9372e6016678f723
->>>>>>> administrar-usuarios
+  version: 1.4.341
+  resolution: "electron-to-chromium@npm:1.4.341"
+  checksum: b97377e4e622266953da2c92276b9c0a948ab7e8a0a9c9947da340269f8eb959b8678f76158b78b473a56912c697d89e37a93d82b4d2db84f622e9be7850a540
   languageName: node
   linkType: hard
 
@@ -2514,61 +2209,32 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-"esbuild@npm:^0.16.14":
-  version: 0.16.17
-  resolution: "esbuild@npm:0.16.17"
-  dependencies:
-    "@esbuild/android-arm": 0.16.17
-    "@esbuild/android-arm64": 0.16.17
-    "@esbuild/android-x64": 0.16.17
-    "@esbuild/darwin-arm64": 0.16.17
-    "@esbuild/darwin-x64": 0.16.17
-    "@esbuild/freebsd-arm64": 0.16.17
-    "@esbuild/freebsd-x64": 0.16.17
-    "@esbuild/linux-arm": 0.16.17
-    "@esbuild/linux-arm64": 0.16.17
-    "@esbuild/linux-ia32": 0.16.17
-    "@esbuild/linux-loong64": 0.16.17
-    "@esbuild/linux-mips64el": 0.16.17
-    "@esbuild/linux-ppc64": 0.16.17
-    "@esbuild/linux-riscv64": 0.16.17
-    "@esbuild/linux-s390x": 0.16.17
-    "@esbuild/linux-x64": 0.16.17
-    "@esbuild/netbsd-x64": 0.16.17
-    "@esbuild/openbsd-x64": 0.16.17
-    "@esbuild/sunos-x64": 0.16.17
-    "@esbuild/win32-arm64": 0.16.17
-    "@esbuild/win32-ia32": 0.16.17
-    "@esbuild/win32-x64": 0.16.17
-=======
 "esbuild@npm:^0.17.5":
-  version: 0.17.12
-  resolution: "esbuild@npm:0.17.12"
+  version: 0.17.14
+  resolution: "esbuild@npm:0.17.14"
   dependencies:
-    "@esbuild/android-arm": 0.17.12
-    "@esbuild/android-arm64": 0.17.12
-    "@esbuild/android-x64": 0.17.12
-    "@esbuild/darwin-arm64": 0.17.12
-    "@esbuild/darwin-x64": 0.17.12
-    "@esbuild/freebsd-arm64": 0.17.12
-    "@esbuild/freebsd-x64": 0.17.12
-    "@esbuild/linux-arm": 0.17.12
-    "@esbuild/linux-arm64": 0.17.12
-    "@esbuild/linux-ia32": 0.17.12
-    "@esbuild/linux-loong64": 0.17.12
-    "@esbuild/linux-mips64el": 0.17.12
-    "@esbuild/linux-ppc64": 0.17.12
-    "@esbuild/linux-riscv64": 0.17.12
-    "@esbuild/linux-s390x": 0.17.12
-    "@esbuild/linux-x64": 0.17.12
-    "@esbuild/netbsd-x64": 0.17.12
-    "@esbuild/openbsd-x64": 0.17.12
-    "@esbuild/sunos-x64": 0.17.12
-    "@esbuild/win32-arm64": 0.17.12
-    "@esbuild/win32-ia32": 0.17.12
-    "@esbuild/win32-x64": 0.17.12
->>>>>>> administrar-usuarios
+    "@esbuild/android-arm": 0.17.14
+    "@esbuild/android-arm64": 0.17.14
+    "@esbuild/android-x64": 0.17.14
+    "@esbuild/darwin-arm64": 0.17.14
+    "@esbuild/darwin-x64": 0.17.14
+    "@esbuild/freebsd-arm64": 0.17.14
+    "@esbuild/freebsd-x64": 0.17.14
+    "@esbuild/linux-arm": 0.17.14
+    "@esbuild/linux-arm64": 0.17.14
+    "@esbuild/linux-ia32": 0.17.14
+    "@esbuild/linux-loong64": 0.17.14
+    "@esbuild/linux-mips64el": 0.17.14
+    "@esbuild/linux-ppc64": 0.17.14
+    "@esbuild/linux-riscv64": 0.17.14
+    "@esbuild/linux-s390x": 0.17.14
+    "@esbuild/linux-x64": 0.17.14
+    "@esbuild/netbsd-x64": 0.17.14
+    "@esbuild/openbsd-x64": 0.17.14
+    "@esbuild/sunos-x64": 0.17.14
+    "@esbuild/win32-arm64": 0.17.14
+    "@esbuild/win32-ia32": 0.17.14
+    "@esbuild/win32-x64": 0.17.14
   dependenciesMeta:
     "@esbuild/android-arm":
       optional: true
@@ -2616,11 +2282,7 @@ __metadata:
       optional: true
   bin:
     esbuild: bin/esbuild
-<<<<<<< HEAD
-  checksum: 4c2cc609ecfb426554bc3f75beb92d89eb2d0c515cfceebaa36c7599d7dcaab7056b70f6d6b51e72b45951ddf9021ee28e356cf205f8e42cc055d522312ea30c
-=======
-  checksum: ea6d33eb1bc6c9e00dcee5e253c7e935251b4801d376661fd9f19a9dcffc27f970078a6f7116d6c78ee825ceff9b974594b0b616bd560ce4d875a951aa92977b
->>>>>>> administrar-usuarios
+  checksum: 8f4c05f5d3da04f05c48d65f60f3c6422253f406cd56a7ab7a898f0971b0366c454635a6340172874950771dc005a9928dd999b732a6d4caa504b537bfcbf2ff
   languageName: node
   linkType: hard
 
@@ -2739,8 +2401,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-=======
 "focus-trap@npm:^2.4.5":
   version: 2.4.6
   resolution: "focus-trap@npm:2.4.6"
@@ -2750,7 +2410,6 @@ __metadata:
   languageName: node
   linkType: hard
 
->>>>>>> administrar-usuarios
 "follow-redirects@npm:^1.15.0":
   version: 1.15.2
   resolution: "follow-redirects@npm:1.15.2"
@@ -2779,10 +2438,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
 "framer-motion@npm:^10.5.0":
-  version: 10.5.0
-  resolution: "framer-motion@npm:10.5.0"
+  version: 10.9.1
+  resolution: "framer-motion@npm:10.9.1"
   dependencies:
     "@emotion/is-prop-valid": ^0.8.2
     tslib: ^2.4.0
@@ -2797,12 +2455,10 @@ __metadata:
       optional: true
     react-dom:
       optional: true
-  checksum: 07009d50101f14988dec493b8cab1b6f56f8729f73686343c4a5509d0b3c097f4d3ee99a370cd7cd540ece04e6034eeb02fb69e9cecd715544ef23bdfc305c60
+  checksum: d2eacc83a1ab308a8cfa404b95fb5fb821b6ff821238e365b6bf0b999a1342b00287c58c9c6d29c00b84066315fdf86acc081d4289c03c17f2f4e58e5bfc2e3e
   languageName: node
   linkType: hard
 
-=======
->>>>>>> administrar-usuarios
 "fs-minipass@npm:^2.0.0, fs-minipass@npm:^2.1.0":
   version: 2.1.0
   resolution: "fs-minipass@npm:2.1.0"
@@ -2950,11 +2606,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-"hoist-non-react-statics@npm:^3.0.0, hoist-non-react-statics@npm:^3.3.1":
-=======
 "hoist-non-react-statics@npm:^3.0.0, hoist-non-react-statics@npm:^3.3.0, hoist-non-react-statics@npm:^3.3.1, hoist-non-react-statics@npm:^3.3.2":
->>>>>>> administrar-usuarios
   version: 3.3.2
   resolution: "hoist-non-react-statics@npm:3.3.2"
   dependencies:
@@ -3057,8 +2709,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-=======
 "invariant@npm:^2.2.4":
   version: 2.2.4
   resolution: "invariant@npm:2.2.4"
@@ -3068,7 +2718,6 @@ __metadata:
   languageName: node
   linkType: hard
 
->>>>>>> administrar-usuarios
 "ip@npm:^2.0.0":
   version: 2.0.0
   resolution: "ip@npm:2.0.0"
@@ -3145,7 +2794,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
 "js-cookie@npm:^3.0.1":
   version: 3.0.1
   resolution: "js-cookie@npm:3.0.1"
@@ -3153,8 +2801,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-=======
->>>>>>> administrar-usuarios
 "js-tokens@npm:^3.0.0 || ^4.0.0, js-tokens@npm:^4.0.0":
   version: 4.0.0
   resolution: "js-tokens@npm:4.0.0"
@@ -3208,11 +2854,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-"loose-envify@npm:^1.0.0, loose-envify@npm:^1.1.0, loose-envify@npm:^1.4.0":
-=======
 "loose-envify@npm:^1.0.0, loose-envify@npm:^1.1.0, loose-envify@npm:^1.3.1, loose-envify@npm:^1.4.0":
->>>>>>> administrar-usuarios
   version: 1.4.0
   resolution: "loose-envify@npm:1.4.0"
   dependencies:
@@ -3223,7 +2865,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
+"lorem-ipsum@npm:^1.0.3":
+  version: 1.0.6
+  resolution: "lorem-ipsum@npm:1.0.6"
+  dependencies:
+    minimist: ~1.2.0
+  bin:
+    lorem-ipsum: bin/lorem-ipsum.bin.js
+  checksum: 393ab55d6353af11eeb1bd94d572f207dd13c621816fb65dc827c334edc9c7aa578db0cd07856afd0263dae5d67485c990198c3a95979951105a9698a34ce74d
+  languageName: node
+  linkType: hard
+
 "lottie-react@npm:^2.4.0":
   version: 2.4.0
   resolution: "lottie-react@npm:2.4.0"
@@ -3240,16 +2892,6 @@ __metadata:
   version: 5.10.2
   resolution: "lottie-web@npm:5.10.2"
   checksum: 9ec80b479d8d03c079bd4f246d301f0c4aac2c4d6f8daaa79f6f3fc285aaba377c64879f6748d49c1db52b9854aea81c3203d858e9c686f7a47cd8b771d112d0
-=======
-"lorem-ipsum@npm:^1.0.3":
-  version: 1.0.6
-  resolution: "lorem-ipsum@npm:1.0.6"
-  dependencies:
-    minimist: ~1.2.0
-  bin:
-    lorem-ipsum: bin/lorem-ipsum.bin.js
-  checksum: 393ab55d6353af11eeb1bd94d572f207dd13c621816fb65dc827c334edc9c7aa578db0cd07856afd0263dae5d67485c990198c3a95979951105a9698a34ce74d
->>>>>>> administrar-usuarios
   languageName: node
   linkType: hard
 
@@ -3311,8 +2953,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-=======
 "memoize-one@npm:^5.1.1":
   version: 5.2.1
   resolution: "memoize-one@npm:5.2.1"
@@ -3320,7 +2960,6 @@ __metadata:
   languageName: node
   linkType: hard
 
->>>>>>> administrar-usuarios
 "memoize-one@npm:^6.0.0":
   version: 6.0.0
   resolution: "memoize-one@npm:6.0.0"
@@ -3379,11 +3018,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-"minimist@npm:^1.2.6":
-=======
 "minimist@npm:^1.2.6, minimist@npm:~1.2.0":
->>>>>>> administrar-usuarios
   version: 1.2.8
   resolution: "minimist@npm:1.2.8"
   checksum: 75a6d645fb122dad29c06a7597bddea977258957ed88d7a6df59b5cd3fe4a527e253e9bbf2e783e4b73657f9098b96a5fe96ab8a113655d4109108577ecf85b0
@@ -3491,11 +3126,11 @@ __metadata:
   linkType: hard
 
 "nanoid@npm:^3.3.4":
-  version: 3.3.4
-  resolution: "nanoid@npm:3.3.4"
+  version: 3.3.6
+  resolution: "nanoid@npm:3.3.6"
   bin:
     nanoid: bin/nanoid.cjs
-  checksum: 2fddd6dee994b7676f008d3ffa4ab16035a754f4bb586c61df5a22cf8c8c94017aadd360368f47d653829e0569a92b129979152ff97af23a558331e47e37cd9c
+  checksum: 7d0eda657002738aa5206107bd0580aead6c95c460ef1bdd0b1a87a9c7ae6277ac2e9b945306aaa5b32c6dcb7feaf462d0f552e7f8b5718abfc6ead5c94a71b3
   languageName: node
   linkType: hard
 
@@ -3786,9 +3421,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-"prop-types@npm:^15.5.10, prop-types@npm:^15.6.0, prop-types@npm:^15.6.2":
-=======
 "prop-types-extra@npm:^1.1.0":
   version: 1.1.1
   resolution: "prop-types-extra@npm:1.1.1"
@@ -3802,7 +3434,6 @@ __metadata:
   linkType: hard
 
 "prop-types@npm:^15.5.10, prop-types@npm:^15.6.0, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
->>>>>>> administrar-usuarios
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -3834,19 +3465,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-"raf-schd@npm:^4.0.3":
-=======
 "raf-schd@npm:^4.0.2, raf-schd@npm:^4.0.3":
->>>>>>> administrar-usuarios
   version: 4.0.3
   resolution: "raf-schd@npm:4.0.3"
   checksum: 45514041c5ad31fa96aef3bb3c572a843b92da2f2cd1cb4a47c9ad58e48761d3a4126e18daa32b2bfa0bc2551a42d8f324a0e40e536cb656969929602b4e8b58
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-=======
 "react-beautiful-dnd@npm:^12.1.1":
   version: 12.2.0
   resolution: "react-beautiful-dnd@npm:12.2.0"
@@ -3892,7 +3517,6 @@ __metadata:
   languageName: node
   linkType: hard
 
->>>>>>> administrar-usuarios
 "react-clientside-effect@npm:^1.2.6":
   version: 1.2.6
   resolution: "react-clientside-effect@npm:1.2.6"
@@ -3916,8 +3540,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-=======
 "react-fast-compare@npm:^3.0.1":
   version: 3.2.1
   resolution: "react-fast-compare@npm:3.2.1"
@@ -3925,7 +3547,6 @@ __metadata:
   languageName: node
   linkType: hard
 
->>>>>>> administrar-usuarios
 "react-focus-lock@npm:^2.5.2":
   version: 2.9.4
   resolution: "react-focus-lock@npm:2.9.4"
@@ -3946,31 +3567,40 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-"react-is@npm:^16.13.1, react-is@npm:^16.7.0":
-=======
 "react-hook-form@npm:^7.43.7":
-  version: 7.43.7
-  resolution: "react-hook-form@npm:7.43.7"
+  version: 7.43.8
+  resolution: "react-hook-form@npm:7.43.8"
   peerDependencies:
     react: ^16.8.0 || ^17 || ^18
-  checksum: c1679fc5119f3f910f30424b846f9a05ecbc9cce1c7408e4e8eb907aa5a4366d5228a7b41d818868c85017f2be4e1854a1536ba5c1cddf2c27818bd045df9589
+  checksum: 1042b68950e1756dd907e7eb904c6efdf04f126a48797b25e8793705d930f7bbff2cc07f0ec7ea4c52272e808a359ae157742c551defa3b3fd0952ff414bd3e3
   languageName: node
   linkType: hard
 
 "react-is@npm:^16.13.1, react-is@npm:^16.3.2, react-is@npm:^16.7.0":
->>>>>>> administrar-usuarios
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
   checksum: f7a19ac3496de32ca9ae12aa030f00f14a3d45374f1ceca0af707c831b2a6098ef0d6bdae51bd437b0a306d7f01d4677fcc8de7c0d331eb47ad0f46130e53c5f
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
+"react-is@npm:^17.0.2":
+  version: 17.0.2
+  resolution: "react-is@npm:17.0.2"
+  checksum: 9d6d111d8990dc98bc5402c1266a808b0459b5d54830bbea24c12d908b536df7883f268a7868cfaedde3dd9d4e0d574db456f84d2e6df9c4526f99bb4b5344d8
+  languageName: node
+  linkType: hard
+
 "react-is@npm:^18.2.0":
   version: 18.2.0
   resolution: "react-is@npm:18.2.0"
   checksum: e72d0ba81b5922759e4aff17e0252bd29988f9642ed817f56b25a3e217e13eea8a7f2322af99a06edb779da12d5d636e9fda473d620df9a3da0df2a74141d53e
+  languageName: node
+  linkType: hard
+
+"react-lifecycles-compat@npm:^3.0.4":
+  version: 3.0.4
+  resolution: "react-lifecycles-compat@npm:3.0.4"
+  checksum: a904b0fc0a8eeb15a148c9feb7bc17cec7ef96e71188280061fc340043fd6d8ee3ff233381f0e8f95c1cf926210b2c4a31f38182c8f35ac55057e453d6df204f
   languageName: node
   linkType: hard
 
@@ -3985,18 +3615,6 @@ __metadata:
     react: ^16.0.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.0.0 || ^17.0.0 || ^18.0.0
   checksum: 429ee74233b2a225164bd77cce94459c20443411248e00604a21752fabf31a36749cc4d52c2a2cf194b98b37c543e0cbb9b76a0e49188acd1f17087035544ca6
-=======
-"react-is@npm:^17.0.2":
-  version: 17.0.2
-  resolution: "react-is@npm:17.0.2"
-  checksum: 9d6d111d8990dc98bc5402c1266a808b0459b5d54830bbea24c12d908b536df7883f268a7868cfaedde3dd9d4e0d574db456f84d2e6df9c4526f99bb4b5344d8
-  languageName: node
-  linkType: hard
-
-"react-lifecycles-compat@npm:^3.0.4":
-  version: 3.0.4
-  resolution: "react-lifecycles-compat@npm:3.0.4"
-  checksum: a904b0fc0a8eeb15a148c9feb7bc17cec7ef96e71188280061fc340043fd6d8ee3ff233381f0e8f95c1cf926210b2c4a31f38182c8f35ac55057e453d6df204f
   languageName: node
   linkType: hard
 
@@ -4046,7 +3664,6 @@ __metadata:
     react-native:
       optional: true
   checksum: 369a2bdcf87915659af9e5c55abfd9f52a84e43e0d12dcc108ed17dbe6933558b7b7fc12caa9c10c1a10a8be7df89454b6c96989d8573fedec1a772c94a1f145
->>>>>>> administrar-usuarios
   languageName: node
   linkType: hard
 
@@ -4092,15 +3709,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-"react-select@npm:^5.7.1":
-  version: 5.7.1
-  resolution: "react-select@npm:5.7.1"
-=======
 "react-select@npm:^5.7.0":
   version: 5.7.2
   resolution: "react-select@npm:5.7.2"
->>>>>>> administrar-usuarios
   dependencies:
     "@babel/runtime": ^7.12.0
     "@emotion/cache": ^11.4.0
@@ -4114,32 +3725,24 @@ __metadata:
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
-<<<<<<< HEAD
-  checksum: a10d09fc9233b51fd391c1871f1becded368ebdc2de18058d76236a7771e81e7582e27d6f4a47fc372bf20cb64c8eed078207da6f31cac71a31b2071e6d6f7e2
-  languageName: node
-  linkType: hard
-
-"react-tooltip@npm:^5.10.0":
-  version: 5.10.0
-  resolution: "react-tooltip@npm:5.10.0"
-  dependencies:
-    "@floating-ui/dom": 1.2.3
-    classnames: ^2.3.2
-  peerDependencies:
-    react: ">=16.14.0"
-    react-dom: ">=16.14.0"
-  checksum: b1fdfa27cecc632afb418e1deb2f3184f69ca61e007bae28b43d91ea45857cf640f3754ba6e8148a35fc6f6ed0e0572d36a4f79e0865d0ea6940b9ddaaeaede9
-  languageName: node
-  linkType: hard
-
-"react-transition-group@npm:^4.3.0":
-=======
   checksum: 1cb03c308be98b0bb89361dd842b92010ebd6769e388c380f2303ccfb14768b2085d0b94478dcd67841991272570fd27f75ea3035a230378fe14215d857e8ff7
   languageName: node
   linkType: hard
 
+"react-tooltip@npm:^5.10.0":
+  version: 5.10.1
+  resolution: "react-tooltip@npm:5.10.1"
+  dependencies:
+    "@floating-ui/dom": ^1.0.0
+    classnames: ^2.3.0
+  peerDependencies:
+    react: ">=16.14.0"
+    react-dom: ">=16.14.0"
+  checksum: 2de22a7e17b75c3182d448a60f69151a9b0e2ec0016a1f23ff74bee63bac7ae5ed1bdf9b01f3580d590260b420a0c87609324a88304a03e364e172a1f345292d
+  languageName: node
+  linkType: hard
+
 "react-transition-group@npm:^4.3.0, react-transition-group@npm:^4.4.2":
->>>>>>> administrar-usuarios
   version: 4.4.5
   resolution: "react-transition-group@npm:4.4.5"
   dependencies:
@@ -4207,8 +3810,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-=======
 "redux@npm:^4.0.0, redux@npm:^4.0.4":
   version: 4.2.1
   resolution: "redux@npm:4.2.1"
@@ -4218,7 +3819,6 @@ __metadata:
   languageName: node
   linkType: hard
 
->>>>>>> administrar-usuarios
 "regenerator-runtime@npm:^0.13.11":
   version: 0.13.11
   resolution: "regenerator-runtime@npm:0.13.11"
@@ -4264,46 +3864,14 @@ __metadata:
   resolution: "retrozeb@workspace:."
   dependencies:
     "@atlaskit/avatar": ^21.1.10
-<<<<<<< HEAD
     "@atlaskit/blanket": ^12.3.7
-    "@atlaskit/button": ^16.5.6
-    "@atlaskit/css-reset": ^6.3.20
-    "@atlaskit/empty-state": ^7.4.9
-    "@atlaskit/flag": ^15.0.8
-    "@atlaskit/form": ^8.8.4
-    "@atlaskit/icon": ^21.11.5
-    "@atlaskit/modal-dialog": ^12.4.11
-    "@atlaskit/tag": ^11.4.10
-    "@atlaskit/textarea": ^4.5.6
-    "@atlaskit/textfield": ^5.3.6
-    "@atlaskit/toggle": ^12.5.8
-    "@emotion/react": ^11.10.6
-    "@types/crypto-js": ^4.1.1
-    "@types/dotenv": ^8.2.0
-    "@types/js-cookie": ^3.0.3
-    "@types/node": ^18.15.8
-    "@types/react": ^18.0.27
-    "@types/react-dom": ^18.0.10
-    "@vitejs/plugin-react": ^3.1.0
-    autoprefixer: ^10.4.14
-    axios: ^1.3.4
-    crypto-js: ^4.1.1
-    framer-motion: ^10.5.0
-    js-cookie: ^3.0.1
-    lottie-react: ^2.4.0
-    postcss: ^8.4.21
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    react-loader-spinner: ^5.3.4
-    react-router-dom: ^6.9.0
-    react-select: ^5.7.1
-    react-tooltip: ^5.10.0
-=======
     "@atlaskit/button": ^16.5.6
     "@atlaskit/checkbox": ^12.4.6
     "@atlaskit/css-reset": ^6.3.20
     "@atlaskit/dropdown-menu": ^11.6.0
     "@atlaskit/dynamic-table": ^14.8.12
+    "@atlaskit/empty-state": ^7.4.9
+    "@atlaskit/flag": ^15.0.8
     "@atlaskit/form": ^8.8.4
     "@atlaskit/icon": ^21.11.5
     "@atlaskit/lozenge": ^11.3.7
@@ -4311,25 +3879,37 @@ __metadata:
     "@atlaskit/section-message": ^6.3.10
     "@atlaskit/tag": ^11.4.10
     "@atlaskit/tag-group": ^10.1.2
+    "@atlaskit/textarea": ^4.5.6
     "@atlaskit/textfield": ^5.3.6
+    "@atlaskit/toggle": ^12.5.8
     "@atlaskit/tokens": ^1.2.4
-    "@types/react": ^18.0.27
+    "@emotion/react": ^11.10.6
+    "@types/crypto-js": ^4.1.1
+    "@types/dotenv": ^8.2.0
+    "@types/js-cookie": ^3.0.3
+    "@types/node": ^18.15.8
+    "@types/react": ^18.0.30
     "@types/react-dom": ^18.0.10
     "@vitejs/plugin-react": ^3.1.0
     animate.css: ^4.1.1
     autoprefixer: ^10.4.14
     axios: ^1.3.4
     bootstrap: ^5.2.3
+    crypto-js: ^4.1.1
+    framer-motion: ^10.5.0
+    js-cookie: ^3.0.1
+    lottie-react: ^2.4.0
     postcss: ^8.4.21
     react: ^18.2.0
     react-bootstrap: ^2.7.2
     react-dom: ^18.2.0
     react-hook-form: ^7.43.7
+    react-loader-spinner: ^5.3.4
     react-lorem-component: ^0.13.0
     react-router-dom: ^6.9.0
     react-select: ^5.7.0
+    react-tooltip: ^5.10.0
     styled-components: ^5.3.9
->>>>>>> administrar-usuarios
     tailwindcss: ^3.2.7
     typescript: ^4.9.3
     vite: ^4.1.0
@@ -4361,15 +3941,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-"rollup@npm:^3.10.0":
-  version: 3.19.1
-  resolution: "rollup@npm:3.19.1"
-=======
 "rollup@npm:^3.18.0":
-  version: 3.20.1
-  resolution: "rollup@npm:3.20.1"
->>>>>>> administrar-usuarios
+  version: 3.20.2
+  resolution: "rollup@npm:3.20.2"
   dependencies:
     fsevents: ~2.3.2
   dependenciesMeta:
@@ -4377,11 +3951,7 @@ __metadata:
       optional: true
   bin:
     rollup: dist/bin/rollup
-<<<<<<< HEAD
-  checksum: f78198c6de224b26650c70b16db156762d1fcceeb375d34fb2c76fc5b23a78f712c3c881d3248e6f277a511589e20d50c247bcf5c7920f1ddc0a43cadf9f0140
-=======
-  checksum: dc88f337133228311c4d52f005310f2b23ad6d0765b8909698aede1eecde32057ef2ae84e244fd27a45ff944f66f3c120d0b5e163c4642356d2d501df531b798
->>>>>>> administrar-usuarios
+  checksum: 34b0932839b7c2a5d1742fb21ce95a47e0b49a0849f4abee2dccf25833187aa7babb898ca90d4fc761cffa4102b9ed0ac6ad7f6f6b96c8b8e2d67305abc5da65
   languageName: node
   linkType: hard
 
@@ -4417,8 +3987,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-=======
 "seedable-random@npm:0.0.1":
   version: 0.0.1
   resolution: "seedable-random@npm:0.0.1"
@@ -4426,7 +3994,6 @@ __metadata:
   languageName: node
   linkType: hard
 
->>>>>>> administrar-usuarios
 "semver@npm:^6.3.0":
   version: 6.3.0
   resolution: "semver@npm:6.3.0"
@@ -4555,11 +4122,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-"styled-components@npm:^5.3.5":
-=======
-"styled-components@npm:^5.3.9":
->>>>>>> administrar-usuarios
+"styled-components@npm:^5.3.5, styled-components@npm:^5.3.9":
   version: 5.3.9
   resolution: "styled-components@npm:5.3.9"
   dependencies:
@@ -4581,7 +4144,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
 "styled-tools@npm:^1.7.2":
   version: 1.7.2
   resolution: "styled-tools@npm:1.7.2"
@@ -4589,8 +4151,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-=======
->>>>>>> administrar-usuarios
 "stylis@npm:4.1.3":
   version: 4.1.3
   resolution: "stylis@npm:4.1.3"
@@ -4614,8 +4174,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-=======
 "tabbable@npm:^1.0.3":
   version: 1.1.3
   resolution: "tabbable@npm:1.1.3"
@@ -4623,7 +4181,6 @@ __metadata:
   languageName: node
   linkType: hard
 
->>>>>>> administrar-usuarios
 "tailwindcss@npm:^3.2.7":
   version: 3.2.7
   resolution: "tailwindcss@npm:3.2.7"
@@ -4674,11 +4231,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-"tiny-invariant@npm:^1.2.0":
-=======
 "tiny-invariant@npm:^1.0.6, tiny-invariant@npm:^1.2.0":
->>>>>>> administrar-usuarios
   version: 1.3.1
   resolution: "tiny-invariant@npm:1.3.1"
   checksum: 872dbd1ff20a21303a2fd20ce3a15602cfa7fcf9b228bd694a52e2938224313b5385a1078cb667ed7375d1612194feaca81c4ecbe93121ca1baebe344de4f84c
@@ -4742,8 +4295,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-=======
 "uncontrollable@npm:^7.2.1":
   version: 7.2.1
   resolution: "uncontrollable@npm:7.2.1"
@@ -4769,7 +4320,6 @@ __metadata:
   languageName: node
   linkType: hard
 
->>>>>>> administrar-usuarios
 "unique-filename@npm:^2.0.0":
   version: 2.0.1
   resolution: "unique-filename@npm:2.0.1"
@@ -4862,16 +4412,6 @@ __metadata:
   linkType: hard
 
 "vite@npm:^4.1.0":
-<<<<<<< HEAD
-  version: 4.1.4
-  resolution: "vite@npm:4.1.4"
-  dependencies:
-    esbuild: ^0.16.14
-    fsevents: ~2.3.2
-    postcss: ^8.4.21
-    resolve: ^1.22.1
-    rollup: ^3.10.0
-=======
   version: 4.2.1
   resolution: "vite@npm:4.2.1"
   dependencies:
@@ -4880,7 +4420,6 @@ __metadata:
     postcss: ^8.4.21
     resolve: ^1.22.1
     rollup: ^3.18.0
->>>>>>> administrar-usuarios
   peerDependencies:
     "@types/node": ">= 14"
     less: "*"
@@ -4906,9 +4445,6 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-<<<<<<< HEAD
-  checksum: 50a9a1f2e29e0ee8fefdec60314d38fb9b746df0bb6ae5a8114014b5bfd95e0fc9b29c0d5e73939361ba53af7eb66c7d20c5656bbe53a783e96540bd3b907c47
-=======
   checksum: 70eb162ffc299017a3c310e3adc95e9661def6b17aafd1f8e5e02e516766060435590dbe3df1e4e95acc3583c728a76e91f07c546221d1e701f1b2b021293f45
   languageName: node
   linkType: hard
@@ -4919,7 +4455,6 @@ __metadata:
   dependencies:
     loose-envify: ^1.0.0
   checksum: 4f2cb6a9575e4faf71ddad9ad1ae7a00d0a75d24521c193fa464f30e6b04027bd97aa5d9546b0e13d3a150ab402eda216d59c1d0f2d6ca60124d96cd40dfa35c
->>>>>>> administrar-usuarios
   languageName: node
   linkType: hard
 

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import './css/modalBorrarUsuarios.css';
 import axios from 'axios';
 import Button from '@atlaskit/button/standard-button';
+import Blanket from '@atlaskit/blanket';
 
 const URI = 'http://localhost:8000/etiquetas/';
 
@@ -40,7 +41,7 @@ const ModalBorrarEtiqueta: FC<GestionarEtiquetasProps> = ({
 
   return (
     <>
-      <div className="modal z-[1000000000]">
+      <Blanket isTinted={true}>
         <div className="modal-content px-10">
           <div className="modal-header">
             <div className="modal-title justify-center">
@@ -71,7 +72,7 @@ const ModalBorrarEtiqueta: FC<GestionarEtiquetasProps> = ({
             </div>
           </div>
         </div>
-      </div>
+      </Blanket>
     </>
   );
 };
