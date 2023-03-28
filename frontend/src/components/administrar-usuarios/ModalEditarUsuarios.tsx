@@ -80,8 +80,6 @@ const ModalEditarUsuarios: FC<ModalEditarUsuariosProps> = ({
     getUsuario();
   }, []);
 
-  //FALTAN: handleSubmit,
-
   if (!show) {
     return null;
   } else {

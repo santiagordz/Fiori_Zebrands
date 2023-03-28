@@ -122,31 +122,10 @@ module.exports = class Usuarios {
     );
   }
 
-  static async fetchOne(correo) {
-    return db.execute(
-      `SELECT correo, nombre, foto, id_jira, id_rol
-        FROM usuarios
-        WHERE correo = ?`,
-      [correo]
-    );
-  }
-
-  static async updateData(
-    nombre,
-    foto,
-    id_google,
-    correo,
-    fechaActual
-  ) {
-    return db.execute(
-      `UPDATE usuarios SET nombre = ?, foto = ?, id_google = ?, updatedAt = ? WHERE correo = ?;`,
-      [nombre, foto, id_google, correo, fechaActual]
-    );
-  }
   
   static async fetchOne(correo) {
     return db.execute(
-      `SELECT correo, nombre, foto, id_jira, id_rol
+      `SELECT id, correo, nombre, foto, id_jira, id_rol
         FROM usuarios
         WHERE correo = ?`,
       [correo]

@@ -40,3 +40,19 @@ exports.getQuestions = async (req, res) => {
     console.log(err);
   }
 };
+
+exports.getRetrospectivasByUserId = async (req, res, next) => {
+  const userId = req.query.id_usuario;
+
+  try {
+    const [rows] = await Retrospectiva.fetchRetrospectivasByUserId(
+      userId
+    );
+    res.status(200).json(rows);
+  } catch (err) {
+    console.log(err);
+    res
+      .status(500)
+      .json({ message: 'Error al obtener las retrospectivas' });
+  }
+};

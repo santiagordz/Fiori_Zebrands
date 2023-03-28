@@ -2,7 +2,7 @@ const db = require('../database/db');
 
 module.exports = class Retrospectiva {
   constructor(newRetrospectiva) {
-    this.id_retrospectiva = newRetrospectiva.id_retrospectiva || null;
+    this.id = newRetrospectiva.id || null;
     this.titulo = newRetrospectiva.titulo || '';
     this.descripcion = newRetrospectiva.descripcion || '';
     this.fecha_inicio = newRetrospectiva.fecha_inicio || '';
@@ -27,6 +27,16 @@ module.exports = class Retrospectiva {
     );
   }
 
+  static fetchRetrospectivasByUserId(userId) {
+    return db.execute(
+      `
+    SELECT r.*, ur.id_usuario, ur.completada, IF(ur.id_usuario IS NOT NULL, 1, 0) as asignada
+    FROM retrospectivas r
+    LEFT JOIN usuarios_retrospectivas ur ON r.id = ur.id_retrospectiva AND ur.id_usuario = ?
+    `,
+      [userId]
+    );
+  }
   static fetchQuestions(id) {
     // Utilizando subconsultas
     return db.execute(
