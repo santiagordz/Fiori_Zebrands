@@ -50,6 +50,8 @@ const ResponderRetro = ({}) => {
   }, []);
 
   if (!retrospectivaData) {
+    if (retroId === '-1')
+      return <Navigate to="/mis-retrospectivas" />;
     return <Spinner message="Cargando retrospectiva" />;
   }
 
@@ -86,7 +88,10 @@ const ResponderRetro = ({}) => {
               </FormDataProvider>
             }
           />
-          <Route path="/respuestas/" element={<Answers />} />
+          <Route
+            path="/respuestas/:id_sesionRespuesta"
+            element={<Answers />}
+          />
         </Routes>
       </div>
     </QuestionsProvider>

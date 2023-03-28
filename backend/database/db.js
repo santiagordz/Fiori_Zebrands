@@ -4,8 +4,7 @@ const pool = mysql.createPool({
   host: 'localhost',
   user: 'root',
   database: 'fiori',
-  password: '',
-  port: 3306, // Puerto predeterminado de MySQL
+  password: 'root',
 });
 
 module.exports = pool.promise();

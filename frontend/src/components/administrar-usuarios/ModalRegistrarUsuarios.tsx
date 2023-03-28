@@ -41,11 +41,9 @@ const ModalRegistrarUsuarios: FC<RegistrarUsuariosProps> = ({
       });
       window.location.reload();
     } catch {
-      window.alert('nel'); // cambiar eso a algo mas bonito
+      window.alert('Hubo un error al subir los datos');
     }
-    // window.alert(
-    //   `Correo: ${correo}, rol: ${rol}, etiquetas: ${etiquetas}`
-    // );
+
     setCorreo('');
     setRol('');
     onClose();

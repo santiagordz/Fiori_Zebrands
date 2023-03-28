@@ -8,7 +8,7 @@ const URI = 'http://localhost:8000/retrospectivas';
 interface PanelRetrosProps {}
 
 interface Retrospectiva {
-  id_retrospectiva: number;
+  id: number;
   titulo: string;
   descripcion: string;
   fecha_inicio: string;
@@ -45,8 +45,8 @@ const PanelRetros: FC<PanelRetrosProps> = ({}) => {
           retroPendientes.map((retrospectiva: Retrospectiva) => {
             return (
               <RetrospectivaGeneral
-                key={retrospectiva.id_retrospectiva}
-                idRetrospectiva={retrospectiva.id_retrospectiva || -1}
+                key={retrospectiva.id}
+                idRetrospectiva={retrospectiva.id || -1}
                 titulo={retrospectiva.titulo || ''}
                 descripcion={retrospectiva.descripcion || ''}
                 fechaInicio={retrospectiva.fecha_inicio || ''}

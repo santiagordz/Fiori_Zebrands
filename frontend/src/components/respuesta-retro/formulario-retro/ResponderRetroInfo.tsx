@@ -6,7 +6,12 @@ import {
   useState,
   useContext,
 } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import {
+  Link,
+  Navigate,
+  useNavigate,
+  useParams,
+} from 'react-router-dom';
 import Team from '../../../assets/team.png';
 import { Recordatorios } from '../modals';
 import { questionsContext } from '../local-contexts';
@@ -45,6 +50,8 @@ const ReponderRetroInfo: FC<ReponderRetroInfoProps> = ({}) => {
       document.body.classList.remove('modal-open');
     };
   }, [isOpen]);
+
+  if (retroId === '-1') return <Navigate to="/mis-retrospectivas" />;
 
   return (
     <>

@@ -22,7 +22,7 @@ module.exports = class Retrospectiva {
 
   static fetchOne(id) {
     return db.execute(
-      'SELECT id, titulo, fecha_inicio, fecha_fin, descripcion, id_reporte, updatedAt, createdAt FROM `retrospectivas` WHERE id_retrospectiva = ?;',
+      'SELECT id, titulo, fecha_inicio, fecha_fin, descripcion, id_reporte, updatedAt, createdAt FROM `retrospectivas` WHERE id = ?;',
       [id]
     );
   }
@@ -30,20 +30,13 @@ module.exports = class Retrospectiva {
   static fetchQuestions(id) {
     // Utilizando subconsultas
     return db.execute(
-      `SELECT P.id AS id_pregunta, P.pregunta, P.id_tipo_pregunta,
-       (SELECT GROUP_CONCAT(opcion_respuesta)
-        FROM opciones_respuestas
-        WHERE id IN (
-            SELECT id_opcion
-            FROM preguntas_opciones_respuestas
-            WHERE id_pregunta = P.id
-        )
-       ) AS opciones_respuesta
-FROM preguntas AS P
-JOIN preguntas_retrospectivas AS PR ON P.id = PR.id_pregunta
-WHERE PR.id_retrospectiva = ?
-GROUP BY P.id;
-      `,
+      `SELECT P.id, P.pregunta, P.id_tipo_pregunta,
+          (SELECT GROUP_CONCAT(OP.opcion_respuesta) FROM opciones_respuestas as OP
+            WHERE OP.id IN (SELECT id_opcion FROM preguntas_opciones WHERE id_pregunta = P.id)
+          ) as opciones_respuestas
+        FROM preguntas as P, preguntas_retrospectivas as PR WHERE P.id = PR.id_pregunta
+        AND PR.id_retrospectiva = ?
+        GROUP BY P.id;`,
       [id]
     );
   }

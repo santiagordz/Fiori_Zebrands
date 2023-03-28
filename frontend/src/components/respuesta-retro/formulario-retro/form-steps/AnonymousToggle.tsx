@@ -30,7 +30,10 @@ const AnonymousToggle: FC<AnonymousToggleProps> = ({
           onChange={onChange}
         />
       </a>
-      <Tooltip id="anon-tooltip" className="text-xs bg-deepBlue" />
+      <Tooltip
+        id="anon-tooltip"
+        className="text-xs bg-deepBlue z-[3]"
+      />
     </>
   );
 };
