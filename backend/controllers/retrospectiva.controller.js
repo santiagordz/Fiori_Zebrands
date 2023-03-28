@@ -41,6 +41,15 @@ exports.getQuestions = async (req, res) => {
   }
 };
 
+exports.getTags = async (req, res) => {
+  try {
+    const [tags] = await Retrospectiva.fetchTags(req.params.id);
+    res.json(tags);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 exports.getRetrospectivasByUserId = async (req, res, next) => {
   const userId = req.query.id_usuario;
 

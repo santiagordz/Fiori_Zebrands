@@ -37,6 +37,19 @@ module.exports = class Retrospectiva {
       [userId]
     );
   }
+
+  static fetchTags(id) {
+    return db.execute(
+      `
+    SELECT E.id, E.etiqueta, E.id_color, C.color
+    FROM etiquetas AS E
+    INNER JOIN colores AS C ON E.id_color = C.id
+    INNER JOIN retrospectiva_etiquetas AS RE ON RE.id_etiqueta = E.id
+    WHERE RE.id_retrospectiva = ?;
+    `,
+      [id]
+    );
+  }
   static fetchQuestions(id) {
     // Utilizando subconsultas
     return db.execute(

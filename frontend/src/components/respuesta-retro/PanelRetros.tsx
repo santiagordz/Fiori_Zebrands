@@ -3,7 +3,6 @@ import { FC, useContext, useEffect, useState } from 'react';
 import Spinner from '../design-template/spinner/Spinner';
 import RetrospectivaGeneral from './reusable/RetrospectivaGeneral';
 import { userDataContext } from '../../contexts';
-import CheckIcon from '@atlaskit/icon/glyph/check';
 
 const URI = 'http://localhost:8000/retrospectivas';
 
@@ -15,6 +14,12 @@ interface Retrospectiva {
   descripcion: string;
   fecha_inicio: string;
   fecha_fin: string;
+  tags: {
+    id: number;
+    etiqueta: string;
+    id_color: number;
+    color: string;
+  }[];
 }
 
 const PanelRetros: FC<PanelRetrosProps> = ({}) => {
@@ -28,12 +33,17 @@ const PanelRetros: FC<PanelRetrosProps> = ({}) => {
     Array<Retrospectiva>
   >([]);
   const { user } = useContext(userDataContext);
-  console.log(user);
+
+  const getTags = async (id: number) => {
+    const response = await axios.get(`${URI}/tags/${id}`);
+    return response.data;
+  };
 
   const getRetrospectivas = async () => {
     const response = await axios.get(`${URI}/panelRetrosByUser`, {
       params: { id_usuario: user?.id || -1 },
     });
+
     const pendientes = response.data.filter(
       (
         retro: Retrospectiva & {
@@ -58,6 +68,12 @@ const PanelRetros: FC<PanelRetrosProps> = ({}) => {
         }
       ) => !retro.asignada
     );
+
+    for (const retro of [...pendientes, ...completadas, ...otras]) {
+      const tags = await getTags(retro.id);
+      retro.tags = tags;
+    }
+
     setRetroPendientes(pendientes);
     setRetrosCompletadas(completadas);
     setOtrasRetros(otras);
@@ -85,6 +101,7 @@ const PanelRetros: FC<PanelRetrosProps> = ({}) => {
                 titulo={retrospectiva.titulo || ''}
                 descripcion={retrospectiva.descripcion || ''}
                 fechaInicio={retrospectiva.fecha_inicio || ''}
+                tags={retrospectiva.tags}
               />
             );
           })}
@@ -104,6 +121,7 @@ const PanelRetros: FC<PanelRetrosProps> = ({}) => {
                 fechaInicio={retrospectiva.fecha_inicio || ''}
                 clickable={false}
                 completada={true}
+                tags={retrospectiva.tags}
               />
             );
           })}
@@ -122,6 +140,7 @@ const PanelRetros: FC<PanelRetrosProps> = ({}) => {
                 descripcion={retrospectiva.descripcion || ''}
                 fechaInicio={retrospectiva.fecha_inicio || ''}
                 clickable={false}
+                tags={retrospectiva.tags}
               />
             );
           })}

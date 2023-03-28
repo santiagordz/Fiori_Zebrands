@@ -12,7 +12,12 @@ interface RetrospectivaGeneralProps {
   idRetrospectiva: number;
   clickable?: boolean;
   completada?: boolean;
-  
+  tags: {
+    id: number;
+    etiqueta: string;
+    id_color: number;
+    color: string;
+  }[];
 }
 
 const RetrospectivaGeneral: FC<RetrospectivaGeneralProps> = ({
@@ -22,6 +27,7 @@ const RetrospectivaGeneral: FC<RetrospectivaGeneralProps> = ({
   idRetrospectiva,
   clickable = true,
   completada = false,
+  tags,
 }) => {
   const navigate = useNavigate();
   const [isInResponder, setIsInResponder] = useState<boolean>(false);
@@ -65,13 +71,21 @@ const RetrospectivaGeneral: FC<RetrospectivaGeneralProps> = ({
             <h3 className="font-bold">{titulo}</h3>
           </div>
           <div className="flex flex-row gap-4 ml-auto">
-            <div id="tag">
-              <Tag
-                text="Back end"
-                appearance="rounded"
-                color="yellowLight"
-              />
-            </div>
+            {tags.map(
+              (tag: {
+                id: number;
+                etiqueta: string;
+                color: string;
+              }) => (
+                <div key={tag.id} id="tag">
+                  <Tag
+                    text={tag.etiqueta}
+                    appearance="rounded"
+                    color={tag.color}
+                  />
+                </div>
+              )
+            )}
           </div>
         </div>
         <div className="flex py-5 text-sm">
