@@ -30,4 +30,11 @@ module.exports = class Respuesta {
       [id_sesionRespuesta]
     );
   }
+
+  static markRetroAsFinished(id_sesionRespuesta, id_usuario) {
+    return db.execute(
+      'UPDATE usuarios_retrospectivas SET completada = 1, updatedAt = CURTIME() WHERE id_retrospectiva = ? AND id_usuario = ?',
+      [id_sesionRespuesta, id_usuario]
+    );
+  }
 };

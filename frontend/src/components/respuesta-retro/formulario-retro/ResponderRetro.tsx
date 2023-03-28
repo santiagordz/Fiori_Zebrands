@@ -19,7 +19,7 @@ import ResponderRetroInfo from './ResponderRetroInfo';
 
 const URI = 'http://localhost:8000/retrospectivas';
 
-interface Retrospectiva {
+export interface Retrospectiva {
   id_retrospectiva: number;
   titulo: string;
   descripcion: string;
@@ -40,9 +40,7 @@ const ResponderRetro = ({}) => {
   };
 
   useEffect(() => {
-    if (location.pathname.includes('respuestas')) {
-      setIsRespuestas(true);
-    } else {
+    if (!location.pathname.includes('respuestas')) {
       setIsRespuestas(false);
     }
 
@@ -80,17 +78,18 @@ const ResponderRetro = ({}) => {
             path="/preguntas/"
             element={
               <FormDataProvider>
-                <Cuestionario
-                  idRetrospectiva={
-                    retrospectivaData.id_retrospectiva || -1
-                  }
-                />
+                <Cuestionario />
               </FormDataProvider>
             }
           />
           <Route
             path="/respuestas/:id_sesionRespuesta"
-            element={<Answers />}
+            element={
+              <Answers
+                setIsRespuestas={setIsRespuestas}
+                retrospectivaData={retrospectivaData}
+              />
+            }
           />
         </Routes>
       </div>

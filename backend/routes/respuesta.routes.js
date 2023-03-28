@@ -7,5 +7,9 @@ router.get(
   '/:id_sesionRespuesta',
   respuestaController.getRespuestaById_sesionRespuesta
 );
+router.post(
+  '/update/:id_sesionRespuesta/:id_usuario',
+  respuestaController.markRetroAsCompleted
+);
 
 module.exports = router;

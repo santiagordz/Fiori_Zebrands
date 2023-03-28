@@ -3,21 +3,31 @@ import ArrowLeftIcon from '@atlaskit/icon/glyph/arrow-left';
 import CheckCircleOutlineIcon from '@atlaskit/icon/glyph/check-circle-outline';
 import EditorHelpIcon from '@atlaskit/icon/glyph/editor/help';
 import { FC, useContext, useEffect, useState } from 'react';
-import { Link, useParams, Navigate } from 'react-router-dom';
+import { useNavigate, useParams, Navigate } from 'react-router-dom';
 import axios from 'axios';
 import { questionsContext, formDataContext } from '../local-contexts';
 import type { Respuestas } from './Cuestionario';
+import Button from '@atlaskit/button';
+import type { Retrospectiva } from './ResponderRetro';
+import Incognito from '../../../assets/incognito.png';
 
 const URI = 'http://localhost:8000/respuesta';
 
-interface AnswersProps {}
+interface AnswersProps {
+  setIsRespuestas: (value: boolean) => void;
+  retrospectivaData: Retrospectiva;
+}
 
 interface Answers {
   [key: number]: Respuestas;
 }
 
-const Answers: FC<AnswersProps> = ({}) => {
-  const { retroId, id_sesionRespuesta } = useParams();
+const Answers: FC<AnswersProps> = ({
+  setIsRespuestas,
+  retrospectivaData,
+}) => {
+  const navigate = useNavigate();
+  const { id_sesionRespuesta } = useParams();
   const { questions, setQuestions } = useContext(questionsContext);
   const { setFormData } = useContext(formDataContext);
   const [answers, setAnswers] = useState<Answers>({});
@@ -27,6 +37,8 @@ const Answers: FC<AnswersProps> = ({}) => {
       const { data } = await axios.get(
         `${URI}/${id_sesionRespuesta}`
       );
+
+      console.log(data);
 
       data.map((answer: Respuestas) => {
         setAnswers((prevData) => {
@@ -42,26 +54,31 @@ const Answers: FC<AnswersProps> = ({}) => {
   };
 
   useEffect(() => {
+    setIsRespuestas(true);
     getAnswers();
-    console.log(answers);
   }, []);
+
+  const handleFinish = () => {
+    setFormData({});
+    setQuestions([]);
+    setAnswers({});
+    navigate('/mis-retrospectivas');
+  };
 
   if (questions.length === 0) {
     return <Navigate to="/mis-retrospectivas" />;
   }
 
-  // ! QUITAR LA RETROSPECTIVA GENERAL DE ESTA PANTALLA, AGREGAR SI FUE ENVIADA COMO ANÓNIMA
-
   return (
     <div className="flex py-5 flex-col gap-5">
       <div className="w-full">
-        <Link
-          to="/mis-retrospectivas"
-          className="flex flex-row items-center w-fit gap-2"
+        <Button
+          appearance="subtle-link"
+          onClick={handleFinish}
+          iconBefore={<ArrowLeftIcon label="volver" />}
         >
-          <ArrowLeftIcon label="volver" />
           Volver al panel de retrospectivas
-        </Link>
+        </Button>
       </div>
       <div className="flex flex-col py-7 px-5 w-full rounded bg-white border border-solid border-gray-300 border-collapse items-center justify-center gap-4">
         <CheckCircleOutlineIcon
@@ -70,7 +87,8 @@ const Answers: FC<AnswersProps> = ({}) => {
           size="xlarge"
         />
         <p className="font-bold text-2xl">
-          ¡Retrospectiva Sprint 3 completada con éxito!
+          ¡Retrospectiva {retrospectivaData.titulo} completada con
+          éxito!
         </p>
         <p className="text-sm">
           Tus respuestas han sido registradas correctamente.
@@ -85,25 +103,49 @@ const Answers: FC<AnswersProps> = ({}) => {
           {questions &&
             questions.map((question) => {
               return (
-                <Flag
-                  appearance="info"
-                  icon={
-                    <EditorHelpIcon
-                      label="pregunta"
-                      primaryColor="#"
-                      size="medium"
-                    />
-                  }
-                  id="info"
-                  key={question.id}
-                  title={question.pregunta}
-                  description={
-                    (answers[question.id]?.respuesta &&
-                      'Tu respuesta: ' +
-                        answers[question.id]?.respuesta) ||
-                    'No registraste una respuesta para esta pregunta'
-                  }
-                />
+                <div id="flag" key={question.id}>
+                  <Flag
+                    appearance="info"
+                    icon={
+                      <EditorHelpIcon
+                        label="pregunta"
+                        primaryColor="#"
+                        size="medium"
+                      />
+                    }
+                    id="info"
+                    title={question.pregunta}
+                    description={
+                      <div className="mt-3 text-sm">
+                        <p>
+                          {answers[question.id]?.respuesta ? (
+                            <p className="text-purple-100">
+                              {'Tu respuesta: ' +
+                                answers[question.id]?.respuesta}
+                            </p>
+                          ) : (
+                            <p className="text-gray-400">
+                              No registraste una respuesta para esta
+                              pregunta
+                            </p>
+                          )}
+                        </p>
+                        {answers[question.id]?.anonimo ? (
+                          <div className="flex gap-2 opacity-60 mt-5 text-xs items-center">
+                            <img
+                              className="aspect-square w-4"
+                              src={Incognito}
+                              alt="respuesta anonima"
+                            />
+                            Marcaste esta respuesta como anónima,
+                            todas las respuestas de todo el equipo a
+                            esta pregunta serán anónimas.
+                          </div>
+                        ) : null}
+                      </div>
+                    }
+                  />
+                </div>
               );
             })}
         </div>

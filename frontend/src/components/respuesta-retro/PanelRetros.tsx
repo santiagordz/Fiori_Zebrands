@@ -23,16 +23,19 @@ const PanelRetros: FC<PanelRetrosProps> = ({}) => {
     Array<Retrospectiva>
   >([]);
 
+  const [tryFetch, setTryFetch] = useState(false);
+
   const getRetrospectivas = async () => {
     const response = await axios.get(`${URI}/panelRetros`);
     setRetroPendientes(response.data);
+    setTryFetch(true);
   };
 
   useEffect(() => {
     getRetrospectivas();
   }, []);
 
-  if (retroPendientes.length === 0)
+  if (retroPendientes.length === 0 && tryFetch)
     return <Spinner message="Cargando retrospectivas..." />;
 
   return (

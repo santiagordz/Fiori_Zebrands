@@ -1,7 +1,10 @@
 import { FC } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { DesignTemplate, PanelRetros } from '../../components';
-import ResponderRetro from '../../components/respuesta-retro/formulario-retro/ResponderRetro';
+import {
+  DesignTemplate,
+  PanelRetros,
+  ResponderRetro,
+} from '../../components';
 
 interface MisRetrospectivasProps {}
 

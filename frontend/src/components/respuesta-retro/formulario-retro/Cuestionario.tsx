@@ -3,6 +3,7 @@ import Form from '@atlaskit/form';
 import ArrowLeftIcon from '@atlaskit/icon/glyph/arrow-left';
 import { FC, useContext, useEffect, useState } from 'react';
 import {
+  Navigate,
   useLocation,
   useNavigate,
   useParams,
@@ -20,10 +21,9 @@ import { userDataContext } from '../../../contexts';
 import { nanoid } from 'nanoid';
 
 const URI = 'http://localhost:8000/respuesta/new';
+const URI_COMPLETE = 'http://localhost:8000/respuesta/update';
 
-interface CuestionarioProps {
-  idRetrospectiva: number;
-}
+interface CuestionarioProps {}
 
 export interface Respuestas {
   respuesta: string;
@@ -34,7 +34,7 @@ export interface Respuestas {
   id_sesionRespuesta: string;
 }
 
-const Cuestionario: FC<CuestionarioProps> = ({ idRetrospectiva }) => {
+const Cuestionario: FC<CuestionarioProps> = ({}) => {
   const { user } = useContext(userDataContext);
   const [formPage, setFormPage] = useState(1);
   const { formData } = useContext(formDataContext);
@@ -76,6 +76,15 @@ const Cuestionario: FC<CuestionarioProps> = ({ idRetrospectiva }) => {
     };
   }, [location.pathname]);
 
+  const markCompleted = async () => {
+    try {
+      await axios.post(`${URI_COMPLETE}/${retroId}/${user?.id}`);
+      console.log('sdasd');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleSubmitWAnon = () => {
     const answers: Array<Respuestas> = [];
     questions.map((question: QuestionDB) => {
@@ -104,11 +113,17 @@ const Cuestionario: FC<CuestionarioProps> = ({ idRetrospectiva }) => {
         }
       });
     }
+
+    markCompleted();
   };
 
   if (questions.length === 0)
-    navigate(`/mis-retrospectivas/responder/${idRetrospectiva}`);
-
+    return (
+      <Navigate
+        to={`/mis-retrospectivas/responder/${retroId}`}
+        replace
+      />
+    );
   return (
     <>
       <div className="flex flex-col items-center justify-center bg-white w-full h-full py-12 px-6 rounded border border-solid border-gray-300">

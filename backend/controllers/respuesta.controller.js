@@ -26,3 +26,19 @@ exports.getRespuestaById_sesionRespuesta = async (req, res, next) => {
     console.error(err);
   }
 };
+
+exports.markRetroAsCompleted = async (req, res, next) => {
+  const id_sesionRespuesta = req.params.id_sesionRespuesta;
+  const id_usuario = req.params.id_usuario;
+  try {
+    const [rows] = await Respuesta.markRetroAsFinished(
+      id_sesionRespuesta,
+      id_usuario
+    );
+    if (rows.length > 0) {
+      res.json({ message: 'Retro marked as finished' });
+    }
+  } catch (err) {
+    console.error(err);
+  }
+};
