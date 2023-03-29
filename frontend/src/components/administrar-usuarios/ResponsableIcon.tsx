@@ -4,14 +4,16 @@ import { token } from '@atlaskit/tokens';
 import { N200, N500, B300, Y300, B200 } from '@atlaskit/theme/colors';
 import AppAccessIcon from '@atlaskit/icon/glyph/app-access';
 import { userDataContext } from '../../contexts';
+import ModalAsignarResponsble from './ModalAsignarResponable';
 
 const URI = 'http://localhost:8000/usuarios/';
 
 const ResponsableIcon = (idUsuario: any) => {
-  const { user } = useContext(userDataContext);
+  const [user, setUser] = useState();
   const [color, setColor] = useState(true);
   const [colorHover, setColorHover] = useState(true);
   const [clicked, setClicked] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const [rolActual, setRolActual] = useState(0);
 
@@ -20,19 +22,9 @@ const ResponsableIcon = (idUsuario: any) => {
       const res = axios.get(`${URI}info/${id}`);
       res.then((response) => {
         const usuario = response.data.usuario.shift();
+        setUser(usuario);
         setRolActual(usuario.rol);
       });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const changeRol = (id: number, rol: number) => {
-    try {
-      const res = axios.post(`${URI}/updateUserRole/${id}`, {
-        rol: rol,
-      });
-      res.then(() => window.location.reload());
     } catch (error) {
       console.log(error);
     }
@@ -41,20 +33,6 @@ const ResponsableIcon = (idUsuario: any) => {
   useEffect(() => {
     getUsuario(idUsuario.idUsuario);
   }, []);
-
-  const handleClickResponsable = (
-    e: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    try {
-      if (rolActual === 3) {
-        changeRol(idUsuario.idUsuario, 2);
-      } else if (rolActual === 2) {
-        changeRol(idUsuario.idUsuario, 3);
-      }
-    } catch {
-      console.log('Error');
-    }
-  };
 
   const handleMouseOverResponsable = (
     e: React.MouseEvent<HTMLButtonElement>
@@ -94,29 +72,43 @@ const ResponsableIcon = (idUsuario: any) => {
     );
   } else if (rolActual === 3) {
     return (
-      <button
-        onMouseOver={handleMouseOverResponsable}
-        onMouseOut={handleMouseOutResponsable}
-        onClick={handleClickResponsable}
-      >
-        <AppAccessIcon
-          label="responsable"
-          primaryColor={token('color.icon.brand', iconColor())}
+      <>
+        <button
+          onMouseOver={handleMouseOverResponsable}
+          onMouseOut={handleMouseOutResponsable}
+          onClick={() => setIsOpen(true)}
+        >
+          <AppAccessIcon
+            label="responsable"
+            primaryColor={token('color.icon.brand', iconColor())}
+          />
+        </button>
+        <ModalAsignarResponsble
+          show={isOpen}
+          onClose={() => setIsOpen(false)}
+          usuario={user}
         />
-      </button>
+      </>
     );
   } else {
     return (
-      <button
-        onMouseOver={handleMouseOverResponsable}
-        onMouseOut={handleMouseOutResponsable}
-        onClick={handleClickResponsable}
-      >
-        <AppAccessIcon
-          label="responsable"
-          primaryColor={token('color.icon.brand', iconColor())}
+      <>
+        <button
+          onMouseOver={handleMouseOverResponsable}
+          onMouseOut={handleMouseOutResponsable}
+          onClick={() => setIsOpen(true)}
+        >
+          <AppAccessIcon
+            label="responsable"
+            primaryColor={token('color.icon.brand', iconColor())}
+          />
+        </button>
+        <ModalAsignarResponsble
+          show={isOpen}
+          onClose={() => setIsOpen(false)}
+          usuario={user}
         />
-      </button>
+      </>
     );
   }
 };
