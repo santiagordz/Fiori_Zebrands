@@ -1,33 +1,37 @@
-import React, { FC, useState } from 'react';
-import { Link } from 'react-router-dom';
+import Button from '@atlaskit/button';
+import AddIcon from '@atlaskit/icon/glyph/add';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import DesignTemplate from '../../design-template/DesignTemplate';
-import BotonGestionarEtiquetas from '../BotonGestionarEtiquetas';
-import BotonRegistrarEtiqueta from '../BotonRegistrarEtiqueta';
 import EtiquetasTable from '../EtiquetasTable';
 
-import ModalRegistrarEtiqueta from '../ModalRegistrarEtiqueta';
+import ModalRegistrarEtiqueta from '../modals/ModalRegistrarEtiqueta';
 
 const GestionarEtiquetas = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
   return (
     <DesignTemplate
       buttons={
         <>
-          <Link to={'/administrar-usuarios'}>
-            <BotonGestionarEtiquetas texto={'Usuarios'} />
-          </Link>
-          <button onClick={() => setIsOpen(true)}>
-            <BotonRegistrarEtiqueta />
-          </button>
+          <Button
+            appearance="link"
+            onClick={() => navigate('/administrar-usuarios')}
+          >
+            Volver a tabla de usuarios
+          </Button>
+          <Button
+            onClick={() => setIsOpen(true)}
+            appearance="primary"
+            iconBefore={<AddIcon label="" />}
+          >
+            Registrar etiqueta
+          </Button>
         </>
       }
     >
-      <div className="flex justify-center">
-        <div className="flex">
-          <div>.</div>
-          <EtiquetasTable />
-          <div>.</div>
-        </div>
+      <div className="flex items-center justify-center w-full bg-white py-4">
+        <EtiquetasTable />
         <ModalRegistrarEtiqueta
           show={isOpen}
           onClose={() => setIsOpen(false)}

@@ -4,28 +4,26 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(9, 30, 66, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.modal-content {
-  background-color: #fff;
-  max-width: 40%;
-  min-width: 200px;
-  max-height: 400px;
+.modal-content-delete {
+  background-color: white;
   border-radius: 10px;
-  padding: 5rem 0;
+  padding: 4rem 2px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 13px;
   justify-content: center;
 }
 
 .modal-header {
   width: 100%;
   display: flex;
+  gap: 13px;
   flex-direction: column;
   align-items: center;
 }
@@ -34,7 +32,6 @@
   width: 100%;
   font-size: 20px;
   font-weight: bold;
-  margin-bottom: 0.25rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -44,15 +41,12 @@
   width: 100%;
   font-size: 11px;
   color: #44546f;
-  margin-bottom: 10px;
-  margin-bottom: 20px;
 }
 
 .modal-body {
   width: 100%;
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
   justify-content: center;
 }
 

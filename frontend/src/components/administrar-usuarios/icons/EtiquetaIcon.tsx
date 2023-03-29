@@ -1,12 +1,10 @@
 import React, { FC, useEffect, useState } from 'react';
 import { SimpleTag as Tag } from '@atlaskit/tag';
 import TagGroup from '@atlaskit/tag-group';
+import type { Etiqueta } from '../UsersTable';
 
 interface EtiquetaIconProps {
-  etiquetas: {
-    nombre: string;
-    color: any;
-  }[];
+  etiquetas: Array<Etiqueta>;
 }
 
 const EtiquetaIcon: FC<EtiquetaIconProps> = ({ etiquetas }) => {
@@ -14,12 +12,8 @@ const EtiquetaIcon: FC<EtiquetaIconProps> = ({ etiquetas }) => {
     const etiquetasRender =
       etiquetas &&
       etiquetas.map((etiqueta, index) => (
-        <div id="tag">
-          <Tag
-            key={index}
-            text={etiqueta.nombre}
-            color={etiqueta.color}
-          />
+        <div id="tag" key={index}>
+          <Tag text={etiqueta.nombre} color={etiqueta.color} />
         </div>
       ));
     return <TagGroup>{etiquetasRender}</TagGroup>;

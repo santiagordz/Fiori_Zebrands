@@ -1,10 +1,8 @@
-import React, { FC, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
-import './css/modalBorrarUsuarios.css';
+import { FC } from 'react';
 import Button from '@atlaskit/button/standard-button';
 import InfoIcon from '@atlaskit/icon/glyph/info';
+import '../css/modalBorrarUsuarios.css';
 
 const URI = 'http://localhost:8000/usuarios/updateUserRole/';
 
@@ -14,7 +12,7 @@ interface AsignarResponsableProps {
   usuario: any;
 }
 
-const ModalAsignarResponsble: FC<AsignarResponsableProps> = ({
+const ModalAsignarResponsable: FC<AsignarResponsableProps> = ({
   show,
   onClose,
   usuario,
@@ -148,4 +146,4 @@ const ModalAsignarResponsble: FC<AsignarResponsableProps> = ({
   }
 };
 
-export default ModalAsignarResponsble;
+export default ModalAsignarResponsable;

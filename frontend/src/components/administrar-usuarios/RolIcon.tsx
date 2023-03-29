@@ -1,8 +1,8 @@
-import React, { FC } from 'react';
 import Lozenge from '@atlaskit/lozenge';
+import { FC } from 'react';
 
 interface RolIconProps {
-  rol: any;
+  rol: number;
 }
 
 const RolIcon: FC<RolIconProps> = ({ rol }) => {

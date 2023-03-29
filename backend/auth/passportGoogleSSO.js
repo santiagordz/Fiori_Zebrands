@@ -33,7 +33,9 @@ passport.use(
         if (needUpdate) {
           try {
             await Usuario.updateData(
-              profile.displayName,
+              userExists.nombre
+                ? userExists.nombre
+                : profile.displayName,
               profile.photos[0].value,
               profile.id,
               profile.email

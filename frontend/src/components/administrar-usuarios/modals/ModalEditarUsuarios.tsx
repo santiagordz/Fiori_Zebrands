@@ -1,13 +1,11 @@
 import axios from 'axios';
 import { FC, useContext, useEffect, useState } from 'react';
-
-import DropdownEtiquetas from './DropdownEtiquetas';
-import DropdowRoles from './DropdownRoles';
-import './css/ModalEditarUsuarios.css';
-
+import DropdownEtiquetas from '../DropdownEtiquetas';
+import DropdowRoles from '../DropdownRoles';
+import '../css/ModalEditarUsuarios.css';
 import CrossIcon from '@atlaskit/icon/glyph/cross';
 import SectionMessage from '@atlaskit/section-message';
-import { userDataContext } from '../../contexts';
+import { userDataContext } from '../../../contexts';
 
 const URI = 'http://localhost:8000/usuarios/';
 
@@ -28,7 +26,7 @@ const ModalEditarUsuarios: FC<ModalEditarUsuariosProps> = ({
   onClose,
   info,
 }) => {
-  const { user, setUser } = useContext(userDataContext);
+  const { getUser } = useContext(userDataContext);
   const [nombre, setNombre] = useState('');
   const [correo, setCorreo] = useState('');
   const [rol, setRol] = useState('');
@@ -54,7 +52,6 @@ const ModalEditarUsuarios: FC<ModalEditarUsuariosProps> = ({
         rol: rol,
         etiquetas: etiquetas,
       });
-      setUser({ ...user, nombre: nombre });
       res.then(() => window.location.reload());
     } catch (error) {
       window.alert(error);
@@ -80,8 +77,6 @@ const ModalEditarUsuarios: FC<ModalEditarUsuariosProps> = ({
   useEffect(() => {
     getUsuario();
   }, []);
-
-  //FALTAN: handleSubmit,
 
   if (!show) {
     return null;
@@ -191,7 +186,9 @@ const ModalEditarUsuarios: FC<ModalEditarUsuariosProps> = ({
                   form="EditarUsuarioForm"
                   className="rounded-sm bg-jiraBlue text-white px-2 py-1 hover:bg-blue-500"
                 >
-                  <p className="text-sm">Registrar Usuario</p>
+                  <p className="text-sm">
+                    Actualizar datos de usuario
+                  </p>
                 </button>
               </div>
             </div>

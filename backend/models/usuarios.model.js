@@ -143,10 +143,10 @@ module.exports = class Usuarios {
       [nombre, foto, id_google, correo, fechaActual]
     );
   }
-  
+
   static async fetchOne(correo) {
     return db.execute(
-      `SELECT correo, nombre, foto, id_jira, id_rol
+      `SELECT correo, nombre, foto, id_jira, id_rol, id as id_usuario
         FROM usuarios
         WHERE correo = ?`,
       [correo]

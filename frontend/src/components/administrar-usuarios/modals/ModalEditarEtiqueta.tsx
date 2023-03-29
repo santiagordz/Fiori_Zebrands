@@ -1,10 +1,7 @@
-import React, { FC } from 'react';
 import axios from 'axios';
-import { useState, useEffect } from 'react';
-
-import './css/ModalEditarUsuarios.css';
-import DropdownColores from './DropdownColores';
-
+import { FC, useEffect, useState } from 'react';
+import DropdownColores from '../DropdownColores';
+import '../css/ModalEditarUsuarios.css';
 import CrossIcon from '@atlaskit/icon/glyph/cross';
 import Tag from '@atlaskit/tag';
 
@@ -93,7 +90,7 @@ const ModalEditarEtiqueta: FC<ModalEditarEtiquetaProps> = ({
               <p className="font-bold text-left mb-4">
                 Detalles de etiqueta
               </p>
-              <div className="flex justify-center">
+              <div className="flex justify-center" id="tag">
                 <Tag
                   text={nombre}
                   color={color}

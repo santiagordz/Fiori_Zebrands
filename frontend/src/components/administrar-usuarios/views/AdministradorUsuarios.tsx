@@ -1,38 +1,43 @@
-import React, { FC, useState } from 'react';
-import { Link } from 'react-router-dom';
+import Button from '@atlaskit/button';
+import AddIcon from '@atlaskit/icon/glyph/add';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import DesignTemplate from '../../design-template/DesignTemplate';
-import BotonGestionarEtiquetas from '../BotonGestionarEtiquetas';
-import BotonRegistrarUsuario from '../BotonRegistrarUsuario';
 import UsersTable from '../UsersTable';
-
-import ModalRegistrarUsuarios from '../ModalRegistrarUsuarios';
+import ModalRegistrarUsuarios from '../modals/ModalRegistrarUsuarios';
 
 const AdministradorUsuarios = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
   return (
     <DesignTemplate
       buttons={
         <>
-          <Link to={'/administrar-usuarios/gestionar-etiquetas'}>
-            <BotonGestionarEtiquetas texto="Etiquetas" />
-          </Link>
-          <button onClick={() => setIsOpen(true)}>
-            <BotonRegistrarUsuario />
-          </button>
+          <Button
+            appearance="link"
+            onClick={() =>
+              navigate('/administrar-usuarios/gestionar-etiquetas')
+            }
+          >
+            Gestionar etiqueta
+          </Button>
+          <Button
+            onClick={() => setIsOpen(true)}
+            appearance="primary"
+            iconBefore={<AddIcon label="" />}
+          >
+            Registrar usuario
+          </Button>
         </>
       }
     >
-      <div className="flex justify-center">
-        <div className="">
-          <div className="flex justify-end gap-10"></div>
-          <br></br>
-          <UsersTable />
-        </div>
-        <ModalRegistrarUsuarios
-          show={isOpen}
-          onClose={() => setIsOpen(false)}
-        />
+      <div className="flex justify-center w-full">
+        <UsersTable />
       </div>
+      <ModalRegistrarUsuarios
+        show={isOpen}
+        onClose={() => setIsOpen(false)}
+      />
     </DesignTemplate>
   );
 };

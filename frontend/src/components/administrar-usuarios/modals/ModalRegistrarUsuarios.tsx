@@ -1,12 +1,9 @@
-import React, { FC, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-
-import './css/ModalRegistrarUsuarios.css';
-
+import { FC, useState } from 'react';
+import '../css/ModalRegistrarUsuarios.css';
 import CrossIcon from '@atlaskit/icon/glyph/cross';
-import DropdowRoles from './DropdownRoles';
-import DropdownEtiquetas from './DropdownEtiquetas';
+import DropdownEtiquetas from '../DropdownEtiquetas';
+import DropdowRoles from '../DropdownRoles';
 
 const URI = 'http://localhost:8000/usuarios/createUser';
 
@@ -41,11 +38,8 @@ const ModalRegistrarUsuarios: FC<RegistrarUsuariosProps> = ({
       });
       window.location.reload();
     } catch {
-      window.alert('nel'); // cambiar eso a algo mas bonito
+      window.alert('Hubo un error al registrar el usuario');
     }
-    // window.alert(
-    //   `Correo: ${correo}, rol: ${rol}, etiquetas: ${etiquetas}`
-    // );
     setCorreo('');
     setRol('');
     onClose();

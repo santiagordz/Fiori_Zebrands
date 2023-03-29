@@ -1,27 +1,24 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-
-import DynamicTable from '@atlaskit/dynamic-table';
-import ResponsableIcon from './ResponsableIcon';
-
-import BorrarIcon from './BorrarIcon';
-import EditarIcon from './EditarIcon';
-import RolIcon from './RolIcon';
 import Avatar from '@atlaskit/avatar';
-
+import DynamicTable from '@atlaskit/dynamic-table';
+import type { RowType } from '@atlaskit/dynamic-table/dist/types/types';
+import type { TagColor } from '@atlaskit/tag';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import RolIcon from './RolIcon';
 import TableHead from './UsersTableHead';
-// import RolesIcon from './RolesIcon';
-
-import './css/usersTable.css';
-import EtiquetaIcon from './EtiquetaIcon';
+import {
+  BorrarIcon,
+  EditarIcon,
+  EtiquetaIcon,
+  ResponsableIcon,
+} from './icons';
 
 const URI = 'http://localhost:8000/usuarios/info';
 
-interface Etiqueta {
+export interface Etiqueta {
   id: number;
-  etiqueta: string;
-  color: string;
+  nombre: string;
+  color: TagColor;
 }
 
 interface Usuario {
@@ -30,12 +27,13 @@ interface Usuario {
   password: string;
   nombre: string;
   foto: string;
-  rol: string;
+  rol: number;
   etiquetas: Etiqueta[];
 }
 
 const UsersTable = () => {
-  const [TableRows, setTableRows] = useState([{}]);
+  const [userRow, setUserRow] = useState<Array<Usuario>>([]);
+  const tableRows: RowType[] = [];
 
   useEffect(() => {
     getUsers();
@@ -43,82 +41,89 @@ const UsersTable = () => {
 
   const getUsers = async () => {
     const res = await axios.get(URI);
-    const usuarios = res.data.usuarios.map((usuario: any) => ({
+    const usuarios = res.data.usuarios.map((usuario: Usuario) => ({
       ...usuario,
     }));
-    setTableRows(usuarios);
+    setUserRow(usuarios);
   };
 
-  const tableRows = TableRows.map((usuario: any) => ({
-    key: usuario.id,
-    isHighlighted: false,
-    cells: [
-      {
-        key: usuario.nombre,
-        content: (
-          <span className="flex items-center gap-5 ml-5">
-            <Avatar src={usuario.foto} />
-            <p>{usuario.nombre}</p>
-          </span>
-        ),
-      },
-      {
-        key: usuario.correo,
-        content: <div className="text-center">{usuario.correo}</div>,
-      },
-      {
-        key: usuario.rol,
-        content: (
-          <div className="text-center">
-            <RolIcon rol={usuario.rol} />
-          </div>
-        ),
-      },
-      {
-        key: usuario.etiqueta,
-        content: (
-          <div>
-            <EtiquetaIcon etiquetas={usuario.etiquetas} />
-          </div>
-        ),
-        // va a cambiar
-      },
-      {
-        key: `${usuario.id}`,
-        //Va a cambiar
-        content: (
-          <div className="flex justify-center">
-            <ResponsableIcon idUsuario={usuario.id} />
-          </div>
-        ),
-      },
-      {
-        key: `${usuario.id}`,
-        //Va a cambiar
-        content: (
-          <div className="flex justify-center">
-            <EditarIcon id={usuario.id} />
-          </div>
-        ),
-      },
-      {
-        key: usuario.id,
-        //Va a cambiar
-        content: (
-          <div className="flex justify-center">
-            <BorrarIcon id={usuario.id} />
-          </div>
-        ),
-      },
-    ],
-  }));
+  userRow.map((usuario, i) =>
+    tableRows.push({
+      key: usuario.id.toString(),
+      isHighlighted: false,
+      cells: [
+        {
+          key: usuario.nombre,
+          content: (
+            <span className="flex items-center gap-5 ml-5 w-full">
+              <Avatar src={usuario.foto} />
+              <div className="w-full">
+                <p>{usuario.nombre || 'Nuevo usuario'}</p>
+              </div>
+            </span>
+          ),
+        },
+        {
+          key: usuario.correo,
+          content: (
+            <div className="text-center">{usuario.correo}</div>
+          ),
+        },
+        {
+          key: usuario.rol,
+          content: (
+            <div className="text-center">
+              <RolIcon rol={usuario.rol} />
+            </div>
+          ),
+        },
+        {
+          key: i,
+          content: (
+            <div>
+              <EtiquetaIcon etiquetas={usuario.etiquetas} />
+            </div>
+          ),
+        },
+        {
+          key: `${usuario.id}`,
+
+          content: (
+            <div className="flex justify-center">
+              <ResponsableIcon idUsuario={usuario.id} />
+            </div>
+          ),
+        },
+        {
+          key: `${usuario.id}`,
+
+          content: (
+            <div className="flex justify-center">
+              <EditarIcon id={usuario.id} />
+            </div>
+          ),
+        },
+        {
+          key: usuario.id,
+
+          content: (
+            <div className="flex justify-center">
+              <BorrarIcon idUsuario={usuario.id} />
+            </div>
+          ),
+        },
+      ],
+    })
+  );
 
   return (
-    <div className="bg-white rounded-lg border-8 border-white">
+    <div className="bg-white rounded-sm w-full px-12 py-6">
       <DynamicTable
         head={TableHead}
         rows={tableRows}
-        emptyView={<div className="text-3xl">No hay registros</div>}
+        emptyView={
+          <div className="text-3xl">No hay usuarios para mostrar</div>
+        }
         rowsPerPage={10}
       />
     </div>

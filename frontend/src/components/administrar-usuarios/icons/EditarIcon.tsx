@@ -3,7 +3,7 @@ import axios from 'axios';
 import { token } from '@atlaskit/tokens';
 import { N500, Y300 } from '@atlaskit/theme/colors';
 import EditFilledIcon from '@atlaskit/icon/glyph/edit-filled';
-import ModalEditarUsuarios from './ModalEditarUsuarios';
+import ModalEditarUsuarios from '../modals/ModalEditarUsuarios';
 
 const URI = 'http://localhost:8000/usuarios/';
 

@@ -58,6 +58,9 @@ const UserContext: FC<UserContextProps> = ({ children }) => {
       });
 
       if (response && response.data) {
+        if (Cookies.get('user')) {
+          Cookies.remove('user');
+        }
         setUser(response.data);
 
         const encryptedData = encryptData(
@@ -68,7 +71,7 @@ const UserContext: FC<UserContextProps> = ({ children }) => {
         Cookies.set('user', encryptedData);
       }
     } catch (err) {
-      console.log('No se autenticó correctamente', err);
+      // console.log('No se autenticó correctamente', err);
     } finally {
       setHasAttemptedFetch(true);
     }
@@ -94,6 +97,7 @@ const UserContext: FC<UserContextProps> = ({ children }) => {
   };
 
   useEffect(() => {
+    getUser();
     const storedEnryptedUser = Cookies.get('user');
     if (storedEnryptedUser) {
       const decryptedUser = decryptData(

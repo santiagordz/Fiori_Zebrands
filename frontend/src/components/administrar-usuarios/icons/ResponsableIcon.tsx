@@ -1,14 +1,18 @@
-import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
-import { token } from '@atlaskit/tokens';
-import { N200, N500, B300, Y300, B200 } from '@atlaskit/theme/colors';
 import AppAccessIcon from '@atlaskit/icon/glyph/app-access';
-import { userDataContext } from '../../contexts';
-import ModalAsignarResponsble from './ModalAsignarResponable';
+import { B200, B300, N200, N500, Y300 } from '@atlaskit/theme/colors';
+import { token } from '@atlaskit/tokens';
+import axios from 'axios';
+import React, { FC, useEffect, useState } from 'react';
+import { ModalAsignarResponsable } from '../modals';
+import { Tooltip } from 'react-tooltip';
 
 const URI = 'http://localhost:8000/usuarios/';
 
-const ResponsableIcon = (idUsuario: any) => {
+interface ResponsableIconProps {
+  idUsuario: number;
+}
+
+const ResponsableIcon: FC<ResponsableIconProps> = ({ idUsuario }) => {
   const [user, setUser] = useState();
   const [color, setColor] = useState(true);
   const [colorHover, setColorHover] = useState(true);
@@ -31,7 +35,7 @@ const ResponsableIcon = (idUsuario: any) => {
   };
 
   useEffect(() => {
-    getUsuario(idUsuario.idUsuario);
+    getUsuario(idUsuario);
   }, []);
 
   const handleMouseOverResponsable = (
@@ -63,12 +67,22 @@ const ResponsableIcon = (idUsuario: any) => {
 
   if (rolActual === 1) {
     return (
-      <button disabled>
-        <AppAccessIcon
-          label="responsable"
-          primaryColor={token('color.icon.brand', Y300)}
-        />
-      </button>
+      <>
+        <a
+          data-tooltip-id="anon-tooltip"
+          data-tooltip-content={
+            'Los administradores tienen el rol de responsable por default.'
+          }
+        >
+          <button disabled className="cursor-not-allowed">
+            <AppAccessIcon
+              label="responsable"
+              primaryColor={token('color.icon.brand', Y300)}
+            />
+          </button>
+        </a>
+        <Tooltip id="anon-tooltip" className="text-xs bg-deepBlue" />
+      </>
     );
   } else if (rolActual === 3) {
     return (
@@ -83,7 +97,7 @@ const ResponsableIcon = (idUsuario: any) => {
             primaryColor={token('color.icon.brand', iconColor())}
           />
         </button>
-        <ModalAsignarResponsble
+        <ModalAsignarResponsable
           show={isOpen}
           onClose={() => setIsOpen(false)}
           usuario={user}
@@ -103,7 +117,7 @@ const ResponsableIcon = (idUsuario: any) => {
             primaryColor={token('color.icon.brand', iconColor())}
           />
         </button>
-        <ModalAsignarResponsble
+        <ModalAsignarResponsable
           show={isOpen}
           onClose={() => setIsOpen(false)}
           usuario={user}

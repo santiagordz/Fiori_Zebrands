@@ -1,13 +1,8 @@
-import React, { FC, useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-
-import './css/ModalRegistrarUsuarios.css';
-
 import CrossIcon from '@atlaskit/icon/glyph/cross';
-import DropdowRoles from './DropdownRoles';
-import DropdownEtiquetas from './DropdownEtiquetas';
-import DropdownColores from './DropdownColores';
+import axios from 'axios';
+import { FC, useState } from 'react';
+import DropdownColores from '../DropdownColores';
+import '../css/ModalRegistrarUsuarios.css';
 
 const URI = 'http://localhost:8000/etiquetas/';
 
@@ -64,8 +59,9 @@ const ModalRegistrarEtiqueta: FC<RegistrarEtiquetaProps> = ({
               </button>
             </div>
             <div className="modal-subtitle">
-              Registra una nueva etiqueta, esta podá ser asignada a un
-              usuario.
+              Registra una nueva etiqueta, esta podrá ser asignada a
+              un usuario para agilizar el proceso de asignación de
+              retrospectivas.
             </div>
           </div>
           <div className="modal-body">

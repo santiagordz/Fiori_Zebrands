@@ -7,8 +7,8 @@ const head = {
       width: 25,
     },
     {
-      key: 'emial',
-      content: 'Emial',
+      key: 'email',
+      content: 'Email',
       isSortable: true,
       width: 15,
     },
