@@ -95,6 +95,7 @@ const ModalEditarEtiqueta: FC<ModalEditarEtiquetaProps> = ({
                   text={nombre}
                   color={color}
                   isRemovable={false}
+                  appearance="rounded"
                 />
               </div>
               <form

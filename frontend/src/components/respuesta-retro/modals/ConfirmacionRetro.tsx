@@ -9,12 +9,14 @@ interface ConfirmacionRetroProps {
   setIsModalNextOpen: (isOpen: boolean) => void;
   submitting: boolean;
   onSubmit: () => void;
+  id_sesionRespuesta: string;
 }
 
 const ConfirmacionRetro: FC<ConfirmacionRetroProps> = ({
   setIsModalNextOpen,
   submitting,
   onSubmit,
+  id_sesionRespuesta,
 }) => {
   const closeModal = useCallback(() => setIsModalNextOpen(false), []);
   const navigate = useNavigate();
@@ -59,7 +61,7 @@ const ConfirmacionRetro: FC<ConfirmacionRetroProps> = ({
                     onSubmit();
                     closeModal();
                     navigate(
-                      `/mis-retrospectivas/responder/${retroId}/respuestas/`
+                      `/mis-retrospectivas/responder/${retroId}/respuestas/${id_sesionRespuesta}`
                     );
                   }}
                   isLoading={submitting}

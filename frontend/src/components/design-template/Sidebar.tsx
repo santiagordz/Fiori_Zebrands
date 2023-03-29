@@ -83,7 +83,10 @@ const Sidebar = ({}) => {
               className={textNotActiveStyles}
               variants={linksVariants}
             >
-              {name || (user?.name === undefined && 'Usuario')}
+              {name && name.length > 22
+                ? `${name.slice(0, 22)}...`
+                : name}
+              {!name && user?.name === undefined && 'Usuario'}
             </motion.p>
           </div>
 

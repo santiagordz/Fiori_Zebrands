@@ -26,7 +26,7 @@ const ModalEditarUsuarios: FC<ModalEditarUsuariosProps> = ({
   onClose,
   info,
 }) => {
-  const { getUser } = useContext(userDataContext);
+  const { user } = useContext(userDataContext);
   const [nombre, setNombre] = useState('');
   const [correo, setCorreo] = useState('');
   const [rol, setRol] = useState('');
@@ -155,6 +155,7 @@ const ModalEditarUsuarios: FC<ModalEditarUsuariosProps> = ({
                   <DropdowRoles
                     onRolSeleccionadoChange={handleRolSeleccionado}
                     rolActual={rol}
+                    active={user?.id_usuario == info}
                   />
                 </div>
                 <div className="flex flex-col">

@@ -1,14 +1,25 @@
+import CheckIcon from '@atlaskit/icon/glyph/check';
 import ChevronRightLargeIcon from '@atlaskit/icon/glyph/chevron-right-large';
 import FlagFilledIcon from '@atlaskit/icon/glyph/flag-filled';
-import { SimpleTag as Tag } from '@atlaskit/tag';
+import { SimpleTag as Tag, TagColor } from '@atlaskit/tag';
 import { FC, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import PdfIcon from '@atlaskit/icon/glyph/pdf';
 
 interface RetrospectivaGeneralProps {
   titulo: string;
   descripcion: string;
   fechaInicio: string;
   idRetrospectiva: number;
+  clickable?: boolean;
+  completada?: boolean;
+  assigned?: boolean;
+  tags: {
+    id: number;
+    etiqueta: string;
+    id_color: number;
+    color: TagColor;
+  }[];
 }
 
 const RetrospectivaGeneral: FC<RetrospectivaGeneralProps> = ({
@@ -16,6 +27,10 @@ const RetrospectivaGeneral: FC<RetrospectivaGeneralProps> = ({
   descripcion,
   fechaInicio,
   idRetrospectiva,
+  clickable = true,
+  completada = false,
+  tags,
+  assigned = true,
 }) => {
   const navigate = useNavigate();
   const [isInResponder, setIsInResponder] = useState<boolean>(false);
@@ -28,36 +43,58 @@ const RetrospectivaGeneral: FC<RetrospectivaGeneralProps> = ({
   }, []);
 
   const handleOnClick = () => {
-    if (!isInResponder) {
+    if (clickable && !isInResponder) {
       navigate(`/mis-retrospectivas/responder/${idRetrospectiva}`);
-    } else {
-      null;
     }
   };
 
   return (
     <div
-      className={`flex ${!isInResponder && 'cursor-pointer'}`}
+      className={`flex ${
+        clickable && !isInResponder
+          ? 'cursor-pointer'
+          : 'cursor-default'
+      }`}
       onClick={handleOnClick}
     >
       <div className="flex flex-col py-3 px-5 w-full rounded bg-white border border-solid border-gray-300">
         <div className="flex w-full justify-between ">
-          <div className="gap-4 flex flex-row">
-            <FlagFilledIcon
-              label="retrospectiva-pendiente"
-              primaryColor="#8270DB"
-            />
+          <div className="gap-2 flex flex-row">
+            {completada ? (
+              <CheckIcon
+                label="retrospectiva-completada"
+                primaryColor="#12ab17"
+              />
+            ) : assigned ? (
+              <FlagFilledIcon
+                label="retrospectiva-pendiente"
+                primaryColor="#8270DB"
+              />
+            ) : (
+              <PdfIcon
+                label="otra retrospectiva"
+                primaryColor="#709ddb"
+              />
+            )}
             <h3 className="font-bold">{titulo}</h3>
           </div>
-          <div className="flex flex-row gap-4 ml-auto">
-            <p>FALTA RELACION RETROSPECTIVA ETIQUETA</p>
-            <div id="tag">
-              <Tag
-                text="Back end"
-                appearance="rounded"
-                color="yellowLight"
-              />
-            </div>
+          <div className="flex flex-row">
+            {tags &&
+              tags.map(
+                (tag: {
+                  id: number;
+                  etiqueta: string;
+                  color: TagColor;
+                }) => (
+                  <div key={tag.id} id="tag">
+                    <Tag
+                      text={tag.etiqueta}
+                      appearance="rounded"
+                      color={tag.color}
+                    />
+                  </div>
+                )
+              )}
           </div>
         </div>
         <div className="flex py-5 text-sm">

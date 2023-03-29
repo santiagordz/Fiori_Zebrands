@@ -16,9 +16,6 @@ const Main = () => {
     useContext(userDataContext);
   const idRol = user?.id_rol || -1;
 
-  /*  11 = admin
-      12 = responsable
-  */
   const adminAllowed = idRol === 1 || false;
   const responsableAllowed = idRol === 2 || false;
 

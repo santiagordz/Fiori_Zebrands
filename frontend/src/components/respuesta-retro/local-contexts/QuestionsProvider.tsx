@@ -1,10 +1,10 @@
 import React, { FC, createContext, useState } from 'react';
 
 export interface QuestionDB {
-  id_pregunta: number;
+  id: number;
   id_tipo_pregunta: number;
   pregunta: string;
-  opciones_respuesta: string | null;
+  opciones_respuestas: string | null;
 }
 
 interface ContextProps {

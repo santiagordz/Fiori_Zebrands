@@ -2,70 +2,152 @@ import Flag from '@atlaskit/flag';
 import ArrowLeftIcon from '@atlaskit/icon/glyph/arrow-left';
 import CheckCircleOutlineIcon from '@atlaskit/icon/glyph/check-circle-outline';
 import EditorHelpIcon from '@atlaskit/icon/glyph/editor/help';
-import { FC } from 'react';
-import { Link } from 'react-router-dom';
+import { FC, useContext, useEffect, useState } from 'react';
+import { useNavigate, useParams, Navigate } from 'react-router-dom';
+import axios from 'axios';
+import { questionsContext, formDataContext } from '../local-contexts';
+import type { Respuestas } from './Cuestionario';
+import Button from '@atlaskit/button';
+import type { Retrospectiva } from './ResponderRetro';
+import Incognito from '../../../assets/incognito.png';
 
-interface AnswersProps {}
+const URI = 'http://localhost:8000/respuesta';
 
-const Answers: FC<AnswersProps> = ({}) => {
+interface AnswersProps {
+  setIsRespuestas: (value: boolean) => void;
+  retrospectivaData: Retrospectiva;
+}
+
+interface Answers {
+  [key: number]: Respuestas;
+}
+
+const Answers: FC<AnswersProps> = ({
+  setIsRespuestas,
+  retrospectivaData,
+}) => {
+  const navigate = useNavigate();
+  const { id_sesionRespuesta } = useParams();
+  const { questions, setQuestions } = useContext(questionsContext);
+  const { setFormData } = useContext(formDataContext);
+  const [answers, setAnswers] = useState<Answers>({});
+
+  const getAnswers = async () => {
+    try {
+      const { data } = await axios.get(
+        `${URI}/${id_sesionRespuesta}`
+      );
+
+      console.log(data);
+
+      data.map((answer: Respuestas) => {
+        setAnswers((prevData) => {
+          return {
+            ...prevData,
+            [answer.id_pregunta]: answer,
+          };
+        });
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    setIsRespuestas(true);
+    getAnswers();
+  }, []);
+
+  const handleFinish = () => {
+    setFormData({});
+    setQuestions([]);
+    setAnswers({});
+    navigate('/mis-retrospectivas');
+  };
+
+  if (questions.length === 0) {
+    return <Navigate to="/mis-retrospectivas" />;
+  }
+
   return (
-    <div>
-      <div className="flex py-5 px-10 flex-col gap-5">
-        <div className="w-full">
-          <Link
-            to="/mis-retrospectivas"
-            className="flex flex-row items-center w-fit gap-2"
-          >
-            <ArrowLeftIcon label="volver" />
-            Volver al panel de retrospectivas
-          </Link>
+    <div className="flex py-5 flex-col gap-5">
+      <div className="w-full">
+        <Button
+          appearance="subtle-link"
+          onClick={handleFinish}
+          iconBefore={<ArrowLeftIcon label="volver" />}
+        >
+          Volver al panel de retrospectivas
+        </Button>
+      </div>
+      <div className="flex flex-col py-7 px-5 w-full rounded bg-white border border-solid border-gray-300 border-collapse items-center justify-center gap-4">
+        <CheckCircleOutlineIcon
+          label="retroCompletada"
+          primaryColor="#1D7AFC"
+          size="xlarge"
+        />
+        <p className="font-bold text-2xl">
+          ¡Retrospectiva {retrospectivaData.titulo} completada con
+          éxito!
+        </p>
+        <p className="text-sm">
+          Tus respuestas han sido registradas correctamente.
+        </p>
+      </div>
+      <div className="flex flex-col py-7 px-7 w-full rounded bg-white border border-solid border-gray-300 border-collapse gap-4">
+        <div>
+          <h3 className="">Resumen de tus respuestas</h3>
+          <hr></hr>
         </div>
-        <div className="flex flex-col py-3 px-5 w-full rounded bg-white border border-solid border-gray-300 border-collapse items-center justify-center gap-4">
-          <CheckCircleOutlineIcon
-            label="retroCompletada"
-            primaryColor="#1D7AFC"
-            size="xlarge"
-          />
-          <p className="font-bold text-2xl">
-            ¡Retrospectiva Sprint 3 completada con éxito!
-          </p>
-          <p className="text-sm">Tus respuestas se han registradas</p>
-        </div>
-        <div className="flex flex-col py-7 px-7 w-full rounded bg-white border border-solid border-gray-300 border-collapse gap-4">
-          <div>
-            <h3 className="">Resumen de tus respuestas</h3>
-            <hr></hr>
-          </div>
-          <div id="quests" className="flex flex-col gap-6 !z-[1]">
-            <Flag
-              appearance="info"
-              icon={
-                <EditorHelpIcon
-                  label="sugerencia"
-                  primaryColor="#"
-                  size="medium"
-                />
-              }
-              id="info"
-              key={1}
-              title="¿Qué acciones tomarás para el siguiente Sprint?"
-              description=" Mejoraré la comunicación con mi equipo."
-            />
-            <Flag
-              appearance="info"
-              icon={
-                <EditorHelpIcon
-                  label="sugerencia"
-                  primaryColor="#"
-                  size="medium"
-                />
-              }
-              id="info"
-              key={2}
-              title="¿En que podrías mejorar individualmente?"
-              description=" Ser más proactivo en las reuniones."
-            />
-          </div>
+        <div id="quests" className="flex flex-col gap-6 !z-[1]">
+          {questions &&
+            questions.map((question) => {
+              return (
+                <div id="flag" key={question.id}>
+                  <Flag
+                    appearance="info"
+                    icon={
+                      <EditorHelpIcon
+                        label="pregunta"
+                        primaryColor="#"
+                        size="medium"
+                      />
+                    }
+                    id="info"
+                    title={question.pregunta}
+                    description={
+                      <div className="mt-3 text-sm">
+                        <p>
+                          {answers[question.id]?.respuesta ? (
+                            <p className="text-purple-100">
+                              {'Tu respuesta: ' +
+                                answers[question.id]?.respuesta}
+                            </p>
+                          ) : (
+                            <p className="text-gray-400">
+                              No registraste una respuesta para esta
+                              pregunta
+                            </p>
+                          )}
+                        </p>
+                        {answers[question.id]?.anonimo ? (
+                          <div className="flex gap-2 opacity-60 mt-5 text-xs items-center">
+                            <img
+                              className="aspect-square w-4"
+                              src={Incognito}
+                              alt="respuesta anonima"
+                            />
+                            Marcaste esta respuesta como anónima,
+                            todas las respuestas de todo el equipo a
+                            esta pregunta serán anónimas.
+                          </div>
+                        ) : null}
+                      </div>
+                    }
+                  />
+                </div>
+              );
+            })}
         </div>
       </div>
     </div>

@@ -1,22 +1,26 @@
 import Button from '@atlaskit/button';
-import {
-  FC,
-  useCallback,
-  useEffect,
-  useState,
-  useContext,
-} from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import Team from '../../../assets/team.png';
-import { Recordatorios } from '../modals';
-import { questionsContext } from '../local-contexts';
 import axios from 'axios';
+import { FC, useContext, useEffect, useState } from 'react';
+import {
+  Link,
+  Navigate,
+  useNavigate,
+  useParams,
+} from 'react-router-dom';
+import Team from '../../../assets/team.png';
+import { questionsContext } from '../local-contexts';
+import { Recordatorios } from '../modals';
+import type { Retrospectiva } from '../../../views/mis-retrospectivas/MisRetrospectivas';
 
 const URI = 'http://localhost:8000/retrospectivas';
 
-interface ReponderRetroInfoProps {}
+interface ReponderRetroInfoProps {
+  retroPendientes: Retrospectiva[];
+}
 
-const ReponderRetroInfo: FC<ReponderRetroInfoProps> = ({}) => {
+const ReponderRetroInfo: FC<ReponderRetroInfoProps> = ({
+  retroPendientes,
+}) => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { questions, setQuestions } = useContext(questionsContext);
@@ -45,6 +49,8 @@ const ReponderRetroInfo: FC<ReponderRetroInfoProps> = ({}) => {
       document.body.classList.remove('modal-open');
     };
   }, [isOpen]);
+
+  if (retroId === '-1') return <Navigate to="/mis-retrospectivas" />;
 
   return (
     <>
@@ -81,7 +87,10 @@ const ReponderRetroInfo: FC<ReponderRetroInfoProps> = ({}) => {
       </div>
       <div>
         {isOpen && questions.length !== 0 && (
-          <Recordatorios setIsOpen={setIsOpen} />
+          <Recordatorios
+            setIsOpen={setIsOpen}
+            retroPendientes={retroPendientes}
+          />
         )}
       </div>
     </>

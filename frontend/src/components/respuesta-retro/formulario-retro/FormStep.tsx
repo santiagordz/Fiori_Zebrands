@@ -9,17 +9,19 @@ import {
 } from '../local-contexts';
 
 import { AnonymousToggle, TiposPregunta } from './form-steps';
+import { nanoid } from 'nanoid';
 
 interface FormStepProps {
   numPregunta: number;
   totalPreguntas: number;
   setFormPage: (updater: (prev: number) => number) => void;
   formPage: number;
-  anonymousQuestions: Array<string>;
+  anonymousQuestions: Array<number>;
   setAnonymousQuestions: (
-    updater: (prev: Array<string>) => Array<string>
+    updater: (prev: Array<number>) => Array<number>
   ) => void;
   setIsModalNextOpen: (value: boolean) => void;
+  setId_sesionRespuesta: (value: string) => void;
 }
 
 const FormStep: FC<FormStepProps> = ({
@@ -30,6 +32,7 @@ const FormStep: FC<FormStepProps> = ({
   anonymousQuestions,
   setAnonymousQuestions,
   setIsModalNextOpen,
+  setId_sesionRespuesta,
 }) => {
   const { formData, setFormData } = useContext(formDataContext);
   const [isError, setIsError] = useState<boolean>(false);
@@ -42,7 +45,7 @@ const FormStep: FC<FormStepProps> = ({
   const handleOnchange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const key: string = question.id_pregunta.toString();
+    const key: number = question.id;
     setFormData((prevFormData: any) => {
       return {
         ...prevFormData,
@@ -52,50 +55,37 @@ const FormStep: FC<FormStepProps> = ({
   };
 
   const handleAnonToggle = () => {
-    if (
-      !isAnonymous &&
-      !anonymousQuestions.includes(question.id_pregunta.toString())
-    ) {
-      setAnonymousQuestions((prev) => [
-        ...prev,
-        question.id_pregunta.toString(),
-      ]);
+    if (!isAnonymous && !anonymousQuestions.includes(question.id)) {
+      setAnonymousQuestions((prev) => [...prev, question.id]);
     }
 
-    if (
-      isAnonymous &&
-      anonymousQuestions.includes(question.id_pregunta.toString())
-    ) {
+    if (isAnonymous && anonymousQuestions.includes(question.id)) {
       setAnonymousQuestions((prev) =>
-        prev.filter(
-          (value: string) => value !== question.id_pregunta.toString()
-        )
+        prev.filter((value: number) => value !== question.id)
       );
     }
   };
 
   useEffect(() => {
-    anonymousQuestions.includes(question.id_pregunta.toString())
+    anonymousQuestions.includes(question.id)
       ? setIsAnonymous(true)
       : setIsAnonymous(false);
-  }, [question.id_pregunta, anonymousQuestions]);
+  }, [question.id, anonymousQuestions]);
 
   useEffect(() => {
     if (
       isAnonymous &&
-      anonymousQuestions.includes(question.id_pregunta.toString()) &&
-      !formData[question.id_pregunta]
+      anonymousQuestions.includes(question.id) &&
+      !formData[question.id]
     ) {
       setAnonymousQuestions((prev) =>
-        prev.filter(
-          (value: string) => value !== question.id_pregunta.toString()
-        )
+        prev.filter((value: number) => value !== question.id)
       );
     }
   }, [formData]);
 
   const getOpciones = () => {
-    const opciones = question.opciones_respuesta;
+    const opciones = question.opciones_respuestas;
     if (opciones) {
       const opcionesArray = opciones.split(',');
       return opcionesArray;
@@ -129,11 +119,11 @@ const FormStep: FC<FormStepProps> = ({
             {question.pregunta}
           </h2>
         </div>
-        <div className="w-full text-left">
+        <div className="w-full text-left z-[2]">
           <TiposPregunta
             idTipoPregunta={question.id_tipo_pregunta}
             opciones={getOpciones()}
-            idPregunta={question.id_pregunta}
+            idPregunta={question.id}
             onChange={handleOnchange}
             setIsError={setIsError}
             isError={isError}
@@ -144,7 +134,7 @@ const FormStep: FC<FormStepProps> = ({
             Enviar como respuesta anónima
           </p>
           <AnonymousToggle
-            isDisabled={!formData[question.id_pregunta]}
+            isDisabled={!formData[question.id]}
             isChecked={isAnonymous}
             onChange={handleAnonToggle}
           />
@@ -165,7 +155,10 @@ const FormStep: FC<FormStepProps> = ({
           {numPregunta === totalPreguntas ? (
             <Button
               appearance="primary"
-              onClick={() => setIsModalNextOpen(true)}
+              onClick={() => {
+                setId_sesionRespuesta(nanoid(13));
+                setIsModalNextOpen(true);
+              }}
             >
               Registrar respuestas
             </Button>

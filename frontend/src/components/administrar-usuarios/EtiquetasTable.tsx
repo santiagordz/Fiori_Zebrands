@@ -71,6 +71,7 @@ const EtiquetasTable: FC<EtiquetasTableProps> = ({}) => {
             <div id="tag" className="w-full flex justify-center">
               <Tag
                 text={etiqueta.nombre}
+                appearance="rounded"
                 isRemovable={false}
                 color={etiqueta.color}
               />

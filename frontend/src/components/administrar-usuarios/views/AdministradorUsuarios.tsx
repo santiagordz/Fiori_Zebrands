@@ -31,7 +31,7 @@ const AdministradorUsuarios = () => {
         </>
       }
     >
-      <div className="flex justify-center w-full">
+      <div className="flex justify-center w-full border border-solid border-gray-300 rounded">
         <UsersTable />
       </div>
       <ModalRegistrarUsuarios

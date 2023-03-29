@@ -4,6 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const retrospectivaRoutes = require('./routes/retrospectivas.routes');
+const respuestaRoutes = require('./routes/respuesta.routes');
 const usuariosRoutes = require('./routes/usuarios.routes');
 const passport = require('passport');
 const authRoutes = require('./auth/index');
@@ -51,6 +52,7 @@ app.use('/etiquetas', etiquetasRoutes);
 app.use('/colores', coloresRoutes);
 app.use('/user', usuariosRoutes);
 app.use('/retrospectivas', retrospectivaRoutes);
+app.use('/respuesta', respuestaRoutes);
 
 app.get('/logout', (req, res) => {
   req.logout();

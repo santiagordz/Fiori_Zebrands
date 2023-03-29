@@ -27,7 +27,7 @@ h6 {
 }
 
 #tag > span > span {
-  font-size: 0.85rem !important;
+  font-size: 0.75rem !important;
   font-weight: 500 !important;
   mix-blend-mode: luminosity;
 }
@@ -36,6 +36,6 @@ h6 {
   overflow: hidden;
 }
 
-#quests > div {
+#flag > div {
   box-shadow: none !important;
 }

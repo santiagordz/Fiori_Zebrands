@@ -2,7 +2,12 @@ import Button from '@atlaskit/button';
 import Form from '@atlaskit/form';
 import ArrowLeftIcon from '@atlaskit/icon/glyph/arrow-left';
 import { FC, useContext, useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import {
+  Navigate,
+  useLocation,
+  useNavigate,
+  useParams,
+} from 'react-router-dom';
 import Stepper from '../../design-template/stepper/Stepper';
 import {
   QuestionDB,
@@ -11,21 +16,37 @@ import {
 } from '../local-contexts';
 import { ConfirmacionRetro, BackMyRetros } from '../modals';
 import FormStep from './FormStep';
+import axios from 'axios';
+import { userDataContext } from '../../../contexts';
+import { nanoid } from 'nanoid';
 
-interface CuestionarioProps {
-  idRetrospectiva: number;
+const URI = 'http://localhost:8000/respuesta/new';
+const URI_COMPLETE = 'http://localhost:8000/respuesta/update';
+
+interface CuestionarioProps {}
+
+export interface Respuestas {
+  respuesta: string;
+  anonimo: boolean;
+  id_usuario: number | null;
+  id_pregunta: number;
+  id_retrospectiva: number;
+  id_sesionRespuesta: string;
 }
 
-const Cuestionario: FC<CuestionarioProps> = ({ idRetrospectiva }) => {
+const Cuestionario: FC<CuestionarioProps> = ({}) => {
+  const { user } = useContext(userDataContext);
   const [formPage, setFormPage] = useState(1);
   const { formData } = useContext(formDataContext);
   const [isModalBackOpen, setIsModalBackOpen] = useState(false);
   const [isModalNextOpen, setIsModalNextOpen] = useState(false);
+  const [id_sesionRespuesta, setId_sesionRespuesta] = useState('');
   const navigate = useNavigate();
+  const { retroId } = useParams();
 
   const location = useLocation();
   const [anonymousQuestions, setAnonymousQuestions] = useState<
-    Array<string>
+    Array<number>
   >([]);
 
   const { questions } = useContext(questionsContext);
@@ -55,13 +76,56 @@ const Cuestionario: FC<CuestionarioProps> = ({ idRetrospectiva }) => {
     };
   }, [location.pathname]);
 
+  const markCompleted = async () => {
+    try {
+      await axios.post(
+        `${URI_COMPLETE}/${retroId}/${user?.id_usuario}`
+      );
+      console.log('sdasd');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleSubmitWAnon = () => {
-    console.log(formData, anonymousQuestions);
+    const answers: Array<Respuestas> = [];
+    questions.map((question: QuestionDB) => {
+      if (formData[question.id]) {
+        answers.push({
+          respuesta: formData[question.id],
+          anonimo: anonymousQuestions.includes(question.id)
+            ? true
+            : false,
+          id_usuario: anonymousQuestions.includes(question.id)
+            ? null
+            : user?.id_usuario,
+          id_retrospectiva: parseInt(retroId!),
+          id_pregunta: question.id,
+          id_sesionRespuesta: id_sesionRespuesta,
+        });
+      }
+    });
+
+    if (answers.length !== 0) {
+      answers.map(async (answer) => {
+        try {
+          await axios.post(URI, answer);
+        } catch (error) {
+          console.log(error);
+        }
+      });
+    }
+
+    markCompleted();
   };
 
   if (questions.length === 0)
-    navigate(`/mis-retrospectivas/responder/${idRetrospectiva}`);
-
+    return (
+      <Navigate
+        to={`/mis-retrospectivas/responder/${retroId}`}
+        replace
+      />
+    );
   return (
     <>
       <div className="flex flex-col items-center justify-center bg-white w-full h-full py-12 px-6 rounded border border-solid border-gray-300">
@@ -101,13 +165,15 @@ const Cuestionario: FC<CuestionarioProps> = ({ idRetrospectiva }) => {
                   formPage,
                   anonymousQuestions,
                   setAnonymousQuestions,
-                  setIsModalNextOpen
+                  setIsModalNextOpen,
+                  setId_sesionRespuesta
                 )}
                 {isModalNextOpen && (
                   <ConfirmacionRetro
                     setIsModalNextOpen={setIsModalNextOpen}
                     submitting={submitting}
                     onSubmit={formProps.onSubmit}
+                    id_sesionRespuesta={id_sesionRespuesta}
                   />
                 )}
               </form>
@@ -123,15 +189,16 @@ const renderFormSteps = (
   questions: QuestionDB[],
   setFormPage: (updater: (prev: number) => number) => void,
   formPage: number,
-  anonymousQuestions: Array<string>,
+  anonymousQuestions: Array<number>,
   setAnonymousQuestions: (
-    updater: (prev: Array<string>) => Array<string>
+    updater: (prev: Array<number>) => Array<number>
   ) => void,
-  setIsModalNextOpen: (value: boolean) => void
+  setIsModalNextOpen: (value: boolean) => void,
+  setId_sesionRespuesta: (value: string) => void
 ): React.ReactNode[] => {
   return questions.map((question, index) => (
     <FormStep
-      key={question.id_pregunta}
+      key={question.id}
       numPregunta={index + 1}
       totalPreguntas={questions.length}
       setFormPage={setFormPage}
@@ -139,6 +206,7 @@ const renderFormSteps = (
       anonymousQuestions={anonymousQuestions}
       setAnonymousQuestions={setAnonymousQuestions}
       setIsModalNextOpen={setIsModalNextOpen}
+      setId_sesionRespuesta={setId_sesionRespuesta}
     />
   ));
 };
