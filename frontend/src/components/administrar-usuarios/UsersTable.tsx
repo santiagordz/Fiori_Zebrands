@@ -43,7 +43,6 @@ const UsersTable = () => {
 
   const getUsers = async () => {
     const res = await axios.get(URI);
-    console.log(res.data);
     const usuarios = res.data.usuarios.map((usuario: any) => ({
       ...usuario,
     }));

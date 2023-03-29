@@ -23,7 +23,7 @@ const AdministradorUsuarios = () => {
       }
     >
       <div className="flex justify-center">
-        <div className="w-5/6">
+        <div className="">
           <div className="flex justify-end gap-10"></div>
           <br></br>
           <UsersTable />
