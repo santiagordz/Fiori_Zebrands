@@ -41,7 +41,7 @@ const ModalBorrarEtiqueta: FC<GestionarEtiquetasProps> = ({
 
   return (
     <>
-      <Blanket isTinted={true}>
+      <div className="modal z-[1000] bg-blueRGBA">
         <div className="modal-content px-10 z-[1000]">
           <div className="modal-header">
             <div className="modal-title justify-center">
@@ -72,7 +72,7 @@ const ModalBorrarEtiqueta: FC<GestionarEtiquetasProps> = ({
             </div>
           </div>
         </div>
-      </Blanket>
+      </div>
     </>
   );
 };

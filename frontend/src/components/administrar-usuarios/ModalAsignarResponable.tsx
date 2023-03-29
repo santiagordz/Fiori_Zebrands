@@ -48,7 +48,7 @@ const ModalAsignarResponsble: FC<AsignarResponsableProps> = ({
   if (usuario.rol === 3) {
     return (
       <>
-        <div className="modal z-[1000]">
+        <div className="modal z-[1000] bg-blueRGBA">
           <div className="modal-content px-10 w-1/2">
             <div className="modal-header justify-center">
               <div>
@@ -98,7 +98,7 @@ const ModalAsignarResponsble: FC<AsignarResponsableProps> = ({
   } else {
     return (
       <>
-        <div className="modal z-[1000]">
+        <div className="modal z-[1000] bg-blueRGBA">
           <div className="modal-content px-10 w-1/2">
             <div className="modal-header justify-center">
               <div>

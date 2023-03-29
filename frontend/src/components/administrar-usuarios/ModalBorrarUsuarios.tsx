@@ -6,7 +6,6 @@ import axios from 'axios';
 import CrossIcon from '@atlaskit/icon/glyph/cross';
 import Button from '@atlaskit/button/standard-button';
 
-
 const URI = 'http://localhost:8000/usuarios/deleteUser/';
 
 interface GestionarEtiquetasProps {
@@ -28,31 +27,31 @@ const ModalBorrarUsuarios: FC<GestionarEtiquetasProps> = ({
     return null;
   }
 
-  const handleDelete =async (id:any) => {
+  const handleDelete = async (id: any) => {
     try {
-      await axios.delete(`${URI}${id}` );
+      await axios.delete(`${URI}${id}`);
       onClose();
       window.location.reload();
     } catch {
-      window.alert(
-        'No se pudo borrar el usuario, intenta de nuevo.'
-      ); // cambiar eso a algo mas bonito
-    }}
+      window.alert('No se pudo borrar el usuario, intenta de nuevo.'); // cambiar eso a algo mas bonito
+    }
+  };
 
   return (
     <>
-      <div className="modal z-[1000000000]">
+      <div className="modal z-[1000] bg-blueRGBA">
         <div className="modal-content px-10">
           <div className="modal-header">
             <div className="modal-title justify-center">
-              <h4 className='uppercase text-3xl text-center'>Borrar Usuario</h4>
-            
+              <h4 className="uppercase text-3xl text-center">
+                Borrar Usuario
+              </h4>
             </div>
             <div className="modal-subtitle text-xl mt-4">
               ¿Está seguro que desea borrar el usuario?
             </div>
           </div>
-          
+
           <div className="modal-footer justify-center">
             <div className="flex gap-10 mt-12">
               <Button
@@ -62,9 +61,9 @@ const ModalBorrarUsuarios: FC<GestionarEtiquetasProps> = ({
                 Cancelar
               </Button>
               <Button
-                appearance='danger'
+                appearance="danger"
                 className="rounded-sm bg-jiraBlue text-white px-2 py-1 hover:bg-blue-500"
-                onClick={()=>handleDelete(id)}
+                onClick={() => handleDelete(id)}
               >
                 Confirmar
               </Button>

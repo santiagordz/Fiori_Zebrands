@@ -54,7 +54,7 @@ const ModalRegistrarEtiqueta: FC<RegistrarEtiquetaProps> = ({
   }
   return (
     <>
-      <div className="modal z-[1000]">
+      <div className="modal z-[1000] bg-blueRGBA">
         <div className="modal-content px-10 py-10">
           <div className="modal-header">
             <div className="modal-title">

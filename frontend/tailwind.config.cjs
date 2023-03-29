@@ -6,6 +6,7 @@ module.exports = {
       colors: {
         textNormal: '#172b4d',
         grayRGBA: 'rgba(0, 0, 0, 0.5)',
+        blueRGBA: 'rgba(9, 30, 66, 0.49)',
         jiraBlue: '#0C66E4',
         accentBolder: '#091E42',
         subtle: '#44546F',

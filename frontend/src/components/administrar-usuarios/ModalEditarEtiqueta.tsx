@@ -76,7 +76,7 @@ const ModalEditarEtiqueta: FC<ModalEditarEtiquetaProps> = ({
   } else {
     return (
       <>
-        <div className="modal z-[1000000000]">
+        <div className="modal z-[1000] bg-blueRGBA">
           <div className="modal-content px-8 py-10">
             <div className="modal-header">
               <div className="modal-title">

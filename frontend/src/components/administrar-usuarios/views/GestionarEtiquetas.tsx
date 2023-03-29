@@ -16,7 +16,7 @@ const GestionarEtiquetas = () => {
           <Link to={'/administrar-usuarios'}>
             <BotonGestionarEtiquetas texto={'Usuarios'} />
           </Link>
-          <button>
+          <button onClick={() => setIsOpen(true)}>
             <BotonRegistrarEtiqueta />
           </button>
         </>

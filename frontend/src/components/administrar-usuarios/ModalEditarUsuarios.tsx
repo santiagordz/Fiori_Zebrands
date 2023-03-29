@@ -87,7 +87,7 @@ const ModalEditarUsuarios: FC<ModalEditarUsuariosProps> = ({
   } else {
     return (
       <>
-        <div className="modal z-[10000]">
+        <div className="modal z-[10000] bg-blueRGBA">
           <div className="modal-content px-10 py-[18rem]">
             <div className="modal-header">
               <div className="modal-title">
