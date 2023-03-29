@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { FC, useContext, useEffect, useState } from 'react';
 import {
   Navigate,
   Route,
@@ -16,18 +16,19 @@ import RetrospectivaGeneral from '../reusable/RetrospectivaGeneral';
 import Answers from './Answers';
 import Cuestionario from './Cuestionario';
 import ResponderRetroInfo from './ResponderRetroInfo';
+import type { Retrospectiva } from '../../../views/mis-retrospectivas/MisRetrospectivas';
+import { userDataContext } from '../../../contexts';
 
 const URI = 'http://localhost:8000/retrospectivas';
 
-export interface Retrospectiva {
-  id_retrospectiva: number;
-  titulo: string;
-  descripcion: string;
-  fecha_inicio: string;
-  fecha_fin: string;
+interface ResponderRetroProps {
+  retroPendientes: Retrospectiva;
 }
 
-const ResponderRetro = ({}) => {
+const ResponderRetro: FC<ResponderRetroProps> = ({
+  retroPendientes,
+}) => {
+  const { user } = useContext(userDataContext);
   const location = useLocation();
   const [isRespuestas, setIsRespuestas] = useState<boolean>(false);
   const [retrospectivaData, setRetrospectivaData] =
@@ -35,8 +36,15 @@ const ResponderRetro = ({}) => {
   const { retroId } = useParams();
 
   const getOne = async () => {
-    const { data } = await axios.get(`${URI}/one/${retroId}`);
-    setRetrospectivaData(data);
+    const { data: retrospectiva } = await axios.get(
+      `${URI}/one/${retroId}/${user?.id}`
+    );
+    const { data: tags } = await axios.get(`${URI}/tags/${retroId}`);
+    setRetrospectivaData((prevState) => ({
+      ...prevState,
+      ...retrospectiva,
+      tags: tags,
+    }));
   };
 
   useEffect(() => {
@@ -50,18 +58,22 @@ const ResponderRetro = ({}) => {
   if (!retrospectivaData) {
     if (retroId === '-1')
       return <Navigate to="/mis-retrospectivas" />;
-    return <Spinner message="Cargando retrospectiva" />;
+    return <Spinner message="Cargando retrospectiva..." />;
   }
+
+  if (retrospectivaData.completada)
+    return <Navigate to="/mis-retrospectivas" />;
 
   return (
     <QuestionsProvider>
       <div className="flex flex-col gap-4">
         {!isRespuestas && (
           <RetrospectivaGeneral
-            idRetrospectiva={retrospectivaData.id_retrospectiva || -1}
+            idRetrospectiva={retrospectivaData.id || -1}
             titulo={retrospectivaData.titulo || ''}
             descripcion={retrospectivaData.descripcion || ''}
             fechaInicio={retrospectivaData.fecha_inicio || ''}
+            tags={retrospectivaData.tags}
           />
         )}
         <Routes>

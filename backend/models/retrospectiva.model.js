@@ -2,7 +2,7 @@ const db = require('../database/db');
 
 module.exports = class Retrospectiva {
   constructor(newRetrospectiva) {
-    this.id_retrospectiva = newRetrospectiva.id_retrospectiva || null;
+    this.id = newRetrospectiva.id || null;
     this.titulo = newRetrospectiva.titulo || '';
     this.descripcion = newRetrospectiva.descripcion || '';
     this.fecha_inicio = newRetrospectiva.fecha_inicio || '';
@@ -20,13 +20,40 @@ module.exports = class Retrospectiva {
     );
   }
 
-  static fetchOne(id) {
+  static fetchOne(id_retrospectiva, id_usuario) {
     return db.execute(
-      'SELECT id, titulo, fecha_inicio, fecha_fin, descripcion, id_reporte, updatedAt, createdAt FROM `retrospectivas` WHERE id = ?;',
-      [id]
+      `SELECT R.id, titulo, fecha_inicio, fecha_fin, descripcion, R.updatedAt, completada 
+      FROM retrospectivas R, usuarios_retrospectivas UR
+      WHERE R.id = UR.id_retrospectiva
+      AND R.id = ?
+      AND UR.id_usuario = ?`,
+      [id_retrospectiva, id_usuario]
     );
   }
 
+  static fetchRetrospectivasByUserId(userId) {
+    return db.execute(
+      `
+    SELECT r.*, ur.id_usuario, ur.completada, IF(ur.id_usuario IS NOT NULL, 1, 0) as asignada
+    FROM retrospectivas r
+    LEFT JOIN usuarios_retrospectivas ur ON r.id = ur.id_retrospectiva AND ur.id_usuario = ?
+    `,
+      [userId]
+    );
+  }
+
+  static fetchTags(id) {
+    return db.execute(
+      `
+    SELECT E.id, E.etiqueta, E.id_color, C.color
+    FROM etiquetas AS E
+    INNER JOIN colores AS C ON E.id_color = C.id
+    INNER JOIN retrospectiva_etiquetas AS RE ON RE.id_etiqueta = E.id
+    WHERE RE.id_retrospectiva = ?;
+    `,
+      [id]
+    );
+  }
   static fetchQuestions(id) {
     // Utilizando subconsultas
     return db.execute(

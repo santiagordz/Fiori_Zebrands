@@ -50,6 +50,7 @@ const Recordatorios: FC<RecordatoriosProps> = ({ setIsOpen }) => {
               </p>
             </div>
             <div className="flex flex-col gap-3 font-medium">
+              {/* ! PROVISIONALMENTE SE USAN DATOS DE PROTOTIPO */}
               <div className="flex items-center">
                 <ErrorIcon label="urgente" primaryColor="#E34935" />
                 <p className="flex flex-row text-xs text-danger">
