@@ -7,6 +7,8 @@ import {
   useLocation,
   useParams,
 } from 'react-router-dom';
+import { userDataContext } from '../../../contexts';
+import type { Retrospectiva } from '../../../views/mis-retrospectivas/MisRetrospectivas';
 import Spinner from '../../design-template/spinner/Spinner';
 import {
   FormDataProvider,
@@ -16,13 +18,11 @@ import RetrospectivaGeneral from '../reusable/RetrospectivaGeneral';
 import Answers from './Answers';
 import Cuestionario from './Cuestionario';
 import ResponderRetroInfo from './ResponderRetroInfo';
-import type { Retrospectiva } from '../../../views/mis-retrospectivas/MisRetrospectivas';
-import { userDataContext } from '../../../contexts';
 
 const URI = 'http://localhost:8000/retrospectivas';
 
 interface ResponderRetroProps {
-  retroPendientes: Retrospectiva;
+  retroPendientes: Retrospectiva[];
 }
 
 const ResponderRetro: FC<ResponderRetroProps> = ({
@@ -81,9 +81,7 @@ const ResponderRetro: FC<ResponderRetroProps> = ({
           <Route
             path="/"
             element={
-              <>
-                <ResponderRetroInfo />
-              </>
+              <ResponderRetroInfo retroPendientes={retroPendientes} />
             }
           />
           <Route
