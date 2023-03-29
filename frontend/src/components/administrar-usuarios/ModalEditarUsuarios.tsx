@@ -1,14 +1,13 @@
-import React, { FC } from 'react';
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { FC, useContext, useEffect, useState } from 'react';
 
-import './css/ModalEditarUsuarios.css';
-import DropdowRoles from './DropdownRoles';
 import DropdownEtiquetas from './DropdownEtiquetas';
+import DropdowRoles from './DropdownRoles';
+import './css/ModalEditarUsuarios.css';
 
 import CrossIcon from '@atlaskit/icon/glyph/cross';
 import SectionMessage from '@atlaskit/section-message';
-import EditarIcon from './EditarIcon';
+import { userDataContext } from '../../contexts';
 
 const URI = 'http://localhost:8000/usuarios/';
 
@@ -29,6 +28,7 @@ const ModalEditarUsuarios: FC<ModalEditarUsuariosProps> = ({
   onClose,
   info,
 }) => {
+  const { user, setUser } = useContext(userDataContext);
   const [nombre, setNombre] = useState('');
   const [correo, setCorreo] = useState('');
   const [rol, setRol] = useState('');
@@ -54,6 +54,7 @@ const ModalEditarUsuarios: FC<ModalEditarUsuariosProps> = ({
         rol: rol,
         etiquetas: etiquetas,
       });
+      setUser({ ...user, nombre: nombre });
       res.then(() => window.location.reload());
     } catch (error) {
       window.alert(error);
