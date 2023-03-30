@@ -1,9 +1,9 @@
 const db = require('../database/db');
 const axios = require('axios');
 const auth = {
-  username: 'bernardo.laing@zeb.mx',
+  username: 'a01708830@tec.mx',
   password:
-    'ATATT3xFfGF0WULrdZADxv7NnfsNI6qZHwdyDx3C7_9mysxgPg5vR-YthjGcDKiD66gPbi6YE2sF301q2SBWNOllGA1TzrXxN9FGw7MB524gUd6JYNCb5aI6DSoEiNKuJsUvxAuGwA3RqLoVofY-1hqg3vGwdnnZQyG27X3oUgt62OfeALzzGYo=44ADD8CC',
+    'ATATT3xFfGF0XKSl4lZMWgE9dWqgKuV6H3e0XrsxdoygjnIlPPuTV7mS3WT_DjiWkj6ruEXp7m55st81d6iEBf0L2dvDR2d26_nlNAfTvbIyK370i8hGc3h0Z_NjBTW7VFhMm48YkRshCtzAtYjR1kMtl40ol3KVf3bXeP1f09rqRAg9TqWGMl0=6C4489B3',
 };
 
 const Jira_id = [];
@@ -11,7 +11,7 @@ const Jira_nombre = [];
 
 const getProjectInfo = async () => {
   const response = await axios.get(
-    `https://zebrands.atlassian.net/rest/api/3/users/search`,
+    `https://fioritec.atlassian.net/rest/api/3/users/search`,
     {
       auth: auth,
     }
@@ -33,8 +33,13 @@ const getProjectInfo = async () => {
   return Jira_Users;
 };
 
-getProjectInfo().then((projectInfo) => {
-  console.log(projectInfo);
+getProjectInfo().then((data) => {
+  console.log(data);
 });
 
-module.exports = class Usuario_Jira {};
+module.exports = class Usuario_Jira {
+  constructor(Usuario_Jira) {
+    this.id_jira = Usuario_Jira.accountId;
+    this.username_jira = Usuario_Jira.displayName;
+  }
+};
