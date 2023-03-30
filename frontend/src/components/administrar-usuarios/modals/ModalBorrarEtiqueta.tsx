@@ -56,7 +56,7 @@ const ModalBorrarEtiqueta: FC<GestionarEtiquetasProps> = ({
             <Button onClick={handleOut}>Cancelar</Button>
             <Button
               appearance="danger"
-              onClick={() => handleDelete(id)}
+              onClick={() => handleDelete(id.id)}
             >
               Confirmar
             </Button>
