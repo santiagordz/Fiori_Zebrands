@@ -30,7 +30,6 @@ interface MisRetrospectivasProps {}
 
 const MisRetrospectivas: FC<MisRetrospectivasProps> = ({}) => {
   const { user } = useContext(userDataContext);
-  console.log(user);
   const [retroPendientes, setRetroPendientes] = useState<
     Array<Retrospectiva>
   >([]);

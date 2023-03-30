@@ -2,7 +2,7 @@ import Blanket from '@atlaskit/blanket';
 import Button, { LoadingButton } from '@atlaskit/button';
 import ErrorIcon from '@atlaskit/icon/glyph/error';
 import JiraFailedBuildStatusIcon from '@atlaskit/icon/glyph/jira/failed-build-status';
-import { FC, useCallback } from 'react';
+import { FC, useCallback, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 interface ConfirmacionRetroProps {
@@ -22,6 +22,14 @@ const ConfirmacionRetro: FC<ConfirmacionRetroProps> = ({
   const navigate = useNavigate();
   const { retroId } = useParams();
 
+  useEffect(() => {
+    document.body.classList.add('modal-open');
+
+    return () => {
+      document.body.classList.remove('modal-open');
+    };
+  }, []);
+
   return (
     <div className="">
       <Blanket isTinted={true}>
@@ -36,7 +44,7 @@ const ConfirmacionRetro: FC<ConfirmacionRetroProps> = ({
                 ></JiraFailedBuildStatusIcon>
               </div>
 
-              <h2 className="font-bold">
+              <h2 className="font-bold text-lg">
                 ¿Deseas registrar tus respuestas?
               </h2>
               <div className="flex items-center gap-2">
@@ -48,13 +56,13 @@ const ConfirmacionRetro: FC<ConfirmacionRetroProps> = ({
               <div className="flex gap-10">
                 <Button
                   appearance="subtle-link"
-                  className="!flex !items-center !p-2 !text-xs gap-6"
+                  className="!flex !items-center !p-2 !text-[0.9rem] gap-6"
                   onClick={closeModal}
                 >
                   Editar mis respuestas
                 </Button>
                 <LoadingButton
-                  className="!flex !items-center !p-2 !text-xs gap-5"
+                  className="!flex !items-center !p-2 !text-[0.9rem] gap-5"
                   appearance="primary"
                   type="submit"
                   onClick={() => {

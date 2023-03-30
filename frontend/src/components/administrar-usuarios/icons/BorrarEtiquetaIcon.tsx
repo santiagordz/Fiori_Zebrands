@@ -1,8 +1,9 @@
 import TrashIcon from '@atlaskit/icon/glyph/trash';
 import { N500, R400 } from '@atlaskit/theme/colors';
 import { token } from '@atlaskit/tokens';
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import { ModalBorrarEtiqueta } from '../modals';
+import type { Etiqueta } from '../UsersTable';
 
 const BorrarEditarIcon = ({ etiqueta }: any) => {
   const [color, setColor] = useState(true);

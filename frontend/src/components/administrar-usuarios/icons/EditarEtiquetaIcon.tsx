@@ -1,23 +1,17 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { token } from '@atlaskit/tokens';
-import { N500, Y300 } from '@atlaskit/theme/colors';
 import EditFilledIcon from '@atlaskit/icon/glyph/edit-filled';
-import ModalEditarUsuarios from '../modals/ModalEditarUsuarios';
+import { N500, Y300 } from '@atlaskit/theme/colors';
+import { token } from '@atlaskit/tokens';
+import React, { FC, useState } from 'react';
+import { Etiqueta } from '../UsersTable';
 import ModalEditarEtiqueta from '../modals/ModalEditarEtiqueta';
 
-const URI = 'http://localhost:8000/usuarios/';
+interface EdtarEtiquetaIconProps {
+  etiqueta: Etiqueta;
+}
 
-// interface InfoUsuario {
-//   id: number;
-//   nombre: string;
-//   apellido: string;
-//   correo: string;
-//   roles: string[];
-//   etiquetas: string[];
-// }
-
-const EditarEtiquetaIcon = ({ etiqueta }: any) => {
+const EditarEtiquetaIcon: FC<EdtarEtiquetaIconProps> = ({
+  etiqueta,
+}) => {
   const [color, setColor] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
 

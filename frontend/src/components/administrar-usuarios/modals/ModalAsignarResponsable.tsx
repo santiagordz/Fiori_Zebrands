@@ -1,15 +1,20 @@
 import axios from 'axios';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import Button from '@atlaskit/button/standard-button';
 import InfoIcon from '@atlaskit/icon/glyph/info';
 import '../css/modalBorrarUsuarios.css';
+import { UserType } from '../../../contexts/UserContext';
 
 const URI = 'http://localhost:8000/usuarios/updateUserRole/';
 
+interface Usuariotype extends UserType {
+  id: number;
+  rol: number;
+}
 interface AsignarResponsableProps {
   show: boolean;
   onClose: () => void;
-  usuario: any;
+  usuario: Usuariotype;
 }
 
 const ModalAsignarResponsable: FC<AsignarResponsableProps> = ({
@@ -21,11 +26,23 @@ const ModalAsignarResponsable: FC<AsignarResponsableProps> = ({
     onClose();
   };
 
+  const nombre =
+    (usuario?.nombre ? usuario?.nombre : usuario?.correo) ||
+    'Usuario';
+
+  useEffect(() => {
+    show && document.body.classList.add('modal-open');
+
+    return () => {
+      show && document.body.classList.remove('modal-open');
+    };
+  }, []);
+
   if (!show) {
     return null;
   }
 
-  const handleAsignarResponsable = async (usuario: any) => {
+  const handleAsignarResponsable = async (usuario: Usuariotype) => {
     try {
       const res = axios.post(`${URI}${usuario.id}`, { rol: 2 });
       res.then(() => window.location.reload());
@@ -34,7 +51,7 @@ const ModalAsignarResponsable: FC<AsignarResponsableProps> = ({
     }
   };
 
-  const handleQuitarResponsable = async (usuario: any) => {
+  const handleQuitarResponsable = async (usuario: Usuariotype) => {
     try {
       const res = axios.post(`${URI}${usuario.id}`, { rol: 3 });
       res.then(() => window.location.reload());
@@ -47,7 +64,7 @@ const ModalAsignarResponsable: FC<AsignarResponsableProps> = ({
     return (
       <>
         <div className="modal z-[1000] bg-blueRGBA">
-          <div className="modal-content px-10 w-1/2">
+          <div className="modal-content-delete px-16 w-fit">
             <div className="modal-header justify-center">
               <div>
                 <InfoIcon
@@ -57,23 +74,21 @@ const ModalAsignarResponsable: FC<AsignarResponsableProps> = ({
                 />
               </div>
               <div className="modal-title justify-center">
-                <h4 className="text-2xl text-center">
+                <h4 className="text-lg text-center">
                   ¿Deseas darle el rol de responsable a
                   <span className="text-jiraBlue">
-                    {` ${usuario.nombre || usuario.correo}`}
+                    {` ${nombre}`}
                   </span>
                   ?
                 </h4>
               </div>
-              <div className="modal-subtitle text-xl mt-4 text-center">
-                {`${
-                  usuario.nombre || usuario.correo
-                } podrá iniciar y finalizar retrospectivas`}
+              <div className="modal-subtitle text-sm mt-1 text-center">
+                {`${nombre} podrá iniciar y finalizar retrospectivas`}
               </div>
             </div>
 
             <div className="modal-footer justify-center">
-              <div className="flex gap-10 mt-12">
+              <div className="flex gap-10 mt-2">
                 <Button
                   className="rounded-none hover:text-blue-500 text-sm"
                   onClick={handleOut}
@@ -97,7 +112,7 @@ const ModalAsignarResponsable: FC<AsignarResponsableProps> = ({
     return (
       <>
         <div className="modal z-[1000] bg-blueRGBA">
-          <div className="modal-content px-10 w-1/2">
+          <div className="modal-content-delete px-16 w-fit">
             <div className="modal-header justify-center">
               <div>
                 <InfoIcon
@@ -107,23 +122,21 @@ const ModalAsignarResponsable: FC<AsignarResponsableProps> = ({
                 />
               </div>
               <div className="modal-title justify-center">
-                <h4 className="text-2xl text-center">
+                <h4 className="text-lg text-center">
                   ¿Deseas eliminar el rol de responsable de
                   <span className="text-jiraBlue">
-                    {` ${usuario.nombre || usuario.correo}`}
+                    {` ${nombre}`}
                   </span>
                   ?
                 </h4>
               </div>
-              <div className="modal-subtitle text-xl mt-4 text-center">
-                {`${
-                  usuario.nombre || usuario.correo
-                } ya no podrá iniciar y finalizar retrospectivas`}
+              <div className="modal-subtitle text-sm mt-1 text-center">
+                {`${nombre} ya no podrá iniciar y finalizar retrospectivas`}
               </div>
             </div>
 
             <div className="modal-footer justify-center">
-              <div className="flex gap-10 mt-12">
+              <div className="flex gap-10 mt-2">
                 <Button
                   className="rounded-none hover:text-blue-500 text-sm"
                   onClick={handleOut}

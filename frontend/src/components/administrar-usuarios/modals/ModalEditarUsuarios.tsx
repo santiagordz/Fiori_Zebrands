@@ -1,5 +1,11 @@
 import axios from 'axios';
-import { FC, useContext, useEffect, useState } from 'react';
+import {
+  FC,
+  FormEvent,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import DropdownEtiquetas from '../DropdownEtiquetas';
 import DropdowRoles from '../DropdownRoles';
 import '../css/ModalEditarUsuarios.css';
@@ -18,7 +24,7 @@ interface Etiqueta {
 interface ModalEditarUsuariosProps {
   show: boolean;
   onClose: () => void;
-  info: any;
+  info: string | number;
 }
 
 const ModalEditarUsuarios: FC<ModalEditarUsuariosProps> = ({
@@ -36,7 +42,7 @@ const ModalEditarUsuarios: FC<ModalEditarUsuariosProps> = ({
     setRol(rol);
   };
 
-  const handleEtiquetasSeleccionadas = (etiquetas: any) => {
+  const handleEtiquetasSeleccionadas = (etiquetas: Etiqueta[]) => {
     setEtiquetas(etiquetas);
   };
 
@@ -44,7 +50,7 @@ const ModalEditarUsuarios: FC<ModalEditarUsuariosProps> = ({
     onClose();
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     try {
       const res = axios.post(`${URI}/updateUser/${info}`, {

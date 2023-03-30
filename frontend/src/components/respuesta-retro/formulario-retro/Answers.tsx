@@ -1,15 +1,15 @@
+import Button from '@atlaskit/button';
 import Flag from '@atlaskit/flag';
 import ArrowLeftIcon from '@atlaskit/icon/glyph/arrow-left';
 import CheckCircleOutlineIcon from '@atlaskit/icon/glyph/check-circle-outline';
 import EditorHelpIcon from '@atlaskit/icon/glyph/editor/help';
-import { FC, useContext, useEffect, useState } from 'react';
-import { useNavigate, useParams, Navigate } from 'react-router-dom';
 import axios from 'axios';
-import { questionsContext, formDataContext } from '../local-contexts';
-import type { Respuestas } from './Cuestionario';
-import Button from '@atlaskit/button';
-import type { Retrospectiva } from './ResponderRetro';
+import { FC, useContext, useEffect, useState } from 'react';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import Incognito from '../../../assets/incognito.png';
+import type { Retrospectiva } from '../../../views/mis-retrospectivas/MisRetrospectivas';
+import { formDataContext, questionsContext } from '../local-contexts';
+import type { Respuestas } from './Cuestionario';
 
 const URI = 'http://localhost:8000/respuesta';
 
@@ -62,6 +62,7 @@ const Answers: FC<AnswersProps> = ({
     setFormData({});
     setQuestions([]);
     setAnswers({});
+    window.location.reload();
     navigate('/mis-retrospectivas');
   };
 
@@ -80,7 +81,7 @@ const Answers: FC<AnswersProps> = ({
           Volver al panel de retrospectivas
         </Button>
       </div>
-      <div className="flex flex-col py-7 px-5 w-full rounded bg-white border border-solid border-gray-300 border-collapse items-center justify-center gap-4">
+      <div className="flex flex-col py-7 px-5 w-full rounded bg-white shadow-sm border-collapse items-center justify-center gap-4">
         <CheckCircleOutlineIcon
           label="retroCompletada"
           primaryColor="#1D7AFC"
@@ -94,7 +95,7 @@ const Answers: FC<AnswersProps> = ({
           Tus respuestas han sido registradas correctamente.
         </p>
       </div>
-      <div className="flex flex-col py-7 px-7 w-full rounded bg-white border border-solid border-gray-300 border-collapse gap-4">
+      <div className="flex flex-col py-7 px-7 w-full rounded bg-white shadow-sm border-collapse gap-4">
         <div>
           <h3 className="">Resumen de tus respuestas</h3>
           <hr></hr>
@@ -119,7 +120,7 @@ const Answers: FC<AnswersProps> = ({
                       <div className="mt-3 text-sm">
                         <p>
                           {answers[question.id]?.respuesta ? (
-                            <p className="text-purple-100">
+                            <p className="text-white">
                               {'Tu respuesta: ' +
                                 answers[question.id]?.respuesta}
                             </p>

@@ -8,7 +8,7 @@ const URI = 'http://localhost:8000/etiquetas/';
 interface GestionarEtiquetasProps {
   show: boolean;
   onClose: () => void;
-  id: any;
+  id: number;
 }
 
 const ModalBorrarEtiqueta: FC<GestionarEtiquetasProps> = ({
@@ -24,7 +24,7 @@ const ModalBorrarEtiqueta: FC<GestionarEtiquetasProps> = ({
     return null;
   }
 
-  const handleDelete = async (id: any) => {
+  const handleDelete = async (id: number) => {
     try {
       await axios.delete(`${URI}${id}`);
       onClose();

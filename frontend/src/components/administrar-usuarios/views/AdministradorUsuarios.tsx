@@ -19,7 +19,7 @@ const AdministradorUsuarios = () => {
               navigate('/administrar-usuarios/gestionar-etiquetas')
             }
           >
-            Gestionar etiqueta
+            Gestionar etiquetas
           </Button>
           <Button
             onClick={() => setIsOpen(true)}
@@ -31,7 +31,7 @@ const AdministradorUsuarios = () => {
         </>
       }
     >
-      <div className="flex justify-center w-full border border-solid border-gray-300 rounded">
+      <div className="flex justify-center w-full shadow-sm rounded">
         <UsersTable />
       </div>
       <ModalRegistrarUsuarios

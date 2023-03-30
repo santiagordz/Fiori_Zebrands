@@ -11,6 +11,20 @@ const URI = 'http://localhost:8000/etiquetas';
 
 interface EtiquetasTableProps {}
 
+interface EtiquetasTableHeadProps {
+  children: React.ReactNode;
+}
+
+const EtiquetasTableHead: FC<EtiquetasTableHeadProps> = ({
+  children,
+}) => {
+  return (
+    <p className="!normal-case text-left px-3 font-semibold text-[0.8rem] text-textNormal">
+      {children}
+    </p>
+  );
+};
+
 const EtiquetasTable: FC<EtiquetasTableProps> = ({}) => {
   const [etiquetas, setEtiquetas] = useState<Array<Etiqueta>>([]);
   const tableRows: RowType[] = [];
@@ -34,17 +48,17 @@ const EtiquetasTable: FC<EtiquetasTableProps> = ({}) => {
     cells: [
       {
         key: 'etiqueta',
-        content: 'Etiqueta',
-        isSortable: false,
+        content: <EtiquetasTableHead>Etiqueta</EtiquetasTableHead>,
+        isSortable: true,
       },
       {
         key: 'nombre',
-        content: 'Nombre',
-        isSortable: false,
+        content: <EtiquetasTableHead>Nombre</EtiquetasTableHead>,
+        isSortable: true,
       },
       {
         key: 'color',
-        content: 'Color',
+        content: <EtiquetasTableHead>Color</EtiquetasTableHead>,
         isSortable: false,
       },
       {

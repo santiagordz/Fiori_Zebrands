@@ -355,6 +355,17 @@
     "@emotion/react" "^11.7.1"
     tiny-invariant "^1.2.0"
 
+"@atlaskit/range@^7.0.4":
+  version "7.0.4"
+  resolved "https://registry.yarnpkg.com/@atlaskit/range/-/range-7.0.4.tgz#4d124e371e352810998d22ee0940a8c3c5f66bd6"
+  integrity sha512-Rkrp/jDDdTzSDBU7i3YXl3HkLuPRW8qT6i6Kvnlh0g394ncmcDhljtLWiR1pWsICJkThf1sOpV7IoLp/7TSezA==
+  dependencies:
+    "@atlaskit/ds-lib" "^2.1.0"
+    "@atlaskit/theme" "^12.2.0"
+    "@atlaskit/tokens" "^1.0.0"
+    "@babel/runtime" "^7.0.0"
+    "@emotion/react" "^11.7.1"
+
 "@atlaskit/section-message@^6.3.10":
   version "6.3.12"
   resolved "https://registry.yarnpkg.com/@atlaskit/section-message/-/section-message-6.3.12.tgz#99cd2a8f5422e4aaf31a04789eb9ad51a6d09c6e"

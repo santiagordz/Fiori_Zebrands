@@ -30,7 +30,7 @@ const GestionarEtiquetas = () => {
         </>
       }
     >
-      <div className="flex items-center justify-center w-full bg-white py-4 border border-solid border-gray-300 rounded">
+      <div className="flex items-center justify-center w-full bg-white py-4 shadow-sm rounded">
         <EtiquetasTable />
         <ModalRegistrarEtiqueta
           show={isOpen}

@@ -1,16 +1,17 @@
 import React, { FC, useState, useEffect } from 'react';
 import axios from 'axios';
+import type { TagColor } from '@atlaskit/tag';
 
 const URI = 'http://localhost:8000/colores';
 
 interface Color {
   id: number;
-  color: string;
+  color: TagColor;
 }
 
 interface DropdownColoresProps {
-  onColorSeleccionadoChange: (valor: string) => void;
-  colorActual: string;
+  onColorSeleccionadoChange: (valor: TagColor) => void;
+  colorActual?: TagColor;
 }
 
 const DropdownColores: FC<DropdownColoresProps> = ({
@@ -18,7 +19,9 @@ const DropdownColores: FC<DropdownColoresProps> = ({
   colorActual,
 }) => {
   const [colores, setColores] = useState<Color[]>([]);
-  const [color, setColor] = useState<string>(colorActual || '');
+  const [color, setColor] = useState<TagColor>(
+    colorActual || 'standard'
+  );
 
   const getColores = () => {
     const res = axios.get(URI);
@@ -27,8 +30,12 @@ const DropdownColores: FC<DropdownColoresProps> = ({
     });
   };
 
-  const handleColorChange = (e: any) => {
-    const colorSeleccionado = e.target.value;
+  const handleColorChange = (
+    e: React.FormEvent<HTMLSelectElement>
+  ) => {
+    const target = e.target as HTMLSelectElement;
+    const value = target.value as TagColor;
+    const colorSeleccionado = value;
     setColor(colorSeleccionado);
     onColorSeleccionadoChange(colorSeleccionado);
   };

@@ -1,6 +1,7 @@
 export {
   default as FormDataProvider,
   formDataContext,
+  type formDataType,
 } from './FormDataProvider';
 
 export {

@@ -9,12 +9,12 @@ export interface QuestionDB {
 
 interface ContextProps {
   questions: Array<QuestionDB>;
-  setQuestions: (data: any) => void;
+  setQuestions: (data: QuestionDB[]) => void;
 }
 
 export const questionsContext = createContext<ContextProps>({
   questions: [],
-  setQuestions: (data: any) => {},
+  setQuestions: (data: QuestionDB[]) => {},
 });
 
 interface questionsContextProps {
@@ -24,7 +24,7 @@ interface questionsContextProps {
 const QuestionsProvider: FC<questionsContextProps> = ({
   children,
 }) => {
-  const [questions, setQuestions] = useState([]);
+  const [questions, setQuestions] = useState<QuestionDB[]>([]);
 
   return (
     <questionsContext.Provider value={{ questions, setQuestions }}>

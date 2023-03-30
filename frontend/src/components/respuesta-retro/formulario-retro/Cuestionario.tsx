@@ -1,24 +1,18 @@
 import Button from '@atlaskit/button';
 import Form from '@atlaskit/form';
 import ArrowLeftIcon from '@atlaskit/icon/glyph/arrow-left';
+import axios from 'axios';
 import { FC, useContext, useEffect, useState } from 'react';
-import {
-  Navigate,
-  useLocation,
-  useNavigate,
-  useParams,
-} from 'react-router-dom';
+import { Navigate, useLocation, useParams } from 'react-router-dom';
+import { userDataContext } from '../../../contexts';
 import Stepper from '../../design-template/stepper/Stepper';
 import {
   QuestionDB,
   formDataContext,
   questionsContext,
 } from '../local-contexts';
-import { ConfirmacionRetro, BackMyRetros } from '../modals';
+import { BackMyRetros, ConfirmacionRetro } from '../modals';
 import FormStep from './FormStep';
-import axios from 'axios';
-import { userDataContext } from '../../../contexts';
-import { nanoid } from 'nanoid';
 
 const URI = 'http://localhost:8000/respuesta/new';
 const URI_COMPLETE = 'http://localhost:8000/respuesta/update';
@@ -37,11 +31,10 @@ export interface Respuestas {
 const Cuestionario: FC<CuestionarioProps> = ({}) => {
   const { user } = useContext(userDataContext);
   const [formPage, setFormPage] = useState(1);
-  const { formData } = useContext(formDataContext);
+  const { formData, setFormData } = useContext(formDataContext);
   const [isModalBackOpen, setIsModalBackOpen] = useState(false);
   const [isModalNextOpen, setIsModalNextOpen] = useState(false);
   const [id_sesionRespuesta, setId_sesionRespuesta] = useState('');
-  const navigate = useNavigate();
   const { retroId } = useParams();
 
   const location = useLocation();
@@ -81,7 +74,6 @@ const Cuestionario: FC<CuestionarioProps> = ({}) => {
       await axios.post(
         `${URI_COMPLETE}/${retroId}/${user?.id_usuario}`
       );
-      console.log('sdasd');
     } catch (error) {
       console.log(error);
     }
@@ -89,22 +81,24 @@ const Cuestionario: FC<CuestionarioProps> = ({}) => {
 
   const handleSubmitWAnon = () => {
     const answers: Array<Respuestas> = [];
-    questions.map((question: QuestionDB) => {
-      if (formData[question.id]) {
-        answers.push({
-          respuesta: formData[question.id],
-          anonimo: anonymousQuestions.includes(question.id)
-            ? true
-            : false,
-          id_usuario: anonymousQuestions.includes(question.id)
-            ? null
-            : user?.id_usuario,
-          id_retrospectiva: parseInt(retroId!),
-          id_pregunta: question.id,
-          id_sesionRespuesta: id_sesionRespuesta,
-        });
-      }
-    });
+    if (formData !== null) {
+      questions.map((question: QuestionDB) => {
+        if (formData[question.id]) {
+          answers.push({
+            respuesta: formData[question.id] as string,
+            anonimo: anonymousQuestions.includes(question.id)
+              ? true
+              : false,
+            id_usuario: anonymousQuestions.includes(question.id)
+              ? null
+              : (user?.id_usuario as number),
+            id_retrospectiva: parseInt(retroId!),
+            id_pregunta: question.id,
+            id_sesionRespuesta: id_sesionRespuesta,
+          });
+        }
+      });
+    }
 
     if (answers.length !== 0) {
       answers.map(async (answer) => {
@@ -128,7 +122,7 @@ const Cuestionario: FC<CuestionarioProps> = ({}) => {
     );
   return (
     <>
-      <div className="flex flex-col items-center justify-center bg-white w-full h-full py-12 px-6 rounded border border-solid border-gray-300">
+      <div className="flex flex-col items-center justify-center bg-white w-full h-full py-12 px-6 rounded shadow-sm">
         <div className="w-full">
           <div>
             {isModalBackOpen && (

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import Select, { StylesConfig } from 'react-select';
 import axios from 'axios';
+import { useEffect, useState } from 'react';
+import Select, { StylesConfig } from 'react-select';
 
 const URI = 'http://localhost:8000/etiquetas';
 
@@ -47,8 +47,6 @@ const DropdownEtiquetas = ({
         color: etiqueta.color,
       }));
 
-      // if options has etiquetasPreseleccionadas, remove them from options
-
       const newOptions = options.filter((option: any) => {
         for (let i = 0; i < etiquetasSeleccionadas.length; i++) {
           if (etiquetasSeleccionadas[i].value === option.value) {
@@ -80,7 +78,9 @@ const DropdownEtiquetas = ({
     setEtiquetasSeleccionadas(selected);
   };
 
-  getOptionsEtiquetas();
+  useEffect(() => {
+    getOptionsEtiquetas();
+  }, []);
 
   const colorStyles = {
     control: (styles: any, state: any) => ({

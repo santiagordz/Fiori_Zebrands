@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import axios from 'axios';
 import { token } from '@atlaskit/tokens';
 import { N500, Y300 } from '@atlaskit/theme/colors';
@@ -7,16 +7,11 @@ import ModalEditarUsuarios from '../modals/ModalEditarUsuarios';
 
 const URI = 'http://localhost:8000/usuarios/';
 
-interface InfoUsuario {
+interface EditarIconProps {
   id: number;
-  nombre: string;
-  apellido: string;
-  correo: string;
-  roles: string[];
-  etiquetas: string[];
 }
 
-const EditarIcon = ({ id }: any) => {
+const EditarIcon: FC<EditarIconProps> = ({ id }) => {
   const [color, setColor] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
 

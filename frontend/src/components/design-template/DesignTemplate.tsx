@@ -26,19 +26,19 @@ const DesignTemplate: FC<DesignTemplateProps> = ({
     <>
       <div className="flex flex-col items-center gap-7 w-auto mx-[6vw] my-[6vh] lg:ml-[9vw] lg:mr-[3vw]">
         <Sidebar />
-        <p className="font-medium text-xl w-full h-fit text-left text-paragraph">
+        <p className="font-medium text-[1.09rem] w-full h-fit text-left text-paragraph">
           Hola, {name}
         </p>
         <div className="flex justify-between items-center w-full mt-3">
           <div className="flex items-center gap-4">
-            <div className="bg-selectBold flex p-2 rounded-xl w-fit">
+            <div className="bg-selectBold flex p-2 rounded-xl w-fit scale-[0.85]">
               <MainIcon
                 label={`${pathInfo[path].view.toLowerCase()}`}
                 primaryColor="white"
                 secondaryColor="#0C66E4"
               />
             </div>
-            <h1 className="font-semibold text-2xl text-accentBolder">
+            <h1 className="font-semibold text-[1.18rem] text-accentBolder">
               {pathInfo[path].view}
             </h1>
           </div>

@@ -1,9 +1,10 @@
 import axios from 'axios';
-import { FC, useState } from 'react';
+import { FC, FormEvent, useState } from 'react';
 import '../css/ModalRegistrarUsuarios.css';
 import CrossIcon from '@atlaskit/icon/glyph/cross';
 import DropdownEtiquetas from '../DropdownEtiquetas';
 import DropdowRoles from '../DropdownRoles';
+import { Etiqueta } from '../UsersTable';
 
 const URI = 'http://localhost:8000/usuarios/createUser';
 
@@ -18,17 +19,17 @@ const ModalRegistrarUsuarios: FC<RegistrarUsuariosProps> = ({
 }) => {
   const [correo, setCorreo] = useState('');
   const [rol, setRol] = useState('');
-  const [etiquetas, setEtiquetas] = useState<string[]>([]);
+  const [etiquetas, setEtiquetas] = useState<Etiqueta[]>([]);
 
   const handleRolSeleccionado = (rol: string) => {
     setRol(rol);
   };
 
-  const handleEtiquetasSeleccionadas = (etiquetas: any) => {
+  const handleEtiquetasSeleccionadas = (etiquetas: Etiqueta[]) => {
     setEtiquetas(etiquetas);
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
       await axios.post(URI, {

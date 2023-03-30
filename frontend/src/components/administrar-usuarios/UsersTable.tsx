@@ -3,7 +3,7 @@ import DynamicTable from '@atlaskit/dynamic-table';
 import type { RowType } from '@atlaskit/dynamic-table/dist/types/types';
 import type { TagColor } from '@atlaskit/tag';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import RolIcon from './RolIcon';
 import TableHead from './UsersTableHead';
 import {
@@ -12,6 +12,7 @@ import {
   EtiquetaIcon,
   ResponsableIcon,
 } from './icons';
+import { userDataContext } from '../../contexts';
 
 const URI = 'http://localhost:8000/usuarios/info';
 
@@ -19,6 +20,7 @@ export interface Etiqueta {
   id: number;
   nombre: string;
   color: TagColor;
+  id_color: number;
 }
 
 interface Usuario {
@@ -32,6 +34,7 @@ interface Usuario {
 }
 
 const UsersTable = () => {
+  const { user } = useContext(userDataContext);
   const [userRow, setUserRow] = useState<Array<Usuario>>([]);
   const tableRows: RowType[] = [];
 
@@ -55,24 +58,25 @@ const UsersTable = () => {
         {
           key: usuario.nombre,
           content: (
-            <span className="flex items-center gap-5 ml-5 w-full">
-              <Avatar src={usuario.foto} />
+            <span className="flex items-center gap-2 ml-5 w-full">
+              <Avatar src={usuario.foto} size="small" />
               <div className="w-full">
-                <p>{usuario.nombre || 'Nuevo usuario'}</p>
+                <p>
+                  {usuario.nombre || 'Nuevo usuario'}{' '}
+                  {user?.id_usuario === usuario.id ? '(Tú)' : ''}
+                </p>
               </div>
             </span>
           ),
         },
         {
           key: usuario.correo,
-          content: (
-            <div className="text-center">{usuario.correo}</div>
-          ),
+          content: <div className="text-left">{usuario.correo}</div>,
         },
         {
           key: usuario.rol,
           content: (
-            <div className="text-center">
+            <div className="text-left">
               <RolIcon rol={usuario.rol} />
             </div>
           ),
@@ -80,7 +84,7 @@ const UsersTable = () => {
         {
           key: i,
           content: (
-            <div>
+            <div className="flex justify-start">
               <EtiquetaIcon etiquetas={usuario.etiquetas} />
             </div>
           ),
@@ -117,14 +121,14 @@ const UsersTable = () => {
   );
 
   return (
-    <div className="bg-white rounded-sm w-full px-12 py-6">
+    <div className="bg-white rounded-sm w-full px-12 py-6 text-sm">
       <DynamicTable
         head={TableHead}
         rows={tableRows}
         emptyView={
           <div className="text-3xl">No hay usuarios para mostrar</div>
         }
-        rowsPerPage={10}
+        rowsPerPage={20}
       />
     </div>
   );

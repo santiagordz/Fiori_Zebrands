@@ -1,8 +1,9 @@
 import CrossIcon from '@atlaskit/icon/glyph/cross';
 import axios from 'axios';
-import { FC, useState } from 'react';
+import { FC, FormEvent, useState } from 'react';
 import DropdownColores from '../DropdownColores';
 import '../css/ModalRegistrarUsuarios.css';
+import type { TagColor } from '@atlaskit/tag';
 
 const URI = 'http://localhost:8000/etiquetas/';
 
@@ -23,13 +24,13 @@ const ModalRegistrarEtiqueta: FC<RegistrarEtiquetaProps> = ({
   onClose,
 }) => {
   const [nombre, setNombre] = useState('');
-  const [color, setColor] = useState('');
+  const [color, setColor] = useState<TagColor>('standard');
 
-  const handleColorSeleccionado = (color: string) => {
+  const handleColorSeleccionado = (color: TagColor) => {
     setColor(color);
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     const res = axios.post(URI, { etiqueta: nombre, color: color });
     res.then((response) => {
@@ -40,7 +41,7 @@ const ModalRegistrarEtiqueta: FC<RegistrarEtiquetaProps> = ({
 
   const handleClose = () => {
     setNombre('');
-    setColor('');
+    setColor('standard');
     onClose();
   };
 
@@ -99,7 +100,6 @@ const ModalRegistrarEtiqueta: FC<RegistrarEtiquetaProps> = ({
                     Color
                   </label>
                   <DropdownColores
-                    colorActual=""
                     onColorSeleccionadoChange={
                       handleColorSeleccionado
                     }

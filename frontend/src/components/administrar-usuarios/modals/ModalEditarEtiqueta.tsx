@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { FC, useEffect, useState } from 'react';
+import { FC, FormEvent, useEffect, useState } from 'react';
 import DropdownColores from '../DropdownColores';
 import '../css/ModalEditarUsuarios.css';
 import CrossIcon from '@atlaskit/icon/glyph/cross';
-import Tag from '@atlaskit/tag';
+import Tag, { type TagColor } from '@atlaskit/tag';
 
 const URI = 'http://localhost:8000/etiquetas/';
 
@@ -11,12 +11,12 @@ interface Etiqueta {
   id: number;
   nombre: string;
   id_color: number;
-  color: any;
+  color: TagColor;
 }
 
 interface Color {
   id: number;
-  color: string;
+  color: TagColor;
 }
 
 interface ModalEditarEtiquetaProps {
@@ -31,21 +31,20 @@ const ModalEditarEtiqueta: FC<ModalEditarEtiquetaProps> = ({
   info,
 }) => {
   const [nombre, setNombre] = useState('');
-  const [color, setColor] = useState<any>('');
+  const [color, setColor] = useState<TagColor>('standard');
   const [etiqueta, setEtiqueta] = useState<Etiqueta>({} as Etiqueta);
 
   const handleClose = () => {
     onClose();
   };
 
-  const handleColorSeleccionado = (color: string) => {
+  const handleColorSeleccionado = (color: TagColor) => {
     setColor(color);
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: FormEvent) => {
     try {
       const id = info.id;
-      console.log(id, nombre, color);
       axios
         .put(`${URI}${id}`, { etiqueta: nombre, color: color })
         .then(() => window.location.reload());
@@ -66,6 +65,11 @@ const ModalEditarEtiqueta: FC<ModalEditarEtiquetaProps> = ({
 
   useEffect(() => {
     getEtiqueta(info.id);
+    show && document.body.classList.add('modal-open');
+
+    return () => {
+      show && document.body.classList.remove('modal-open');
+    };
   }, [show]);
 
   if (!show) {
@@ -153,7 +157,7 @@ const ModalEditarEtiqueta: FC<ModalEditarEtiquetaProps> = ({
                   form="EditarEtiquetaForm"
                   className="rounded-sm bg-jiraBlue text-white px-2 py-1 hover:bg-blue-500"
                 >
-                  <p className="text-sm">Aceptar Cambios</p>
+                  <p className="text-sm">Aceptar cambios</p>
                 </button>
               </div>
             </div>

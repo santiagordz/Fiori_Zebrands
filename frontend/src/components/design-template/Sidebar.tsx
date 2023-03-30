@@ -16,7 +16,7 @@ const buttonActiveStyles =
   'bg-[#E9F2FF] px-[2vmin] py-[0.8vmin] flex justify-start w-full items-center rounded-md gap-5';
 const buttonStyles =
   'px-[2vmin] py-[0.8vmin] flex justify-start w-full items-center rounded-md gap-5 hover:bg-[#E9F2FF]';
-const textStyle = 'link font-bold text-[0.85rem]';
+const textStyle = 'link font-medium text-[0.85rem]';
 const textNotActiveStyles = `${textStyle} text-paragraph`;
 const textActiveStyles = `${textStyle} text-selectBold`;
 
@@ -75,7 +75,7 @@ const Sidebar = ({}) => {
         <div className="flex flex-col justify-between h-full">
           <div className="flex items-center justify-center gap-3 border-gray-100 border-solid border-2 bg-white rounded-full py-[0.2vmin] w-full">
             <Avatar
-              src={user?.foto || null}
+              src={(user?.foto as string) || undefined}
               appearance="circle"
               name={name}
             />
@@ -86,7 +86,7 @@ const Sidebar = ({}) => {
               {name && name.length > 22
                 ? `${name.slice(0, 22)}...`
                 : name}
-              {!name && user?.name === undefined && 'Usuario'}
+              {!name && user?.nombre === undefined && 'Usuario'}
             </motion.p>
           </div>
 

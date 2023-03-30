@@ -10,9 +10,18 @@ const SECRET_KEY_2 =
 
 const URI_LOGIN = 'http://localhost:8000/user';
 
+export interface UserType {
+  correo: string;
+  foto: string;
+  id_jira: string | number | null;
+  id_rol: number;
+  id_usuario: number;
+  nombre: string;
+}
+
 interface ContextProps {
-  user: { [key: string]: any } | null;
-  setUser: (data: any) => void;
+  user: UserType | null;
+  setUser: (data: UserType | null) => void;
   hasAttemptedFetch: boolean;
   setHasAttemptedFetch: (attempted: boolean) => void;
   getUser: () => void;
@@ -20,7 +29,7 @@ interface ContextProps {
 
 export const userDataContext = createContext<ContextProps>({
   user: null,
-  setUser: (data: any) => {},
+  setUser: (data: UserType | null) => {},
   hasAttemptedFetch: false,
   setHasAttemptedFetch: (attempted: boolean) => {},
   getUser: () => {},
@@ -31,7 +40,7 @@ interface UserContextProps {
 }
 
 const UserContext: FC<UserContextProps> = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<UserType | null>(null!);
   const [hasAttemptedFetch, setHasAttemptedFetch] = useState(false);
 
   // Enfoque de cifrado en cascada, en el que los datos se cifran con varias claves de cifrado en secuencia.

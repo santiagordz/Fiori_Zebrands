@@ -99,6 +99,7 @@ const Recordatorios: FC<RecordatoriosProps> = ({
                   (retro) =>
                     Number(retroId) !== retro.id && (
                       <BannerRetro
+                        key={retro.id}
                         titulo={retro.titulo}
                         fechaInicio={retro.fecha_inicio}
                         idRetrospectiva={retro.id}
@@ -109,7 +110,7 @@ const Recordatorios: FC<RecordatoriosProps> = ({
               </div>
             </div>
           </div>
-          <ButtonGroup>
+          <div className="flex justify-between">
             <Link to="/mis-retrospectivas">
               <Button
                 appearance="subtle-link"
@@ -132,7 +133,7 @@ const Recordatorios: FC<RecordatoriosProps> = ({
             >
               Continuar con la retrospectiva
             </Button>
-          </ButtonGroup>
+          </div>
         </div>
       </div>
     </Blanket>

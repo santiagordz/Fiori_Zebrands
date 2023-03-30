@@ -22,8 +22,10 @@ const DropdowRoles = ({
   const [roles, setRoles] = useState<Rol[]>([]);
   const [rol, setRol] = useState<string>(rolActual || '');
 
-  function hanldeRolChange(e: any) {
-    const rolSeleccionado = e.target.value;
+  function hanldeRolChange(e: React.FormEvent<HTMLSelectElement>) {
+    const target = e.target as HTMLSelectElement;
+    const value = target.value;
+    const rolSeleccionado = value;
     setRol(rolSeleccionado);
     onRolSeleccionadoChange(rolSeleccionado);
   }

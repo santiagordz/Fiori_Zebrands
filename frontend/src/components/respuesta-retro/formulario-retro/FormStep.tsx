@@ -3,11 +3,11 @@ import ArrowRightIcon from '@atlaskit/icon/glyph/arrow-right';
 import ArrowLeftIcon from '@atlaskit/icon/glyph/arrow-left';
 import { FC, useContext, useEffect, useState } from 'react';
 import {
-  QuestionDB,
+  type QuestionDB,
+  type formDataType,
   formDataContext,
   questionsContext,
 } from '../local-contexts';
-
 import { AnonymousToggle, TiposPregunta } from './form-steps';
 import { nanoid } from 'nanoid';
 
@@ -43,14 +43,24 @@ const FormStep: FC<FormStepProps> = ({
   const question: QuestionDB = questions[numPregunta - 1];
 
   const handleOnchange = (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.FormEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
     const key: number = question.id;
-    setFormData((prevFormData: any) => {
-      return {
-        ...prevFormData,
-        [key]: event.target.value,
-      };
+    const target = event.target as
+      | HTMLInputElement
+      | HTMLTextAreaElement;
+    const value = target.value;
+    setFormData({
+      ...formData,
+      [key]: value,
+    });
+  };
+
+  const handleRangeChange = (value: number) => {
+    const key: number = question.id;
+    setFormData({
+      ...formData,
+      [key]: value,
     });
   };
 
@@ -76,6 +86,7 @@ const FormStep: FC<FormStepProps> = ({
     if (
       isAnonymous &&
       anonymousQuestions.includes(question.id) &&
+      formData !== null &&
       !formData[question.id]
     ) {
       setAnonymousQuestions((prev) =>
@@ -96,7 +107,7 @@ const FormStep: FC<FormStepProps> = ({
     <Button
       appearance="primary"
       isDisabled={isError}
-      iconBefore={<ArrowRightIcon label="pregunta siguiente" />}
+      iconAfter={<ArrowRightIcon label="pregunta siguiente" />}
       label="Siguiente pregunta"
       onClick={() => setFormPage((prev: number) => prev + 1)}
     >
@@ -115,7 +126,7 @@ const FormStep: FC<FormStepProps> = ({
           <p className="uppercase text-selectBold text-xs font-bold">
             Pregunta {numPregunta}/{totalPreguntas}
           </p>
-          <h2 className="text-[#5E4DB2] text-2xl font-bold">
+          <h2 className="text-[#5E4DB2] text-xl font-bold">
             {question.pregunta}
           </h2>
         </div>
@@ -127,6 +138,7 @@ const FormStep: FC<FormStepProps> = ({
             onChange={handleOnchange}
             setIsError={setIsError}
             isError={isError}
+            handleRangeOnchange={handleRangeChange}
           />
         </div>
         <div className="flex items-center justify-end w-full">
@@ -134,7 +146,7 @@ const FormStep: FC<FormStepProps> = ({
             Enviar como respuesta anónima
           </p>
           <AnonymousToggle
-            isDisabled={!formData[question.id]}
+            isDisabled={formData !== null && !formData[question.id]}
             isChecked={isAnonymous}
             onChange={handleAnonToggle}
           />

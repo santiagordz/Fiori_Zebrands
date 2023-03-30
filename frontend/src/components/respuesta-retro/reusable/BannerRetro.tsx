@@ -21,7 +21,7 @@ const BannerRetro: FC<BannerRetroProps> = ({
   tags,
 }) => {
   return (
-    <div className="flex flex-col py-3 px-5 w-full rounded bg-white border border-solid border-gray-300 border-collapse justify-center">
+    <div className="flex flex-col py-3 px-5 w-full rounded bg-white shadow-sm border-collapse justify-center">
       <div className="flex justify-between items-center">
         <div className="flex gap-3 items-center w-full">
           <FlagFilledIcon

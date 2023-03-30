@@ -57,9 +57,15 @@ const RetrospectivaGeneral: FC<RetrospectivaGeneralProps> = ({
       }`}
       onClick={handleOnClick}
     >
-      <div className="flex flex-col py-3 px-5 w-full rounded bg-white border border-solid border-gray-300">
+      <div
+        className={`flex flex-col py-3 px-5 w-full gap-1 rounded bg-white ${
+          !isInResponder
+            ? 'hover:bg-[#fafbfc] border border-solid border-gray-30'
+            : 'shadow-sm'
+        }`}
+      >
         <div className="flex w-full justify-between ">
-          <div className="gap-2 flex flex-row">
+          <div className="gap-2 flex flex-row items-center">
             {completada ? (
               <CheckIcon
                 label="retrospectiva-completada"
@@ -76,7 +82,7 @@ const RetrospectivaGeneral: FC<RetrospectivaGeneralProps> = ({
                 primaryColor="#709ddb"
               />
             )}
-            <h3 className="font-bold">{titulo}</h3>
+            <h3 className="font-bold text-sm">{titulo}</h3>
           </div>
           <div className="flex flex-row">
             {tags &&
@@ -97,10 +103,10 @@ const RetrospectivaGeneral: FC<RetrospectivaGeneralProps> = ({
               )}
           </div>
         </div>
-        <div className="flex py-5 text-sm">
+        <div className="flex text-[0.8rem]">
           <p>{descripcion}</p>
         </div>
-        <div className="flex flex-row text-xs justify-between">
+        <div className="flex flex-row text-[0.7rem] justify-between mt-3">
           <p>Fecha de inicio: {fechaInicio}</p>
           {!isInResponder && (
             <ChevronRightLargeIcon
