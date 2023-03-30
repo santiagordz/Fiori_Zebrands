@@ -89,25 +89,34 @@ const Recordatorios: FC<RecordatoriosProps> = ({
               <h4 className="flex font-bold text-sm">
                 Retrospectivas
               </h4>
-              <p className="text-xs max-w-xl mb-3">
-                Te recordamos que tienes las siguientes retrospectivas
-                pendientes de contestar, te recomendamos atender las
-                más antiguas primero.
-              </p>
-              <div className="flex flex-col gap-3 w-full">
-                {retroPendientes.map(
-                  (retro) =>
-                    Number(retroId) !== retro.id && (
-                      <BannerRetro
-                        key={retro.id}
-                        titulo={retro.titulo}
-                        fechaInicio={retro.fecha_inicio}
-                        idRetrospectiva={retro.id}
-                        tags={retro.tags}
-                      />
-                    )
-                )}
-              </div>
+              {retroPendientes.length - 1 > 0 ? (
+                <>
+                  <p className="text-xs max-w-xl mb-3">
+                    Te recordamos que tienes las siguientes
+                    retrospectivas pendientes de contestar, te
+                    recomendamos atender las más antiguas primero.
+                  </p>
+                  <div className="flex flex-col gap-3 w-full">
+                    {retroPendientes.map(
+                      (retro) =>
+                        Number(retroId) !== retro.id && (
+                          <BannerRetro
+                            key={retro.id}
+                            titulo={retro.titulo}
+                            fechaInicio={retro.fecha_inicio}
+                            idRetrospectiva={retro.id}
+                            tags={retro.tags}
+                          />
+                        )
+                    )}
+                  </div>
+                </>
+              ) : (
+                <p className="text-xs max-w-xl mb-3">
+                  ¡Muy bien! No tienes ninguna retrospectiva pendiente
+                  de contestar.
+                </p>
+              )}
             </div>
           </div>
           <div className="flex justify-between">
