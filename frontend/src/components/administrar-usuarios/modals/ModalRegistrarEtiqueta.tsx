@@ -89,6 +89,8 @@ const ModalRegistrarEtiqueta: FC<RegistrarEtiquetaProps> = ({
                     autoComplete="off"
                     id="nombre"
                     type="text"
+                    pattern="^[a-zA-Z0-9!@#$%^&*()_+]{1,15}$"
+                    title="El nombre de la etiqueta debe tener entre 1 y 15 caracteres alfanuméricos"
                     onChange={(e) => setNombre(e.target.value)}
                   />
                 </div>
