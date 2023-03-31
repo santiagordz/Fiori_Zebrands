@@ -45,8 +45,10 @@ app.use((err, req, res, next) => {
 const rolesRoutes = require('./routes/roles.routes');
 const etiquetasRoutes = require('./routes/etiquetas.routes');
 const coloresRoutes = require('./routes/colores.routes');
+const usuariosJiraRoutes = require('./routes/usuarios_jira.routes');
 
 app.use('/usuarios', usuariosRoutes);
+app.use('/usuarios_jira', usuariosJiraRoutes);
 app.use('/roles', rolesRoutes);
 app.use('/etiquetas', etiquetasRoutes);
 app.use('/colores', coloresRoutes);
