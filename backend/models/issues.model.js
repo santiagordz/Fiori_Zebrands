@@ -2,19 +2,19 @@ const db = require('../database/db');
 require('dotenv').config();
 const axios = require('axios');
 const auth = {
-  username: process.env.JIRA_USERNAME,
-  password: process.env.JIRA_PASSWORD,
+  username: process.env.JIRA_USERNAME_ZEB,
+  password: process.env.JIRA_PASSWORD_ZEB,
 };
 
 module.exports = class Issue {
   static fetchIssuesJira = async () => {
     const response = await axios.get(
-      `https://fioritec.atlassian.net/rest/api/3/search?jql=project=ZEB AND issuetype=Task AND status=Open`,
+      `https://zebrands.atlassian.net/rest/api/3/search?jql=Sprint%20%3D%20%22[ZeCommerce Tech] Sprint 5%22%20ORDER%20BY%20createdDate%20DESC`,
       {
         auth: auth,
       }
     );
 
-    return response.data;
+    console.log(response.data.issues)
   };
 };
