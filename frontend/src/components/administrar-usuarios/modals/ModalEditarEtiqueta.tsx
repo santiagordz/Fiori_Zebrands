@@ -145,7 +145,7 @@ const ModalEditarEtiqueta: FC<ModalEditarEtiquetaProps> = ({
                 </div>
               </form>
             </div>
-            <div className="w-full flex items-center justify-end justify-center">
+            <div className="w-full flex items-center justify-center">
               <div className="flex gap-10 mt-8">
                 <button
                   className="rounded-none hover:text-blue-500 text-sm"
