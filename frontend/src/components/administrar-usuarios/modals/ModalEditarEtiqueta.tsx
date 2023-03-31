@@ -124,8 +124,8 @@ const ModalEditarEtiqueta: FC<ModalEditarEtiquetaProps> = ({
                       id="nombre"
                       type="text"
                       defaultValue={etiqueta.nombre}
-                      pattern="^[a-zA-Z0-9!@#$%^&*()_+]{1,15}$"
-                      title = "El nombre de la etiqueta debe tener entre 1 y 15 caracteres alfanuméricos"
+                      pattern="^[a-zA-Z0-9!@#$%^&*()_+\-]{1,15}$"
+                      title="El nombre de la etiqueta debe tener entre 1 y 15 caracteres alfanuméricos"
                       onChange={(e) => setNombre(e.target.value)}
                     />
                   </div>
