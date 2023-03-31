@@ -1,4 +1,6 @@
 import React, { FC } from 'react';
+import axios from 'axios';
+import { useEffect } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import {
   AdministradorUsuarios,
@@ -9,6 +11,10 @@ import DesignTemplate from '../../components/design-template/DesignTemplate';
 interface AdministrarUsuariosProps {}
 
 const AdministrarUsuarios: FC<AdministrarUsuariosProps> = ({}) => {
+  useEffect(() => {
+    axios.get('http://localhost:8000/usuarios_jira/fetch');
+  }, []);
+
   return (
     <>
       <Routes>

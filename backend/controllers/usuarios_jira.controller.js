@@ -14,17 +14,11 @@ exports.getJiraUsers = async (req, res, next) => {
 };
 
 exports.postJiraUsers = async (req, res, next) => {
-  try {
-    const usuarios = await usuarios_jiraModel.fetchJiraUsers();
-    const usuariosJiraDb = usuarios_jiraModel.getJiraUsers();
-    usuariosJiraDb.then(([rows, fieldData]) => {
-      console.log(usuarios);
-      console.log(rows.shift());
-    });
-  } catch (error) {
-    console.error(error);
-    res
-      .status(500)
-      .json({ message: 'Error al obtener los usuarios.' });
+  const usuarios = await usuarios_jiraModel.fetchJiraUsers();
+  for (let usuario of usuarios) {
+    await usuarios_jiraModel.postJiraUser(
+      usuario.accountId,
+      usuario.displayName
+    );
   }
 };

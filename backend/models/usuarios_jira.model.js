@@ -41,7 +41,7 @@ module.exports = class Usuarios_Jira {
 
   static postJiraUser = async (id_jira, nombre_jira) => {
     return db.execute(
-      `INSERT INTO usuarios_jira (id, nombre) VALUES (?, ?)`,
+      `INSERT IGNORE INTO usuarios_jira (id_jira, nombre_jira) VALUES (?, ?)`,
       [id_jira, nombre_jira]
     );
   };
