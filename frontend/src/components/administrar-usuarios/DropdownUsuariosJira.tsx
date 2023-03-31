@@ -19,10 +19,14 @@ const DropdownUsuariosJira: FC<DropdownUsuariosJiraProps> = ({
   const [usuario, setUsuario] = useState('');
 
   const getUsuariosJira = () => {
-    const res = axios.get(URI);
-    res.then((res) => {
-      setUsuarios(res.data);
-    });
+    try {
+      const res = axios.get(URI);
+      res.then((res) => {
+        setUsuarios(res.data);
+      });
+    } catch {
+      console.log('Error al obtener los usuarios');
+    }
   };
 
   const handleUsuarioChange = (
