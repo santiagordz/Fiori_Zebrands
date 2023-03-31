@@ -26,4 +26,4 @@ dist-ssr
 
 # Archivos
 .env
-db.js
+backend/database/db.js
