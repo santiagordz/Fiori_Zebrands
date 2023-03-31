@@ -78,6 +78,7 @@ $ git clone https://github.com/SJBauer0/Fiori_Zebrands
 
 # Access
 $ cd frontend
+$ cd backend
 
 # Install dependencies
 $ yarn
