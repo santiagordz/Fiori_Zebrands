@@ -27,7 +27,7 @@ const ReponderRetroInfo: FC<ReponderRetroInfoProps> = ({
   const { retroId } = useParams();
 
   const getQuestions = async () => {
-    const response = await axios
+    await axios
       .get(`${URI}/questions/${retroId}`)
       .then((res) => {
         setQuestions(res.data);
@@ -37,6 +37,17 @@ const ReponderRetroInfo: FC<ReponderRetroInfoProps> = ({
         console.log(err);
       });
   };
+
+  useEffect(() => {
+    if (
+      !retroPendientes.some((retro) => retro.id === Number(retroId))
+    ) {
+      navigate('/404', { replace: true });
+    }
+    if (retroId === '-1') {
+      navigate('/mis-retrospectivas', { replace: true });
+    }
+  }, []);
 
   useEffect(() => {
     if (isOpen && questions.length !== 0) {
@@ -49,8 +60,6 @@ const ReponderRetroInfo: FC<ReponderRetroInfoProps> = ({
       document.body.classList.remove('modal-open');
     };
   }, [isOpen]);
-
-  if (retroId === '-1') return <Navigate to="/mis-retrospectivas" />;
 
   return (
     <>

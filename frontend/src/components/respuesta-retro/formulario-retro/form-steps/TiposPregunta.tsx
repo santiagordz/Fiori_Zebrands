@@ -186,6 +186,7 @@ const TiposPregunta: FC<TiposPreguntaProps> = ({
                     {rangeNumbers.map((number) => {
                       return (
                         <p
+                          key={number}
                           className={
                             range === number
                               ? 'text-jiraBlue text-sm'

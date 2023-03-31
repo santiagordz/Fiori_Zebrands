@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { FC, useContext, useEffect, useState } from 'react';
+import { FC, useContext, useEffect, useState, memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import GoogleLogo from '../../assets/Google__G__Logo.svg';
 import Geometry from '../../assets/geometry.png';
@@ -48,10 +48,9 @@ const Login: FC<LoginProps> = ({}) => {
     const handleAuthMessage = (event: MessageEvent) => {
       if (event.data.error === 'User not registered') {
         navigate('/usernotregistered');
-      } else if (event.data.error) {
+      }
+      if (event.data.error) {
         setError(true);
-      } else {
-        getUser();
       }
     };
 
@@ -62,9 +61,11 @@ const Login: FC<LoginProps> = ({}) => {
     };
   }, []);
 
-  if (user) {
-    navigate('/dashboard');
-  }
+  useEffect(() => {
+    if (user) {
+      navigate('/dashboard', { replace: true });
+    }
+  }, [user]);
 
   return (
     <motion.div
@@ -127,4 +128,4 @@ const Login: FC<LoginProps> = ({}) => {
   );
 };
 
-export default Login;
+export default memo(Login);

@@ -40,7 +40,7 @@ const NotFound404: FC<NotFound404Props> = ({}) => {
             <Button
               onClick={() => {
                 if (user) {
-                  navigate(-1);
+                  navigate('/dashboard');
                 } else {
                   navigate('/login');
                 }

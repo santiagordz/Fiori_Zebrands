@@ -136,7 +136,8 @@ const Recordatorios: FC<RecordatoriosProps> = ({
               onClick={() => {
                 closeModal();
                 navigate(
-                  `/mis-retrospectivas/responder/${retroId}/preguntas/`
+                  `/mis-retrospectivas/responder/${retroId}/preguntas/`,
+                  { replace: true }
                 );
               }}
             >

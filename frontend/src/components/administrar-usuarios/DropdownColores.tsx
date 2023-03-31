@@ -42,7 +42,6 @@ const DropdownColores: FC<DropdownColoresProps> = ({
 
   useEffect(() => {
     getColores();
-    console.log(color);
   }, []);
 
   return (

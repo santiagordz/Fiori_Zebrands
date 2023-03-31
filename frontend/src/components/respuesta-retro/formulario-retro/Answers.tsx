@@ -38,8 +38,6 @@ const Answers: FC<AnswersProps> = ({
         `${URI}/${id_sesionRespuesta}`
       );
 
-      console.log(data);
-
       data.map((answer: Respuestas) => {
         setAnswers((prevData) => {
           return {
@@ -63,7 +61,7 @@ const Answers: FC<AnswersProps> = ({
     setQuestions([]);
     setAnswers({});
     window.location.reload();
-    navigate('/mis-retrospectivas');
+    navigate('/mis-retrospectivas', { replace: true });
   };
 
   if (questions.length === 0) {
@@ -118,19 +116,17 @@ const Answers: FC<AnswersProps> = ({
                     title={question.pregunta}
                     description={
                       <div className="mt-3 text-sm">
-                        <p>
-                          {answers[question.id]?.respuesta ? (
-                            <p className="text-white">
-                              {'Tu respuesta: ' +
-                                answers[question.id]?.respuesta}
-                            </p>
-                          ) : (
-                            <p className="text-gray-400">
-                              No registraste una respuesta para esta
-                              pregunta
-                            </p>
-                          )}
-                        </p>
+                        {answers[question.id]?.respuesta ? (
+                          <p className="text-white">
+                            {'Tu respuesta: ' +
+                              answers[question.id]?.respuesta}
+                          </p>
+                        ) : (
+                          <p className="text-gray-400">
+                            No registraste una respuesta para esta
+                            pregunta
+                          </p>
+                        )}
                         {answers[question.id]?.anonimo ? (
                           <div className="flex gap-2 opacity-60 mt-5 text-xs items-center">
                             <img

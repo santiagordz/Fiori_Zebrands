@@ -35,6 +35,34 @@ export const userDataContext = createContext<ContextProps>({
   getUser: () => {},
 });
 
+// Enfoque de cifrado en cascada, en el que los datos se cifran con varias claves de cifrado en secuencia.
+const encryptData = (
+  data: string,
+  key1: string,
+  key2: string
+): string => {
+  const encryptedData1 = CryptoJS.AES.encrypt(data, key1).toString();
+  const encryptedData2 = CryptoJS.AES.encrypt(
+    encryptedData1,
+    key2
+  ).toString();
+  return encryptedData2;
+};
+
+const decryptData = (
+  encryptedData: string,
+  key1: string,
+  key2: string
+) => {
+  const decryptedBytes1 = CryptoJS.AES.decrypt(encryptedData, key2);
+  const decryptedData1 = decryptedBytes1.toString(CryptoJS.enc.Utf8);
+  const decryptedBytes2 = CryptoJS.AES.decrypt(decryptedData1, key1);
+  const decryptedData2 = JSON.parse(
+    decryptedBytes2.toString(CryptoJS.enc.Utf8)
+  );
+  return decryptedData2;
+};
+
 interface UserContextProps {
   children: React.ReactNode;
 }
@@ -43,21 +71,13 @@ const UserContext: FC<UserContextProps> = ({ children }) => {
   const [user, setUser] = useState<UserType | null>(null!);
   const [hasAttemptedFetch, setHasAttemptedFetch] = useState(false);
 
-  // Enfoque de cifrado en cascada, en el que los datos se cifran con varias claves de cifrado en secuencia.
-  const encryptData = (
-    data: string,
-    key1: string,
-    key2: string
-  ): string => {
-    const encryptedData1 = CryptoJS.AES.encrypt(
-      data,
-      key1
-    ).toString();
-    const encryptedData2 = CryptoJS.AES.encrypt(
-      encryptedData1,
-      key2
-    ).toString();
-    return encryptedData2;
+  const setEncryptedUserCookie = (userData: UserType) => {
+    const encryptedData = encryptData(
+      JSON.stringify(userData),
+      SECRET_KEY_1,
+      SECRET_KEY_2
+    );
+    Cookies.set('user', encryptedData);
   };
 
   const getUser = async () => {
@@ -71,53 +91,35 @@ const UserContext: FC<UserContextProps> = ({ children }) => {
           Cookies.remove('user');
         }
         setUser(response.data);
-
-        const encryptedData = encryptData(
-          JSON.stringify(response.data),
-          SECRET_KEY_1,
-          SECRET_KEY_2
-        );
-        Cookies.set('user', encryptedData);
+        setEncryptedUserCookie(response.data);
       }
     } catch (err) {
-      // console.log('No se autenticó correctamente', err);
+      if (hasAttemptedFetch)
+        console.log('No se autenticó correctamente');
     } finally {
       setHasAttemptedFetch(true);
     }
   };
 
-  const decryptData = (
-    encryptedData: string,
-    key1: string,
-    key2: string
-  ) => {
-    const decryptedBytes1 = CryptoJS.AES.decrypt(encryptedData, key2);
-    const decryptedData1 = decryptedBytes1.toString(
-      CryptoJS.enc.Utf8
-    );
-    const decryptedBytes2 = CryptoJS.AES.decrypt(
-      decryptedData1,
-      key1
-    );
-    const decryptedData2 = JSON.parse(
-      decryptedBytes2.toString(CryptoJS.enc.Utf8)
-    );
-    return decryptedData2;
-  };
-
-  useEffect(() => {
-    getUser();
-    const storedEnryptedUser = Cookies.get('user');
-    if (storedEnryptedUser) {
+  const getDecryptedUserFromCookie = (): UserType | null => {
+    const storedEncryptedUser = Cookies.get('user');
+    if (storedEncryptedUser) {
       const decryptedUser = decryptData(
-        storedEnryptedUser,
+        storedEncryptedUser,
         SECRET_KEY_1,
         SECRET_KEY_2
       );
+      return decryptedUser;
+    }
+    return null;
+  };
 
+  useEffect(() => {
+    const decryptedUser = getDecryptedUserFromCookie();
+    if (decryptedUser) {
+      getUser();
       setUser(decryptedUser);
     }
-    setHasAttemptedFetch(true);
   }, []);
 
   return (

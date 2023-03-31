@@ -37,7 +37,6 @@ exports.getQuestions = async (req, res) => {
     const [questions] = await Retrospectiva.fetchQuestions(
       req.params.id
     );
-
     res.json(questions);
   } catch (err) {
     console.log(err);
