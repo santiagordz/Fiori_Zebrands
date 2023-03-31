@@ -36,7 +36,9 @@ module.exports = class Usuarios_Jira {
   };
 
   static getJiraUsers = async () => {
-    return await db.execute('SELECT * FROM usuarios_jira');
+    return await db.execute(
+      'SELECT * FROM usuarios_jira WHERE id_jira NOT IN (SELECT id_jira FROM usuarios WHERE id_jira IS NOT NULL);'
+    );
   };
 
   static postJiraUser = async (id_jira, nombre_jira) => {

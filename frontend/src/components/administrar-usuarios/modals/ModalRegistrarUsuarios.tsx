@@ -60,10 +60,6 @@ const ModalRegistrarUsuarios: FC<RegistrarUsuariosProps> = ({
     onClose();
   };
 
-  useEffect(() => {
-    console.log(usuarioJira);
-  }, [dominioCorreo]);
-
   if (!show) {
     return null;
   }

@@ -42,6 +42,7 @@ const DropdownUsuariosJira: FC<DropdownUsuariosJiraProps> = ({
 
   return (
     <select
+      required
       onChange={handleUsuarioChange}
       value={usuario}
       name="usuarios-jira"
