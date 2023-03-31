@@ -12,7 +12,7 @@ const Dashboard: FC<DashboardProps> = ({}) => {
   if (!user) {
     navigate('/login');
   }
-  return <DesignTemplate>Estoy en Dashboard</DesignTemplate>;
+  return <DesignTemplate>En construcción</DesignTemplate>;
 };
 
 export default Dashboard;

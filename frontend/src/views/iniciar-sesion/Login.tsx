@@ -63,6 +63,7 @@ const Login: FC<LoginProps> = ({}) => {
 
   useEffect(() => {
     if (user) {
+      getUser();
       navigate('/dashboard', { replace: true });
     }
   }, [user]);
