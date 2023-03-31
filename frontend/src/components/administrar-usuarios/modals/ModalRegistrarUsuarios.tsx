@@ -1,9 +1,10 @@
 import axios from 'axios';
-import { FC, FormEvent, useState } from 'react';
+import { FC, FormEvent, useEffect, useState } from 'react';
 import '../css/ModalRegistrarUsuarios.css';
 import CrossIcon from '@atlaskit/icon/glyph/cross';
 import DropdownEtiquetas from '../DropdownEtiquetas';
 import DropdowRoles from '../DropdownRoles';
+import DropdownUsuariosJira from '../DropdownUsuariosJira';
 import { Etiqueta } from '../UsersTable';
 
 const URI = 'http://localhost:8000/usuarios/createUser';
@@ -18,8 +19,10 @@ const ModalRegistrarUsuarios: FC<RegistrarUsuariosProps> = ({
   onClose,
 }) => {
   const [correo, setCorreo] = useState('');
+  const [dominioCorreo, setDominioCorreo] = useState('@zeb.mx');
   const [rol, setRol] = useState('');
   const [etiquetas, setEtiquetas] = useState<Etiqueta[]>([]);
+  const [usuarioJira, setUsuarioJira] = useState();
 
   const handleRolSeleccionado = (rol: string) => {
     setRol(rol);
@@ -29,13 +32,18 @@ const ModalRegistrarUsuarios: FC<RegistrarUsuariosProps> = ({
     setEtiquetas(etiquetas);
   };
 
+  const handleUsuarioSeleccionado = (usuario: any) => {
+    setUsuarioJira(usuario);
+  };
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
       await axios.post(URI, {
-        correo: `${correo}@zeb.mx`,
+        correo: `${correo}${dominioCorreo}`,
         rol: Number(rol),
         etiquetas: etiquetas,
+        usuario_jira: usuarioJira,
       });
       window.location.reload();
     } catch {
@@ -52,13 +60,17 @@ const ModalRegistrarUsuarios: FC<RegistrarUsuariosProps> = ({
     onClose();
   };
 
+  useEffect(() => {
+    console.log(usuarioJira);
+  }, [dominioCorreo]);
+
   if (!show) {
     return null;
   }
   return (
     <>
-      <div className="modal z-[1000] bg-blueRGBA">
-        <div className="modal-content px-10">
+      <div className="z-[1000] bg-blueRGBA fixed top-0 bottom-0 right-0 left-0 flex items-center justify-center">
+        <div className="p-10 bg-white rounded-xl flex flex-col ">
           <div className="modal-header">
             <div className="modal-title">
               <h4>Registrar usuario</h4>
@@ -80,6 +92,16 @@ const ModalRegistrarUsuarios: FC<RegistrarUsuariosProps> = ({
               className="w-full"
               id="RegistrarUsuarioForm"
             >
+              <div className="flex flex-col mb-5">
+                <label id="label-correo">Usuario Jira</label>
+                <div className="flex w-full gap-4">
+                  <DropdownUsuariosJira
+                    onUsuarioSeleccionadoChange={
+                      handleUsuarioSeleccionado
+                    }
+                  />
+                </div>
+              </div>
               <div className="flex flex-col">
                 <label htmlFor="correo" id="label-correo">
                   Correo
@@ -98,14 +120,15 @@ const ModalRegistrarUsuarios: FC<RegistrarUsuariosProps> = ({
                     autoComplete="off"
                     placeholder="Ingresa el correo"
                   />
-                  <input
-                    type="text"
-                    name="terminacion-correo"
-                    id="input-dominio-correo"
-                    className="border-2 border-gray-300 rounded-sm p-2 disabled:bg-gray-200"
-                    disabled
-                    placeholder="@zeb.mx"
-                  />
+                  <select
+                    onChange={(e) => setDominioCorreo(e.target.value)}
+                    value={dominioCorreo}
+                    className=" w-full h-8 bg-[#F1F2F4] rounded-md pl-2 hover:bg-gray-200 text-sm text-gray-600 font-medium focus:border-0"
+                  >
+                    <option>@zeb.mx</option>
+                    <option>@luuna.mx</option>
+                    <option>@mappa.mx</option>
+                  </select>
                 </div>
                 <p className="text-[0.75rem] text-gray-600 mt-1 mb-4">
                   El correo debe de pertenecer a una cuenta de Google

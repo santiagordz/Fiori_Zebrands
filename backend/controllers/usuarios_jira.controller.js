@@ -3,8 +3,11 @@ const db = require('../database/db');
 
 exports.getJiraUsers = async (req, res, next) => {
   try {
-    const usuarios = await usuarios_jiraModel.fecthJiraUsers();
-    res.json({ usuarios });
+    const usuarios = await usuarios_jiraModel
+      .getJiraUsers()
+      .then(([rows, fieldData]) => {
+        res.json(rows);
+      });
   } catch (error) {
     console.error(error);
     res
