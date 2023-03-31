@@ -2,7 +2,6 @@ import axios from 'axios';
 import { FC, useEffect } from 'react';
 import Button from '@atlaskit/button/standard-button';
 import InfoIcon from '@atlaskit/icon/glyph/info';
-import '../css/modalBorrarUsuarios.css';
 import { UserType } from '../../../contexts/UserContext';
 
 const URI = 'http://localhost:8000/usuarios/updateUserRole/';
@@ -63,9 +62,9 @@ const ModalAsignarResponsable: FC<AsignarResponsableProps> = ({
   if (usuario.rol === 3) {
     return (
       <>
-        <div className="modal z-[1000] bg-blueRGBA">
-          <div className="modal-content-delete px-16 w-fit">
-            <div className="modal-header justify-center">
+        <div className="z-[1000] bg-blueRGBA fixed top-0 bottom-0 right-0 left-0 flex items-center justify-center">
+          <div className="p-10 bg-white rounded-xl flex flex-col">
+            <div className="w-full flex flex-col items-center">
               <div>
                 <InfoIcon
                   label="info"
@@ -73,7 +72,7 @@ const ModalAsignarResponsable: FC<AsignarResponsableProps> = ({
                   size="xlarge"
                 />
               </div>
-              <div className="modal-title justify-center">
+              <div className="w-full text-xl font-bold mb-1 flex items-center justify-between">
                 <h4 className="text-lg text-center">
                   ¿Deseas darle el rol de responsable a
                   <span className="text-jiraBlue">
@@ -82,12 +81,12 @@ const ModalAsignarResponsable: FC<AsignarResponsableProps> = ({
                   ?
                 </h4>
               </div>
-              <div className="modal-subtitle text-sm mt-1 text-center">
+              <div className="w-full text-sm text-[#44546f] mb-5 text-center">
                 {`${nombre} podrá iniciar y finalizar retrospectivas`}
               </div>
             </div>
 
-            <div className="modal-footer justify-center">
+            <div className="w-full flex items-center justify-center">
               <div className="flex gap-10 mt-2">
                 <Button
                   className="rounded-none hover:text-blue-500 text-sm"
@@ -135,7 +134,7 @@ const ModalAsignarResponsable: FC<AsignarResponsableProps> = ({
               </div>
             </div>
 
-            <div className="modal-footer justify-center">
+            <div className="w-full flex items-center justify-center">
               <div className="flex gap-10 mt-2">
                 <Button
                   className="rounded-none hover:text-blue-500 text-sm"

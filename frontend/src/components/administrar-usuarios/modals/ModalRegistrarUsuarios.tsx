@@ -60,26 +60,30 @@ const ModalRegistrarUsuarios: FC<RegistrarUsuariosProps> = ({
     onClose();
   };
 
+  useEffect(() => {
+    axios.get('http://localhost:8000/usuarios_jira/fetch');
+  }, []);
+
   if (!show) {
     return null;
   }
   return (
     <>
       <div className="z-[1000] bg-blueRGBA fixed top-0 bottom-0 right-0 left-0 flex items-center justify-center">
-        <div className="p-10 bg-white rounded-xl flex flex-col ">
-          <div className="modal-header">
-            <div className="modal-title">
+        <div className="p-10 bg-white rounded-xl flex flex-col">
+          <div className="w-full flex flex-col items-center">
+            <div className="w-full text-xl font-bold mb-1 flex items-center justify-between">
               <h4>Registrar usuario</h4>
               <button className="flex" onClick={handleClose}>
                 <CrossIcon label="Cross Icon" />
               </button>
             </div>
-            <div className="modal-subtitle">
+            <div className="w-full text-sm text-[#44546f] mb-5">
               Registra un nuevo usuario en el sistema, una invitación
               a iniciar sesión será enviada al correo ingresado.
             </div>
           </div>
-          <div className="modal-body">
+          <div className="w-full flex flex-col justify center">
             <p className="font-bold text-left mb-4">
               Detalles del nuevo usuario
             </p>
@@ -154,7 +158,7 @@ const ModalRegistrarUsuarios: FC<RegistrarUsuariosProps> = ({
               </div>
             </form>
           </div>
-          <div className="modal-footer">
+          <div className="w-full flex items-center justify-end ">
             <div className="flex gap-10 mt-12">
               <button
                 className="rounded-none hover:text-blue-500 text-sm"

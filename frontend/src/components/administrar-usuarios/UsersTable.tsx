@@ -56,13 +56,14 @@ const UsersTable = () => {
       isHighlighted: false,
       cells: [
         {
-          key: usuario.nombre,
+          key: usuario?.nombre || 'Nuevo usuario',
           content: (
             <span className="flex items-center gap-2 ml-5 w-full">
               <Avatar src={usuario.foto} size="small" />
               <div className="w-full">
                 <p>
-                  {usuario.nombre || 'Nuevo usuario'}{' '}
+                  {usuario.nombre ||
+                    'Nuevo usuario (sin registrar con google)'}{' '}
                   {user?.id_usuario === usuario.id ? '(Tú)' : ''}
                 </p>
               </div>

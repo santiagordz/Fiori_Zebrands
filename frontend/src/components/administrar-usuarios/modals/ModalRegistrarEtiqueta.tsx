@@ -2,7 +2,6 @@ import CrossIcon from '@atlaskit/icon/glyph/cross';
 import axios from 'axios';
 import { FC, FormEvent, useState } from 'react';
 import DropdownColores from '../DropdownColores';
-import '../css/ModalRegistrarUsuarios.css';
 import type { TagColor } from '@atlaskit/tag';
 
 const URI = 'http://localhost:8000/etiquetas/';
@@ -50,22 +49,22 @@ const ModalRegistrarEtiqueta: FC<RegistrarEtiquetaProps> = ({
   }
   return (
     <>
-      <div className="modal z-[1000] bg-blueRGBA">
-        <div className="modal-content px-10 py-10">
-          <div className="modal-header">
-            <div className="modal-title">
+      <div className="z-[1000] bg-blueRGBA fixed top-0 bottom-0 right-0 left-0 flex items-center justify-center">
+        <div className="p-10 bg-white rounded-xl flex flex-col">
+          <div className="w-full flex flex-col items-center">
+            <div className="w-full text-xl font-bold mb-1 flex items-center justify-between">
               <h4>Registrar etiqueta</h4>
               <button className="flex" onClick={handleClose}>
                 <CrossIcon label="Cross Icon" />
               </button>
             </div>
-            <div className="modal-subtitle">
+            <div className="w-full text-sm text-[#44546f] mb-5">
               Registra una nueva etiqueta, esta podrá ser asignada a
-              un usuario para agilizar el proceso de asignación de
-              retrospectivas.
+              un usuario <br /> para agilizar el proceso de asignación
+              de retrospectivas.
             </div>
           </div>
-          <div className="modal-body">
+          <div className="w-full flex flex-col justify center">
             <p className="font-bold text-left mb-4">
               Detalles de la nueva etiqueta
             </p>
@@ -110,7 +109,7 @@ const ModalRegistrarEtiqueta: FC<RegistrarEtiquetaProps> = ({
               </div>
             </form>
           </div>
-          <div className="modal-footer">
+          <div className="w-full flex items-center justify-center">
             <div className="flex gap-10 mt-12">
               <button
                 className="rounded-none hover:text-blue-500 text-sm"

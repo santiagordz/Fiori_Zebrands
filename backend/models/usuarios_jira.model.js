@@ -4,17 +4,14 @@ require('dotenv').config();
 
 const axios = require('axios');
 const auth = {
-  username: process.env.JIRA_USERNAME,
-  password: process.env.JIRA_PASSWORD,
+  username: process.env.JIRA_USERNAME_ZEB,
+  password: process.env.JIRA_PASSWORD_ZEB,
 };
-
-const Jira_id = [];
-const Jira_nombre = [];
 
 module.exports = class Usuarios_Jira {
   static fetchJiraUsers = async () => {
     const response = await axios.get(
-      `https://fioritec.atlassian.net/rest/api/3/users/search`,
+      `https://zebrands.atlassian.net/rest/api/3/users/search`,
       {
         auth: auth,
       }
