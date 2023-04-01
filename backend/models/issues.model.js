@@ -15,43 +15,44 @@ module.exports = class Issue {
       }
     );
 
-      const issuesJira = response.data.issues.map(function (issue) {
-        
-        const issue_parent = []
-        const issue_type_parent = []
-        const issue_assignee_id = []
-        const issue_assignee_name = []
+    const issuesJira = response.data.issues.map(function (issue) {
+      const issue_parent = [];
+      const issue_type_parent = [];
+      const issue_assignee_id = [];
+      const issue_assignee_name = [];
 
-        if (issue.fields.parent) {
-          issue_parent.push(issue.fields.parent.key);
-        }
+      if (issue.fields.parent) {
+        issue_parent.push(issue.fields.parent.key);
+      }
 
-        if (issue.fields.parent != null) {
-          issue_type_parent.push(issue.fields.parent.fields.issuetype.name);
-        }
+      if (issue.fields.parent != null) {
+        issue_type_parent.push(
+          issue.fields.parent.fields.issuetype.name
+        );
+      }
 
-        if (issue.fields.assignee != null) {
-          issue_assignee_id.push(issue.fields.assignee.accountId);
-        }
+      if (issue.fields.assignee != null) {
+        issue_assignee_id.push(issue.fields.assignee.accountId);
+      }
 
-        if (issue.fields.assignee != null) {
-          issue_assignee_name.push(issue.fields.assignee.displayName);
-        }
+      if (issue.fields.assignee != null) {
+        issue_assignee_name.push(issue.fields.assignee.displayName);
+      }
 
-        return {
-          id: issue.id,
-          key: issue.key,
-          type: issue.fields.issuetype.name,
-          parent: issue_parent,
-          type_parent: issue_type_parent,
-          sprint_id: issue.fields.customfield_10010[0].id,
-          assignee_id: issue_assignee_id,
-          assignee_name: issue_assignee_name,
-          issue_storypoints: issue.fields.customfield_10042,
-          issue_status:issue.fields.status.name
-        }
-      })
+      return {
+        id: issue.id,
+        key: issue.key,
+        type: issue.fields.issuetype.name,
+        parent: issue_parent,
+        type_parent: issue_type_parent,
+        sprint_id: issue.fields.customfield_10010[0].id,
+        assignee_id: issue_assignee_id,
+        assignee_name: issue_assignee_name,
+        issue_storypoints: issue.fields.customfield_10042,
+        issue_status: issue.fields.status.name,
+      };
+    });
 
-    console.log(issuesJira)
+    return issuesJira;
   };
 };
