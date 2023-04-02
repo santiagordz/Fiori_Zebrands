@@ -118,13 +118,14 @@ const ModalEditarEtiqueta: FC<ModalEditarEtiquetaProps> = ({
                       Nombre:
                     </label>
                     <input
+                      required
                       className="h-8 border-2 border-gray-300 rounded-sm p-2 focus:outline-gray-400 hover:bg-gray-100"
                       autoComplete="off"
                       name="nombre"
                       id="nombre"
                       type="text"
                       defaultValue={etiqueta.nombre}
-                      pattern="^[a-zA-Z0-9!@#$%^&*()_+\-]{1,15}$"
+                      pattern="^[a-zA-Z0-9!@#$%^&*()_+\/-]{1,15}$"
                       title="El nombre de la etiqueta debe tener entre 1 y 15 caracteres alfanuméricos"
                       onChange={(e) => setNombre(e.target.value)}
                     />
