@@ -23,20 +23,28 @@ module.exports = class Issue {
 
       if (issue.fields.parent) {
         issue_parent.push(issue.fields.parent.key);
+      } else {
+        issue_parent.push(null);
       }
 
       if (issue.fields.parent != null) {
         issue_type_parent.push(
           issue.fields.parent.fields.issuetype.name
         );
+      } else {
+        issue_type_parent.push(null);
       }
 
       if (issue.fields.assignee != null) {
         issue_assignee_id.push(issue.fields.assignee.accountId);
+      } else {
+        issue_assignee_id.push(null);
       }
 
       if (issue.fields.assignee != null) {
         issue_assignee_name.push(issue.fields.assignee.displayName);
+      } else {
+        issue_assignee_name.push(null);
       }
 
       return {
@@ -54,5 +62,25 @@ module.exports = class Issue {
     });
 
     return issuesJira;
+  };
+
+  static postIssue = async (
+    clave,
+    tipo,
+    story_points,
+    key_epic,
+    assignee_id,
+    status
+  ) => {
+    console.log(clave);
+    console.log(tipo);
+    console.log(story_points);
+    console.log(key_epic);
+    console.log(assignee_id);
+    console.log(status);
+    return db.execute(
+      `INSERT IGNORE INTO ISSUES (clave, tipo, story_points, key_epic, assignee_id, status) VALUES (?, ?, ?, ?, ?, ?)`,
+      [clave, tipo, story_points, key_epic, assignee_id, status]
+    );
   };
 };
