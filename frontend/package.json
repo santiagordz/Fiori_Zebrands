@@ -17,7 +17,7 @@
     "@atlaskit/form": "^8.8.4",
     "@atlaskit/heading": "^1.1.2",
     "@atlaskit/modal-dialog": "^12.4.11",
-    "@atlaskit/progress-indicator": "^9.4.7",
+    "@atlaskit/progress-indicator": "^9.4.12",
     "@atlaskit/tabs": "^13.3.13",
     "@atlaskit/tag": "^11.4.10",
     "@atlaskit/textfield": "^5.3.6",

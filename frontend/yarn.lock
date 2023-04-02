@@ -224,16 +224,28 @@
     "@atlaskit/theme" "^12.2.0"
     "@babel/runtime" "^7.0.0"
 
-"@atlaskit/progress-indicator@^9.4.7":
-  version "9.4.7"
-  resolved "https://registry.yarnpkg.com/@atlaskit/progress-indicator/-/progress-indicator-9.4.7.tgz#5d8cc7e0026f3fa44e74469d7c87dd9f1591cea6"
-  integrity sha512-3QK/k11p+oULuyqccw43/qmA5ayIhrSbOTvuVbWdYrQoK3aM5kzT3Wximim/e5cK5rSfEfs42qXJ3xHQUp8woA==
+"@atlaskit/primitives@^0.4.0":
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/@atlaskit/primitives/-/primitives-0.4.2.tgz#dd0e0ca8fee15ca442faf676fafc62308b0d7d4c"
+  integrity sha512-vFkCDmrn1Wy/wjYBXYno2QCVo3FCPLs5TdV5jnM4ERczyDrycjVL2vbFxhZ3D2I4pMtsmNdUZVa/ObFEIec0SQ==
+  dependencies:
+    "@atlaskit/tokens" "^1.2.0"
+    "@babel/runtime" "^7.0.0"
+    "@emotion/react" "^11.7.1"
+    "@emotion/serialize" "^1.1.0"
+    tiny-invariant "^1.2.0"
+
+"@atlaskit/progress-indicator@^9.4.12":
+  version "9.4.12"
+  resolved "https://registry.yarnpkg.com/@atlaskit/progress-indicator/-/progress-indicator-9.4.12.tgz#ab9e3ddd76ce5865125ceefc5eabe5a090bad261"
+  integrity sha512-Gh3RsbCBahi8sBaQ5+ZUrEp5VStLXSfElYsHdwh/7xKFulHUEdJ3TuEeXZylas++Grgx10yW/07qb9/QCiRqjg==
   dependencies:
     "@atlaskit/analytics-next" "^9.0.0"
     "@atlaskit/ds-explorations" "^2.0.0"
     "@atlaskit/ds-lib" "^2.1.0"
     "@atlaskit/focus-ring" "^1.2.0"
-    "@atlaskit/theme" "^12.2.0"
+    "@atlaskit/primitives" "^0.4.0"
+    "@atlaskit/theme" "^12.3.0"
     "@atlaskit/tokens" "^1.2.0"
     "@babel/runtime" "^7.0.0"
     "@emotion/react" "^11.7.1"
@@ -292,6 +304,16 @@
   version "12.2.9"
   resolved "https://registry.yarnpkg.com/@atlaskit/theme/-/theme-12.2.9.tgz#4cef7b850ce1945e2233ea82a4e36fbc6589a02e"
   integrity sha512-EooPOJDLrcZHDE2SmgGCJnVg+PKbhzked31aZ+BIg25uqhfi+AZhIVentoXiDGVQekz32YYTU5EtDES9XyV5vQ==
+  dependencies:
+    "@atlaskit/codemod-utils" "^4.1.0"
+    "@atlaskit/ds-lib" "^2.1.0"
+    "@atlaskit/tokens" "^1.2.0"
+    "@babel/runtime" "^7.0.0"
+
+"@atlaskit/theme@^12.3.0":
+  version "12.3.0"
+  resolved "https://registry.yarnpkg.com/@atlaskit/theme/-/theme-12.3.0.tgz#769629b063241da4e80bb60a304c0bda6ee05fd0"
+  integrity sha512-kLWNtbcmyWthhHRXNelif2QwCz8TrYkXz/J2i6yb+H2CMDFdYI/mP1+/WJ+dv3b2YVlrbazzA/HS33RJHBJYPQ==
   dependencies:
     "@atlaskit/codemod-utils" "^4.1.0"
     "@atlaskit/ds-lib" "^2.1.0"
