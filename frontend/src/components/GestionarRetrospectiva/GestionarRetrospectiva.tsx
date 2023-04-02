@@ -5,18 +5,11 @@ import Button from "@atlaskit/button/standard-button";
 import { ProgressIndicator } from "@atlaskit/progress-indicator";
 import ListaPreguntas from "../preguntas/ListaPreguntas";
 import Tabs, { Tab, TabList, TabPanel } from "@atlaskit/tabs";
+import { useMultistepForm } from "./useMultistepForm";
 
 const GestionarRetrospectiva = () => {
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const [values] = useState(["first", "second", "third"]);
-
-  const handlePrev = () => {
-    setSelectedIndex((prevState) => prevState - 1);
-  };
-
-  const handleNext = () => {
-    setSelectedIndex((prevState) => prevState + 1);
-  };
+  const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } =
+    useMultistepForm([<div> one </div>, <div> two </div>, <div> three </div>]);
 
   return (
     <div className="p-5">
@@ -27,16 +20,13 @@ const GestionarRetrospectiva = () => {
         </p>
       </button>
 
-      <ProgressIndicator
-        appearance="primary"
-        selectedIndex={selectedIndex}
-        values={values}
-      />
       <div className="text-center py-[8vmin]">
         <h3 className="text-[#0C66E4] text-sm font-bold">
-          {" "}
-          PASO {selectedIndex + 1}/3
+          {currentStepIndex + 1} / {steps.length}
         </h3>
+
+        {step}
+
         <h1 className="text-[#5E4DB2] font-bold text-2xl">
           Selecciona las Preguntas
         </h1>
@@ -46,25 +36,24 @@ const GestionarRetrospectiva = () => {
           retrospectiva.
         </p>
       </div>
-      <div className="py-[2vmin]">
-        <ListaPreguntas />
-      </div>
+
       <div className="flex flex-row place-content-center justify-center gap-[10vmin] py-[2vmax]">
-        <Button
-          iconBefore={<ArrowLeftIcon label=" " size="medium" />}
-          appearance="subtle"
-          isDisabled={selectedIndex === 0}
-          onClick={handlePrev}
-        >
-          Volver al paso anterior
-        </Button>
+        {!isFirstStep && (
+          <Button
+            iconBefore={<ArrowLeftIcon label=" " size="medium" />}
+            appearance="subtle"
+            onClick={back}
+          >
+            Volver al paso anterior
+          </Button>
+        )}
+
         <Button
           iconAfter={<ArrowRightIcon label=" " size="medium" />}
-          isDisabled={selectedIndex === values.length - 1}
-          onClick={handleNext}
           appearance="primary"
+          onClick={next}
         >
-          Siguiente paso
+          {isLastStep ? "Enviar e iniciar retrospectiva" : "Siguiente paso"}
         </Button>
       </div>
     </div>
