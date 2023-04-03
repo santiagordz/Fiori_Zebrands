@@ -29,7 +29,7 @@ const BackMyRetros: FC<BackMyRetrosProps> = ({
               className="flex w-full absolute top-0 justify-end p-4"
               onClick={() => setIsModalBackOpen(false)}
             >
-              <div className="flex items-center justify-center rounded- cursor-pointer hover:bg-slate-200 p-1">
+              <div className="flex items-center justify-center rounded- cursor-pointer p-1">
                 <CrossIcon label="cerrar modal" size="small" />
               </div>
             </div>

@@ -26,6 +26,7 @@ interface Step2Props {
 const Step2: FC<Step2Props> = ({ setStepNumber, stepNumber }) => {
   const { newRetro, setNewRetro } = useContext(newRetroContext);
   const [isError, setIsError] = useState<boolean>(false);
+  // const [isNewQuestionOpen, setIsNewQuestionOpen] = useState(second)
 
   const getPreguntas = async () => {
     const { data } = await axios.get(URI);

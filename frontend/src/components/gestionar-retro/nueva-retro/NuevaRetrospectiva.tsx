@@ -9,7 +9,7 @@ import { Step2 } from './steps';
 interface NuevaRetrospectivaProps {}
 
 const NuevaRetrospectiva: FC<NuevaRetrospectivaProps> = ({}) => {
-  const [stepNumber, setStepNumber] = useState(1);
+  const [stepNumber, setStepNumber] = useState(2);
 
   return (
     <>
