@@ -1,22 +1,20 @@
-import React, { FC, useState } from 'react';
-import Button from '@atlaskit/button';
-import ArrowLeftIcon from '@atlaskit/icon/glyph/arrow-left';
-import Stepper from '../../design-template/stepper/Stepper';
-import Form from '@atlaskit/form';
-import { stepsInformation } from './steps/stepsInformation';
-import { Step2 } from './steps';
+import React, { FC, useState } from "react";
+import Button from "@atlaskit/button";
+import ArrowLeftIcon from "@atlaskit/icon/glyph/arrow-left";
+import Stepper from "../../design-template/stepper/Stepper";
+import Form from "@atlaskit/form";
+import { stepsInformation } from "./steps/stepsInformation";
+import { Step2 } from "./steps";
 
 interface NuevaRetrospectivaProps {}
 
 const NuevaRetrospectiva: FC<NuevaRetrospectivaProps> = ({}) => {
-  const [stepNumber, setStepNumber] = useState(2);
+  const [stepNumber, setStepNumber] = useState(1);
 
   return (
     <>
       <div className="flex flex-col gap-5 bg-[#ffffff] py-5 px-5 rounded-sm shadow-sm">
-        <h2 className="font-semibold text-information">
-          Nueva retrospectiva
-        </h2>
+        <h2 className="font-semibold text-information">Nueva retrospectiva</h2>
       </div>
       <div className="flex flex-col gap-5 bg-[#ffffff] py-5 px-5 rounded-sm shadow-sm mt-2">
         <div className="w-full">

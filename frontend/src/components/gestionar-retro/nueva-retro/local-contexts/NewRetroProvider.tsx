@@ -1,4 +1,4 @@
-import React, { FC, createContext, useState } from 'react';
+import React, { FC, createContext, useState } from "react";
 
 export interface PreguntaType {
   id: number;
@@ -33,8 +33,8 @@ interface newRetroContextProps {
 
 const NewRetroProvider: FC<newRetroContextProps> = ({ children }) => {
   const [newRetro, setNewRetro] = useState<newRetroType>({
-    titulo: '',
-    descripcion: '',
+    titulo: "",
+    descripcion: "",
     predeterminadas: [],
     otras: [],
     usuarios: [],

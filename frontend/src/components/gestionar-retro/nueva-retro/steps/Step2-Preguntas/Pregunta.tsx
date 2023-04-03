@@ -1,7 +1,7 @@
-import { Checkbox } from '@atlaskit/checkbox';
-import { SimpleTag as Tag } from '@atlaskit/tag';
-import { FC } from 'react';
-import DropdownMenu from '../../../../design-template/dropdown/DropdownMenu';
+import { Checkbox } from "@atlaskit/checkbox";
+import { SimpleTag as Tag } from "@atlaskit/tag";
+import { FC } from "react";
+import DropdownMenu from "../../../../design-template/dropdown/DropdownMenu";
 
 interface PreguntaProps {
   pregunta: string;
@@ -16,10 +16,10 @@ interface tiposPreguntaType {
 }
 
 const tiposPregunta: tiposPreguntaType = {
-  1: 'Párrafo',
-  2: 'Respuesta corta',
-  3: 'Lista desplegable',
-  4: 'Escala numérica',
+  1: "Párrafo",
+  2: "Respuesta corta",
+  3: "Lista desplegable",
+  4: "Escala numérica",
 };
 
 const Pregunta: FC<PreguntaProps> = ({
@@ -42,11 +42,7 @@ const Pregunta: FC<PreguntaProps> = ({
       </div>
       <div className="flex items-center">
         <div id="tag" className="scale-[0.9]">
-          <Tag
-            text={tiposPregunta[tipo]}
-            appearance="rounded"
-            color="green"
-          />
+          <Tag text={tiposPregunta[tipo]} appearance="rounded" color="green" />
         </div>
         <DropdownMenu>
           <button className="bg-white hover:bg-[#f1f2f4] text-sm inline-block whitespace-nowrap py-[0.35rem] px-5 text-textNormal">

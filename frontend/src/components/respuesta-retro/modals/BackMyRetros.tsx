@@ -1,20 +1,18 @@
-import Blanket from '@atlaskit/blanket';
-import Button from '@atlaskit/button';
-import CrossIcon from '@atlaskit/icon/glyph/cross';
-import InfoIcon from '@atlaskit/icon/glyph/info';
-import WarningIcon from '@atlaskit/icon/glyph/warning';
-import { FC } from 'react';
+import Blanket from "@atlaskit/blanket";
+import Button from "@atlaskit/button";
+import CrossIcon from "@atlaskit/icon/glyph/cross";
+import InfoIcon from "@atlaskit/icon/glyph/info";
+import WarningIcon from "@atlaskit/icon/glyph/warning";
+import { FC } from "react";
 
-import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 interface BackMyRetrosProps {
   setIsModalBackOpen: (isOpen: boolean) => void;
 }
 
-const BackMyRetros: FC<BackMyRetrosProps> = ({
-  setIsModalBackOpen,
-}) => {
+const BackMyRetros: FC<BackMyRetrosProps> = ({ setIsModalBackOpen }) => {
   const navigate = useNavigate();
 
   return (
@@ -55,7 +53,7 @@ const BackMyRetros: FC<BackMyRetrosProps> = ({
             >
               <Button
                 appearance="primary"
-                onClick={() => navigate('/mis-retrospectivas')}
+                onClick={() => navigate("/mis-retrospectivas")}
               >
                 Ir al panel de retrospectivas
               </Button>

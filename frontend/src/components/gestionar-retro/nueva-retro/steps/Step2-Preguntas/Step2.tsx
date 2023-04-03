@@ -1,22 +1,13 @@
-import Button from '@atlaskit/button';
-import AddIcon from '@atlaskit/icon/glyph/add';
-import ArrowLeftIcon from '@atlaskit/icon/glyph/arrow-left';
-import ArrowRightIcon from '@atlaskit/icon/glyph/arrow-right';
-import axios from 'axios';
-import {
-  FC,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
-import {
-  newRetroContext,
-  type PreguntaType,
-} from '../../local-contexts';
-import Pregunta from './Pregunta';
+import Button from "@atlaskit/button";
+import AddIcon from "@atlaskit/icon/glyph/add";
+import ArrowLeftIcon from "@atlaskit/icon/glyph/arrow-left";
+import ArrowRightIcon from "@atlaskit/icon/glyph/arrow-right";
+import axios from "axios";
+import { FC, useCallback, useContext, useEffect, useState } from "react";
+import { newRetroContext, type PreguntaType } from "../../local-contexts";
+import Pregunta from "./Pregunta";
 
-const URI = 'http://localhost:8000/preguntas';
+const URI = "http://localhost:8000/preguntas";
 
 interface Step2Props {
   setStepNumber: (updater: (prev: number) => number) => void;
@@ -102,7 +93,7 @@ const Step2: FC<Step2Props> = ({ setStepNumber, stepNumber }) => {
   return (
     <span
       className={`flex flex-col gap-10 w-full text-left ${
-        stepNumber === 2 ? '' : 'hidden'
+        stepNumber === 2 ? "" : "hidden"
       }`}
     >
       <div className="flex flex-col gap-3">
@@ -113,30 +104,28 @@ const Step2: FC<Step2Props> = ({ setStepNumber, stepNumber }) => {
             }`}
           </p>
           <p className="text-xs text-[#626F86] mt-1">
-            Las preguntas en este espacio se harán predeterminadas, lo
-            que quiere decir que se establecerán como las preguntas
-            seleccionadas por default para las futuras retrospectivas
-            una vez que inicies esta retrospectiva.
+            Las preguntas en este espacio se harán predeterminadas, lo que
+            quiere decir que se establecerán como las preguntas seleccionadas
+            por default para las futuras retrospectivas una vez que inicies esta
+            retrospectiva.
           </p>
         </div>
         <div className="flex flex-col gap-3">
           {newRetro?.predeterminadas?.length ?? 0 > 0 ? (
-            newRetro?.predeterminadas?.map(
-              (pregunta: PreguntaType) => (
-                <Pregunta
-                  key={pregunta.id}
-                  pregunta={pregunta.pregunta}
-                  id={pregunta.id}
-                  isChecked={true}
-                  tipo={pregunta.id_tipo_pregunta}
-                  handleChecked={handleChecked}
-                />
-              )
-            )
+            newRetro?.predeterminadas?.map((pregunta: PreguntaType) => (
+              <Pregunta
+                key={pregunta.id}
+                pregunta={pregunta.pregunta}
+                id={pregunta.id}
+                isChecked={true}
+                tipo={pregunta.id_tipo_pregunta}
+                handleChecked={handleChecked}
+              />
+            ))
           ) : (
             <p className="text-danger mt-3 text-sm">
-              No hay preguntas seleccionadas, agrega al menos una
-              pregunta para continuar.
+              No hay preguntas seleccionadas, agrega al menos una pregunta para
+              continuar.
             </p>
           )}
         </div>
@@ -151,10 +140,7 @@ const Step2: FC<Step2Props> = ({ setStepNumber, stepNumber }) => {
             <Button
               appearance="subtle"
               iconBefore={
-                <AddIcon
-                  label="agregar retrospectiva"
-                  primaryColor="#0055CC"
-                />
+                <AddIcon label="agregar retrospectiva" primaryColor="#0055CC" />
               }
             >
               <p className="text-information">Nueva pregunta</p>
@@ -175,8 +161,8 @@ const Step2: FC<Step2Props> = ({ setStepNumber, stepNumber }) => {
             ))
           ) : (
             <p className="text-subtle text-sm">
-              No hay otras preguntas disponibles, si lo necesitas,
-              puedes crear una nueva.
+              No hay otras preguntas disponibles, si lo necesitas, puedes crear
+              una nueva.
             </p>
           )}
         </div>
