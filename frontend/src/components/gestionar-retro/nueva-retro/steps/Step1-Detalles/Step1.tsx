@@ -1,6 +1,5 @@
 import Button from "@atlaskit/button";
-import AddIcon from "@atlaskit/icon/glyph/add";
-import ArrowLeftIcon from "@atlaskit/icon/glyph/arrow-left";
+import Select, { StylesConfig } from "react-select";
 import ArrowRightIcon from "@atlaskit/icon/glyph/arrow-right";
 import TextArea from "@atlaskit/textarea";
 import axios from "axios";
@@ -38,9 +37,16 @@ const Step1: FC<Step1Props> = ({ setStepNumber, stepNumber }) => {
         }`}
       >
         <div className="grid grid-cols-1 gap-y-4 px-[8vmin]">
-          <p className="pr-[150vmin] font-semibold text-md text-[#626F86] pl-30">
-            Descripción:
-          </p>
+          <p className="font-semibold text-xs">Título:</p>
+
+          <Select
+            className="mt-1 text-sm"
+            id="etiquetas"
+            placeholder="Selecciona etiquetas"
+            isMulti={true}
+          ></Select>
+
+          <p className="font-semibold text-xs">Descripción:</p>
 
           <TextArea
             resize="auto"

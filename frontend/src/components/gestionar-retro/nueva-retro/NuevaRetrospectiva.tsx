@@ -5,6 +5,7 @@ import Stepper from "../../design-template/stepper/Stepper";
 import Form from "@atlaskit/form";
 import { stepsInformation } from "./steps/stepsInformation";
 import { Step2 } from "./steps";
+import { Step1 } from "./steps";
 
 interface NuevaRetrospectivaProps {}
 
@@ -52,6 +53,11 @@ const NuevaRetrospectiva: FC<NuevaRetrospectivaProps> = ({}) => {
                     {...formProps}
                     className="flex flex-col items-center justify-center w-full mb-5 text-center"
                   >
+                    <Step1
+                      setStepNumber={setStepNumber}
+                      stepNumber={stepNumber}
+                    />
+
                     <Step2
                       setStepNumber={setStepNumber}
                       stepNumber={stepNumber}
