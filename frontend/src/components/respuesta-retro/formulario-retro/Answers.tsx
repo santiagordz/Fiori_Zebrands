@@ -1,3 +1,4 @@
+import { ReactComponent as IncognitoSVG } from '@/assets/icons/incognito.svg';
 import Button from '@atlaskit/button';
 import Flag from '@atlaskit/flag';
 import ArrowLeftIcon from '@atlaskit/icon/glyph/arrow-left';
@@ -6,7 +7,6 @@ import EditorHelpIcon from '@atlaskit/icon/glyph/editor/help';
 import axios from 'axios';
 import { FC, useContext, useEffect, useState } from 'react';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
-import Incognito from '../../../assets/incognito.png';
 import type { Retrospectiva } from '../../../views/mis-retrospectivas/MisRetrospectivas';
 import { formDataContext, questionsContext } from '../local-contexts';
 import type { Respuestas } from './Cuestionario';
@@ -129,11 +129,7 @@ const Answers: FC<AnswersProps> = ({
                         )}
                         {answers[question.id]?.anonimo ? (
                           <div className="flex gap-2 opacity-60 mt-5 text-xs items-center">
-                            <img
-                              className="aspect-square w-4"
-                              src={Incognito}
-                              alt="respuesta anonima"
-                            />
+                            <IncognitoSVG width={15} height={15} />
                             Marcaste esta respuesta como anónima,
                             todas las respuestas de todo el equipo a
                             esta pregunta serán anónimas.

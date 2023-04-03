@@ -243,39 +243,3 @@ const TiposPregunta: FC<TiposPreguntaProps> = ({
 };
 
 export default TiposPregunta;
-
-interface DynamicFieldProps {
-  idTipoPregunta: number;
-  children: any;
-  label: () => string;
-  idPregunta: number;
-}
-
-const DynamicField: FC<DynamicFieldProps> = ({
-  idTipoPregunta,
-  children,
-  label,
-  idPregunta,
-}) => {
-  if (idTipoPregunta === 4) {
-    return (
-      <RangeField
-        label={label()}
-        name={`q_${idPregunta.toString()}`}
-        defaultValue={0}
-      >
-        {children}
-      </RangeField>
-    );
-  } else {
-    return (
-      <Field
-        aria-required={true}
-        name={`q_${idPregunta.toString()}`}
-        label={label()}
-      >
-        {children}
-      </Field>
-    );
-  }
-};

@@ -15,6 +15,7 @@ import {
   type PreguntaType,
 } from '../../local-contexts';
 import Pregunta from './Pregunta';
+import { NuevaPregunta } from './modals';
 
 const URI = 'http://localhost:8000/preguntas';
 
@@ -26,7 +27,8 @@ interface Step2Props {
 const Step2: FC<Step2Props> = ({ setStepNumber, stepNumber }) => {
   const { newRetro, setNewRetro } = useContext(newRetroContext);
   const [isError, setIsError] = useState<boolean>(false);
-  // const [isNewQuestionOpen, setIsNewQuestionOpen] = useState(second)
+  const [isNewQuestionOpen, setIsNewQuestionOpen] =
+    useState<boolean>(false);
 
   const getPreguntas = async () => {
     const { data } = await axios.get(URI);
@@ -105,6 +107,9 @@ const Step2: FC<Step2Props> = ({ setStepNumber, stepNumber }) => {
         stepNumber === 2 ? '' : 'hidden'
       }`}
     >
+      {isNewQuestionOpen && (
+        <NuevaPregunta setIsNewQuestionOpen={setIsNewQuestionOpen} />
+      )}
       <div className="flex flex-col gap-3">
         <div>
           <p className="font-semibold text-xs">
@@ -150,6 +155,7 @@ const Step2: FC<Step2Props> = ({ setStepNumber, stepNumber }) => {
           <span className="border border-solid border-gray-200 rounded scale-[0.85] mr-[-0.8rem]">
             <Button
               appearance="subtle"
+              onClick={() => setIsNewQuestionOpen(true)}
               iconBefore={
                 <AddIcon
                   label="agregar retrospectiva"
