@@ -13,26 +13,30 @@ exports.getIssuesJira = async (req, res, next) => {
 };
 
 exports.postIssuesJira = async (req, res, next) => {
-  axios.post('http://localhost:8000/epics').then(async () => {
-    const issues = await issuesModel.fetchIssuesJira();
-    for (let issue of issues) {
+  await axios.post('http://localhost:8000/epics');
+  const issues = await issuesModel.fetchIssuesJira();
+  try {
+    issues.map(async (issue) => {
       await issuesModel.postIssue(
-        issue.key,
-        issue.type,
-        issue.issue_storypoints,
-        issue.parent.shift(),
+        issue.clave,
+        issue.tipo,
+        issue.story_points,
+        issue.key_epic,
         issue.assignee_id,
-        issue.issue_status
+        issue.status
       );
-
-      if (issue.assignee_id) {
+      if (issue.assignee_id !== null) {
         await usuario_issues.createUsuarioIssue(
-          console.log(issue.key),
-          issue.assignee_id ? issue.assignee_id : null,
-          issue.key
+          issue.assignee_id,
+          issue.clave
         );
       }
-    }
-    res.send('Issues guardados en la base de datos');
-  });
+    });
+    res.send('listo');
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ message: 'Error al insertar los issues.' });
+  }
 };

@@ -8,33 +8,35 @@ const auth = {
 
 module.exports = class Epic {
   static fetchEpicsJira = async () => {
-    const response = await axios.get(
-      'https://zebrands.atlassian.net/rest/api/3/search?jql=Sprint%20%3D%20%22[ZeCommerce Tech] Sprint 5%22%20ORDER%20BY%20createdDate%20DESC',
-      {
-        auth: auth,
-      }
-    );
+    const maxResults = 100; // Número máximo de issues a recuperar por solicitud
+    let startAt = 3080; // Punto de inicio para recuperar issues en cada solicitud
+    let isLast = false; // Indicador para verificar si se han recuperado todos los issues
+    let epicsJira = []; // Arreglo para almacenar todos los issues recuperados
 
-    var epicsFiltered = [];
+    while (!isLast) {
+      const response = await axios.get(
+        'https://zebrands.atlassian.net/rest/api/2/search?jql=project=TPECG%20AND%20type=Epic&maxResults=100',
+        {
+          auth: auth,
+        }
+      );
 
-    const jsonData = response.data;
+      epicsJira = epicsJira.concat(response.data.issues);
+      isLast = startAt + maxResults >= response.data.total;
+      startAt += maxResults;
+    }
 
-    // Loop through each issue and extract the required information
-    const epicsJira = jsonData.issues.map(function (epics) {
-      if (epics.fields.parent) {
-        epicsFiltered.push({
-          key: epics.fields.parent.key,
-          summary: epics.fields.parent.fields.summary,
-          status: epics.fields.parent.fields.status.name,
-          type: epics.fields.parent.fields.issuetype.name,
-          color:
-            epics.fields.parent.fields.status.statusCategory
-              .colorName,
-        });
-      }
+    const epics = epicsJira.map((epic) => {
+      return {
+        key: epic.key,
+        summary: epic.fields.summary,
+        status: epic.fields.status.name,
+        type: epic.fields.issuetype.name,
+        color: epic.fields.status.statusCategory.colorName,
+      };
     });
 
-    return epicsFiltered;
+    return epics;
   };
 
   static postEpicsJira = async (key, summary, status, color) => {

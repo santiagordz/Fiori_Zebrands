@@ -8,60 +8,50 @@ const auth = {
 
 module.exports = class Issue {
   static fetchIssuesJira = async () => {
-    const response = await axios.get(
-      `https://zebrands.atlassian.net/rest/api/3/search?jql=Sprint%20%3D%20%22[ZeCommerce Tech] Sprint 5%22%20ORDER%20BY%20createdDate%20DESC`,
-      {
-        auth: auth,
-      }
-    );
+    const maxResults = 100; // Número máximo de issues a recuperar por solicitud
+    let startAt = 0; // Punto de inicio para recuperar issues en cada solicitud
+    let isLast = false; // Indicador para verificar si se han recuperado todos los issues
+    let issuesJira = []; // Arreglo para almacenar todos los issues recuperados
 
-    const issuesJira = response.data.issues.map(function (issue) {
-      const issue_parent = [];
-      const issue_type_parent = [];
-      const issue_assignee_id = [];
-      const issue_assignee_name = [];
+    while (!isLast) {
+      const response = await axios.get(
+        `https://zebrands.atlassian.net/rest/api/2/search?jql=project=TPECG&startAt=${startAt}&maxResults=${maxResults}`,
+        {
+          auth: auth,
+        }
+      );
 
-      if (issue.fields.parent) {
-        issue_parent.push(issue.fields.parent.key);
-      } else {
-        issue_parent.push(null);
-      }
+      issuesJira = issuesJira.concat(response.data.issues);
+      isLast = startAt + maxResults >= response.data.total;
+      startAt += maxResults;
+    }
 
-      if (issue.fields.parent != null) {
-        issue_type_parent.push(
-          issue.fields.parent.fields.issuetype.name
-        );
-      } else {
-        issue_type_parent.push(null);
-      }
+    const issues = issuesJira
+      .map((issue) => {
+        if (issue.fields.issuetype.name != 'Epic') {
+          const newIssue = {
+            id: issue.id,
+            clave: issue.key,
+            tipo: issue.fields.issuetype.name,
+            story_points: issue.fields.customfield_10042,
+            key_epic: issue.fields.parent
+              ? issue.fields.parent.key
+              : null,
+            assignee_id: issue.fields.assignee
+              ? issue.fields.assignee.accountId
+              : null,
+            status: issue.fields.status.name,
+          };
+          return Object.fromEntries(
+            Object.entries(newIssue).filter(
+              ([_, v]) => v !== undefined
+            )
+          );
+        }
+      })
+      .filter((issue) => issue);
 
-      if (issue.fields.assignee != null) {
-        issue_assignee_id.push(issue.fields.assignee.accountId);
-      } else {
-        issue_assignee_id.push(null);
-      }
-
-      if (issue.fields.assignee != null) {
-        issue_assignee_name.push(issue.fields.assignee.displayName);
-      } else {
-        issue_assignee_name.push(null);
-      }
-
-      return {
-        id: issue.id,
-        key: issue.key,
-        type: issue.fields.issuetype.name,
-        parent: issue_parent,
-        type_parent: issue_type_parent,
-        sprint_id: issue.fields.customfield_10010[0].id,
-        assignee_id: issue_assignee_id[0],
-        assignee_name: issue_assignee_name,
-        issue_storypoints: issue.fields.customfield_10042,
-        issue_status: issue.fields.status.name,
-      };
-    });
-
-    return issuesJira;
+    return issues;
   };
 
   static postIssue = async (
@@ -72,9 +62,13 @@ module.exports = class Issue {
     assignee_id,
     status
   ) => {
-    return db.execute(
-      `INSERT IGNORE INTO ISSUES (clave, tipo, story_points, key_epic, assignee_id, status) VALUES (?, ?, ?, ?, ?, ?)`,
-      [clave, tipo, story_points, key_epic, assignee_id, status]
-    );
+    try {
+      return db.execute(
+        `INSERT IGNORE INTO issues (clave, tipo, story_points, key_epic, assignee_id, status) VALUES (?, ?, ?, ?, ?, ?)`,
+        [clave, tipo, story_points, key_epic, assignee_id, status]
+      );
+    } catch (error) {
+      console.error(error);
+    }
   };
 };
