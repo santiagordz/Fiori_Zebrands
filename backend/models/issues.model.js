@@ -54,7 +54,7 @@ module.exports = class Issue {
         parent: issue_parent,
         type_parent: issue_type_parent,
         sprint_id: issue.fields.customfield_10010[0].id,
-        assignee_id: issue_assignee_id,
+        assignee_id: issue_assignee_id[0],
         assignee_name: issue_assignee_name,
         issue_storypoints: issue.fields.customfield_10042,
         issue_status: issue.fields.status.name,

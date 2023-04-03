@@ -1,6 +1,7 @@
 const axios = require('axios');
 const issuesModel = require('../models/issues.model');
 const db = require('../database/db');
+const usuario_issues = require('../models/usuarios_issues.model');
 
 exports.getIssuesJira = async (req, res, next) => {
   try {
@@ -20,9 +21,17 @@ exports.postIssuesJira = async (req, res, next) => {
         issue.type,
         issue.issue_storypoints,
         issue.parent.shift(),
-        issue.assignee_id.shift(),
+        issue.assignee_id,
         issue.issue_status
       );
+
+      if (issue.assignee_id) {
+        await usuario_issues.createUsuarioIssue(
+          console.log(issue.key),
+          issue.assignee_id ? issue.assignee_id : null,
+          issue.key
+        );
+      }
     }
     res.send('Issues guardados en la base de datos');
   });
