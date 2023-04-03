@@ -47,7 +47,7 @@ const etiquetasRoutes = require('./routes/etiquetas.routes');
 const coloresRoutes = require('./routes/colores.routes');
 const usuariosJiraRoutes = require('./routes/usuarios_jira.routes');
 const issuesJiraRoutes = require('./routes/issuesJira.routes');
-const epicsJiraRoutes = require('./routes/epicsJira.routes');
+const sprintsJiraRoutes = require('./routes/sprints.routes');
 
 app.use('/usuarios', usuariosRoutes);
 app.use('/usuarios_jira', usuariosJiraRoutes);
@@ -58,7 +58,7 @@ app.use('/user', usuariosRoutes);
 app.use('/retrospectivas', retrospectivaRoutes);
 app.use('/respuesta', respuestaRoutes);
 app.use('/issuesjira', issuesJiraRoutes);
-app.use('/epicsjira', epicsJiraRoutes);
+app.use('/sprints', sprintsJiraRoutes);
 
 app.get('/logout', (req, res) => {
   req.logout();
