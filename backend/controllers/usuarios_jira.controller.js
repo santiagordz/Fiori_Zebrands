@@ -24,4 +24,5 @@ exports.postJiraUsers = async (req, res, next) => {
       usuario.displayName
     );
   }
+  res.send('Usuarios de Jira guardados en la base de datos.');
 };

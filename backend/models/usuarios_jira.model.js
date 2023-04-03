@@ -11,25 +11,24 @@ const auth = {
 module.exports = class Usuarios_Jira {
   static fetchJiraUsers = async () => {
     const response = await axios.get(
-      `https://zebrands.atlassian.net/rest/api/3/users/search`,
+      `https://zebrands.atlassian.net/rest/api/2/project/TPECG/role/10155`,
       {
         auth: auth,
       }
     );
 
-    var atlassianUsers = response.data.filter(function (user) {
-      return user.accountType.toLowerCase() === 'atlassian';
+    var jsonData = response.data;
+    var actors = [];
+
+    jsonData.actors.map((actor) => {
+      actors.push({
+        accountId: actor.actorUser.accountId,
+        displayName: actor.displayName,
+        accountType: actor.type,
+      });
     });
 
-    const jiraUsers = atlassianUsers.map(function (user) {
-      return {
-        accountId: user.accountId,
-        displayName: user.displayName,
-        accountType: user.accountType,
-      };
-    });
-
-    return jiraUsers;
+    return actors;
   };
 
   static getJiraUsers = async () => {
