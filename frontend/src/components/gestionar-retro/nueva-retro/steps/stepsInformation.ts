@@ -16,6 +16,6 @@ export const stepsInformation: Array<StepInformation> = [
   {
     title: 'Selecciona los participantes',
     description:
-      'Solo los usuarios seleccionados podrán responder las preguntas a esta retrospectiva pero cualquiera podrá ver los resultados',
+      'Solo los usuarios seleccionados podrán responder las preguntas de esta retrospectiva pero cualquiera podrá ver los resultados',
   },
 ];

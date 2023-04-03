@@ -1,21 +1,20 @@
-import React, {
-  FC,
-  useState,
-  useEffect,
-  useContext,
-  useCallback,
-} from 'react';
 import Button from '@atlaskit/button';
 import AddIcon from '@atlaskit/icon/glyph/add';
-import ArrowRightIcon from '@atlaskit/icon/glyph/arrow-right';
 import ArrowLeftIcon from '@atlaskit/icon/glyph/arrow-left';
-import Pregunta from './Pregunta';
+import ArrowRightIcon from '@atlaskit/icon/glyph/arrow-right';
 import axios from 'axios';
 import {
-  type PreguntaType,
+  FC,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
+import {
   newRetroContext,
-  newRetroType,
+  type PreguntaType,
 } from '../../local-contexts';
+import Pregunta from './Pregunta';
 
 const URI = 'http://localhost:8000/preguntas';
 
@@ -26,8 +25,7 @@ interface Step2Props {
 
 const Step2: FC<Step2Props> = ({ setStepNumber, stepNumber }) => {
   const { newRetro, setNewRetro } = useContext(newRetroContext);
-  const [preguntaTemp, setPreguntaTemp] =
-    useState<PreguntaType | null>(null!);
+  const [isError, setIsError] = useState<boolean>(false);
 
   const getPreguntas = async () => {
     const { data } = await axios.get(URI);
@@ -92,6 +90,14 @@ const Step2: FC<Step2Props> = ({ setStepNumber, stepNumber }) => {
     getPreguntas();
   }, []);
 
+  useEffect(() => {
+    if (newRetro?.predeterminadas?.length === 0) {
+      setIsError(true);
+    } else {
+      setIsError(false);
+    }
+  }, [newRetro?.predeterminadas?.length]);
+
   return (
     <span
       className={`flex flex-col gap-10 w-full text-left ${
@@ -99,11 +105,19 @@ const Step2: FC<Step2Props> = ({ setStepNumber, stepNumber }) => {
       }`}
     >
       <div className="flex flex-col gap-3">
-        <p className="font-semibold text-xs text-[626F86]">
-          {`Preguntas seleccionadas: ${
-            newRetro?.predeterminadas?.length ?? 0
-          }`}
-        </p>
+        <div>
+          <p className="font-semibold text-xs">
+            {`Preguntas seleccionadas: ${
+              newRetro?.predeterminadas?.length ?? 0
+            }`}
+          </p>
+          <p className="text-xs text-[#626F86] mt-1">
+            Las preguntas en este espacio se harán predeterminadas, lo
+            que quiere decir que se establecerán como las preguntas
+            seleccionadas por default para las futuras retrospectivas
+            una vez que inicies esta retrospectiva.
+          </p>
+        </div>
         <div className="flex flex-col gap-3">
           {newRetro?.predeterminadas?.length ?? 0 > 0 ? (
             newRetro?.predeterminadas?.map(
@@ -119,8 +133,9 @@ const Step2: FC<Step2Props> = ({ setStepNumber, stepNumber }) => {
               )
             )
           ) : (
-            <p className="text-subtle mt-3 text-xs">
-              No hay preguntas seleccionadas
+            <p className="text-danger mt-3 text-sm">
+              No hay preguntas seleccionadas, agrega al menos una
+              pregunta para continuar.
             </p>
           )}
         </div>
@@ -146,7 +161,7 @@ const Step2: FC<Step2Props> = ({ setStepNumber, stepNumber }) => {
           </span>
         </div>
         <div className="flex flex-col gap-3">
-          {newRetro?.predeterminadas?.length ?? 0 > 0 ? (
+          {newRetro?.otras?.length ?? 0 > 0 ? (
             newRetro?.otras?.map((pregunta: PreguntaType) => (
               <Pregunta
                 key={pregunta.id}
@@ -158,8 +173,9 @@ const Step2: FC<Step2Props> = ({ setStepNumber, stepNumber }) => {
               />
             ))
           ) : (
-            <p className="text-subtle mt-3 text-xs">
-              No hay otras preguntas
+            <p className="text-subtle text-sm">
+              No hay otras preguntas disponibles, si lo necesitas,
+              puedes crear una nueva.
             </p>
           )}
         </div>
@@ -175,7 +191,7 @@ const Step2: FC<Step2Props> = ({ setStepNumber, stepNumber }) => {
         </Button>
         <Button
           appearance="primary"
-          //   isDisabled={isError}
+          isDisabled={isError}
           iconAfter={<ArrowRightIcon label="siguiente paso" />}
           label="Siguiente paso"
           onClick={() => setStepNumber((prev: number) => prev + 1)}

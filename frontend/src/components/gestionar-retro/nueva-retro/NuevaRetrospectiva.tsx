@@ -9,18 +9,14 @@ import { Step2 } from './steps';
 interface NuevaRetrospectivaProps {}
 
 const NuevaRetrospectiva: FC<NuevaRetrospectivaProps> = ({}) => {
-  const [stepNumber, setStepNumber] = useState(2);
+  const [stepNumber, setStepNumber] = useState(1);
 
   return (
     <>
       <div className="flex flex-col gap-5 bg-[#ffffff] py-5 px-5 rounded-sm shadow-sm">
         <h2 className="font-semibold text-information">
-          Crear retrospectiva
+          Nueva retrospectiva
         </h2>
-        <p>
-          Sigue los 3 pasos para crear una nueva retrospectiva después
-          de terminar con el sprint
-        </p>
       </div>
       <div className="flex flex-col gap-5 bg-[#ffffff] py-5 px-5 rounded-sm shadow-sm mt-2">
         <div className="w-full">
