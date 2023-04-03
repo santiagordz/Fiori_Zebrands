@@ -72,12 +72,6 @@ module.exports = class Issue {
     assignee_id,
     status
   ) => {
-    console.log(clave);
-    console.log(tipo);
-    console.log(story_points);
-    console.log(key_epic);
-    console.log(assignee_id);
-    console.log(status);
     return db.execute(
       `INSERT IGNORE INTO ISSUES (clave, tipo, story_points, key_epic, assignee_id, status) VALUES (?, ?, ?, ?, ?, ?)`,
       [clave, tipo, story_points, key_epic, assignee_id, status]
