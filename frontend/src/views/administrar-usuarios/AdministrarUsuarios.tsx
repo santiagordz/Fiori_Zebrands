@@ -1,10 +1,9 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import {
   AdministradorUsuarios,
   GestionarEtiquetas,
 } from '../../components/administrar-usuarios';
-import DesignTemplate from '../../components/design-template/DesignTemplate';
 
 interface AdministrarUsuariosProps {}
 

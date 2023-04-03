@@ -119,7 +119,7 @@ const ModalEditarEtiqueta: FC<ModalEditarEtiquetaProps> = ({
                     </label>
                     <input
                       required
-                      className="h-8 border-2 border-gray-300 rounded-sm p-2 focus:outline-gray-400 hover:bg-gray-100"
+                      className="h-8 border-2 border-gray0 rounded-sm p-2 focus:outline-gray-400 hover:bg-gray-100"
                       autoComplete="off"
                       name="nombre"
                       id="nombre"

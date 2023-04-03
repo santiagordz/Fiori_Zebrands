@@ -131,7 +131,7 @@ const ModalEditarUsuarios: FC<ModalEditarUsuariosProps> = ({
                       autoComplete="off"
                       type="text"
                       name="nombre"
-                      className="h-8 border-2 border-gray-300 rounded-sm p-2 focus:outline-gray-400 hover:bg-gray-100"
+                      className="h-8 border-2 border-gray0 rounded-sm p-2 focus:outline-gray-400 hover:bg-gray-100"
                       defaultValue={nombre}
                       onChange={(e) => setNombre(e.target.value)}
                     />
@@ -148,7 +148,7 @@ const ModalEditarUsuarios: FC<ModalEditarUsuariosProps> = ({
                     type="text"
                     placeholder={correo}
                     disabled={true}
-                    className="h-8 border-2 border-gray-300 rounded-sm p-2 disabled:bg-[#F1F2F4]"
+                    className="h-8 border-2 border-gray0 rounded-sm p-2 disabled:bg-[#F1F2F4]"
                   ></input>
                 </div>
                 <div className="flex flex-col mb-5">

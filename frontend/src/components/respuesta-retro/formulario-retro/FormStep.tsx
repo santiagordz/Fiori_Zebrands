@@ -158,7 +158,7 @@ const FormStep: FC<FormStepProps> = ({
         <div className="flex gap-14">
           <Button
             appearance="default"
-            iconBefore={<ArrowLeftIcon label="pregunta siguiente" />}
+            iconBefore={<ArrowLeftIcon label="pregunta anterior" />}
             label="Pregunta anterior"
             onClick={() => setFormPage((prev: number) => prev - 1)}
           >

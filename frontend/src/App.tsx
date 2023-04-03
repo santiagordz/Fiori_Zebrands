@@ -27,7 +27,7 @@ function App() {
           <Route path="/login/success" element={<LoginSuccess />} />
           <Route path="/login/error" element={<LoginError />} />
           <Route
-            path="/usernotregistered"
+            path="/usuario-no-registrado"
             element={<NotRegistered />}
           />
         </>

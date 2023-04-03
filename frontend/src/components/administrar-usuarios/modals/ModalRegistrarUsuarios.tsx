@@ -94,7 +94,7 @@ const ModalRegistrarUsuarios: FC<RegistrarUsuariosProps> = ({
                     type="text"
                     name="correo"
                     id="input-correo"
-                    className="border-2 border-gray-300 rounded-sm p-2 focus:outline-gray-400 hover:bg-gray-100"
+                    className="border-2 border-gray0 rounded-sm p-2 focus:outline-gray-400 hover:bg-gray-100"
                     autoComplete="off"
                     placeholder="Ingresa el correo"
                   />
@@ -102,7 +102,7 @@ const ModalRegistrarUsuarios: FC<RegistrarUsuariosProps> = ({
                     type="text"
                     name="terminacion-correo"
                     id="input-dominio-correo"
-                    className="border-2 border-gray-300 rounded-sm p-2 disabled:bg-gray-200"
+                    className="border-2 border-gray0 rounded-sm p-2 disabled:bg-gray-200"
                     disabled
                     placeholder="@zeb.mx"
                   />

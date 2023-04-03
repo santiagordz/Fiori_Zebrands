@@ -1,6 +1,6 @@
 import CheckIcon from '@atlaskit/icon/glyph/check';
-import ChevronRightLargeIcon from '@atlaskit/icon/glyph/chevron-right-large';
 import FlagFilledIcon from '@atlaskit/icon/glyph/flag-filled';
+import ChevronRightLargeIcon from '@atlaskit/icon/glyph/chevron-right-large';
 import { SimpleTag as Tag, TagColor } from '@atlaskit/tag';
 import { FC, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -48,6 +48,19 @@ const RetrospectivaGeneral: FC<RetrospectivaGeneralProps> = ({
     }
   };
 
+  const fecha_inicio = new Date(fechaInicio);
+
+  const dia_inicio = fecha_inicio
+    .getUTCDate()
+    .toString()
+    .padStart(2, '0');
+  const mes_inicio = (fecha_inicio.getUTCMonth() + 1)
+    .toString()
+    .padStart(2, '0');
+  const anio_inicio = fecha_inicio.getUTCFullYear().toString();
+
+  const fecha_inicio_formateada = `${dia_inicio}/${mes_inicio}/${anio_inicio}`;
+
   return (
     <div
       className={`flex ${
@@ -60,7 +73,7 @@ const RetrospectivaGeneral: FC<RetrospectivaGeneralProps> = ({
       <div
         className={`flex flex-col py-3 px-5 w-full gap-1 rounded bg-white ${
           !isInResponder
-            ? 'hover:bg-[#fafbfc] border border-solid border-gray-30'
+            ? 'hover:bg-[#fafbfc] border border-solid border-gray'
             : 'shadow-sm'
         }`}
       >
@@ -107,7 +120,7 @@ const RetrospectivaGeneral: FC<RetrospectivaGeneralProps> = ({
           <p>{descripcion}</p>
         </div>
         <div className="flex flex-row text-[0.7rem] justify-between mt-3">
-          <p>Fecha de inicio: {fechaInicio}</p>
+          <p>Fecha de inicio: {fecha_inicio_formateada}</p>
           {!isInResponder && (
             <ChevronRightLargeIcon
               label="flecha"

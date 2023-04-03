@@ -3,9 +3,6 @@ require('./auth/passportGoogleSSO');
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const retrospectivaRoutes = require('./routes/retrospectivas.routes');
-const respuestaRoutes = require('./routes/respuesta.routes');
-const usuariosRoutes = require('./routes/usuarios.routes');
 const passport = require('passport');
 const authRoutes = require('./auth/index');
 const cookieSession = require('cookie-session');
@@ -42,6 +39,10 @@ app.use((err, req, res, next) => {
   }
 });
 
+const retrospectivaRoutes = require('./routes/retrospectivas.routes');
+const respuestaRoutes = require('./routes/respuesta.routes');
+const usuariosRoutes = require('./routes/usuarios.routes');
+const preguntaRoutes = require('./routes/preguntas.routes');
 const rolesRoutes = require('./routes/roles.routes');
 const etiquetasRoutes = require('./routes/etiquetas.routes');
 const coloresRoutes = require('./routes/colores.routes');
@@ -53,6 +54,7 @@ app.use('/colores', coloresRoutes);
 app.use('/user', usuariosRoutes);
 app.use('/retrospectivas', retrospectivaRoutes);
 app.use('/respuesta', respuestaRoutes);
+app.use('/preguntas', preguntaRoutes);
 
 app.get('/logout', (req, res) => {
   req.logout();

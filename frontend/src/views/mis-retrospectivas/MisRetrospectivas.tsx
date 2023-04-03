@@ -14,6 +14,8 @@ const URI = 'http://localhost:8000/retrospectivas';
 export interface Retrospectiva {
   id: number;
   completada: boolean;
+  num_respuestas: number;
+  en_curso: boolean;
   titulo: string;
   descripcion: string;
   fecha_inicio: string;

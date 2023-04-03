@@ -47,7 +47,7 @@ const Login: FC<LoginProps> = ({}) => {
   useEffect(() => {
     const handleAuthMessage = (event: MessageEvent) => {
       if (event.data.error === 'User not registered') {
-        navigate('/usernotregistered');
+        navigate('/usuario-no-registrado');
       }
       if (event.data.error) {
         setError(true);

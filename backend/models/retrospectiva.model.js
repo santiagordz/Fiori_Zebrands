@@ -16,7 +16,10 @@ module.exports = class Retrospectiva {
 
   static fetchPanelRetros() {
     return db.execute(
-      'SELECT id, titulo, fecha_inicio, fecha_fin, descripcion, id_reporte, updatedAt, createdAt FROM `retrospectivas`;'
+      `SELECT Retro.id, titulo, fecha_inicio, fecha_fin, descripcion, en_curso, COUNT(DISTINCT R.id_sesionRespuesta) AS num_respuestas
+        FROM retrospectivas Retro
+        LEFT JOIN respuestas R ON R.id_retrospectiva = Retro.id
+        GROUP BY Retro.id;`
     );
   }
 
@@ -55,7 +58,6 @@ module.exports = class Retrospectiva {
     );
   }
   static fetchQuestions(id) {
-    // Utilizando subconsultas
     return db.execute(
       `SELECT P.id, P.pregunta, P.id_tipo_pregunta,
           (SELECT GROUP_CONCAT(OP.opcion_respuesta) FROM opciones_respuestas as OP

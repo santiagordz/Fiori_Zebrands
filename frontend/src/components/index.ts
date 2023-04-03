@@ -9,3 +9,4 @@ export { default as ResponderRetro } from './respuesta-retro/formulario-retro/Re
 
 // Gestionar retrospectivas
 export { default as PanelGestionarRetro } from './gestionar-retro/PanelGestionarRetro';
+export { default as NuevaRetrospectiva } from './gestionar-retro/nueva-retro/NuevaRetrospectiva';
