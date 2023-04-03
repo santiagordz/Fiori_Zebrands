@@ -15,8 +15,32 @@ module.exports = class Epic {
       }
     );
 
-    const epicsJira = response.data.epics.map((epic) => {
-      console.log(epic);
+    var epicsFiltered = [];
+
+    const jsonData = response.data;
+
+    // Loop through each issue and extract the required information
+    const epicsJira = jsonData.issues.map(function (epics) {
+      if (epics.fields.parent) {
+        epicsFiltered.push({
+          key: epics.fields.parent.key,
+          summary: epics.fields.parent.fields.summary,
+          status: epics.fields.parent.fields.status.name,
+          type: epics.fields.parent.fields.issuetype.name,
+          color:
+            epics.fields.parent.fields.status.statusCategory
+              .colorName,
+        });
+      }
     });
+
+    return epicsFiltered;
+  };
+
+  static postEpicsJira = async (key, summary, status, color) => {
+    return db.execute(
+      `INSERT IGNORE INTO epics (id_jira, nombre, status, color) VALUES (?, ?, ?, ?)`,
+      [key, summary, status, color]
+    );
   };
 };
