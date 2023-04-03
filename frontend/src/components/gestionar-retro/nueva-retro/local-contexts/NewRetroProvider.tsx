@@ -8,14 +8,13 @@ export interface PreguntaType {
 }
 
 export interface newRetroType {
-  basic?: {
-    title: string;
-    description: string;
-  };
+  titulo?: string;
+  descripcion?: string;
   predeterminadas?: PreguntaType[];
   otras?: PreguntaType[];
   // !Cambiar tipo de usuario que no sea any
   usuarios?: any;
+  // etiquetas?: any;
 }
 
 interface ContextProps {
@@ -34,10 +33,8 @@ interface newRetroContextProps {
 
 const NewRetroProvider: FC<newRetroContextProps> = ({ children }) => {
   const [newRetro, setNewRetro] = useState<newRetroType>({
-    basic: {
-      title: '',
-      description: '',
-    },
+    titulo: '',
+    descripcion: '',
     predeterminadas: [],
     otras: [],
     usuarios: [],

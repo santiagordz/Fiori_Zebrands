@@ -2,7 +2,6 @@ import { Checkbox } from '@atlaskit/checkbox';
 import { SimpleTag as Tag } from '@atlaskit/tag';
 import { FC } from 'react';
 import DropdownMenu from '../../../../design-template/dropdown/DropdownMenu';
-import DragHandlerIcon from '@atlaskit/icon/glyph/drag-handler';
 
 interface PreguntaProps {
   pregunta: string;
@@ -57,7 +56,6 @@ const Pregunta: FC<PreguntaProps> = ({
             Eliminar pregunta
           </button>
         </DropdownMenu>
-        <DragHandlerIcon label="drag" />
       </div>
     </div>
   );
