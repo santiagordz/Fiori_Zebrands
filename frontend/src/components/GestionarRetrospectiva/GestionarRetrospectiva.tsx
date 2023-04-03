@@ -41,6 +41,7 @@ const GestionarRetrospectiva = () => {
         )}
 
         <Button
+          type="submit"
           iconAfter={<ArrowRightIcon label=" " size="medium" />}
           appearance="primary"
           onClick={next}

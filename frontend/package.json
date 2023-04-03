@@ -14,6 +14,7 @@
     "@atlaskit/button": "^16.5.6",
     "@atlaskit/checkbox": "^12.4.6",
     "@atlaskit/css-reset": "^6.3.20",
+    "@atlaskit/dropdown-menu": "^11.7.2",
     "@atlaskit/form": "^8.8.4",
     "@atlaskit/heading": "^1.1.2",
     "@atlaskit/modal-dialog": "^12.4.11",

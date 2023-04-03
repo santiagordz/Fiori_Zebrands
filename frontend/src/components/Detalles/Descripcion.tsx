@@ -1,3 +1,7 @@
+import React, { Fragment } from "react";
+import TextArea from "@atlaskit/textarea";
+import Titulo from "./Titulo";
+
 const Descripcion = () => {
   return (
     <>
@@ -11,10 +15,19 @@ const Descripcion = () => {
         </p>
       </div>
 
+      <Titulo />
+
       <div className="grid grid-cols-1 gap-y-4 px-[8vmin]">
         <p className="pr-[150vmin] font-semibold text-md text-[#626F86] pl-30">
           Descripción:
         </p>
+
+        <TextArea
+          resize="auto"
+          maxHeight="20vh"
+          name="descripcion"
+          placeholder="Escribe una descripción para tu retrospectiva"
+        />
       </div>
     </>
   );
