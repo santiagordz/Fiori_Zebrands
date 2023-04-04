@@ -9,7 +9,7 @@ import DebugContextButton from "./DebugContextButton";
 const URI = "http://localhost:8000/";
 
 const fecha = ["01-06-2023", "01-07-2023", "01-08-2023", "01-09-2023"];
-const maxCaracteres = 1000; //En la base de datos dice 1000, no es mucho ?
+const maxCaracteres = 250;
 
 interface Step1Props {
   setStepNumber: (updater: (prev: number) => number) => void;
