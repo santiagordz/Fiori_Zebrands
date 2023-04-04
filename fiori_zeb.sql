@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.2
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 31-03-2023 a las 04:27:41
--- Versión del servidor: 10.4.27-MariaDB
--- Versión de PHP: 8.1.12
+-- Host: localhost:3306
+-- Generation Time: Apr 04, 2023 at 09:28 PM
+-- Server version: 5.7.24
+-- PHP Version: 8.0.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,24 +18,181 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `fiori_zeb`
+-- Database: `fiori`
 --
+
+DELIMITER $$
+--
+-- Procedures
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `DeletePregunta` (IN `pregunta_id` INT)   BEGIN
+    DECLARE tipo_pregunta_id INT;
+
+    -- Declarar el manejador de errores
+    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+    END;
+
+    -- Iniciar la transacción
+    START TRANSACTION;
+
+    -- Obtener el id_tipo_pregunta
+    SELECT id_tipo_pregunta INTO tipo_pregunta_id
+    FROM preguntas
+    WHERE id = pregunta_id;
+    
+    -- Eliminar las respuestas asociadas a la pregunta
+    DELETE FROM respuestas
+    WHERE id_pregunta = pregunta_id;
+
+    -- Eliminar las opciones de respuesta si id_tipo_pregunta es 3
+    IF tipo_pregunta_id = 3 THEN
+        DELETE FROM opciones_respuestas
+        WHERE id IN (
+            SELECT id_opcion
+            FROM preguntas_opciones
+            WHERE id_pregunta = pregunta_id
+        );
+    END IF;
+
+    -- Eliminar la pregunta
+    DELETE FROM preguntas
+    WHERE id = pregunta_id;
+
+    -- Confirmar la transacción si todo fue exitoso
+    COMMIT;
+
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `EditPregunta` (IN `pregunta_id` INT, IN `nueva_pregunta` VARCHAR(255), IN `nueva_predeterminada` BOOLEAN, IN `nuevo_id_tipo_pregunta` INT, IN `nuevas_opciones` TEXT)   BEGIN
+    DECLARE tipo_pregunta_id INT;
+    DECLARE opcion_actual VARCHAR(255);
+    DECLARE pos_coma INT;
+    DECLARE opciones_actuales TEXT;
+
+    -- Declarar el manejador de errores
+    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+    END;
+
+    -- Iniciar la transacción
+    START TRANSACTION;
+
+    -- Obtener el id_tipo_pregunta y las opciones actuales
+    SELECT id_tipo_pregunta, GROUP_CONCAT(opciones_respuestas.opcion_respuesta) INTO tipo_pregunta_id, opciones_actuales
+    FROM preguntas
+    LEFT JOIN preguntas_opciones ON preguntas.id = preguntas_opciones.id_pregunta
+    LEFT JOIN opciones_respuestas ON preguntas_opciones.id_opcion = opciones_respuestas.id
+    WHERE preguntas.id = pregunta_id
+    GROUP BY preguntas.id;
+
+    -- Actualizar la pregunta, predeterminada e id_tipo_pregunta
+    UPDATE preguntas
+    SET pregunta = nueva_pregunta, predeterminada = nueva_predeterminada, id_tipo_pregunta = nuevo_id_tipo_pregunta
+    WHERE id = pregunta_id;
+
+    -- Si el id_tipo_pregunta original es 3 y las opciones han cambiado, eliminar las opciones de respuesta actuales
+    IF tipo_pregunta_id = 3 THEN
+        DELETE FROM opciones_respuestas
+        WHERE id IN (
+            SELECT id_opcion
+            FROM preguntas_opciones
+            WHERE id_pregunta = pregunta_id
+        );
+    END IF;
+
+    -- Si el nuevo id_tipo_pregunta es 3 y las opciones han cambiado, agregar las nuevas opciones de respuesta
+    IF nuevo_id_tipo_pregunta = 3 THEN
+        WHILE LENGTH(nuevas_opciones) > 0 DO
+            SET pos_coma = LOCATE(',', nuevas_opciones);
+
+            IF pos_coma > 0 THEN
+                SET opcion_actual = TRIM(LEFT(nuevas_opciones, pos_coma - 1));
+                SET nuevas_opciones = SUBSTRING(nuevas_opciones, pos_coma + 1);
+            ELSE
+                SET opcion_actual = TRIM(nuevas_opciones);
+                SET nuevas_opciones = '';
+            END IF;
+
+            INSERT INTO opciones_respuestas(opcion_respuesta)
+            VALUES (opcion_actual);
+
+            INSERT INTO preguntas_opciones(id_pregunta, id_opcion)
+            VALUES (pregunta_id, LAST_INSERT_ID());
+        END WHILE;
+    END IF;
+
+    -- Confirmar la transacción si todo fue exitoso
+    COMMIT;
+
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertPregunta` (IN `pregunta_id` INT, IN `nueva_pregunta` VARCHAR(255), IN `es_predeterminada` BOOLEAN, IN `tipo_pregunta_id` INT, IN `opciones_respuesta` TEXT)   BEGIN
+    DECLARE opcion_actual VARCHAR(255);
+    DECLARE pos_coma INT;
+
+    -- Declarar el manejador de errores
+    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+    END;
+
+    -- Iniciar la transacción
+    START TRANSACTION;
+
+    -- Insertar la nueva pregunta
+    INSERT INTO preguntas(id, pregunta, predeterminada, id_tipo_pregunta)
+    VALUES (pregunta_id, nueva_pregunta, es_predeterminada, tipo_pregunta_id);
+
+    IF tipo_pregunta_id = 3 THEN
+        BEGIN
+          WHILE LENGTH(opciones_respuesta) > 0 DO
+
+              SET pos_coma = LOCATE(',', opciones_respuesta);
+              IF pos_coma > 0 THEN
+                  SET opcion_actual = TRIM(SUBSTRING(opciones_respuesta, 1, pos_coma - 1));
+                  SET opciones_respuesta = TRIM(SUBSTRING(opciones_respuesta, pos_coma + 1));
+              ELSE
+                  SET opcion_actual = TRIM(opciones_respuesta);
+                  SET opciones_respuesta = '';
+              END IF;
+
+              IF LENGTH(opcion_actual) > 0 THEN
+                  -- Insertar la opción de respuesta y asociarla con la pregunta
+                  INSERT INTO opciones_respuestas(opcion_respuesta)
+                  VALUES (opcion_actual);
+
+                  INSERT INTO preguntas_opciones(id_pregunta, id_opcion)
+                  VALUES (pregunta_id, LAST_INSERT_ID());
+              END IF;
+          END WHILE;
+        END;
+    END IF;
+
+    -- Confirmar la transacción si todo fue exitoso
+    COMMIT;
+
+END$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `colores`
+-- Table structure for table `colores`
 --
 
 CREATE TABLE `colores` (
   `id` int(11) NOT NULL,
   `color` varchar(100) NOT NULL,
-  `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updatedAt` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Volcado de datos para la tabla `colores`
+-- Dumping data for table `colores`
 --
 
 INSERT INTO `colores` (`id`, `color`, `createdAt`, `updatedAt`) VALUES
@@ -50,7 +207,7 @@ INSERT INTO `colores` (`id`, `color`, `createdAt`, `updatedAt`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `epics`
+-- Table structure for table `epics`
 --
 
 CREATE TABLE `epics` (
@@ -58,53 +215,41 @@ CREATE TABLE `epics` (
   `nombre` varchar(200) NOT NULL,
   `resumen` varchar(500) NOT NULL,
   `color` varchar(100) NOT NULL,
-  `fecha_inicio` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `fecha_fin` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updatedAt` timestamp NOT NULL DEFAULT current_timestamp(),
+  `fecha_inicio` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `fecha_fin` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `id_reporte` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `etiquetas`
+-- Table structure for table `etiquetas`
 --
 
 CREATE TABLE `etiquetas` (
   `id` int(11) NOT NULL,
   `etiqueta` varchar(100) NOT NULL,
-  `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updatedAt` timestamp NOT NULL DEFAULT current_timestamp(),
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `id_color` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Volcado de datos para la tabla `etiquetas`
+-- Dumping data for table `etiquetas`
 --
 
 INSERT INTO `etiquetas` (`id`, `etiqueta`, `createdAt`, `updatedAt`, `id_color`) VALUES
-(1, 'Full-Stack', '2023-03-27 00:00:00', '2023-03-29 20:13:21', 2),
-(2, 'Front-End', '2023-03-27 00:00:00', '2023-03-27 00:00:00', 3),
-(3, 'Back-End', '2023-03-27 00:00:00', '2023-03-27 00:00:00', 6);
+(2, 'Full-Stack', '2023-03-27 00:00:00', '2023-03-31 19:01:43', 3),
+(3, 'Back-End', '2023-03-27 00:00:00', '2023-03-31 19:01:57', 6),
+(6, 'UX/UI', '2023-03-30 18:15:26', '2023-03-31 19:01:33', 4),
+(9, 'Front-End', '2023-03-31 19:02:14', '2023-03-31 19:02:14', 2);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `funciones`
---
-
-CREATE TABLE `funciones` (
-  `id` int(11) NOT NULL,
-  `funcion` varchar(200) NOT NULL,
-  `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updatedAt` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `issues`
+-- Table structure for table `issues`
 --
 
 CREATE TABLE `issues` (
@@ -113,26 +258,26 @@ CREATE TABLE `issues` (
   `prioridad` varchar(100) NOT NULL,
   `tipo` varchar(100) NOT NULL,
   `story_points` varchar(100) NOT NULL,
-  `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updatedAt` timestamp NOT NULL DEFAULT current_timestamp(),
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `id_epic` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `opciones_respuestas`
+-- Table structure for table `opciones_respuestas`
 --
 
 CREATE TABLE `opciones_respuestas` (
   `id` int(11) NOT NULL,
   `opcion_respuesta` varchar(100) NOT NULL,
-  `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updatedAt` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Volcado de datos para la tabla `opciones_respuestas`
+-- Dumping data for table `opciones_respuestas`
 --
 
 INSERT INTO `opciones_respuestas` (`id`, `opcion_respuesta`, `createdAt`, `updatedAt`) VALUES
@@ -144,42 +289,42 @@ INSERT INTO `opciones_respuestas` (`id`, `opcion_respuesta`, `createdAt`, `updat
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `preguntas`
+-- Table structure for table `preguntas`
 --
 
 CREATE TABLE `preguntas` (
   `id` int(11) NOT NULL,
   `pregunta` varchar(1000) NOT NULL,
   `predeterminada` tinyint(1) NOT NULL,
-  `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updatedAt` timestamp NOT NULL DEFAULT current_timestamp(),
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `id_tipo_pregunta` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Volcado de datos para la tabla `preguntas`
+-- Dumping data for table `preguntas`
 --
 
 INSERT INTO `preguntas` (`id`, `pregunta`, `predeterminada`, `createdAt`, `updatedAt`, `id_tipo_pregunta`) VALUES
-(3, '¿Qué hicimos bien en el Sprint que vale la pena mencionar?', 0, '2023-03-27 23:33:11', '2023-03-27 23:33:11', 1),
-(4, '¿Qué hicimos mal que debemos de hacer diferente en el siguiente sprint?', 0, '2023-03-27 23:33:11', '2023-03-27 23:33:11', 2),
+(3, '¿Qué hicimos bien en el Sprint que vale la pena mencionar?', 1, '2023-03-27 23:33:11', '2023-03-27 23:33:11', 1),
+(4, '¿Qué hicimos mal que debemos de hacer diferente en el siguiente sprint?', 1, '2023-03-27 23:33:11', '2023-03-27 23:33:11', 2),
 (5, '¿Cómo calificarías la calidad de las reuniones del equipo durante el último sprint?', 0, '2023-03-27 23:35:03', '2023-03-27 23:35:03', 3),
-(6, 'En una escala del 1 al 5 ¿Cómo calificas tu desempeño en el sprint?', 0, '2023-03-30 03:41:26', '2023-03-30 03:41:26', 4);
+(6, 'En una escala del 1 al 5 ¿Cómo calificas tu desempeño en el sprint?', 1, '2023-03-30 03:41:26', '2023-04-04 21:27:29', 4);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `preguntas_opciones`
+-- Table structure for table `preguntas_opciones`
 --
 
 CREATE TABLE `preguntas_opciones` (
   `id` int(11) NOT NULL,
   `id_pregunta` int(11) NOT NULL,
   `id_opcion` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Volcado de datos para la tabla `preguntas_opciones`
+-- Dumping data for table `preguntas_opciones`
 --
 
 INSERT INTO `preguntas_opciones` (`id`, `id_pregunta`, `id_opcion`) VALUES
@@ -191,17 +336,17 @@ INSERT INTO `preguntas_opciones` (`id`, `id_pregunta`, `id_opcion`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `preguntas_retrospectivas`
+-- Table structure for table `preguntas_retrospectivas`
 --
 
 CREATE TABLE `preguntas_retrospectivas` (
   `id` int(11) NOT NULL,
   `id_pregunta` int(11) NOT NULL,
   `id_retrospectiva` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Volcado de datos para la tabla `preguntas_retrospectivas`
+-- Dumping data for table `preguntas_retrospectivas`
 --
 
 INSERT INTO `preguntas_retrospectivas` (`id`, `id_pregunta`, `id_retrospectiva`) VALUES
@@ -216,112 +361,108 @@ INSERT INTO `preguntas_retrospectivas` (`id`, `id_pregunta`, `id_retrospectiva`)
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `reportes`
+-- Table structure for table `reportes`
 --
 
 CREATE TABLE `reportes` (
   `id` int(11) NOT NULL,
-  `fecha` timestamp NOT NULL DEFAULT current_timestamp(),
+  `fecha` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `archivo` varchar(5000) NOT NULL,
-  `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updatedAt` timestamp NOT NULL DEFAULT current_timestamp(),
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `id_retrospectiva` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `respuestas`
+-- Table structure for table `respuestas`
 --
 
 CREATE TABLE `respuestas` (
   `id` int(11) NOT NULL,
   `respuesta` varchar(3000) NOT NULL,
   `anonimo` tinyint(1) NOT NULL,
-  `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updatedAt` timestamp NOT NULL DEFAULT current_timestamp(),
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `id_usuario` int(11) DEFAULT NULL,
   `id_retrospectiva` int(11) NOT NULL,
   `id_pregunta` int(11) NOT NULL,
   `id_sesionRespuesta` varchar(13) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Volcado de datos para la tabla `respuestas`
+-- Dumping data for table `respuestas`
 --
 
 INSERT INTO `respuestas` (`id`, `respuesta`, `anonimo`, `createdAt`, `updatedAt`, `id_usuario`, `id_retrospectiva`, `id_pregunta`, `id_sesionRespuesta`) VALUES
-(10, 'asdfasdfasdf', 0, '2023-03-30 15:39:16', '2023-03-30 15:39:16', 21, 5, 3, 'KBGDlBrX5iCob'),
-(11, 'as.dkflakjsdfassdfklasmdfknqweuir13y40981239uhflkjsadnc,asdfasdf', 1, '2023-03-30 15:39:16', '2023-03-30 15:39:16', NULL, 5, 4, 'KBGDlBrX5iCob'),
-(12, 'Malo', 1, '2023-03-30 15:39:16', '2023-03-30 15:39:16', NULL, 5, 5, 'KBGDlBrX5iCob');
+(20, 'a', 1, '2023-04-03 20:34:45', '2023-04-03 20:34:45', NULL, 6, 3, 'g932KDPvYBf-C');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `retrospectivas`
+-- Table structure for table `retrospectivas`
 --
 
 CREATE TABLE `retrospectivas` (
   `id` int(11) NOT NULL,
   `titulo` varchar(100) NOT NULL,
   `descripcion` varchar(1000) NOT NULL,
-  `fecha_inicio` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `fecha_fin` timestamp NOT NULL DEFAULT current_timestamp(),
-  `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updatedAt` timestamp NOT NULL DEFAULT current_timestamp(),
+  `fecha_inicio` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `fecha_fin` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `en_curso` tinyint(1) NOT NULL DEFAULT '1',
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `id_reporte` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Volcado de datos para la tabla `retrospectivas`
+-- Dumping data for table `retrospectivas`
 --
 
-INSERT INTO `retrospectivas` (`id`, `titulo`, `descripcion`, `fecha_inicio`, `fecha_fin`, `createdAt`, `updatedAt`, `id_reporte`) VALUES
-(5, 'Retro 1', 'Descripcion retro 1', '2023-03-29 21:54:24', '2023-03-28 17:49:10', '2023-03-28 17:49:10', '2023-03-28 17:49:10', NULL),
-(6, 'Retro 2', 'Descripcion retro 2', '2023-03-28 21:28:22', '2023-03-28 21:28:22', '2023-03-28 21:28:22', '2023-03-28 21:28:22', NULL),
-(7, 'Retro 3', 'Descripcion retro 3', '2023-03-29 20:56:47', '2023-03-29 20:56:47', '2023-03-29 20:56:47', '2023-03-29 20:56:47', NULL),
-(8, 'Retro 4', 'Descripcion retro 4', '2023-03-29 21:54:38', '2023-03-29 21:53:18', '2023-03-29 21:53:18', '2023-03-29 21:53:18', NULL);
+INSERT INTO `retrospectivas` (`id`, `titulo`, `descripcion`, `fecha_inicio`, `fecha_fin`, `en_curso`, `createdAt`, `updatedAt`, `id_reporte`) VALUES
+(5, 'Retro 1', 'Descripcion retro 1', '2023-04-04 21:08:45', '2023-04-04 21:10:30', 0, '2023-03-28 17:49:10', '2023-04-04 21:10:30', NULL),
+(6, 'Retro 2', 'Descripcion retro 2', '2023-04-04 20:56:52', '2023-03-28 21:28:22', 1, '2023-03-28 21:28:22', '2023-03-28 21:28:22', NULL),
+(8, 'Retro 4', 'Descripcion retro 4', '2023-04-04 20:56:52', '2023-03-29 21:53:18', 1, '2023-03-29 21:53:18', '2023-03-29 21:53:18', NULL);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `retrospectiva_etiquetas`
+-- Table structure for table `retrospectiva_etiquetas`
 --
 
 CREATE TABLE `retrospectiva_etiquetas` (
   `id` int(11) NOT NULL,
   `id_retrospectiva` int(11) NOT NULL,
   `id_etiqueta` int(11) NOT NULL,
-  `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updatedAt` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Volcado de datos para la tabla `retrospectiva_etiquetas`
+-- Dumping data for table `retrospectiva_etiquetas`
 --
 
 INSERT INTO `retrospectiva_etiquetas` (`id`, `id_retrospectiva`, `id_etiqueta`, `createdAt`, `updatedAt`) VALUES
 (9, 5, 3, '2023-03-28 18:34:51', '2023-03-28 18:34:51'),
-(10, 6, 1, '2023-03-28 21:28:40', '2023-03-28 21:28:40'),
 (11, 6, 2, '2023-03-28 21:28:40', '2023-03-28 21:28:40'),
-(12, 7, 1, '2023-03-29 21:21:15', '2023-03-29 21:21:15'),
-(13, 7, 3, '2023-03-29 21:24:49', '2023-03-29 21:24:49');
+(14, 5, 6, '2023-04-02 18:08:46', '2023-04-02 18:08:46');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `roles`
+-- Table structure for table `roles`
 --
 
 CREATE TABLE `roles` (
   `id` int(11) NOT NULL,
   `rol` varchar(50) NOT NULL,
-  `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updatedAt` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Volcado de datos para la tabla `roles`
+-- Dumping data for table `roles`
 --
 
 INSERT INTO `roles` (`id`, `rol`, `createdAt`, `updatedAt`) VALUES
@@ -332,70 +473,70 @@ INSERT INTO `roles` (`id`, `rol`, `createdAt`, `updatedAt`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `roles_funciones`
+-- Table structure for table `roles_funciones`
 --
 
 CREATE TABLE `roles_funciones` (
   `id` int(11) NOT NULL,
   `id_rol` int(11) NOT NULL,
   `id_funcion` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `sprints`
+-- Table structure for table `sprints`
 --
 
 CREATE TABLE `sprints` (
   `id` int(11) NOT NULL,
   `nombre` varchar(200) NOT NULL,
-  `fecha_inicio` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `fecha_fin` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updatedAt` timestamp NOT NULL DEFAULT current_timestamp(),
+  `fecha_inicio` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `fecha_fin` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `id_reporte` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `sprints_epics`
+-- Table structure for table `sprints_epics`
 --
 
 CREATE TABLE `sprints_epics` (
   `id` int(11) NOT NULL,
   `id_sprint` int(11) NOT NULL,
   `id_epic` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `sprints_issues`
+-- Table structure for table `sprints_issues`
 --
 
 CREATE TABLE `sprints_issues` (
   `id` int(11) NOT NULL,
   `id_sprint` int(11) NOT NULL,
   `id_issue` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `tipos_preguntas`
+-- Table structure for table `tipos_preguntas`
 --
 
 CREATE TABLE `tipos_preguntas` (
   `id` int(11) NOT NULL,
   `tipo_pregunta` varchar(100) NOT NULL,
-  `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updatedAt` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Volcado de datos para la tabla `tipos_preguntas`
+-- Dumping data for table `tipos_preguntas`
 --
 
 INSERT INTO `tipos_preguntas` (`id`, `tipo_pregunta`, `createdAt`, `updatedAt`) VALUES
@@ -407,7 +548,7 @@ INSERT INTO `tipos_preguntas` (`id`, `tipo_pregunta`, `createdAt`, `updatedAt`) 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `usuarios`
+-- Table structure for table `usuarios`
 --
 
 CREATE TABLE `usuarios` (
@@ -417,123 +558,94 @@ CREATE TABLE `usuarios` (
   `foto` varchar(1000) DEFAULT NULL,
   `id_google` varchar(100) DEFAULT NULL,
   `id_jira` varchar(100) DEFAULT NULL,
-  `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updatedAt` timestamp NOT NULL DEFAULT current_timestamp(),
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `id_rol` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Volcado de datos para la tabla `usuarios`
+-- Dumping data for table `usuarios`
 --
 
 INSERT INTO `usuarios` (`id`, `correo`, `nombre`, `foto`, `id_google`, `id_jira`, `createdAt`, `updatedAt`, `id_rol`) VALUES
-(7, 'correo@zeb.mx', '', NULL, NULL, NULL, '2023-03-29 22:40:26', '2023-03-30 03:23:24', 1),
-(21, 'a01708830@tec.mx', 'Sebastián Jiménez Bauer', 'https://lh3.googleusercontent.com/a/AGNmyxarmtORM68RE43eVftM4vdd86KWZme9XJY9C_62=s96-c', '110334041169444958529', NULL, '2023-03-30 15:31:44', '2023-03-30 15:36:28', 1);
+(7, 'david.langarica@gmail.com', NULL, NULL, NULL, NULL, '2023-03-27 21:04:28', '2023-04-04 15:14:53', 1),
+(23, 'juanpablocabrera045@gmail.com', NULL, NULL, NULL, NULL, '2023-04-04 18:01:52', '2023-04-04 19:44:03', 2),
+(24, 'bailleres.frida@gmail.com', NULL, NULL, NULL, NULL, '2023-04-04 18:02:06', '2023-04-04 18:02:06', 1);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `usuarios_etiquetas`
+-- Table structure for table `usuarios_etiquetas`
 --
 
 CREATE TABLE `usuarios_etiquetas` (
   `id` int(11) NOT NULL,
   `id_usuario` int(11) NOT NULL,
   `id_etiqueta` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `usuarios_etiquetas`
---
-
-INSERT INTO `usuarios_etiquetas` (`id`, `id_usuario`, `id_etiqueta`) VALUES
-(35, 7, 1),
-(41, 19, 2);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `usuarios_issues`
+-- Table structure for table `usuarios_issues`
 --
 
 CREATE TABLE `usuarios_issues` (
   `id` int(11) NOT NULL,
   `id_usuario` int(11) NOT NULL,
   `id_issues` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `usuarios_jira`
---
-
-CREATE TABLE `usuarios_jira` (
-  `id` int(11) NOT NULL,
-  `id_jira` varchar(200) NOT NULL,
-  `nombre_jira` varchar(100) NOT NULL,
-  `createdAt` date NOT NULL DEFAULT current_timestamp(),
-  `updatedAt` date NOT NULL DEFAULT current_timestamp(),
-  `id_usuario` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `usuarios_retrospectivas`
+-- Table structure for table `usuarios_retrospectivas`
 --
 
 CREATE TABLE `usuarios_retrospectivas` (
   `id` int(11) NOT NULL,
   `id_usuario` int(11) NOT NULL,
   `id_retrospectiva` int(11) NOT NULL,
-  `completada` tinyint(1) NOT NULL DEFAULT 0,
-  `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updatedAt` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `completada` tinyint(1) NOT NULL DEFAULT '0',
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Volcado de datos para la tabla `usuarios_retrospectivas`
+-- Dumping data for table `usuarios_retrospectivas`
 --
 
 INSERT INTO `usuarios_retrospectivas` (`id`, `id_usuario`, `id_retrospectiva`, `completada`, `createdAt`, `updatedAt`) VALUES
 (3, 7, 5, 1, '2023-03-28 17:49:20', '2023-03-28 17:57:49'),
-(5, 7, 6, 0, '2023-03-28 22:40:21', '2023-03-30 04:15:31'),
-(6, 7, 7, 0, '2023-03-29 20:57:00', '2023-03-29 20:57:00'),
-(7, 21, 5, 1, '2023-03-30 15:36:23', '2023-03-30 15:39:16');
+(5, 7, 6, 0, '2023-03-28 22:40:21', '2023-04-03 20:34:45'),
+(7, 22, 6, 1, '2023-03-30 18:17:04', '2023-04-02 19:18:08');
 
 --
--- Índices para tablas volcadas
+-- Indexes for dumped tables
 --
 
 --
--- Indices de la tabla `colores`
+-- Indexes for table `colores`
 --
 ALTER TABLE `colores`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `epics`
+-- Indexes for table `epics`
 --
 ALTER TABLE `epics`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_reporte` (`id_reporte`);
 
 --
--- Indices de la tabla `etiquetas`
+-- Indexes for table `etiquetas`
 --
 ALTER TABLE `etiquetas`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_color` (`id_color`);
 
 --
--- Indices de la tabla `funciones`
---
-ALTER TABLE `funciones`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `issues`
+-- Indexes for table `issues`
 --
 ALTER TABLE `issues`
   ADD PRIMARY KEY (`id`),
@@ -541,20 +653,20 @@ ALTER TABLE `issues`
   ADD KEY `id_epic` (`id_epic`);
 
 --
--- Indices de la tabla `opciones_respuestas`
+-- Indexes for table `opciones_respuestas`
 --
 ALTER TABLE `opciones_respuestas`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `preguntas`
+-- Indexes for table `preguntas`
 --
 ALTER TABLE `preguntas`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_tipo_pregunta` (`id_tipo_pregunta`);
 
 --
--- Indices de la tabla `preguntas_opciones`
+-- Indexes for table `preguntas_opciones`
 --
 ALTER TABLE `preguntas_opciones`
   ADD PRIMARY KEY (`id`),
@@ -562,7 +674,7 @@ ALTER TABLE `preguntas_opciones`
   ADD KEY `id_opcion` (`id_opcion`);
 
 --
--- Indices de la tabla `preguntas_retrospectivas`
+-- Indexes for table `preguntas_retrospectivas`
 --
 ALTER TABLE `preguntas_retrospectivas`
   ADD PRIMARY KEY (`id`),
@@ -570,14 +682,14 @@ ALTER TABLE `preguntas_retrospectivas`
   ADD KEY `id_retrospectiva` (`id_retrospectiva`);
 
 --
--- Indices de la tabla `reportes`
+-- Indexes for table `reportes`
 --
 ALTER TABLE `reportes`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_retrospectiva` (`id_retrospectiva`);
 
 --
--- Indices de la tabla `respuestas`
+-- Indexes for table `respuestas`
 --
 ALTER TABLE `respuestas`
   ADD PRIMARY KEY (`id`),
@@ -586,14 +698,14 @@ ALTER TABLE `respuestas`
   ADD KEY `id_usuario` (`id_usuario`);
 
 --
--- Indices de la tabla `retrospectivas`
+-- Indexes for table `retrospectivas`
 --
 ALTER TABLE `retrospectivas`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_reporte` (`id_reporte`);
 
 --
--- Indices de la tabla `retrospectiva_etiquetas`
+-- Indexes for table `retrospectiva_etiquetas`
 --
 ALTER TABLE `retrospectiva_etiquetas`
   ADD PRIMARY KEY (`id`),
@@ -601,13 +713,13 @@ ALTER TABLE `retrospectiva_etiquetas`
   ADD KEY `id_etiqueta` (`id_etiqueta`) USING BTREE;
 
 --
--- Indices de la tabla `roles`
+-- Indexes for table `roles`
 --
 ALTER TABLE `roles`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `roles_funciones`
+-- Indexes for table `roles_funciones`
 --
 ALTER TABLE `roles_funciones`
   ADD PRIMARY KEY (`id`),
@@ -615,14 +727,14 @@ ALTER TABLE `roles_funciones`
   ADD KEY `id_funcion` (`id_funcion`);
 
 --
--- Indices de la tabla `sprints`
+-- Indexes for table `sprints`
 --
 ALTER TABLE `sprints`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_reporte` (`id_reporte`);
 
 --
--- Indices de la tabla `sprints_epics`
+-- Indexes for table `sprints_epics`
 --
 ALTER TABLE `sprints_epics`
   ADD PRIMARY KEY (`id`),
@@ -630,7 +742,7 @@ ALTER TABLE `sprints_epics`
   ADD KEY `id_epic` (`id_epic`);
 
 --
--- Indices de la tabla `sprints_issues`
+-- Indexes for table `sprints_issues`
 --
 ALTER TABLE `sprints_issues`
   ADD PRIMARY KEY (`id`),
@@ -638,13 +750,13 @@ ALTER TABLE `sprints_issues`
   ADD KEY `id_issue` (`id_issue`);
 
 --
--- Indices de la tabla `tipos_preguntas`
+-- Indexes for table `tipos_preguntas`
 --
 ALTER TABLE `tipos_preguntas`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `usuarios`
+-- Indexes for table `usuarios`
 --
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id`),
@@ -652,7 +764,7 @@ ALTER TABLE `usuarios`
   ADD KEY `id_rol` (`id_rol`);
 
 --
--- Indices de la tabla `usuarios_etiquetas`
+-- Indexes for table `usuarios_etiquetas`
 --
 ALTER TABLE `usuarios_etiquetas`
   ADD PRIMARY KEY (`id`),
@@ -660,7 +772,7 @@ ALTER TABLE `usuarios_etiquetas`
   ADD KEY `id_etiqueta` (`id_etiqueta`);
 
 --
--- Indices de la tabla `usuarios_issues`
+-- Indexes for table `usuarios_issues`
 --
 ALTER TABLE `usuarios_issues`
   ADD PRIMARY KEY (`id`),
@@ -668,15 +780,7 @@ ALTER TABLE `usuarios_issues`
   ADD KEY `id_issues` (`id_issues`);
 
 --
--- Indices de la tabla `usuarios_jira`
---
-ALTER TABLE `usuarios_jira`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `id_jira` (`id_jira`),
-  ADD KEY `id_usuario` (`id_usuario`);
-
---
--- Indices de la tabla `usuarios_retrospectivas`
+-- Indexes for table `usuarios_retrospectivas`
 --
 ALTER TABLE `usuarios_retrospectivas`
   ADD PRIMARY KEY (`id`),
@@ -684,203 +788,191 @@ ALTER TABLE `usuarios_retrospectivas`
   ADD KEY `id_retrospectiva` (`id_retrospectiva`) USING BTREE;
 
 --
--- AUTO_INCREMENT de las tablas volcadas
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT de la tabla `colores`
+-- AUTO_INCREMENT for table `colores`
 --
 ALTER TABLE `colores`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT de la tabla `epics`
+-- AUTO_INCREMENT for table `epics`
 --
 ALTER TABLE `epics`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `etiquetas`
+-- AUTO_INCREMENT for table `etiquetas`
 --
 ALTER TABLE `etiquetas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT de la tabla `funciones`
---
-ALTER TABLE `funciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `issues`
+-- AUTO_INCREMENT for table `issues`
 --
 ALTER TABLE `issues`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `opciones_respuestas`
+-- AUTO_INCREMENT for table `opciones_respuestas`
 --
 ALTER TABLE `opciones_respuestas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
--- AUTO_INCREMENT de la tabla `preguntas`
+-- AUTO_INCREMENT for table `preguntas`
 --
 ALTER TABLE `preguntas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=972260216;
 
 --
--- AUTO_INCREMENT de la tabla `preguntas_opciones`
+-- AUTO_INCREMENT for table `preguntas_opciones`
 --
 ALTER TABLE `preguntas_opciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
--- AUTO_INCREMENT de la tabla `preguntas_retrospectivas`
+-- AUTO_INCREMENT for table `preguntas_retrospectivas`
 --
 ALTER TABLE `preguntas_retrospectivas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT de la tabla `reportes`
+-- AUTO_INCREMENT for table `reportes`
 --
 ALTER TABLE `reportes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `respuestas`
+-- AUTO_INCREMENT for table `respuestas`
 --
 ALTER TABLE `respuestas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
--- AUTO_INCREMENT de la tabla `retrospectivas`
+-- AUTO_INCREMENT for table `retrospectivas`
 --
 ALTER TABLE `retrospectivas`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT de la tabla `retrospectiva_etiquetas`
+-- AUTO_INCREMENT for table `retrospectiva_etiquetas`
 --
 ALTER TABLE `retrospectiva_etiquetas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
--- AUTO_INCREMENT de la tabla `roles`
+-- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT de la tabla `roles_funciones`
+-- AUTO_INCREMENT for table `roles_funciones`
 --
 ALTER TABLE `roles_funciones`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `sprints`
+-- AUTO_INCREMENT for table `sprints`
 --
 ALTER TABLE `sprints`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `sprints_epics`
+-- AUTO_INCREMENT for table `sprints_epics`
 --
 ALTER TABLE `sprints_epics`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `sprints_issues`
+-- AUTO_INCREMENT for table `sprints_issues`
 --
 ALTER TABLE `sprints_issues`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `tipos_preguntas`
+-- AUTO_INCREMENT for table `tipos_preguntas`
 --
 ALTER TABLE `tipos_preguntas`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT de la tabla `usuarios`
+-- AUTO_INCREMENT for table `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
--- AUTO_INCREMENT de la tabla `usuarios_etiquetas`
+-- AUTO_INCREMENT for table `usuarios_etiquetas`
 --
 ALTER TABLE `usuarios_etiquetas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `usuarios_issues`
+-- AUTO_INCREMENT for table `usuarios_issues`
 --
 ALTER TABLE `usuarios_issues`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `usuarios_jira`
---
-ALTER TABLE `usuarios_jira`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `usuarios_retrospectivas`
+-- AUTO_INCREMENT for table `usuarios_retrospectivas`
 --
 ALTER TABLE `usuarios_retrospectivas`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- Restricciones para tablas volcadas
+-- Constraints for dumped tables
 --
 
 --
--- Filtros para la tabla `epics`
+-- Constraints for table `epics`
 --
 ALTER TABLE `epics`
   ADD CONSTRAINT `epics_reporte_ibfk_1` FOREIGN KEY (`id_reporte`) REFERENCES `reportes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `etiquetas`
+-- Constraints for table `etiquetas`
 --
 ALTER TABLE `etiquetas`
   ADD CONSTRAINT `etiquetas_colores_ibfk_1` FOREIGN KEY (`id_color`) REFERENCES `colores` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `issues`
+-- Constraints for table `issues`
 --
 ALTER TABLE `issues`
   ADD CONSTRAINT `issues_epic_ibfk_1` FOREIGN KEY (`id_epic`) REFERENCES `epics` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `preguntas`
+-- Constraints for table `preguntas`
 --
 ALTER TABLE `preguntas`
   ADD CONSTRAINT `pregunta_tipo_pregunta_ibfk_1` FOREIGN KEY (`id_tipo_pregunta`) REFERENCES `tipos_preguntas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `preguntas_opciones`
+-- Constraints for table `preguntas_opciones`
 --
 ALTER TABLE `preguntas_opciones`
   ADD CONSTRAINT `pregunta_opc_res_ibfk_1` FOREIGN KEY (`id_pregunta`) REFERENCES `preguntas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `pregunta_opc_res_ibfk_2` FOREIGN KEY (`id_opcion`) REFERENCES `opciones_respuestas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `preguntas_retrospectivas`
+-- Constraints for table `preguntas_retrospectivas`
 --
 ALTER TABLE `preguntas_retrospectivas`
   ADD CONSTRAINT `pregunta_retrospectiva_ibfk_1` FOREIGN KEY (`id_pregunta`) REFERENCES `preguntas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `pregunta_retrospectiva_ibfk_2` FOREIGN KEY (`id_retrospectiva`) REFERENCES `retrospectivas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `reportes`
+-- Constraints for table `reportes`
 --
 ALTER TABLE `reportes`
   ADD CONSTRAINT `reportes_retrospectiva_ibfk_1` FOREIGN KEY (`id_retrospectiva`) REFERENCES `retrospectivas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `respuestas`
+-- Constraints for table `respuestas`
 --
 ALTER TABLE `respuestas`
   ADD CONSTRAINT `respuestas_preguntas_ibfk_3` FOREIGN KEY (`id_pregunta`) REFERENCES `preguntas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -888,53 +980,60 @@ ALTER TABLE `respuestas`
   ADD CONSTRAINT `respuestas_usuario_ibfk1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `retrospectivas`
+-- Constraints for table `retrospectivas`
 --
 ALTER TABLE `retrospectivas`
   ADD CONSTRAINT `retrospectiva_reporte_ibfk_1` FOREIGN KEY (`id_reporte`) REFERENCES `reportes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `retrospectiva_etiquetas`
+-- Constraints for table `retrospectiva_etiquetas`
 --
 ALTER TABLE `retrospectiva_etiquetas`
   ADD CONSTRAINT `retrospectiva_etiquetas_ibfk_1` FOREIGN KEY (`id_retrospectiva`) REFERENCES `retrospectivas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `retrospectiva_etiquetas_ibfk_2` FOREIGN KEY (`id_etiqueta`) REFERENCES `etiquetas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `sprints`
+-- Constraints for table `sprints`
 --
 ALTER TABLE `sprints`
   ADD CONSTRAINT `sprint_reporte` FOREIGN KEY (`id_reporte`) REFERENCES `reportes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `sprints_epics`
+-- Constraints for table `sprints_epics`
 --
 ALTER TABLE `sprints_epics`
   ADD CONSTRAINT `sprint_epic_ibfk_1` FOREIGN KEY (`id_sprint`) REFERENCES `sprints` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `sprint_epic_ibfk_2` FOREIGN KEY (`id_epic`) REFERENCES `epics` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `sprints_issues`
+-- Constraints for table `sprints_issues`
 --
 ALTER TABLE `sprints_issues`
   ADD CONSTRAINT `sprint_issue_ibfk_1` FOREIGN KEY (`id_issue`) REFERENCES `issues` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `sprint_issue_ibfk_2` FOREIGN KEY (`id_sprint`) REFERENCES `sprints` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `usuarios`
+-- Constraints for table `usuarios`
 --
 ALTER TABLE `usuarios`
   ADD CONSTRAINT `usuario_rol_ibfk_1` FOREIGN KEY (`id_rol`) REFERENCES `roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `usuarios_issues`
+-- Constraints for table `usuarios_etiquetas`
+--
+ALTER TABLE `usuarios_etiquetas`
+  ADD CONSTRAINT `usuario_etiqueta_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `usuario_etiqueta_ibfk_2` FOREIGN KEY (`id_etiqueta`) REFERENCES `etiquetas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `usuarios_issues`
 --
 ALTER TABLE `usuarios_issues`
   ADD CONSTRAINT `usuario_issue_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `usuario_issue_ibfk_2` FOREIGN KEY (`id_issues`) REFERENCES `issues` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `usuarios_retrospectivas`
+-- Constraints for table `usuarios_retrospectivas`
 --
 ALTER TABLE `usuarios_retrospectivas`
   ADD CONSTRAINT `usuarios_retrospectivas_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
