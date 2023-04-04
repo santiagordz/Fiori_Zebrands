@@ -53,7 +53,9 @@ const Step1: FC<Step1Props> = ({ setStepNumber, stepNumber }) => {
         }`}
       >
         <div className="grid grid-cols-1 gap-y-4 px-[8vmin]">
-          <p className="font-semibold text-xs">Título:</p>
+          <p className="font-semibold text-xs after:content-['*'] after:text-[#ae2a19] text-xs font-semibold text-label">
+            Título:
+          </p>
           <p className="text-xs text-[#626F86] mt-1">
             La fecha del Sprint seleccionado será el título de la retrospectiva.
           </p>
@@ -66,7 +68,9 @@ const Step1: FC<Step1Props> = ({ setStepNumber, stepNumber }) => {
             onChange={handleTituloChange}
             placeholder="fecha"
           />
-          <p className="font-semibold text-xs">Descripción:</p>
+          <p className="font-semibold text-xs after:content-['*'] after:text-[#ae2a19] text-xs font-semibold text-label">
+            Descripción:
+          </p>
           <TextArea
             resize="auto"
             maxHeight="20vh"
