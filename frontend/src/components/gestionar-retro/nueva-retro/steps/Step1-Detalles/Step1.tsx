@@ -19,6 +19,7 @@ const Step1: FC<Step1Props> = ({ setStepNumber, stepNumber }) => {
   const { newRetro, setNewRetro } = useContext(newRetroContext);
   const [isError, setIsError] = useState<boolean>(false);
   const [descripcion, setDescripcion] = useState<string>("");
+  const [isDateSelected, setIsDateSelected] = useState<boolean>(false);
 
   const handleDescripcionChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
@@ -35,6 +36,7 @@ const Step1: FC<Step1Props> = ({ setStepNumber, stepNumber }) => {
       ...newRetro,
       titulo: value.value,
     });
+    setIsDateSelected(true);
   };
 
   return (
@@ -51,12 +53,12 @@ const Step1: FC<Step1Props> = ({ setStepNumber, stepNumber }) => {
           </p>
           <Select
             required
-            name="rol"
-            id="dropdown-rol"
+            name="titulo"
+            id="dropdown-fechas"
             className="w-44 h-8 rounded-md pl-2 text-sm text-gray-600 font-medium"
             options={fecha.map((fecha) => ({ value: fecha, label: fecha }))}
             onChange={handleTituloChange}
-            placeholder="Selecciona una fecha"
+            placeholder="fecha"
           />
           <p className="font-semibold text-xs">Descripción:</p>
           <TextArea
@@ -72,7 +74,7 @@ const Step1: FC<Step1Props> = ({ setStepNumber, stepNumber }) => {
         <div className="flex gap-14 w-full items-center justify-center mt-4">
           <Button
             appearance="primary"
-            isDisabled={isError}
+            isDisabled={!isDateSelected}
             label="Siguiente paso"
             onClick={() => setStepNumber((prev: number) => prev + 1)}
           >
