@@ -118,7 +118,11 @@ const RetrospectivaThumb: FC<RetrospectivaThumbProps> = ({
               )}
             </div>
           </div>
-          <div className="flex flex-row items-center">
+          <div
+            className={`${
+              tags.length > 4 ? 'grid grid-cols-2' : 'flex flex-row'
+            } items-end text-right`}
+          >
             {tags &&
               tags.map(
                 (tag: {
