@@ -8,6 +8,8 @@ import { newRetroContext } from "../../local-contexts";
 
 const URI = "http://localhost:8000/"; //que ruta pongo
 
+const fecha = ["01-06-2022", "01-07-2022", "01-08-2022", "01-09-2022"];
+
 interface Step1Props {
   setStepNumber: (updater: (prev: number) => number) => void;
   stepNumber: number;
@@ -15,19 +17,20 @@ interface Step1Props {
 
 const Step1: FC<Step1Props> = ({ setStepNumber, stepNumber }) => {
   const { newRetro, setNewRetro } = useContext(newRetroContext);
+
   const [isError, setIsError] = useState<boolean>(false);
 
   const getSprints = async () => {
     const { data } = await axios.get(URI);
-
     //Aquí que va?
-
     setNewRetro({
       ...newRetro,
       titulo: "sprints",
       descripcion: "descripcion",
     });
   };
+
+  //usar use state para guardar los datos de la fecha y la descripcion
 
   return (
     <>
@@ -38,16 +41,19 @@ const Step1: FC<Step1Props> = ({ setStepNumber, stepNumber }) => {
       >
         <div className="grid grid-cols-1 gap-y-4 px-[8vmin]">
           <p className="font-semibold text-xs">Título:</p>
-
+          <p className="text-xs text-[#626F86] mt-1">
+            La fecha del Sprint seleccionado será el título de la retrospectiva.
+          </p>
+          //Título
           <Select
-            className="mt-1 text-sm"
-            id="etiquetas"
-            placeholder="Selecciona etiquetas"
-            isMulti={true}
+            required
+            name="rol"
+            id="dropdown-rol"
+            className="w-44 h-8 rounded-md pl-2 text-sm text-gray-600 font-medium"
+            options={fecha.map((fecha) => ({ value: fecha, label: fecha }))}
           ></Select>
-
           <p className="font-semibold text-xs">Descripción:</p>
-
+          //Descripción
           <TextArea
             resize="auto"
             maxHeight="20vh"
