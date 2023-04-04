@@ -21,8 +21,8 @@ interface EliminarPreguntaProps {
   id_pregunta: number;
   id_tipo_pregunta: number;
   pregunta: string;
-  setIsDeleteModalOpen: (isOpen: boolean) => void;
   predeterminada: boolean;
+  setIsDeleteModalOpen: (isOpen: boolean) => void;
   addFlag: (
     title: string,
     icon: React.ReactNode,
@@ -68,21 +68,21 @@ const EliminarPregunta: FC<EliminarPreguntaProps> = ({
       }
       setIsDeleteModalOpen(false);
       addFlag(
-        'La pregunta se ha eliminado correctamente',
+        '¡Listo! Tu pregunta ha sido eliminada correctamente.',
         <InfoIcon label="pregunta eliminada" secondaryColor="gray" />,
         'info'
       );
     } catch (error) {
       if (error instanceof Error) {
         addFlag(
-          'Hubo un error al eliminar la pregunta',
+          'Hubo un error al eliminar la pregunta. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
           <InfoIcon label="pregunta eliminada" />,
           'warning',
           error.toString()
         );
       } else {
         addFlag(
-          'Hubo un error al eliminar la pregunta',
+          'Hubo un error al eliminar la pregunta. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
           <InfoIcon label="pregunta eliminada" />,
           'warning',
           'Error desconocido'

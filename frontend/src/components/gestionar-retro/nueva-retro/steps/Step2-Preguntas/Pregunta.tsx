@@ -2,7 +2,7 @@ import { Checkbox } from '@atlaskit/checkbox';
 import { SimpleTag as Tag } from '@atlaskit/tag';
 import { FC, useState } from 'react';
 import DropdownMenu from '../../../../design-template/dropdown/DropdownMenu';
-import { EliminarPregunta } from './modals';
+import { EliminarPregunta, EditarPregunta } from './modals';
 import { type AppearanceTypes } from '@atlaskit/flag';
 
 interface PreguntaProps {
@@ -39,6 +39,8 @@ const Pregunta: FC<PreguntaProps> = ({
 }) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] =
     useState<boolean>(false);
+  const [isEditModalOpen, setIsEditModalOpen] =
+    useState<boolean>(false);
   return (
     <div className="w-full flex justify-between items-center bg-[#E9F2FF] py-2 px-4 rounded">
       {isDeleteModalOpen && (
@@ -49,6 +51,15 @@ const Pregunta: FC<PreguntaProps> = ({
           id_pregunta={id}
           predeterminada={isChecked}
           setIsDeleteModalOpen={setIsDeleteModalOpen}
+        />
+      )}
+      {isEditModalOpen && (
+        <EditarPregunta
+          addFlag={addFlag}
+          id_tipo_pregunta={tipo}
+          id_pregunta={id}
+          predeterminada={isChecked}
+          setIsEditModalOpen={setIsEditModalOpen}
         />
       )}
       <div className="flex items-center gap-2">
@@ -69,7 +80,10 @@ const Pregunta: FC<PreguntaProps> = ({
           />
         </div>
         <DropdownMenu>
-          <button className="bg-white hover:bg-[#f1f2f4] text-sm inline-block whitespace-nowrap py-[0.35rem] px-5 text-textNormal">
+          <button
+            onClick={() => setIsEditModalOpen(true)}
+            className="bg-white hover:bg-[#f1f2f4] text-sm inline-block whitespace-nowrap py-[0.35rem] px-5 text-textNormal"
+          >
             Editar
           </button>
           <button

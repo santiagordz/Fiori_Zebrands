@@ -39,4 +39,21 @@ module.exports = class Pregunta {
   static eliminarPreguntaById(id_pregunta) {
     return db.execute('CALL DeletePregunta(?)', [id_pregunta]);
   }
+
+  static updatePreguntaById(Pregunta) {
+    const {
+      id_pregunta,
+      pregunta,
+      predeterminada,
+      id_tipo_pregunta,
+      opciones_respuesta,
+    } = Pregunta;
+    return db.execute('CALL EditPregunta(?, ?, ?, ?, ?)', [
+      id_pregunta,
+      pregunta,
+      predeterminada,
+      id_tipo_pregunta,
+      opciones_respuesta,
+    ]);
+  }
 };

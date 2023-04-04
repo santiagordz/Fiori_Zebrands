@@ -44,3 +44,25 @@ exports.deletePreguntaById = async (req, res, next) => {
       .json({ message: 'Error al eliminar la pregunta' });
   }
 };
+
+exports.editarPreguntaById = async (req, res, next) => {
+  try {
+    const Question = {
+      id_pregunta: req.body.id,
+      pregunta: req.body.pregunta,
+      predeterminada: req.body.predeterminada,
+      id_tipo_pregunta: req.body.id_tipo_pregunta,
+      opciones_respuesta: req.body.opciones,
+    };
+    const [result] = await Pregunta.updatePreguntaById(Question);
+    res.json({
+      message: 'Pregunta actualizada exitosamente',
+      data: result,
+    });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ message: 'Error al actualizar la pregunta' });
+  }
+};
