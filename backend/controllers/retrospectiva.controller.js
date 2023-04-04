@@ -67,3 +67,17 @@ exports.getRetrospectivasByUserId = async (req, res, next) => {
       .json({ message: 'Error al obtener las retrospectivas' });
   }
 };
+
+exports.finishRetrospectiva = async (req, res, next) => {
+  try {
+    await Retrospectiva.finishRetrospectiva(req.params.retroId);
+    res
+      .status(200)
+      .json({ message: 'Retrospectiva finalizada correctamente.' });
+  } catch (err) {
+    console.log(err);
+    res
+      .status(500)
+      .json({ message: 'Error al finalizar la retrospectiva' });
+  }
+};

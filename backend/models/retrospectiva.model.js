@@ -37,7 +37,7 @@ module.exports = class Retrospectiva {
   static fetchRetrospectivasByUserId(userId) {
     return db.execute(
       `
-    SELECT r.*, ur.id_usuario, ur.completada, IF(ur.id_usuario IS NOT NULL, 1, 0) as asignada
+    SELECT r.*, ur.id_usuario, ur.completada, IF(ur.id_usuario IS NOT NULL, 1, 0) as asignada, r.en_curso
     FROM retrospectivas r
     LEFT JOIN usuarios_retrospectivas ur ON r.id = ur.id_retrospectiva AND ur.id_usuario = ?
     `,
@@ -67,6 +67,13 @@ module.exports = class Retrospectiva {
         AND PR.id_retrospectiva = ?
         GROUP BY P.id;`,
       [id]
+    );
+  }
+
+  static finishRetrospectiva(id_retrospectiva) {
+    return db.execute(
+      `UPDATE retrospectivas SET en_curso = 0, fecha_fin = CURTIME(), WHERE id = ?`,
+      [id_retrospectiva]
     );
   }
 };

@@ -5,20 +5,19 @@ import { ReactComponent as ShortTextSVG } from '@/assets/icons/short_text.svg';
 import Blanket from '@atlaskit/blanket';
 import Button from '@atlaskit/button';
 import { Checkbox } from '@atlaskit/checkbox';
+import { type AppearanceTypes } from '@atlaskit/flag';
+import CheckCircleIcon from '@atlaskit/icon/glyph/check-circle';
 import CrossIcon from '@atlaskit/icon/glyph/cross';
+import ErrorIcon from '@atlaskit/icon/glyph/error';
+import axios from 'axios';
 import { motion } from 'framer-motion';
 import { customAlphabet } from 'nanoid';
 import { FC, useContext, useEffect, useState } from 'react';
 import Select from 'react-select';
-import ErrorIcon from '@atlaskit/icon/glyph/error';
 import {
   newRetroContext,
   type PreguntaType,
 } from '../../../local-contexts';
-import axios from 'axios';
-import { type AppearanceTypes } from '@atlaskit/flag';
-import CheckCircleIcon from '@atlaskit/icon/glyph/check-circle';
-import InfoIcon from '@atlaskit/icon/glyph/info';
 
 const URI = 'http://localhost:8000/preguntas';
 

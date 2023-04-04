@@ -5,6 +5,8 @@ import { SimpleTag as Tag, TagColor } from '@atlaskit/tag';
 import { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DropdownMenu from '../../design-template/dropdown/DropdownMenu';
+import EndRetro from '../modals/EndRetro';
+import { type AppearanceTypes } from '@atlaskit/flag';
 
 interface RetrospectivaThumbProps {
   titulo: string;
@@ -20,6 +22,13 @@ interface RetrospectivaThumbProps {
     id_color: number;
     color: TagColor;
   }[];
+  addFlag: (
+    title: string,
+    icon: React.ReactNode,
+    appearance: AppearanceTypes,
+    description?: string
+  ) => void;
+  updateRetrospectivas?: () => void;
 }
 
 const RetrospectivaThumb: FC<RetrospectivaThumbProps> = ({
@@ -31,11 +40,14 @@ const RetrospectivaThumb: FC<RetrospectivaThumbProps> = ({
   respuestas = 0,
   completada = false,
   tags,
+  addFlag,
+  updateRetrospectivas,
 }) => {
   const navigate = useNavigate();
   const [fechaInicioFormat, setFechaInicioFormat] =
     useState<string>('');
   const [fechaFinFormat, setFechaFinFormat] = useState<string>('');
+  const [isEndModalOpen, setIsEndModalOpen] = useState(false);
 
   useEffect(() => {
     const fecha_inicio = new Date(fechaInicio);
@@ -75,6 +87,15 @@ const RetrospectivaThumb: FC<RetrospectivaThumbProps> = ({
       <div
         className={`flex flex-col py-3 px-5 w-full gap-3 rounded bg-white hover:bg-[#fafbfc] border border-solid border-gray`}
       >
+        {isEndModalOpen && updateRetrospectivas && (
+          <EndRetro
+            setIsEndModalOpen={setIsEndModalOpen}
+            idRetrospectiva={idRetrospectiva}
+            titulo={titulo}
+            addFlag={addFlag}
+            updateRetrospectivas={updateRetrospectivas}
+          />
+        )}
         <div className="flex w-full justify-between">
           <div className="flex items-start justify-start gap-2">
             {completada ? (
@@ -116,7 +137,10 @@ const RetrospectivaThumb: FC<RetrospectivaThumbProps> = ({
               )}
             {!completada && (
               <DropdownMenu>
-                <button className="bg-white hover:bg-[#fff5f5] text-xs inline-block whitespace-nowrap py-[0.35rem] px-5 text-danger">
+                <button
+                  onClick={() => setIsEndModalOpen(true)}
+                  className="bg-white hover:bg-[#fff5f5] text-xs inline-block whitespace-nowrap py-[0.35rem] px-5 text-danger"
+                >
                   Finalizar retrospectiva
                 </button>
               </DropdownMenu>
@@ -125,7 +149,7 @@ const RetrospectivaThumb: FC<RetrospectivaThumbProps> = ({
         </div>
         <span className="w-full flex justify-between">
           <p className="text-xs text-discovery font-medium">
-            {respuestas} Respuestas registradas
+            Respuestas registradas: {respuestas}
           </p>
         </span>
         {descripcion && (

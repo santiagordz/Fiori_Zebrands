@@ -1,16 +1,19 @@
 import CheckIcon from '@atlaskit/icon/glyph/check';
-import FlagFilledIcon from '@atlaskit/icon/glyph/flag-filled';
 import ChevronRightLargeIcon from '@atlaskit/icon/glyph/chevron-right-large';
+import FlagFilledIcon from '@atlaskit/icon/glyph/flag-filled';
+import PdfIcon from '@atlaskit/icon/glyph/pdf';
 import { SimpleTag as Tag, TagColor } from '@atlaskit/tag';
 import { FC, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import PdfIcon from '@atlaskit/icon/glyph/pdf';
+import CheckCircleOutlineIcon from '@atlaskit/icon/glyph/check-circle-outline';
 
 interface RetrospectivaGeneralProps {
   titulo: string;
   descripcion: string;
   fechaInicio: string;
+  fechaFin?: string;
   idRetrospectiva: number;
+  enCurso?: boolean;
   clickable?: boolean;
   completada?: boolean;
   assigned?: boolean;
@@ -26,7 +29,9 @@ const RetrospectivaGeneral: FC<RetrospectivaGeneralProps> = ({
   titulo,
   descripcion,
   fechaInicio,
+  fechaFin,
   idRetrospectiva,
+  enCurso = true,
   clickable = true,
   completada = false,
   tags,
@@ -34,6 +39,9 @@ const RetrospectivaGeneral: FC<RetrospectivaGeneralProps> = ({
 }) => {
   const navigate = useNavigate();
   const [isInResponder, setIsInResponder] = useState<boolean>(false);
+  const [fechaInicioFormat, setFechaInicioFormat] =
+    useState<string>('');
+  const [fechaFinFormat, setFechaFinFormat] = useState<string>('');
   const location = useLocation().pathname;
 
   useEffect(() => {
@@ -48,18 +56,38 @@ const RetrospectivaGeneral: FC<RetrospectivaGeneralProps> = ({
     }
   };
 
-  const fecha_inicio = new Date(fechaInicio);
+  useEffect(() => {
+    const fecha_inicio = new Date(fechaInicio);
 
-  const dia_inicio = fecha_inicio
-    .getUTCDate()
-    .toString()
-    .padStart(2, '0');
-  const mes_inicio = (fecha_inicio.getUTCMonth() + 1)
-    .toString()
-    .padStart(2, '0');
-  const anio_inicio = fecha_inicio.getUTCFullYear().toString();
+    const dia_inicio = fecha_inicio
+      .getUTCDate()
+      .toString()
+      .padStart(2, '0');
+    const mes_inicio = (fecha_inicio.getUTCMonth() + 1)
+      .toString()
+      .padStart(2, '0');
+    const anio_inicio = fecha_inicio.getUTCFullYear().toString();
 
-  const fecha_inicio_formateada = `${dia_inicio}/${mes_inicio}/${anio_inicio}`;
+    setFechaInicioFormat(
+      `${dia_inicio}/${mes_inicio}/${anio_inicio}`
+    );
+  }, [fechaInicio]);
+
+  useEffect(() => {
+    if (fechaFin) {
+      const fecha_fin = new Date(fechaFin);
+      const dia_fin = fecha_fin
+        .getUTCDate()
+        .toString()
+        .padStart(2, '0');
+      const mes_fin = (fecha_fin.getUTCMonth() + 1)
+        .toString()
+        .padStart(2, '0');
+      const anio_fin = fecha_fin.getUTCFullYear().toString();
+
+      setFechaFinFormat(`${dia_fin}/${mes_fin}/${anio_fin}`);
+    }
+  }, [fechaFin]);
 
   return (
     <div
@@ -88,6 +116,11 @@ const RetrospectivaGeneral: FC<RetrospectivaGeneralProps> = ({
               <FlagFilledIcon
                 label="retrospectiva-pendiente"
                 primaryColor="#8270DB"
+              />
+            ) : !enCurso ? (
+              <CheckCircleOutlineIcon
+                label="finalizar retrospectiva"
+                primaryColor="#0055CC"
               />
             ) : (
               <PdfIcon
@@ -120,7 +153,10 @@ const RetrospectivaGeneral: FC<RetrospectivaGeneralProps> = ({
           <p>{descripcion}</p>
         </div>
         <div className="flex flex-row text-[0.7rem] justify-between mt-3">
-          <p>Fecha de inicio: {fecha_inicio_formateada}</p>
+          <p>Fecha de inicio: {fechaInicioFormat}</p>
+          {fechaFinFormat && !enCurso && (
+            <p>Fecha de fin: {fechaFinFormat}</p>
+          )}
           {!isInResponder && (
             <ChevronRightLargeIcon
               label="flecha"
