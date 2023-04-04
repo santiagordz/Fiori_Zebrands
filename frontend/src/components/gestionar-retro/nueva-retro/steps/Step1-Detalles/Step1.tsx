@@ -1,12 +1,12 @@
+import React, { FC, useContext, useState } from "react";
+import { newRetroContext } from "../../local-contexts";
 import Button from "@atlaskit/button";
-import Select, { StylesConfig } from "react-select";
-import ArrowRightIcon from "@atlaskit/icon/glyph/arrow-right";
+import Select from "react-select";
 import TextArea from "@atlaskit/textarea";
 import axios from "axios";
-import { FC, useCallback, useContext, useEffect, useState } from "react";
-import { newRetroContext } from "../../local-contexts";
+import DebugContextButton from "./DebugContextButton";
 
-const URI = "http://localhost:8000/"; //que ruta pongo
+const URI = "http://localhost:8000/";
 
 const fecha = ["01-06-2022", "01-07-2022", "01-08-2022", "01-09-2022"];
 
@@ -17,12 +17,11 @@ interface Step1Props {
 
 const Step1: FC<Step1Props> = ({ setStepNumber, stepNumber }) => {
   const { newRetro, setNewRetro } = useContext(newRetroContext);
-
   const [isError, setIsError] = useState<boolean>(false);
+  const [descripcion, setDescripcion] = useState<string>("");
 
   const getSprints = async () => {
     const { data } = await axios.get(URI);
-    //Aquí que va?
     setNewRetro({
       ...newRetro,
       titulo: "sprints",
@@ -30,7 +29,11 @@ const Step1: FC<Step1Props> = ({ setStepNumber, stepNumber }) => {
     });
   };
 
-  //usar use state para guardar los datos de la fecha y la descripcion
+  const handleDescripcionChange = (
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    setDescripcion(event.target.value);
+  };
 
   return (
     <>
@@ -44,20 +47,27 @@ const Step1: FC<Step1Props> = ({ setStepNumber, stepNumber }) => {
           <p className="text-xs text-[#626F86] mt-1">
             La fecha del Sprint seleccionado será el título de la retrospectiva.
           </p>
-          //Título
           <Select
             required
             name="rol"
             id="dropdown-rol"
             className="w-44 h-8 rounded-md pl-2 text-sm text-gray-600 font-medium"
             options={fecha.map((fecha) => ({ value: fecha, label: fecha }))}
-          ></Select>
+            onChange={(value: any) =>
+              setNewRetro({
+                ...newRetro,
+                titulo: value.value,
+              })
+            }
+            placeholder="Selecciona una fecha"
+          />
           <p className="font-semibold text-xs">Descripción:</p>
-          //Descripción
           <TextArea
             resize="auto"
             maxHeight="20vh"
             name="descripcion"
+            value={descripcion}
+            onChange={handleDescripcionChange}
             placeholder="Escribe una descripción para tu retrospectiva"
           />
         </div>
@@ -66,14 +76,20 @@ const Step1: FC<Step1Props> = ({ setStepNumber, stepNumber }) => {
           <Button
             appearance="primary"
             isDisabled={isError}
-            iconAfter={<ArrowRightIcon label="siguiente paso" />}
             label="Siguiente paso"
-            onClick={() => setStepNumber((prev: number) => prev + 1)}
+            onClick={() => {
+              setNewRetro({
+                ...newRetro,
+                descripcion: descripcion,
+              });
+              setStepNumber((prev: number) => prev + 1);
+            }}
           >
             Siguiente paso
           </Button>
         </div>
       </span>
+      <DebugContextButton />
     </>
   );
 };
