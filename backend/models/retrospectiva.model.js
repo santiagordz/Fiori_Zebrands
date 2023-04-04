@@ -72,7 +72,7 @@ module.exports = class Retrospectiva {
 
   static finishRetrospectiva(id_retrospectiva) {
     return db.execute(
-      `UPDATE retrospectivas SET en_curso = 0, fecha_fin = CURTIME(), WHERE id = ?`,
+      `UPDATE retrospectivas SET en_curso = 0, fecha_fin = CURTIME() WHERE id = ?`,
       [id_retrospectiva]
     );
   }

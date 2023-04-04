@@ -130,7 +130,11 @@ const RetrospectivaGeneral: FC<RetrospectivaGeneralProps> = ({
             )}
             <h3 className="font-bold text-sm">{titulo}</h3>
           </div>
-          <div className="flex flex-row">
+          <div
+            className={`${
+              tags.length > 3 ? 'grid grid-cols-2' : 'flex flex-row'
+            } items-end text-right`}
+          >
             {tags &&
               tags.map(
                 (tag: {
@@ -138,13 +142,15 @@ const RetrospectivaGeneral: FC<RetrospectivaGeneralProps> = ({
                   etiqueta: string;
                   color: TagColor;
                 }) => (
-                  <div key={tag.id} id="tag">
-                    <Tag
-                      text={tag.etiqueta}
-                      appearance="rounded"
-                      color={tag.color}
-                    />
-                  </div>
+                  <>
+                    <div key={tag.id} id="tag">
+                      <Tag
+                        text={tag.etiqueta}
+                        appearance="rounded"
+                        color={tag.color}
+                      />
+                    </div>
+                  </>
                 )
               )}
           </div>

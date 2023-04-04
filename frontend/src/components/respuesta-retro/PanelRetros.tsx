@@ -13,6 +13,9 @@ interface PanelRetrosProps {
   getRetrospectivas: () => void;
 }
 
+const divGroupsStyle =
+  'flex flex-col gap-5 bg-[#ffffff] py-5 px-5 rounded-sm shadow-sm overflow-y-auto min-h-[30rem] min-w-[28rem]';
+
 const PanelRetros: FC<PanelRetrosProps> = ({
   tryFetch,
   retroPendientes,
@@ -24,16 +27,15 @@ const PanelRetros: FC<PanelRetrosProps> = ({
   if (!tryFetch)
     return <Spinner message="Cargando retrospectivas..." />;
 
-  const divGroupsStyle =
-    'flex flex-col gap-5 bg-[#ffffff] py-5 px-5 rounded-sm shadow-sm overflow-y-auto max-h-[50rem]';
-
   useEffect(() => {
     getRetrospectivas();
   }, []);
 
   return (
-    <div className="flex flex-col gap-5">
-      <div className="grid grid-cols-2 gap-5">
+    <div className="relative w-full">
+      <div className="bg-[#f4f8ff] w-1 h-full absolute top-0 left-[-0.1rem] shadow-container-left" />
+      <div className="bg-[#f4f8ff] w-1 h-full absolute top-0 right-[-0.1rem] shadow-container-right" />
+      <div className="flex gap-5 overflow-x-auto pb-5">
         <div className={divGroupsStyle}>
           <h2 className="text-base font-bold text-information">
             Mis retrospectivas pendientes de responder
@@ -54,7 +56,7 @@ const PanelRetros: FC<PanelRetrosProps> = ({
               })
             ) : (
               <p className="text-xs">
-                No hay retrospectivas pendientes para mostrar.
+                No tienes retrospectivas pendientes para mostrar.
               </p>
             )}
           </div>
@@ -83,14 +85,15 @@ const PanelRetros: FC<PanelRetrosProps> = ({
               )
             ) : (
               <p className="text-xs">
-                No hay retrospectivas completadas para mostrar.
+                No tienes retrospectivas recientemente completadas
+                para mostrar.
               </p>
             )}
           </div>
         </div>
         <div className={divGroupsStyle}>
           <h2 className="text-base font-bold text-information">
-            Otras retrospectivas del equipo
+            Otras retrospectivas en curso del equipo
           </h2>
           <div className="flex flex-col gap-5">
             {otrasRetros.length > 0 ? (
@@ -141,7 +144,7 @@ const PanelRetros: FC<PanelRetrosProps> = ({
               )
             ) : (
               <p className="text-xs">
-                No hay otras retrospectivas finalizadas para mostrar.
+                No hay retrospectivas finalizadas para mostrar.
               </p>
             )}
           </div>
