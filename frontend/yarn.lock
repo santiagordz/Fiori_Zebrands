@@ -67,6 +67,21 @@
     "@babel/runtime" "^7.0.0"
     "@emotion/react" "^11.7.1"
 
+"@atlaskit/button@^16.6.0":
+  version "16.6.0"
+  resolved "https://registry.yarnpkg.com/@atlaskit/button/-/button-16.6.0.tgz#f29d96f0e97104b18f8e3c01f73c12fe1196fde1"
+  integrity sha512-tGOTUdB+Tc70j43+4uneXqzP2tAn40SXJYPeZaOeNLMJWBbeLMekBysZdKou8UdXYcZg0kfsVD/7bmYUB/MiGQ==
+  dependencies:
+    "@atlaskit/analytics-next" "^9.0.0"
+    "@atlaskit/ds-lib" "^2.1.0"
+    "@atlaskit/focus-ring" "^1.0.6"
+    "@atlaskit/interaction-context" "^2.0.0"
+    "@atlaskit/spinner" "^15.4.0"
+    "@atlaskit/theme" "^12.3.0"
+    "@atlaskit/tokens" "^1.2.0"
+    "@babel/runtime" "^7.0.0"
+    "@emotion/react" "^11.7.1"
+
 "@atlaskit/checkbox@^12.4.6":
   version "12.4.6"
   resolved "https://registry.yarnpkg.com/@atlaskit/checkbox/-/checkbox-12.4.6.tgz#25e2b2c2f59e728acd4439c15a2a92a6c420dccb"
@@ -142,13 +157,13 @@
     "@babel/runtime" "^7.0.0"
     "@emotion/react" "^11.7.1"
 
-"@atlaskit/flag@^15.0.8":
-  version "15.0.12"
-  resolved "https://registry.yarnpkg.com/@atlaskit/flag/-/flag-15.0.12.tgz#2c2ba66a1e4d4bba9c3bf72e2f62dd0dbc1e4b1b"
-  integrity sha512-czz22WQlijWN00OpWXEvDCy+kscK6iHk1ZouZBcbFtgrWBXjgqUxXyP7mWavHsJ1eisCE1pkLj5B1t0dDQBNgA==
+"@atlaskit/flag@^15.1.0":
+  version "15.1.0"
+  resolved "https://registry.yarnpkg.com/@atlaskit/flag/-/flag-15.1.0.tgz#b30518df34c866389af7b33d8513b5d2c3cefdaf"
+  integrity sha512-bFDoA7h/6wbOYNybIODQHeAedOPR6LF2xoEl0wZKvOJWa0paGZs84/b6HsJ63mhaWjeZEQrTzLFQ50sRG8X66g==
   dependencies:
     "@atlaskit/analytics-next" "^9.0.0"
-    "@atlaskit/button" "^16.5.0"
+    "@atlaskit/button" "^16.6.0"
     "@atlaskit/ds-explorations" "^2.0.0"
     "@atlaskit/ds-lib" "^2.1.0"
     "@atlaskit/focus-ring" "^1.2.0"
@@ -159,6 +174,15 @@
     "@atlaskit/theme" "^12.3.0"
     "@atlaskit/tokens" "^1.2.0"
     "@atlaskit/visually-hidden" "^1.1.0"
+    "@babel/runtime" "^7.0.0"
+    "@emotion/react" "^11.7.1"
+
+"@atlaskit/focus-ring@^1.0.6":
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/@atlaskit/focus-ring/-/focus-ring-1.2.6.tgz#bc9ae3c5dccc90e347e3901e2389c8153e3d6e91"
+  integrity sha512-uY7JlsCm1RAnasOOGXKOC8gCbj4VUZMU6q6E7ov6W7DWtrENICJJdrhCu4ZM23oqS5x7Gkko6h5nhiz5B79V5g==
+  dependencies:
+    "@atlaskit/tokens" "^1.2.0"
     "@babel/runtime" "^7.0.0"
     "@emotion/react" "^11.7.1"
 

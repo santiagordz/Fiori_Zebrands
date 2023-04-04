@@ -10,7 +10,33 @@ module.exports = class Pregunta {
 
   static fetchAll() {
     return db.execute(
-      `SELECT id, pregunta, predeterminada, id_tipo_pregunta FROM preguntas`
+      `SELECT P.id, P.pregunta, P.id_tipo_pregunta, P.predeterminada,
+          (SELECT GROUP_CONCAT(OP.opcion_respuesta) FROM opciones_respuestas as OP
+            WHERE OP.id IN (SELECT id_opcion FROM preguntas_opciones WHERE id_pregunta = P.id)
+          ) as opciones
+        FROM preguntas as P;`
     );
+  }
+
+  static registrarPregunta(newPregunta) {
+    const {
+      id_pregunta,
+      pregunta,
+      predeterminada,
+      id_tipo_pregunta,
+      opciones_respuesta,
+    } = newPregunta;
+    const opciones = opciones_respuesta ? opciones_respuesta : '';
+    return db.execute('CALL InsertPregunta(?, ?, ?, ?, ?)', [
+      id_pregunta,
+      pregunta,
+      predeterminada,
+      id_tipo_pregunta,
+      opciones,
+    ]);
+  }
+
+  static eliminarPreguntaById(id_pregunta) {
+    return db.execute('CALL DeletePregunta(?)', [id_pregunta]);
   }
 };

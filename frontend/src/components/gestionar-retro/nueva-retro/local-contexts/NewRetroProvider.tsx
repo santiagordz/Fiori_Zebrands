@@ -5,6 +5,7 @@ export interface PreguntaType {
   pregunta: string;
   predeterminada: boolean;
   id_tipo_pregunta: number;
+  opciones?: string | null;
 }
 
 export interface newRetroType {

@@ -1,7 +1,9 @@
 import { Checkbox } from '@atlaskit/checkbox';
 import { SimpleTag as Tag } from '@atlaskit/tag';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import DropdownMenu from '../../../../design-template/dropdown/DropdownMenu';
+import { EliminarPregunta } from './modals';
+import { type AppearanceTypes } from '@atlaskit/flag';
 
 interface PreguntaProps {
   pregunta: string;
@@ -9,13 +11,18 @@ interface PreguntaProps {
   isChecked: boolean;
   tipo: number;
   handleChecked: (checked: boolean, id: number) => void;
+  addFlag: (
+    title: string,
+    icon: React.ReactNode,
+    appearance: AppearanceTypes
+  ) => void;
 }
 
-interface tiposPreguntaType {
+export interface tiposPreguntaType {
   [key: number]: string;
 }
 
-const tiposPregunta: tiposPreguntaType = {
+export const tiposPregunta: tiposPreguntaType = {
   1: 'Párrafo',
   2: 'Respuesta corta',
   3: 'Lista desplegable',
@@ -28,9 +35,22 @@ const Pregunta: FC<PreguntaProps> = ({
   isChecked,
   tipo,
   handleChecked,
+  addFlag,
 }) => {
+  const [isDeleteModalOpen, setIsDeleteModalOpen] =
+    useState<boolean>(false);
   return (
     <div className="w-full flex justify-between items-center bg-[#E9F2FF] py-2 px-4 rounded">
+      {isDeleteModalOpen && (
+        <EliminarPregunta
+          addFlag={addFlag}
+          pregunta={pregunta}
+          id_tipo_pregunta={tipo}
+          id_pregunta={id}
+          predeterminada={isChecked}
+          setIsDeleteModalOpen={setIsDeleteModalOpen}
+        />
+      )}
       <div className="flex items-center gap-2">
         <Checkbox
           isChecked={isChecked}
@@ -52,8 +72,11 @@ const Pregunta: FC<PreguntaProps> = ({
           <button className="bg-white hover:bg-[#f1f2f4] text-sm inline-block whitespace-nowrap py-[0.35rem] px-5 text-textNormal">
             Editar
           </button>
-          <button className="bg-white hover:bg-[#fff5f5] text-sm inline-block whitespace-nowrap py-[0.35rem] px-5 text-danger">
-            Eliminar pregunta
+          <button
+            onClick={() => setIsDeleteModalOpen(true)}
+            className="bg-white hover:bg-[#fff5f5] text-sm inline-block whitespace-nowrap py-[0.35rem] px-5 text-danger"
+          >
+            Eliminar
           </button>
         </DropdownMenu>
       </div>

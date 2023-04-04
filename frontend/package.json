@@ -16,7 +16,7 @@
     "@atlaskit/css-reset": "^6.3.20",
     "@atlaskit/dynamic-table": "^14.8.12",
     "@atlaskit/empty-state": "^7.4.9",
-    "@atlaskit/flag": "^15.0.8",
+    "@atlaskit/flag": "^15.1.0",
     "@atlaskit/form": "^8.8.4",
     "@atlaskit/icon": "^21.11.5",
     "@atlaskit/lozenge": "^11.3.7",
