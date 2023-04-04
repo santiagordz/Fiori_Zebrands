@@ -20,15 +20,6 @@ const Step1: FC<Step1Props> = ({ setStepNumber, stepNumber }) => {
   const [isError, setIsError] = useState<boolean>(false);
   const [descripcion, setDescripcion] = useState<string>("");
 
-  const getSprints = async () => {
-    const { data } = await axios.get(URI);
-    setNewRetro({
-      ...newRetro,
-      titulo: "sprints",
-      descripcion: "descripcion",
-    });
-  };
-
   const handleDescripcionChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
@@ -37,6 +28,13 @@ const Step1: FC<Step1Props> = ({ setStepNumber, stepNumber }) => {
       descripcion: event.target.value,
     });
     setDescripcion(event.target.value);
+  };
+
+  const handleTituloChange = (value: any) => {
+    setNewRetro({
+      ...newRetro,
+      titulo: value.value,
+    });
   };
 
   return (
@@ -57,12 +55,7 @@ const Step1: FC<Step1Props> = ({ setStepNumber, stepNumber }) => {
             id="dropdown-rol"
             className="w-44 h-8 rounded-md pl-2 text-sm text-gray-600 font-medium"
             options={fecha.map((fecha) => ({ value: fecha, label: fecha }))}
-            onChange={(value: any) =>
-              setNewRetro({
-                ...newRetro,
-                titulo: value.value,
-              })
-            }
+            onChange={handleTituloChange}
             placeholder="Selecciona una fecha"
           />
           <p className="font-semibold text-xs">Descripción:</p>
@@ -87,7 +80,6 @@ const Step1: FC<Step1Props> = ({ setStepNumber, stepNumber }) => {
           </Button>
         </div>
       </span>
-      <DebugContextButton />
     </>
   );
 };
