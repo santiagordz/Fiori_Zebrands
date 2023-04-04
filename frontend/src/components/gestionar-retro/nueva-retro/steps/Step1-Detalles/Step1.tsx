@@ -32,6 +32,10 @@ const Step1: FC<Step1Props> = ({ setStepNumber, stepNumber }) => {
   const handleDescripcionChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
+    setNewRetro({
+      ...newRetro,
+      descripcion: event.target.value,
+    });
     setDescripcion(event.target.value);
   };
 
@@ -77,13 +81,7 @@ const Step1: FC<Step1Props> = ({ setStepNumber, stepNumber }) => {
             appearance="primary"
             isDisabled={isError}
             label="Siguiente paso"
-            onClick={() => {
-              setNewRetro({
-                ...newRetro,
-                descripcion: descripcion,
-              });
-              setStepNumber((prev: number) => prev + 1);
-            }}
+            onClick={() => setStepNumber((prev: number) => prev + 1)}
           >
             Siguiente paso
           </Button>
