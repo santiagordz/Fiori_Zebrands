@@ -3,6 +3,7 @@ import { newRetroContext } from "../../local-contexts";
 import Button from "@atlaskit/button";
 import Select from "react-select";
 import TextArea from "@atlaskit/textarea";
+import ArrowRightIcon from "@atlaskit/icon/glyph/arrow-right";
 import axios from "axios";
 import DebugContextButton from "./DebugContextButton";
 
@@ -63,13 +64,14 @@ const Step1: FC<Step1Props> = ({ setStepNumber, stepNumber }) => {
             required
             name="titulo"
             id="dropdown-fechas"
-            className="w-44 h-8 rounded-md pl-2 text-xsm text-gray-600 "
+            className="w-44 h-8"
             options={fecha.map((fecha) => ({ value: fecha, label: fecha }))}
             onChange={handleTituloChange}
             placeholder="fecha"
           />
-          <p className="font-semibold text-xs after:content-['*'] after:text-[#ae2a19] text-xs font-semibold text-label">
-            Descripción:
+          <p className="font-semibold text-xs">Descripción:</p>
+          <p className="text-xs text-[#626F86] mt-1">
+            La descripción es opcional pero te recomendamos escribir una.
           </p>
           <TextArea
             resize="auto"
@@ -79,6 +81,7 @@ const Step1: FC<Step1Props> = ({ setStepNumber, stepNumber }) => {
             onChange={handleDescripcionChange}
             placeholder="Escribe una descripción para tu retrospectiva"
           />
+
           {showMaxDescriptionWarning && (
             <p className="text-red-500 text-xs">
               La descripción no puede tener más de {maxCaracteres} caracteres.
@@ -89,6 +92,7 @@ const Step1: FC<Step1Props> = ({ setStepNumber, stepNumber }) => {
         <div className="flex gap-14 w-full items-center justify-center mt-4">
           <Button
             appearance="primary"
+            iconAfter={<ArrowRightIcon label="siguiente paso" />}
             isDisabled={!isDateSelected || !isValidDescripcion}
             label="Siguiente paso"
             onClick={() => setStepNumber((prev: number) => prev + 1)}
@@ -97,7 +101,6 @@ const Step1: FC<Step1Props> = ({ setStepNumber, stepNumber }) => {
           </Button>
         </div>
       </span>
-      <DebugContextButton />
     </>
   );
 };
