@@ -8,64 +8,36 @@ const auth = {
 
 class Sprint {
   static fetchSprintsJira = async () => {
-    const response = await axios.get(
-      `https://zebrands.atlassian.net/rest/api/3/search?jql=Sprint%20%3D%20%22[ZeCommerce Tech] Sprint 5%22%20ORDER%20BY%20createdDate%20DESC`,
-      {
-        auth: auth,
-      }
-    );
+    const maxResults = 100; // Número máximo de issues a recuperar por solicitud
+    let startAt = 0; // Punto de inicio para recuperar issues en cada solicitud
+    let isLast = false; // Indicador para verificar si se han recuperado todos los issues
+    let sprintsJira = []; // Arreglo para almacenar todos los issues recuperados
 
-    var jsonData = response.data;
-
-    var uniqueObjects = [];
-
-    // Function to check if two objects have the same properties and values
-    function objectsAreEqual(obj1, obj2) {
-      var keys1 = Object.keys(obj1);
-      var keys2 = Object.keys(obj2);
-
-      if (keys1.length !== keys2.length) {
-        return false;
-      }
-
-      for (var key of keys1) {
-        if (obj1[key] !== obj2[key]) {
-          return false;
+    while (!isLast) {
+      const response = await axios.get(
+        `https://zebrands.atlassian.net/rest/agile/1.0/board/549/sprint?startAt=${startAt}&maxResults=${maxResults}`,
+        {
+          auth: auth,
         }
-      }
+      );
 
-      return true;
+      sprintsJira = sprintsJira.concat(response.data.values);
+      isLast = response.data.isLast;
+      startAt += maxResults;
     }
 
-    // Function to check if an object is already in the array of unique objects
-    function objectExistsInArray(obj, array) {
-      for (var item of array) {
-        if (objectsAreEqual(obj, item)) {
-          return true;
-        }
-      }
-      return false;
-    }
-
-    // Loop through each issue and extract the required information
-    jsonData.issues.forEach(function (issue) {
-      var currentObject = {
-        id: issue.fields.customfield_10010[0].id,
-        nombre: issue.fields.customfield_10010[0].name,
-        fecha_inicio: issue.fields.customfield_10010[0].startDate,
-        fecha_fin: issue.fields.customfield_10010[0].endDate,
-        state: issue.fields.customfield_10010[0].state,
-        boardId: issue.fields.customfield_10010[0].boardId
+    const sprints = sprintsJira.map((sprint) => {
+      return {
+        id: sprint.id,
+        nombre: sprint.name,
+        fecha_inicio: sprint.startDate,
+        fecha_fin: sprint.endDate,
+        state: sprint.completeDate ? 'closed' : 'active',
+        boardId: sprint.originBoardId,
       };
-
-      // Check for uniqueness and push to the array of unique objects
-      if (!objectExistsInArray(currentObject, uniqueObjects)) {
-        uniqueObjects.push(currentObject);
-      }
     });
 
-    // Log the extracted unique objects to the console
-    return uniqueObjects
+    return sprints;
   };
 
   static postSprints = async (
@@ -81,9 +53,6 @@ class Sprint {
       [id, nombre, fecha_inicio, fecha_fin, state, boardId]
     );
   };
-
-};
+}
 
 module.exports = Sprint;
-
-Sprint.fetchSprintsJira()
