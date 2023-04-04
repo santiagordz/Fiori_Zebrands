@@ -2,6 +2,7 @@ const axios = require('axios');
 const issuesModel = require('../models/issues.model');
 const db = require('../database/db');
 const usuario_issues = require('../models/usuarios_issues.model');
+const sprint_issues = require('../models/sprint_issue.model');
 
 exports.getIssuesJira = async (req, res, next) => {
   try {
@@ -14,6 +15,7 @@ exports.getIssuesJira = async (req, res, next) => {
 
 exports.postIssuesJira = async (req, res, next) => {
   await axios.post('http://localhost:8000/epics');
+  await axios.post('http://localhost:8000/sprints');
   const issues = await issuesModel.fetchIssuesJira();
   try {
     issues.map(async (issue) => {
@@ -30,6 +32,16 @@ exports.postIssuesJira = async (req, res, next) => {
           issue.assignee_id,
           issue.clave
         );
+      }
+      if (issue.sprints !== null) {
+        issue.sprints.map(async (sprint) => {
+          console.log(sprint);
+          await sprint_issues.postSprintIssue(
+            sprint.id,
+            issue.clave,
+            sprint.state
+          );
+        });
       }
     });
     res.send('listo');

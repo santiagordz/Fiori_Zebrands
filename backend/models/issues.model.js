@@ -41,6 +41,7 @@ module.exports = class Issue {
               ? issue.fields.assignee.accountId
               : null,
             status: issue.fields.status.name,
+            sprints: issue.fields.customfield_10010,
           };
           return Object.fromEntries(
             Object.entries(newIssue).filter(
