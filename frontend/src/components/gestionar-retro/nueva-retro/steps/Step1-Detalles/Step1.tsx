@@ -43,6 +43,8 @@ const Step1: FC<Step1Props> = ({ setStepNumber, stepNumber }) => {
     setIsDateSelected(true);
   };
 
+  const isValidDescripcion = descripcion.length <= maxCaracteres;
+
   return (
     <>
       <span
@@ -83,7 +85,7 @@ const Step1: FC<Step1Props> = ({ setStepNumber, stepNumber }) => {
         <div className="flex gap-14 w-full items-center justify-center mt-4">
           <Button
             appearance="primary"
-            isDisabled={!isDateSelected}
+            isDisabled={!isDateSelected || !isValidDescripcion}
             label="Siguiente paso"
             onClick={() => setStepNumber((prev: number) => prev + 1)}
           >
