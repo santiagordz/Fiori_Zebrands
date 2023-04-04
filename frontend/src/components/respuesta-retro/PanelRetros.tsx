@@ -16,6 +16,8 @@ interface PanelRetrosProps {
 const divGroupsStyle =
   'flex flex-col gap-5 bg-[#ffffff] py-5 px-5 rounded-sm shadow-sm overflow-y-auto min-h-[30rem] min-w-[28rem]';
 
+const cardsTitles = 'text-sm font-semibold text-information';
+
 const PanelRetros: FC<PanelRetrosProps> = ({
   tryFetch,
   retroPendientes,
@@ -37,7 +39,7 @@ const PanelRetros: FC<PanelRetrosProps> = ({
       <div className="bg-[#f4f8ff] w-1 h-full absolute top-0 right-[-0.1rem] shadow-container-right" />
       <div className="flex gap-5 overflow-x-auto pb-5">
         <div className={divGroupsStyle}>
-          <h2 className="text-base font-bold text-information">
+          <h2 className={cardsTitles}>
             Mis retrospectivas pendientes de responder
           </h2>
           <div className="flex flex-col gap-5">
@@ -62,7 +64,7 @@ const PanelRetros: FC<PanelRetrosProps> = ({
           </div>
         </div>
         <div className={divGroupsStyle}>
-          <h2 className="text-base font-bold text-information">
+          <h2 className={cardsTitles}>
             Mis retrospectivas recientemente completadas
           </h2>
           <div className="flex flex-col gap-5">
@@ -92,7 +94,7 @@ const PanelRetros: FC<PanelRetrosProps> = ({
           </div>
         </div>
         <div className={divGroupsStyle}>
-          <h2 className="text-base font-bold text-information">
+          <h2 className={cardsTitles}>
             Otras retrospectivas en curso del equipo
           </h2>
           <div className="flex flex-col gap-5">
@@ -119,9 +121,7 @@ const PanelRetros: FC<PanelRetrosProps> = ({
           </div>
         </div>
         <div className={divGroupsStyle}>
-          <h2 className="text-base font-bold text-information">
-            Retrospectivas finalizadas
-          </h2>
+          <h2 className={cardsTitles}>Retrospectivas finalizadas</h2>
           <div className="flex flex-col gap-5">
             {retrosFinalizadas.length > 0 ? (
               retrosFinalizadas.map(
