@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import type { Retrospectiva } from '../../views/mis-retrospectivas/MisRetrospectivas';
 import Spinner from '../design-template/spinner/Spinner';
 import RetrospectivaGeneral from './reusable/RetrospectivaGeneral';
@@ -10,6 +10,7 @@ interface PanelRetrosProps {
   retrosCompletadas: Retrospectiva[];
   otrasRetros: Retrospectiva[];
   retrosFinalizadas: Retrospectiva[];
+  getRetrospectivas: () => void;
 }
 
 const PanelRetros: FC<PanelRetrosProps> = ({
@@ -18,12 +19,17 @@ const PanelRetros: FC<PanelRetrosProps> = ({
   retrosCompletadas,
   otrasRetros,
   retrosFinalizadas,
+  getRetrospectivas,
 }) => {
   if (!tryFetch)
     return <Spinner message="Cargando retrospectivas..." />;
 
   const divGroupsStyle =
     'flex flex-col gap-5 bg-[#ffffff] py-5 px-5 rounded-sm shadow-sm overflow-y-auto max-h-[50rem]';
+
+  useEffect(() => {
+    getRetrospectivas();
+  }, []);
 
   return (
     <div className="flex flex-col gap-5">

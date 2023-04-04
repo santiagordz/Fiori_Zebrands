@@ -60,7 +60,6 @@ const Answers: FC<AnswersProps> = ({
     setFormData({});
     setQuestions([]);
     setAnswers({});
-    window.location.reload();
     navigate('/mis-retrospectivas', { replace: true });
   };
 

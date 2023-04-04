@@ -123,6 +123,7 @@ const MisRetrospectivas: FC<MisRetrospectivasProps> = ({}) => {
               retrosCompletadas={retrosCompletadas}
               otrasRetros={otrasRetros}
               retrosFinalizadas={retrosFinalizadas}
+              getRetrospectivas={getRetrospectivas}
             />
           }
         />
