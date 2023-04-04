@@ -8,7 +8,8 @@ import DebugContextButton from "./DebugContextButton";
 
 const URI = "http://localhost:8000/";
 
-const fecha = ["01-06-2022", "01-07-2022", "01-08-2022", "01-09-2022"];
+const fecha = ["01-06-2023", "01-07-2023", "01-08-2023", "01-09-2023"];
+const maxCaracteres = 1000; //En la base de datos dice 1000, no es mucho ?
 
 interface Step1Props {
   setStepNumber: (updater: (prev: number) => number) => void;
@@ -17,18 +18,21 @@ interface Step1Props {
 
 const Step1: FC<Step1Props> = ({ setStepNumber, stepNumber }) => {
   const { newRetro, setNewRetro } = useContext(newRetroContext);
-  const [isError, setIsError] = useState<boolean>(false);
   const [descripcion, setDescripcion] = useState<string>("");
   const [isDateSelected, setIsDateSelected] = useState<boolean>(false);
+  const [showMaxDescriptionWarning, setShowMaxDescriptionWarning] =
+    useState<boolean>(false);
 
   const handleDescripcionChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
+    const value = event.target.value;
     setNewRetro({
       ...newRetro,
-      descripcion: event.target.value,
+      descripcion: value,
     });
-    setDescripcion(event.target.value);
+    setDescripcion(value);
+    setShowMaxDescriptionWarning(value.length > maxCaracteres);
   };
 
   const handleTituloChange = (value: any) => {
@@ -55,7 +59,7 @@ const Step1: FC<Step1Props> = ({ setStepNumber, stepNumber }) => {
             required
             name="titulo"
             id="dropdown-fechas"
-            className="w-44 h-8 rounded-md pl-2 text-sm text-gray-600 font-medium"
+            className="w-44 h-8 rounded-md pl-2 text-xsm text-gray-600 "
             options={fecha.map((fecha) => ({ value: fecha, label: fecha }))}
             onChange={handleTituloChange}
             placeholder="fecha"
@@ -69,6 +73,11 @@ const Step1: FC<Step1Props> = ({ setStepNumber, stepNumber }) => {
             onChange={handleDescripcionChange}
             placeholder="Escribe una descripción para tu retrospectiva"
           />
+          {showMaxDescriptionWarning && (
+            <p className="text-red-500 text-xs">
+              La descripción no puede tener más de {maxCaracteres} caracteres.
+            </p>
+          )}
         </div>
 
         <div className="flex gap-14 w-full items-center justify-center mt-4">
@@ -82,6 +91,7 @@ const Step1: FC<Step1Props> = ({ setStepNumber, stepNumber }) => {
           </Button>
         </div>
       </span>
+      <DebugContextButton />
     </>
   );
 };
