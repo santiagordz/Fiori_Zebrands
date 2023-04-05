@@ -1,7 +1,3 @@
-import { ReactComponent as ParagraphSVG } from '@/assets/icons/paragraph.svg';
-import { ReactComponent as RangeSVG } from '@/assets/icons/range.svg';
-import { ReactComponent as SelectSVG } from '@/assets/icons/select.svg';
-import { ReactComponent as ShortTextSVG } from '@/assets/icons/short_text.svg';
 import Blanket from '@atlaskit/blanket';
 import Button from '@atlaskit/button';
 import { Checkbox } from '@atlaskit/checkbox';
@@ -20,34 +16,12 @@ import axios from 'axios';
 import { type AppearanceTypes } from '@atlaskit/flag';
 import CheckCircleIcon from '@atlaskit/icon/glyph/check-circle';
 import InfoIcon from '@atlaskit/icon/glyph/info';
+import { tipos } from '../tiposPregunta';
 
 const URI = 'http://localhost:8000/preguntas';
 
 const labelStyle =
   "after:content-['*'] after:text-[#ae2a19] text-xs font-semibold text-label";
-
-const tipos = [
-  {
-    value: 1,
-    label: 'Párrafo',
-    icon: ParagraphSVG,
-  },
-  {
-    value: 2,
-    label: 'Respuesta corta',
-    icon: ShortTextSVG,
-  },
-  {
-    value: 3,
-    label: 'Lista desplegable',
-    icon: SelectSVG,
-  },
-  {
-    value: 4,
-    label: 'Escala numérica',
-    icon: RangeSVG,
-  },
-];
 
 interface EditarPreguntaProps {
   id_pregunta: number;

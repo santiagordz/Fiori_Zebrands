@@ -1,1 +1,2 @@
 export { default as Step2 } from './Step2-Preguntas/Step2';
+export { default as Step4 } from './Step4-Detalles/Step4';

@@ -8,11 +8,11 @@ import { FC } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
-interface BackMyRetrosProps {
+interface BackGestionarProps {
   setIsModalBackOpen: (isOpen: boolean) => void;
 }
 
-const BackMyRetros: FC<BackMyRetrosProps> = ({
+const BackGestionar: FC<BackGestionarProps> = ({
   setIsModalBackOpen,
 }) => {
   const navigate = useNavigate();
@@ -40,7 +40,7 @@ const BackMyRetros: FC<BackMyRetrosProps> = ({
                 size="xlarge"
               />
               <h3 className="font-bold text-modalSoft text-xl">
-                ¿Deseas volver al panel de retrospectivas?
+                ¿Deseas volver al panel de gestión de retrospectivas?
               </h3>
             </div>
             <div className="flex gap-2 items-center justify-center">
@@ -50,14 +50,14 @@ const BackMyRetros: FC<BackMyRetrosProps> = ({
               </p>
             </div>
             <div
-              className="flex items-center justify-between
+              className="flex items-center justify-center
             w-full gap-10"
             >
               <Button
                 appearance="primary"
-                onClick={() => navigate('/mis-retrospectivas')}
+                onClick={() => navigate('/gestionar-retrospectivas')}
               >
-                Ir al panel de retrospectivas
+                Ir al panel de gestión de retrospectivas
               </Button>
               <Button
                 appearance="default"
@@ -73,4 +73,4 @@ const BackMyRetros: FC<BackMyRetrosProps> = ({
   );
 };
 
-export default BackMyRetros;
+export default BackGestionar;

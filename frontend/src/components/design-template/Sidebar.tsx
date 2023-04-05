@@ -2,13 +2,13 @@ import Avatar from '@atlaskit/avatar';
 import SignOutIcon from '@atlaskit/icon/glyph/sign-out';
 import axios from 'axios';
 import { motion } from 'framer-motion';
+import Cookies from 'js-cookie';
 import { useContext } from 'react';
-import { useLocation, useMatch, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import zebrandsLogo from '../../assets/zebrandsLogo.svg';
 import { userDataContext } from '../../contexts';
 import { categories } from '../../utils/templateData';
 import ConfirmLink from './ConfirmLink';
-import Cookies from 'js-cookie';
 
 const URI = 'http://localhost:8000/logout';
 
@@ -29,9 +29,21 @@ const Sidebar = ({}) => {
   const pColor = '#44546F';
   const sColor = '#0C66E4';
   const iconSize = 'medium';
-  const isOnProtectedRoute = useMatch(
-    '/mis-retrospectivas/responder/:id/preguntas/'
-  );
+  const onProtectedRoute = (path: string) => {
+    const protectedRoutes = [
+      '/mis-retrospectivas/responder/:id/preguntas/',
+      '/gestionar-retrospectivas/nueva-retrospectiva',
+    ];
+
+    return protectedRoutes.some((route) => {
+      const routeMatcher = new RegExp(
+        route.replace(/:[^\s/]+/g, '([\\w-]+)')
+      );
+      return routeMatcher.test(path);
+    });
+  };
+
+  const isOnProtectedRoute = onProtectedRoute(location.pathname);
 
   const handleLogout = async () => {
     await axios.get(URI, {
