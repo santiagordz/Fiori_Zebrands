@@ -14,7 +14,7 @@ interface NuevaRetrospectivaProps {}
 const NuevaRetrospectiva: FC<NuevaRetrospectivaProps> = ({}) => {
   const nanoid = customAlphabet('1234567890', 10);
   const { newRetro, setNewRetro } = useContext(newRetroContext);
-  const [stepNumber, setStepNumber] = useState(4);
+  const [stepNumber, setStepNumber] = useState(2);
   const [isModalBackOpen, setIsModalBackOpen] = useState(false);
 
   useEffect(() => {
@@ -67,7 +67,8 @@ const NuevaRetrospectiva: FC<NuevaRetrospectivaProps> = ({}) => {
                   {stepsInformation[stepNumber - 1].description}
                 </p>
               </div>
-              <Form onSubmit={(data) => console.log(data)}>
+              {/* ! AQUI VA EL ONSUBMIT DE LA BASE DE DATOS */}
+              <Form>
                 {({ formProps }) => (
                   <form
                     {...formProps}

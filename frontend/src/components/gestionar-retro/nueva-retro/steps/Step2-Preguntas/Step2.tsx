@@ -205,7 +205,7 @@ const Step2: FC<Step2Props> = ({ setStepNumber, stepNumber }) => {
       </div>
       <div className="flex flex-col gap-3">
         <div className="flex justify-between items-center">
-          <p className="font-semibold text-xs text-[626F86]">
+          <p className="font-semibold text-xs text-[#626F86]">
             {`Otras preguntas disponibles: 
             ${newRetro?.otras?.length ?? 0}`}
           </p>
@@ -239,7 +239,7 @@ const Step2: FC<Step2Props> = ({ setStepNumber, stepNumber }) => {
             ))
           ) : (
             <p className="text-subtle text-sm">
-              No hay otras preguntas disponibles, si lo necesitas,
+              No hay otras preguntas disponibles. Si lo necesitas,
               puedes crear una nueva.
             </p>
           )}

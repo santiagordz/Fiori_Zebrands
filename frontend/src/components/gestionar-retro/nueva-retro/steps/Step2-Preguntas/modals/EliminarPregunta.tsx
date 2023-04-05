@@ -120,15 +120,15 @@ const EliminarPregunta: FC<EliminarPreguntaProps> = ({
             <p className="text-xs text-textNormal mb-2">
               Se eliminará la siguiente pregunta:
             </p>
-            <div className="flex flex-col items-center justify-center gap-3 bg-blue-50 border-2 border-blue-600 rounded w-full py-3 px-2">
-              <p className="text-information text-center font-medium text-sm">
+            <div className="flex items-center justify-between gap-3 w-full bg-[#E9F2FF] py-2 px-4 rounded">
+              <p className="text-textNormal text-[0.8rem] font-semibold">
                 {pregunta}
               </p>
               <div id="tag">
                 <Tag
                   text={tiposPregunta[id_tipo_pregunta]}
                   appearance="rounded"
-                  color="blue"
+                  color="green"
                 />
               </div>
             </div>
@@ -150,14 +150,14 @@ const EliminarPregunta: FC<EliminarPreguntaProps> = ({
             className="flex items-center justify-center
             w-full gap-8 mt-2 scale-[0.9]"
           >
+            <Button appearance="danger" onClick={handleDelete}>
+              Eliminar pregunta
+            </Button>
             <Button
               appearance="subtle"
               onClick={() => setIsDeleteModalOpen(false)}
             >
               Cancelar
-            </Button>
-            <Button appearance="danger" onClick={handleDelete}>
-              Eliminar pregunta
             </Button>
           </div>
         </div>

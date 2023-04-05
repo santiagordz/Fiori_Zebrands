@@ -21,6 +21,6 @@ export const stepsInformation: Array<StepInformation> = [
   {
     title: 'Confirma los detalles',
     description:
-      'Asegúrate de que los detalles de la retrospectiva sean correctos antes de crearla',
+      'Asegúrate de que los detalles de la retrospectiva sean correctos antes de iniciarla',
   },
 ];

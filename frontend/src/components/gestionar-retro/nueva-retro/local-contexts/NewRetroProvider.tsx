@@ -15,7 +15,7 @@ export interface newRetroType {
   predeterminadas?: PreguntaType[];
   otras?: PreguntaType[];
   usuarios?: any;
-  // etiquetas?: any;
+  etiquetas?: any;
 }
 
 interface ContextProps {
@@ -40,6 +40,7 @@ const NewRetroProvider: FC<newRetroContextProps> = ({ children }) => {
     predeterminadas: [],
     otras: [],
     usuarios: [],
+    etiquetas: [],
   });
 
   return (

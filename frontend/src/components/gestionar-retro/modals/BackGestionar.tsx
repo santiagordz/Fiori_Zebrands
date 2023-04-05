@@ -49,7 +49,7 @@ const BackGestionar: FC<BackGestionarProps> = ({
                 ¿Deseas volver al panel de gestión de retrospectivas?
               </h3>
             </div>
-            <div className="flex gap-2 items-center justify-center">
+            <div className="flex gap-2 items-center justify-center pl-5">
               <WarningIcon label="warning" primaryColor="#FF0000" />
               <p className="text-xs text-textNormal">
                 Perderás todo el progreso para la nueva la

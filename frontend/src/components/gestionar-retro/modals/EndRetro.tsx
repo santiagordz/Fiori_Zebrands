@@ -110,14 +110,14 @@ const EndRetro: FC<EndRetroProps> = ({
             className="flex items-center justify-center
             w-full gap-8 mt-2 scale-[0.9]"
           >
+            <Button appearance="primary" onClick={handleFinishRetro}>
+              Finalizar retrospectiva
+            </Button>
             <Button
               appearance="subtle"
               onClick={() => setIsEndModalOpen(false)}
             >
               Cancelar
-            </Button>
-            <Button appearance="primary" onClick={handleFinishRetro}>
-              Finalizar retrospectiva
             </Button>
           </div>
         </div>
