@@ -3,7 +3,7 @@ import Button from '@atlaskit/button';
 import CrossIcon from '@atlaskit/icon/glyph/cross';
 import InfoIcon from '@atlaskit/icon/glyph/info';
 import WarningIcon from '@atlaskit/icon/glyph/warning';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
@@ -17,6 +17,14 @@ const BackMyRetros: FC<BackMyRetrosProps> = ({
 }) => {
   const navigate = useNavigate();
 
+  useEffect(() => {
+    document.body.classList.add('modal-open');
+
+    return () => {
+      document.body.classList.remove('modal-open');
+    };
+  }, []);
+
   return (
     <>
       <Blanket isTinted={true}>
@@ -24,7 +32,7 @@ const BackMyRetros: FC<BackMyRetrosProps> = ({
           animate={{ opacity: 1 }}
           className="flex flex-col w-full h-full items-center justify-center opacity-0"
         >
-          <div className="flex flex-col bg-white rounded p-10 gap-7 items-center justify-center drop-shadow-lg">
+          <div className="flex flex-col bg-white rounded p-10 gap-7 items-center justify-center drop-shadow-lg max-w-[42vw]">
             <div
               className="flex w-full absolute top-0 justify-end p-4"
               onClick={() => setIsModalBackOpen(false)}
@@ -46,7 +54,8 @@ const BackMyRetros: FC<BackMyRetrosProps> = ({
             <div className="flex gap-2 items-center justify-center">
               <WarningIcon label="warning" primaryColor="#FF0000" />
               <p className="flex text-xs text-textNormal">
-                Perderás los cambios no guardados.
+                Perderás tus respuestas a las preguntas respondidas
+                hasta el momento.
               </p>
             </div>
             <div

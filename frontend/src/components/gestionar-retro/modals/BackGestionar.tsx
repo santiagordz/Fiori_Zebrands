@@ -3,9 +3,8 @@ import Button from '@atlaskit/button';
 import CrossIcon from '@atlaskit/icon/glyph/cross';
 import InfoIcon from '@atlaskit/icon/glyph/info';
 import WarningIcon from '@atlaskit/icon/glyph/warning';
-import { FC } from 'react';
-
 import { motion } from 'framer-motion';
+import { FC, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 interface BackGestionarProps {
@@ -16,6 +15,13 @@ const BackGestionar: FC<BackGestionarProps> = ({
   setIsModalBackOpen,
 }) => {
   const navigate = useNavigate();
+  useEffect(() => {
+    document.body.classList.add('modal-open');
+
+    return () => {
+      document.body.classList.remove('modal-open');
+    };
+  }, []);
 
   return (
     <>
@@ -24,7 +30,7 @@ const BackGestionar: FC<BackGestionarProps> = ({
           animate={{ opacity: 1 }}
           className="flex flex-col w-full h-full items-center justify-center opacity-0"
         >
-          <div className="flex flex-col bg-white rounded p-10 gap-7 items-center justify-center drop-shadow-lg">
+          <div className="flex flex-col bg-white rounded p-10 gap-7 items-center justify-center drop-shadow-lg max-w-[42vw]">
             <div
               className="flex w-full absolute top-0 justify-end p-4"
               onClick={() => setIsModalBackOpen(false)}
@@ -45,8 +51,13 @@ const BackGestionar: FC<BackGestionarProps> = ({
             </div>
             <div className="flex gap-2 items-center justify-center">
               <WarningIcon label="warning" primaryColor="#FF0000" />
-              <p className="flex text-xs text-textNormal">
-                Perderás los cambios no guardados.
+              <p className="text-xs text-textNormal">
+                Perderás todo el progreso para la nueva la
+                retrospectiva.{' '}
+                <span className="font-semibold">
+                  Las preguntas que se hayan registrado como nuevas, o
+                  los cambios en las preguntas se mantendrán.
+                </span>
               </p>
             </div>
             <div
