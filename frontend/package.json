@@ -28,6 +28,7 @@
     "@atlaskit/textfield": "^5.3.6",
     "@atlaskit/toggle": "^12.5.8",
     "@atlaskit/tokens": "^1.2.4",
+    "@emailjs/browser": "^3.10.0",
     "@emotion/react": "^11.10.6",
     "@types/js-cookie": "^3.0.3",
     "autoprefixer": "^10.4.14",
