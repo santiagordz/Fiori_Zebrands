@@ -1,6 +1,8 @@
 import React, { FC, useState} from 'react'
 
 import DropdownSprints from '../../components/charts/DropdownSprints'
+import StackedBarChart from '../../components/charts/StackedBarchart'
+
 interface MetricasSprintProps {
   
 }
@@ -16,8 +18,10 @@ const MetricasSprint: FC<MetricasSprintProps> = ({  }) => {
 
   return (
     <div className=''>
-        <div className='flex justify-end'>
-            <DropdownSprints  sprintsActuales={[]} onSprintsSeleccionadasChange={handleSprintSeleccionados}/>
+        <div className='flex justify-end p-3'>
+            <DropdownSprints sprintsActuales={[]} onSprintsSeleccionadasChange={handleSprintSeleccionados}/>
+            <StackedBarChart />
+         
         </div>
     </div>
   )

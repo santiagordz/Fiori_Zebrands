@@ -3,3 +3,5 @@ const router = express.Router();
 const sprintsDataController = require('../controllers/sprintsDataMetrica.controller');
 
 router.get('/:id', sprintsDataController.getIssuesBySprint);
+
+module.exports = router;

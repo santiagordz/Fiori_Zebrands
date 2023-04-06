@@ -32,13 +32,13 @@ const Metricas: FC<MetricasProps> = ({}) => {
       </TabList>
       <TabPanel>
         <Panel>
-          <Piechart></Piechart>
+        <Piechart></Piechart>
         </Panel>
       </TabPanel>
       <TabPanel>
         <Panel>
-          <div className="flex justify-end"><MetricasSprint></MetricasSprint></div>
-          <div>asdfasdf</div>
+          <MetricasSprint />
+          
         </Panel>
       </TabPanel>
       <TabPanel>
