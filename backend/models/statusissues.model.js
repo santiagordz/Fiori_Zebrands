@@ -6,6 +6,16 @@ module.exports = class StatusIssue {
     this.status = status;
   }
 
+  static fetchAll = async () => {
+    try {
+      const [rows] = await db.execute('SELECT * FROM status_issues');
+      return rows;
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
+  };
+
   static getIssuesBySprint(id) {
     return db.execute(
       `
