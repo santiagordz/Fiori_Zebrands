@@ -79,6 +79,11 @@ const NuevaRetrospectiva: FC<NuevaRetrospectivaProps> = ({}) => {
                       stepNumber={stepNumber}
                     />
 
+                    <Step1
+                      setStepNumber={setStepNumber}
+                      stepNumber={stepNumber}
+                    />
+
                     <Step2
                       setStepNumber={setStepNumber}
                       stepNumber={stepNumber}
