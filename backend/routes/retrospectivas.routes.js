@@ -14,5 +14,9 @@ router.get(
   retrospectivaController.getRetrospectivasByUserId
 );
 router.get('/tags/:id', retrospectivaController.getTags);
+router.put(
+  '/finish/:retroId',
+  retrospectivaController.finishRetrospectiva
+);
 
 module.exports = router;

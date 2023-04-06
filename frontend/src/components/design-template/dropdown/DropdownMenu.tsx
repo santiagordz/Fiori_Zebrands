@@ -44,7 +44,7 @@ const DropdownMenu: FC<DropdownMenuProps> = ({ children }) => {
         />
       </button>
       {isPressed && (
-        <span className="flex flex-col gap-2 absolute right-0 mt-2 bg-white border border-solid border-gray-100 shadow-lg rounded text-left z-10 py-2 w-fit">
+        <span className="flex flex-col gap-2 absolute right-0 mt-1 bg-white border border-solid border-gray-100 shadow-lg rounded text-left z-10 py-2 w-fit">
           {children}
         </span>
       )}

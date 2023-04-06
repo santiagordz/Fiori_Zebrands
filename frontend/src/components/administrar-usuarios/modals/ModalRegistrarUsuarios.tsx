@@ -5,6 +5,7 @@ import CrossIcon from '@atlaskit/icon/glyph/cross';
 import DropdownEtiquetas from '../DropdownEtiquetas';
 import DropdowRoles from '../DropdownRoles';
 import { Etiqueta } from '../UsersTable';
+import emailjs from '@emailjs/browser';
 
 const URI = 'http://localhost:8000/usuarios/createUser';
 
@@ -37,9 +38,25 @@ const ModalRegistrarUsuarios: FC<RegistrarUsuariosProps> = ({
         rol: Number(rol),
         etiquetas: etiquetas,
       });
+
       window.location.reload();
     } catch {
       window.alert('Hubo un error al registrar el usuario');
+    }
+    try {
+      emailjs.send(
+        'service_yhwmvyx',
+        'template_6dsa5hr',
+        {
+          to_email: `${correo}@gmail.com`,
+        },
+        'huMoBlbtLZGwi0vSZ'
+      );
+    } catch (error) {
+      console.log(
+        'Hubo un error al enviar el correo al usuario',
+        error
+      );
     }
     setCorreo('');
     setRol('');

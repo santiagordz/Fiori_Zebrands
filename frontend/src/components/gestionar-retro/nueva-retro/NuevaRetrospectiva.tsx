@@ -1,19 +1,35 @@
-import React, { FC, useState } from 'react';
 import Button from '@atlaskit/button';
-import ArrowLeftIcon from '@atlaskit/icon/glyph/arrow-left';
-import Stepper from '../../design-template/stepper/Stepper';
 import Form from '@atlaskit/form';
+import ArrowLeftIcon from '@atlaskit/icon/glyph/arrow-left';
+import { FC, useState, useContext, useEffect } from 'react';
+import Stepper from '../../design-template/stepper/Stepper';
+import { Step2, Step4, Step1 } from './steps';
 import { stepsInformation } from './steps/stepsInformation';
-import { Step2, Step3 } from './steps';
+import { nanoid, customAlphabet } from 'nanoid';
+import { newRetroContext } from './local-contexts';
+import BackGestionar from '../modals/BackGestionar';
 
 interface NuevaRetrospectivaProps {}
 
 const NuevaRetrospectiva: FC<NuevaRetrospectivaProps> = ({}) => {
-  const [stepNumber, setStepNumber] = useState(3);
+  const nanoid = customAlphabet('1234567890', 10);
+  const { newRetro, setNewRetro } = useContext(newRetroContext);
+  const [stepNumber, setStepNumber] = useState(1);
+  const [isModalBackOpen, setIsModalBackOpen] = useState(false);
+
+  useEffect(() => {
+    setNewRetro({
+      ...newRetro,
+      id: Number(nanoid()),
+    });
+  }, []);
 
   return (
     <>
       <div className="flex flex-col gap-5 bg-[#ffffff] py-5 px-5 rounded-sm shadow-sm">
+        {isModalBackOpen && (
+          <BackGestionar setIsModalBackOpen={setIsModalBackOpen} />
+        )}
         <h2 className="font-semibold text-information">
           Nueva retrospectiva
         </h2>
@@ -26,14 +42,17 @@ const NuevaRetrospectiva: FC<NuevaRetrospectivaProps> = ({}) => {
             iconBefore={
               <ArrowLeftIcon label="volver a gestionar retrospectivas" />
             }
-            // onClick={() => setIsModalBackOpen(true)}
+            onClick={() => setIsModalBackOpen(true)}
           >
-            Volver a gestionar retrospectivas
+            Volver al panel de gestión de retrospectivas
           </Button>
         </div>
         <div className="w-full px-28 flex flex-col items-center justify-center gap-8">
           <div className="w-4/12 flex items-center justify-center">
-            <Stepper totalSteps={3} currentStep={stepNumber} />
+            <Stepper
+              totalSteps={stepsInformation.length}
+              currentStep={stepNumber}
+            />
           </div>
           <div className="w-full flex flex-col justify-center items-center gap-9">
             <div className="flex flex-col items-center justify-center gap-10 w-full">
@@ -48,17 +67,24 @@ const NuevaRetrospectiva: FC<NuevaRetrospectivaProps> = ({}) => {
                   {stepsInformation[stepNumber - 1].description}
                 </p>
               </div>
-              <Form onSubmit={(data) => console.log(data)}>
+              {/* ! AQUI VA EL ONSUBMIT DE LA BASE DE DATOS */}
+              <Form>
                 {({ formProps }) => (
                   <form
                     {...formProps}
                     className="flex flex-col items-center justify-center w-full mb-5 text-center"
                   >
+
+                    <Step1
+                      setStepNumber={setStepNumber}
+                      stepNumber={stepNumber}
+                    />
+
                     <Step2
                       setStepNumber={setStepNumber}
                       stepNumber={stepNumber}
                     />
-                    <Step3
+                    <Step4
                       setStepNumber={setStepNumber}
                       stepNumber={stepNumber}
                     />

@@ -3,18 +3,18 @@ import Button from '@atlaskit/button';
 import CrossIcon from '@atlaskit/icon/glyph/cross';
 import InfoIcon from '@atlaskit/icon/glyph/info';
 import WarningIcon from '@atlaskit/icon/glyph/warning';
+import { motion } from 'framer-motion';
 import { FC, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
-
-interface BackMyRetrosProps {
+interface BackGestionarProps {
   setIsModalBackOpen: (isOpen: boolean) => void;
 }
 
-const BackMyRetros: FC<BackMyRetrosProps> = ({ setIsModalBackOpen }) => {
+const BackGestionar: FC<BackGestionarProps> = ({
+  setIsModalBackOpen,
+}) => {
   const navigate = useNavigate();
-
   useEffect(() => {
     document.body.classList.add('modal-open');
 
@@ -46,25 +46,29 @@ const BackMyRetros: FC<BackMyRetrosProps> = ({ setIsModalBackOpen }) => {
                 size="xlarge"
               />
               <h3 className="font-bold text-modalSoft text-xl">
-                ¿Deseas volver al panel de retrospectivas?
+                ¿Deseas volver al panel de gestión de retrospectivas?
               </h3>
             </div>
-            <div className="flex gap-2 items-center justify-center">
+            <div className="flex gap-2 items-center justify-center pl-5">
               <WarningIcon label="warning" primaryColor="#FF0000" />
-              <p className="flex text-xs text-textNormal">
-                Perderás tus respuestas a las preguntas respondidas
-                hasta el momento.
+              <p className="text-xs text-textNormal">
+                Perderás todo el progreso para la nueva la
+                retrospectiva.{' '}
+                <span className="font-semibold">
+                  Las preguntas que se hayan registrado como nuevas, o
+                  los cambios en las preguntas se mantendrán.
+                </span>
               </p>
             </div>
             <div
-              className="flex items-center justify-between
+              className="flex items-center justify-center
             w-full gap-10"
             >
               <Button
                 appearance="primary"
-                onClick={() => navigate("/mis-retrospectivas")}
+                onClick={() => navigate('/gestionar-retrospectivas')}
               >
-                Ir al panel de retrospectivas
+                Ir al panel de gestión de retrospectivas
               </Button>
               <Button
                 appearance="default"
@@ -80,4 +84,4 @@ const BackMyRetros: FC<BackMyRetrosProps> = ({ setIsModalBackOpen }) => {
   );
 };
 
-export default BackMyRetros;
+export default BackGestionar;

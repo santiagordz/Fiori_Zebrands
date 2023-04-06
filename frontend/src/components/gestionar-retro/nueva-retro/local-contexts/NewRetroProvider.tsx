@@ -1,11 +1,11 @@
-import React, { FC, createContext, useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { FC, createContext, useState } from "react";
 
 export interface PreguntaType {
   id: number;
   pregunta: string;
   predeterminada: boolean;
   id_tipo_pregunta: number;
+  opciones?: string | null;
 }
 
 export interface EtiquetaType {
@@ -16,13 +16,11 @@ export interface EtiquetaType {
 }
 
 export interface newRetroType {
-  basic?: {
-    title: string;
-    description: string;
-  };
+  id?: number;
+  titulo?: string;
+  descripcion?: string | null;
   predeterminadas?: PreguntaType[];
   otras?: PreguntaType[];
-  // !Cambiar tipo de usuario que no sea any
   usuarios?: any;
   etiquetas?: EtiquetaType[]; //Esta parte del contexto va a guardar las etiquetas del select de etiquetas
 }
@@ -47,10 +45,9 @@ interface newRetroContextProps {
 
 const NewRetroProvider: FC<newRetroContextProps> = ({ children }) => {
   const [newRetro, setNewRetro] = useState<newRetroType>({
-    basic: {
-      title: '',
-      description: '',
-    },
+    id: 0,
+    titulo: '',
+    descripcion: null,
     predeterminadas: [],
     otras: [],
     usuarios: [],

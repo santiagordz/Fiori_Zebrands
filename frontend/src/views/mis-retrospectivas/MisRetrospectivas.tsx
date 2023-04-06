@@ -41,6 +41,9 @@ const MisRetrospectivas: FC<MisRetrospectivasProps> = ({}) => {
   const [otrasRetros, setOtrasRetros] = useState<
     Array<Retrospectiva>
   >([]);
+  const [retrosFinalizadas, setRetrosFinalizadas] = useState<
+    Array<Retrospectiva>
+  >([]);
   const [tryFetch, setTryFetch] = useState(false);
 
   const getTags = async (id: number) => {
@@ -57,26 +60,42 @@ const MisRetrospectivas: FC<MisRetrospectivasProps> = ({}) => {
       (
         retro: Retrospectiva & {
           asignada: boolean;
+          en_curso: boolean;
         }
-      ) => !retro.completada && retro.asignada
+      ) => !retro.completada && retro.asignada && retro.en_curso
     );
     const completadas = response.data.filter(
       (
         retro: Retrospectiva & {
           asignada: boolean;
+          en_curso: boolean;
         }
-      ) => retro.completada && retro.asignada
+      ) => retro.completada && retro.asignada && retro.en_curso
     );
     const otras = response.data.filter(
       (
         retro: Retrospectiva & {
           completada: boolean;
           asignada: boolean;
+          en_curso: boolean;
         }
-      ) => !retro.asignada
+      ) => !retro.asignada && retro.en_curso
     );
 
-    for (const retro of [...pendientes, ...completadas, ...otras]) {
+    const finalizadas = response.data.filter(
+      (
+        retro: Retrospectiva & {
+          en_curso: boolean;
+        }
+      ) => !retro.en_curso
+    );
+
+    for (const retro of [
+      ...pendientes,
+      ...completadas,
+      ...otras,
+      ...finalizadas,
+    ]) {
       const tags = await getTags(retro.id);
       retro.tags = tags;
     }
@@ -84,6 +103,7 @@ const MisRetrospectivas: FC<MisRetrospectivasProps> = ({}) => {
     setRetroPendientes(pendientes);
     setRetrosCompletadas(completadas);
     setOtrasRetros(otras);
+    setRetrosFinalizadas(finalizadas);
     setTryFetch(true);
   };
 
@@ -102,6 +122,8 @@ const MisRetrospectivas: FC<MisRetrospectivasProps> = ({}) => {
               retroPendientes={retroPendientes}
               retrosCompletadas={retrosCompletadas}
               otrasRetros={otrasRetros}
+              retrosFinalizadas={retrosFinalizadas}
+              getRetrospectivas={getRetrospectivas}
             />
           }
         />

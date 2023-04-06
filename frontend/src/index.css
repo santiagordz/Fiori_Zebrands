@@ -39,3 +39,13 @@ h6 {
 #flag > div {
   box-shadow: none !important;
 }
+
+.shadow-container-left {
+  box-shadow: 4px 0px 6px -1px rgba(0, 0, 0, 0.1),
+    2px 0px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.shadow-container-right {
+  box-shadow: -4px 0px 6px -1px rgba(0, 0, 0, 0.1),
+    -2px 0px 4px -1px rgba(0, 0, 0, 0.06);
+}

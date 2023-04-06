@@ -15,8 +15,23 @@ import {
   type PreguntaType,
 } from '../../local-contexts';
 import Pregunta from './Pregunta';
+import { NuevaPregunta } from './modals';
+import {
+  AutoDismissFlag,
+  FlagGroup,
+  type AppearanceTypes,
+} from '@atlaskit/flag';
 
 const URI = 'http://localhost:8000/preguntas';
+
+type flagData = {
+  created: number;
+  icon: React.ReactNode;
+  appearance: AppearanceTypes;
+  id: number;
+  title: string;
+  description?: string;
+};
 
 interface Step2Props {
   setStepNumber: (updater: (prev: number) => number) => void;
@@ -26,6 +41,31 @@ interface Step2Props {
 const Step2: FC<Step2Props> = ({ setStepNumber, stepNumber }) => {
   const { newRetro, setNewRetro } = useContext(newRetroContext);
   const [isError, setIsError] = useState<boolean>(false);
+  const [isNewQuestionOpen, setIsNewQuestionOpen] =
+    useState<boolean>(false);
+  const [flags, setFlags] = useState<Array<flagData>>([]);
+
+  const addFlag = (
+    title: string,
+    icon: React.ReactNode,
+    appearance: AppearanceTypes,
+    description?: string
+  ): void => {
+    const flag = {
+      created: Date.now(),
+      appearance: appearance,
+      icon: icon,
+      id: flags.length,
+      title: title,
+      description: description || '',
+    };
+
+    setFlags((current) => [flag, ...current]);
+  };
+
+  const handleDismiss = () => {
+    setFlags(flags.slice(1));
+  };
 
   const getPreguntas = async () => {
     const { data } = await axios.get(URI);
@@ -104,6 +144,28 @@ const Step2: FC<Step2Props> = ({ setStepNumber, stepNumber }) => {
         stepNumber === 2 ? '' : 'hidden'
       }`}
     >
+      {isNewQuestionOpen && (
+        <NuevaPregunta
+          setIsNewQuestionOpen={setIsNewQuestionOpen}
+          addFlag={addFlag}
+        />
+      )}
+
+      <FlagGroup onDismissed={handleDismiss}>
+        {flags.map((flag) => {
+          return (
+            <AutoDismissFlag
+              id={flag.id}
+              appearance={flag.appearance}
+              icon={flag.icon}
+              key={flag.id}
+              title={flag.title}
+              description={flag.description ?? null}
+            />
+          );
+        })}
+      </FlagGroup>
+
       <div className="flex flex-col gap-3">
         <div>
           <p className="font-semibold text-xs">
@@ -124,6 +186,7 @@ const Step2: FC<Step2Props> = ({ setStepNumber, stepNumber }) => {
               (pregunta: PreguntaType) => (
                 <Pregunta
                   key={pregunta.id}
+                  addFlag={addFlag}
                   pregunta={pregunta.pregunta}
                   id={pregunta.id}
                   isChecked={true}
@@ -142,13 +205,14 @@ const Step2: FC<Step2Props> = ({ setStepNumber, stepNumber }) => {
       </div>
       <div className="flex flex-col gap-3">
         <div className="flex justify-between items-center">
-          <p className="font-semibold text-xs text-[626F86]">
+          <p className="font-semibold text-xs text-[#626F86]">
             {`Otras preguntas disponibles: 
             ${newRetro?.otras?.length ?? 0}`}
           </p>
           <span className="border border-solid border-gray-200 rounded scale-[0.85] mr-[-0.8rem]">
             <Button
               appearance="subtle"
+              onClick={() => setIsNewQuestionOpen(true)}
               iconBefore={
                 <AddIcon
                   label="agregar retrospectiva"
@@ -165,6 +229,7 @@ const Step2: FC<Step2Props> = ({ setStepNumber, stepNumber }) => {
             newRetro?.otras?.map((pregunta: PreguntaType) => (
               <Pregunta
                 key={pregunta.id}
+                addFlag={addFlag}
                 pregunta={pregunta.pregunta}
                 id={pregunta.id}
                 isChecked={false}
@@ -174,7 +239,7 @@ const Step2: FC<Step2Props> = ({ setStepNumber, stepNumber }) => {
             ))
           ) : (
             <p className="text-subtle text-sm">
-              No hay otras preguntas disponibles, si lo necesitas,
+              No hay otras preguntas disponibles. Si lo necesitas,
               puedes crear una nueva.
             </p>
           )}

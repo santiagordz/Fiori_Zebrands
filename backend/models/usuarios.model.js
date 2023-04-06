@@ -155,7 +155,7 @@ module.exports = class Usuarios {
 
   static async updateData(nombre, foto, id_google, correo) {
     return db.execute(
-      `UPDATE usuarios SET nombre = ?, foto = ?, id_google = ?, updatedAt = CURTIME() WHERE correo = ?`,
+      `UPDATE usuarios SET nombre = ?, foto = ?, id_google = ? WHERE correo = ?`,
       [nombre, foto, id_google, correo]
     );
   }
