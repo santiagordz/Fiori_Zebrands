@@ -73,8 +73,11 @@ const Pregunta: FC<PreguntaProps> = ({
       </div>
       <div className="flex items-center">
         <div id="tag" className="scale-[0.9]">
-          <Tag text={tiposPregunta[tipo]} appearance="rounded" color="green" />
-          <Tag text={tiposPregunta[tipo]} appearance="rounded" color="green" />
+          <Tag
+            text={tiposPregunta[tipo]}
+            appearance="rounded"
+            color="green"
+          />
         </div>
         <DropdownMenu>
           <button

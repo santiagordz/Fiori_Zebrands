@@ -1,5 +1,4 @@
 import React, { FC, createContext, useState } from "react";
-import React, { FC, createContext, useState } from "react";
 
 export interface PreguntaType {
   id: number;

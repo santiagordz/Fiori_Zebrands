@@ -45,7 +45,7 @@ const Step4: FC<Step4Props> = ({ setStepNumber, stepNumber }) => {
   return (
     <span
       className={`flex flex-col gap-10 w-full text-left ${
-        stepNumber === 3 ? '' : 'hidden'
+        stepNumber === 4 ? '' : 'hidden'
       }`}
     >
       <div>

@@ -141,8 +141,7 @@ const Step2: FC<Step2Props> = ({ setStepNumber, stepNumber }) => {
   return (
     <span
       className={`flex flex-col gap-10 w-full text-left ${
-        stepNumber === 2 ? "" : "hidden"
-        stepNumber === 2 ? "" : "hidden"
+        stepNumber === 2 ? '' : 'hidden'
       }`}
     >
       {isNewQuestionOpen && (
@@ -175,14 +174,10 @@ const Step2: FC<Step2Props> = ({ setStepNumber, stepNumber }) => {
             }`}
           </p>
           <p className="text-xs text-[#626F86] mt-1">
-            Las preguntas en este espacio se harán predeterminadas, lo que
-            quiere decir que se establecerán como las preguntas seleccionadas
-            por default para las futuras retrospectivas una vez que inicies esta
-            retrospectiva.
-            Las preguntas en este espacio se harán predeterminadas, lo que
-            quiere decir que se establecerán como las preguntas seleccionadas
-            por default para las futuras retrospectivas una vez que inicies esta
-            retrospectiva.
+            Las preguntas en este espacio se harán predeterminadas, lo
+            que quiere decir que se establecerán como las preguntas
+            seleccionadas por default para las futuras retrospectivas
+            una vez que inicies esta retrospectiva.
           </p>
         </div>
         <div className="flex flex-col gap-3">
@@ -202,10 +197,8 @@ const Step2: FC<Step2Props> = ({ setStepNumber, stepNumber }) => {
             )
           ) : (
             <p className="text-danger mt-3 text-sm">
-              No hay preguntas seleccionadas, agrega al menos una pregunta para
-              continuar.
-              No hay preguntas seleccionadas, agrega al menos una pregunta para
-              continuar.
+              No hay preguntas seleccionadas, agrega al menos una
+              pregunta para continuar.
             </p>
           )}
         </div>
@@ -221,8 +214,10 @@ const Step2: FC<Step2Props> = ({ setStepNumber, stepNumber }) => {
               appearance="subtle"
               onClick={() => setIsNewQuestionOpen(true)}
               iconBefore={
-                <AddIcon label="agregar retrospectiva" primaryColor="#0055CC" />
-                <AddIcon label="agregar retrospectiva" primaryColor="#0055CC" />
+                <AddIcon
+                  label="agregar retrospectiva"
+                  primaryColor="#0055CC"
+                />
               }
             >
               <p className="text-information">Nueva pregunta</p>
