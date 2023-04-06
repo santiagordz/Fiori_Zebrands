@@ -3,4 +3,5 @@ export {
   newRetroContext,
   type PreguntaType,
   type newRetroType,
+  type EtiquetaType,
 } from './NewRetroProvider';

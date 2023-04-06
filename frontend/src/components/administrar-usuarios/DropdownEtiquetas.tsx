@@ -47,16 +47,7 @@ const DropdownEtiquetas = ({
         color: etiqueta.color,
       }));
 
-      const newOptions = options.filter((option: any) => {
-        for (let i = 0; i < etiquetasSeleccionadas.length; i++) {
-          if (etiquetasSeleccionadas[i].value === option.value) {
-            return false;
-          }
-        }
-        return true;
-      });
-
-      setEtiquetasOptions(newOptions);
+      setEtiquetasOptions(options);
     });
   };
 
@@ -69,11 +60,6 @@ const DropdownEtiquetas = ({
       })
     );
 
-    const newOptions = etiquetasOptions.filter(
-      (etiqueta) => !selected.includes(etiqueta)
-    );
-
-    setEtiquetasOptions(newOptions);
     onEtiquetasSeleccionadasChange(etiquetasReturn);
     setEtiquetasSeleccionadas(selected);
   };

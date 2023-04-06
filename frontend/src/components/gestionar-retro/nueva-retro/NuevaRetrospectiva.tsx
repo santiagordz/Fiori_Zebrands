@@ -4,12 +4,12 @@ import ArrowLeftIcon from '@atlaskit/icon/glyph/arrow-left';
 import Stepper from '../../design-template/stepper/Stepper';
 import Form from '@atlaskit/form';
 import { stepsInformation } from './steps/stepsInformation';
-import { Step2 } from './steps';
+import { Step2, Step3 } from './steps';
 
 interface NuevaRetrospectivaProps {}
 
 const NuevaRetrospectiva: FC<NuevaRetrospectivaProps> = ({}) => {
-  const [stepNumber, setStepNumber] = useState(1);
+  const [stepNumber, setStepNumber] = useState(3);
 
   return (
     <>
@@ -55,6 +55,10 @@ const NuevaRetrospectiva: FC<NuevaRetrospectivaProps> = ({}) => {
                     className="flex flex-col items-center justify-center w-full mb-5 text-center"
                   >
                     <Step2
+                      setStepNumber={setStepNumber}
+                      stepNumber={stepNumber}
+                    />
+                    <Step3
                       setStepNumber={setStepNumber}
                       stepNumber={stepNumber}
                     />

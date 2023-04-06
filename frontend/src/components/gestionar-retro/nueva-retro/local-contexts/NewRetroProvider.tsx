@@ -1,10 +1,18 @@
-import React, { FC, createContext, useState } from 'react';
+import React, { FC, createContext, useState, useEffect } from 'react';
+import axios from 'axios';
 
 export interface PreguntaType {
   id: number;
   pregunta: string;
   predeterminada: boolean;
   id_tipo_pregunta: number;
+}
+
+export interface EtiquetaType {
+  id: number;
+  nombre: string;
+  color: string;
+  id_color: number;
 }
 
 export interface newRetroType {
@@ -16,16 +24,21 @@ export interface newRetroType {
   otras?: PreguntaType[];
   // !Cambiar tipo de usuario que no sea any
   usuarios?: any;
+  etiquetas?: EtiquetaType[]; //Esta parte del contexto va a guardar las etiquetas del select de etiquetas
 }
 
 interface ContextProps {
   newRetro: newRetroType | null;
-  setNewRetro: (prevNewRetro: newRetroType) => newRetroType | void;
+  setNewRetro: (
+    updater: (prevNewRetro: newRetroType) => newRetroType
+  ) => void;
 }
 
 export const newRetroContext = createContext<ContextProps>({
   newRetro: null,
-  setNewRetro: (prevNewRetro: newRetroType) => {},
+  setNewRetro: (
+    updater: (prevNewRetro: newRetroType) => newRetroType
+  ) => {},
 });
 
 interface newRetroContextProps {
@@ -41,7 +54,23 @@ const NewRetroProvider: FC<newRetroContextProps> = ({ children }) => {
     predeterminadas: [],
     otras: [],
     usuarios: [],
+    etiquetas: [],
   });
+
+  const getEtiquetas = async () => {
+    const res = await axios.get('http://localhost:8000/etiquetas');
+    const etiquetas = res.data.map((etiqueta: any) => ({
+      id: etiqueta.id,
+      nombre: etiqueta.nombre,
+      color: etiqueta.color,
+      id_color: etiqueta.id_color,
+    }));
+    setNewRetro((prevNewRetro) => ({ ...prevNewRetro, etiquetas }));
+  };
+
+  useEffect(() => {
+    getEtiquetas();
+  }, []);
 
   return (
     <newRetroContext.Provider value={{ newRetro, setNewRetro }}>

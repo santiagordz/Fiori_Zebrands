@@ -31,6 +31,7 @@ module.exports = {
         tealLight: '#E6FFFF',
         purpleLight: '#F2E6FF',
         standard: '#F4F5F7',
+        bNB: '#626F86',
       },
       backgroundColor: {
         background: 'rgba(233, 242, 255, 0.5)',
