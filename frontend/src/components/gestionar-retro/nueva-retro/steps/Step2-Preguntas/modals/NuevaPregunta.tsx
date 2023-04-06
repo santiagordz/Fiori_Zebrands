@@ -105,6 +105,7 @@ const NuevaPregunta: FC<NuevaPreguntaProps> = ({
       return response.data;
     } catch (error) {
       if (error instanceof Error) {
+        console.log(error);
         addFlag(
           'Hubo un error al crear la pregunta. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
           <ErrorIcon label="error" secondaryColor="red" />,
@@ -112,6 +113,7 @@ const NuevaPregunta: FC<NuevaPreguntaProps> = ({
           error.toString()
         );
       } else {
+        console.log(error);
         addFlag(
           'Hubo un error al crear la pregunta. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
           <ErrorIcon label="error" secondaryColor="red" />,
@@ -124,6 +126,9 @@ const NuevaPregunta: FC<NuevaPreguntaProps> = ({
 
   const handleNewPregunta = async () => {
     let error = false;
+    const options = opciones.filter(
+      (opcion) => opcion.trim().length > 0
+    );
 
     if (newPregunta.pregunta.trim() === '') {
       setIsErrorPregunta(true);
@@ -135,19 +140,17 @@ const NuevaPregunta: FC<NuevaPreguntaProps> = ({
       error = true;
     }
 
-    if (
-      newPregunta.id_tipo_pregunta === 3 &&
-      (opciones.length === 1 || opciones[0] === '')
-    ) {
+    if (newPregunta.id_tipo_pregunta === 3 && options.length === 0) {
       setIsErrorOpciones(true);
       error = true;
     }
 
     if (!error) {
+      const optionsTrimmed = options.map((option) => option.trim());
       const updatedNewPregunta = { ...newPregunta };
 
       if (newPregunta.id_tipo_pregunta === 3) {
-        updatedNewPregunta.opciones = opciones.join(',');
+        updatedNewPregunta.opciones = optionsTrimmed.join(',');
       } else {
         updatedNewPregunta.opciones = null;
       }
@@ -162,13 +165,16 @@ const NuevaPregunta: FC<NuevaPreguntaProps> = ({
             ...newRetro,
             predeterminadas: [
               ...(newRetro?.predeterminadas || []),
-              { ...newPregunta },
+              { ...updatedNewPregunta },
             ],
           });
         } else {
           setNewRetro({
             ...newRetro,
-            otras: [...(newRetro?.otras || []), { ...newPregunta }],
+            otras: [
+              ...(newRetro?.otras || []),
+              { ...updatedNewPregunta },
+            ],
           });
         }
         setIsNewQuestionOpen(false);
@@ -339,9 +345,9 @@ const NuevaPregunta: FC<NuevaPreguntaProps> = ({
                   </div>
                 ))}
                 {isErrorOpciones && (
-                  <p className="text-red-500 text-xs">
+                  <p className="text-red-500 text-xs w-11/12">
                     Una pregunta de lista desplegable no puede ser
-                    enviada sin opciones
+                    enviada sin opciones o con solo opciones en blanco
                   </p>
                 )}
                 <button

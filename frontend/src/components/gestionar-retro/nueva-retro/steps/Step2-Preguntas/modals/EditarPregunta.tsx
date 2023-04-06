@@ -143,6 +143,7 @@ const EditarPregunta: FC<EditarPreguntaProps> = ({
       return response.data;
     } catch (error) {
       if (error instanceof Error) {
+        console.log(error);
         addFlag(
           'Hubo un error al actualizar la pregunta. Inténtalo de nuevo más tarde o contacta soporte.',
           <InfoIcon label="pregunta eliminada" />,
@@ -150,6 +151,7 @@ const EditarPregunta: FC<EditarPreguntaProps> = ({
           error.toString()
         );
       } else {
+        console.log(error);
         addFlag(
           'Hubo un error al actualizar la pregunta. Inténtalo de nuevo más tarde o contacta soporte.',
           <InfoIcon label="pregunta eliminada" />,
@@ -244,6 +246,9 @@ const EditarPregunta: FC<EditarPreguntaProps> = ({
 
   const handleEditPregunta = async () => {
     let error = false;
+    const options = opciones.filter(
+      (opcion) => opcion.trim().length > 0
+    );
 
     if (editPregunta.pregunta.trim() === '') {
       setIsErrorPregunta(true);
@@ -255,19 +260,17 @@ const EditarPregunta: FC<EditarPreguntaProps> = ({
       error = true;
     }
 
-    if (
-      editPregunta.id_tipo_pregunta === 3 &&
-      (opciones.length === 1 || opciones[0] === '')
-    ) {
+    if (editPregunta.id_tipo_pregunta === 3 && options.length === 0) {
       setIsErrorOpciones(true);
       error = true;
     }
 
     if (!error) {
+      const optionsTrimmed = options.map((option) => option.trim());
       const updatedEditPregunta = { ...editPregunta };
 
       if (editPregunta.id_tipo_pregunta === 3) {
-        updatedEditPregunta.opciones = opciones.join(',');
+        updatedEditPregunta.opciones = optionsTrimmed.join(',');
       } else {
         updatedEditPregunta.opciones = null;
       }

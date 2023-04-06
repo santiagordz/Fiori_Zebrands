@@ -11,15 +11,8 @@ exports.getAllPreguntas = async (req, res) => {
 
 exports.createPregunta = async (req, res, next) => {
   try {
-    const newPregunta = {
-      id_pregunta: req.body.id,
-      pregunta: req.body.pregunta,
-      predeterminada: req.body.predeterminada,
-      id_tipo_pregunta: req.body.id_tipo_pregunta,
-      opciones_respuesta: req.body.opciones,
-    };
-
-    const [result] = await Pregunta.registrarPregunta(newPregunta);
+    const newPregunta = req.body;
+    const result = await Pregunta.registrarPregunta(newPregunta);
     res.status(201).json({
       message: 'Pregunta creada exitosamente',
       data: result,
@@ -47,14 +40,8 @@ exports.deletePreguntaById = async (req, res, next) => {
 
 exports.editarPreguntaById = async (req, res, next) => {
   try {
-    const Question = {
-      id_pregunta: req.body.id,
-      pregunta: req.body.pregunta,
-      predeterminada: req.body.predeterminada,
-      id_tipo_pregunta: req.body.id_tipo_pregunta,
-      opciones_respuesta: req.body.opciones,
-    };
-    const [result] = await Pregunta.updatePreguntaById(Question);
+    const question = req.body;
+    const result = await Pregunta.updatePreguntaById(question);
     res.json({
       message: 'Pregunta actualizada exitosamente',
       data: result,
