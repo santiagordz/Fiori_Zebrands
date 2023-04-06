@@ -24,6 +24,7 @@
     "@atlaskit/modal-dialog": "^12.4.11",
     "@atlaskit/range": "^7.0.4",
     "@atlaskit/section-message": "^6.3.10",
+    "@atlaskit/tabs": "^13.3.13",
     "@atlaskit/tag": "^11.4.10",
     "@atlaskit/tag-group": "^10.1.2",
     "@atlaskit/textarea": "^4.5.6",
@@ -51,6 +52,7 @@
     "react-router-dom": "^6.9.0",
     "react-select": "^5.7.0",
     "react-tooltip": "^5.10.0",
+    "recharts": "^2.5.0",
     "styled-components": "^5.3.9",
     "tailwindcss": "^3.2.7"
   },

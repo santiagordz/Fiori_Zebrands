@@ -36,10 +36,7 @@ const Metricas: FC<MetricasProps> = ({}) => {
         </Panel>
       </TabPanel>
       <TabPanel>
-        <Panel>
           <MetricasSprint />
-          
-        </Panel>
       </TabPanel>
       <TabPanel>
         <Panel>
