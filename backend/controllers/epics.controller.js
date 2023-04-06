@@ -18,7 +18,9 @@ exports.postEpicsJira = async (req, res, next) => {
         epic.key,
         epic.summary,
         epic.status,
-        epic.color
+        epic.color,
+        epic.createdAt.slice(0, 10),
+        epic.updatedAt.slice(0, 10)
       );
     }
     res.send('Epics guardados');

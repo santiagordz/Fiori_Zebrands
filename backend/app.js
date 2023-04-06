@@ -58,7 +58,7 @@ app.use('/colores', coloresRoutes);
 app.use('/user', usuariosRoutes);
 app.use('/retrospectivas', retrospectivaRoutes);
 app.use('/respuesta', respuestaRoutes);
-app.use('/issuesjira', issuesJiraRoutes);
+app.use('/issues', issuesJiraRoutes);
 app.use('/sprints', sprintsJiraRoutes);
 app.use('/epics', epicJiraRoutes);
 
