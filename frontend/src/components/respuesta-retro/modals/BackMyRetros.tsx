@@ -5,16 +5,14 @@ import InfoIcon from '@atlaskit/icon/glyph/info';
 import WarningIcon from '@atlaskit/icon/glyph/warning';
 import { FC, useEffect } from 'react';
 
-import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 interface BackMyRetrosProps {
   setIsModalBackOpen: (isOpen: boolean) => void;
 }
 
-const BackMyRetros: FC<BackMyRetrosProps> = ({
-  setIsModalBackOpen,
-}) => {
+const BackMyRetros: FC<BackMyRetrosProps> = ({ setIsModalBackOpen }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -64,7 +62,7 @@ const BackMyRetros: FC<BackMyRetrosProps> = ({
             >
               <Button
                 appearance="primary"
-                onClick={() => navigate('/mis-retrospectivas')}
+                onClick={() => navigate("/mis-retrospectivas")}
               >
                 Ir al panel de retrospectivas
               </Button>

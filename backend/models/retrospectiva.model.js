@@ -76,4 +76,33 @@ module.exports = class Retrospectiva {
       [id_retrospectiva]
     );
   }
+
+  static async newRetrospectiva(Retrospectiva) {
+    const connection = await db.getConnection();
+    await connection.beginTransaction();
+
+    try {
+      await connection.execute(
+        `
+      INSERT INTO retrospectivas (id, titulo, descripcion) VALUES (?, ?, ?)`,
+        [
+          Retrospectiva.id,
+          Retrospectiva.titulo,
+          Retrospectiva.descripcion,
+        ]
+      );
+
+      for (const pregunta of Retrospectiva.predeterminadas) {
+        await connection.execute(
+          `INSERT INTO preguntas_retrospectivas (id_retrospectiva, id_pregunta)`,
+          [Retrospectiva.id, pregunta.id]
+        );
+      }
+    } catch (error) {
+      connection.rollback();
+      throw error;
+    } finally {
+      connection.release();
+    }
+  }
 };

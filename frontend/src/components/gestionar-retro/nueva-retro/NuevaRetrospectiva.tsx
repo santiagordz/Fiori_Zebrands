@@ -3,7 +3,7 @@ import Form from '@atlaskit/form';
 import ArrowLeftIcon from '@atlaskit/icon/glyph/arrow-left';
 import { FC, useState, useContext, useEffect } from 'react';
 import Stepper from '../../design-template/stepper/Stepper';
-import { Step2, Step4 } from './steps';
+import { Step2, Step4, Step1 } from './steps';
 import { stepsInformation } from './steps/stepsInformation';
 import { nanoid, customAlphabet } from 'nanoid';
 import { newRetroContext } from './local-contexts';
@@ -14,7 +14,7 @@ interface NuevaRetrospectivaProps {}
 const NuevaRetrospectiva: FC<NuevaRetrospectivaProps> = ({}) => {
   const nanoid = customAlphabet('1234567890', 10);
   const { newRetro, setNewRetro } = useContext(newRetroContext);
-  const [stepNumber, setStepNumber] = useState(2);
+  const [stepNumber, setStepNumber] = useState(1);
   const [isModalBackOpen, setIsModalBackOpen] = useState(false);
 
   useEffect(() => {
@@ -74,6 +74,11 @@ const NuevaRetrospectiva: FC<NuevaRetrospectivaProps> = ({}) => {
                     {...formProps}
                     className="flex flex-col items-center justify-center w-full mb-5 text-center"
                   >
+                    <Step1
+                      setStepNumber={setStepNumber}
+                      stepNumber={stepNumber}
+                    />
+
                     <Step2
                       setStepNumber={setStepNumber}
                       stepNumber={stepNumber}
