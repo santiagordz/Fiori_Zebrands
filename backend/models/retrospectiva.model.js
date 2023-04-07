@@ -94,10 +94,32 @@ module.exports = class Retrospectiva {
 
       for (const pregunta of Retrospectiva.predeterminadas) {
         await connection.execute(
-          `INSERT INTO preguntas_retrospectivas (id_retrospectiva, id_pregunta)`,
-          [Retrospectiva.id, pregunta.id]
+          `INSERT INTO preguntas_retrospectivas (id_pregunta, id_retrospectiva) VALUES (?,?)`,
+          [pregunta.id, Retrospectiva.id]
         );
       }
+
+      for (const usuario of Retrospectiva.usuarios) {
+        await connection.execute(
+          `INSERT INTO usuarios_retrospectivas (id_usuario, id_retrospectiva) VALUES (?,?)`,
+          [usuario.id, Retrospectiva.id]
+        );
+      }
+
+      for (const etiqueta of Retrospectiva.etiquetas) {
+        const [usuariosEtiqueta] = await connection.execute(
+          `SELECT id_usuario FROM usuarios_etiquetas WHERE id_etiqueta = ?`,
+          [Number(etiqueta.id)]
+        );
+
+        for (const { id_usuario } of usuariosEtiqueta) {
+          await connection.execute(
+            'INSERT INTO usuarios_retrospectivas (id_retrospectiva, id_usuario) VALUES(?,?)',
+            [Retrospectiva.id, id_usuario]
+          );
+        }
+      }
+      connection.commit();
     } catch (error) {
       connection.rollback();
       throw error;

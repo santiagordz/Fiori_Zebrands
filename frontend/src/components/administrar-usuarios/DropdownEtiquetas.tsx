@@ -25,13 +25,13 @@ const DropdownEtiquetas = ({
   onEtiquetasSeleccionadasChange,
   etiquetasActuales,
 }: Props) => {
-  const etiquetasPreseleccionadas = etiquetasActuales.map(
+  const etiquetasPreseleccionadas = etiquetasActuales.length > 0 ? etiquetasActuales.map(
     (etiqueta: Etiqueta) => ({
       value: etiqueta.id,
       label: etiqueta.nombre,
       color: etiqueta.color,
     })
-  );
+  ): [];
 
   const [etiquetasSeleccionadas, setEtiquetasSeleccionadas] =
     useState<OptionsEtiquetas[]>(etiquetasPreseleccionadas);

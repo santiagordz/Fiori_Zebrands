@@ -18,5 +18,6 @@ router.put(
   '/finish/:retroId',
   retrospectivaController.finishRetrospectiva
 );
+router.post('/new', retrospectivaController.newRetrospectiva);
 
 module.exports = router;

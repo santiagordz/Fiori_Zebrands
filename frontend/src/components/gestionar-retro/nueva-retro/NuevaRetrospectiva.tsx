@@ -3,26 +3,41 @@ import Form from '@atlaskit/form';
 import ArrowLeftIcon from '@atlaskit/icon/glyph/arrow-left';
 import { FC, useState, useContext, useEffect } from 'react';
 import Stepper from '../../design-template/stepper/Stepper';
-import { Step2, Step4, Step1 } from './steps';
+import { Step2, Step4, Step1, Step3 } from './steps';
 import { stepsInformation } from './steps/stepsInformation';
 import { nanoid, customAlphabet } from 'nanoid';
 import { newRetroContext } from './local-contexts';
 import BackGestionar from '../modals/BackGestionar';
+import axios from 'axios';
+import {useNavigate} from 'react-router-dom'
+
+const URI = 'http://localhost:8000/retrospectivas/new'
 
 interface NuevaRetrospectivaProps {}
 
-const NuevaRetrospectiva: FC<NuevaRetrospectivaProps> = ({}) => {
+const NuevaRetrospectiva: FC<NuevaRetrospectivaProps> = ({ }) => {
+  const navigate = useNavigate();
   const nanoid = customAlphabet('1234567890', 10);
   const { newRetro, setNewRetro } = useContext(newRetroContext);
   const [stepNumber, setStepNumber] = useState(1);
   const [isModalBackOpen, setIsModalBackOpen] = useState(false);
 
-  useEffect(() => {
-    setNewRetro({
-      ...newRetro,
-      id: Number(nanoid()),
-    });
-  }, []);
+  const handleSubmit = async () => {
+    try {
+      await axios.post(URI, newRetro);
+      setNewRetro({id: 0,
+    titulo: '',
+    descripcion: null,
+    predeterminadas: [],
+    otras: [],
+    usuarios: [],
+        etiquetas: []
+      })
+      navigate('/gestionar-retro');
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <>
@@ -68,7 +83,7 @@ const NuevaRetrospectiva: FC<NuevaRetrospectivaProps> = ({}) => {
                 </p>
               </div>
               {/* ! AQUI VA EL ONSUBMIT DE LA BASE DE DATOS */}
-              <Form>
+              <Form onSubmit={handleSubmit}>
                 {({ formProps }) => (
                   <form
                     {...formProps}
@@ -80,6 +95,11 @@ const NuevaRetrospectiva: FC<NuevaRetrospectivaProps> = ({}) => {
                       stepNumber={stepNumber}
                     />
 
+                    <Step3
+                      setStepNumber={setStepNumber}
+                      stepNumber={stepNumber}
+                    />
+
                     <Step2
                       setStepNumber={setStepNumber}
                       stepNumber={stepNumber}
@@ -87,6 +107,7 @@ const NuevaRetrospectiva: FC<NuevaRetrospectivaProps> = ({}) => {
                     <Step4
                       setStepNumber={setStepNumber}
                       stepNumber={stepNumber}
+                      handleSubmit={handleSubmit}
                     />
                   </form>
                 )}

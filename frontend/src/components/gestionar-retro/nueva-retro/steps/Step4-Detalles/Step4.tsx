@@ -7,6 +7,8 @@ import ArrowLeftIcon from '@atlaskit/icon/glyph/arrow-left';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import ChevronRightLargeIcon from '@atlaskit/icon/glyph/chevron-right-large';
 import FlagFilledIcon from '@atlaskit/icon/glyph/flag-filled';
+import TablaUsuarios from './TablaUsuarios';
+import { customAlphabet } from 'nanoid';
 
 const getToday = () => {
   const today = new Date();
@@ -21,7 +23,8 @@ interface Step4Props {
 }
 
 const Step4: FC<Step4Props> = ({ setStepNumber, stepNumber }) => {
-  const { newRetro } = useContext(newRetroContext);
+  const nanoid = customAlphabet('0123456789', 10);
+  const { newRetro, setNewRetro } = useContext(newRetroContext);
   const navigate = useNavigate();
   const location = useLocation().pathname;
   const [date, setDate] = useState('');
@@ -41,7 +44,12 @@ const Step4: FC<Step4Props> = ({ setStepNumber, stepNumber }) => {
 
   useEffect(() => {
     setDate(getToday());
+    setNewRetro({
+      ...newRetro,
+      id: Number(nanoid()),
+    });
   }, []);
+
   return (
     <span
       className={`flex flex-col gap-10 w-full text-left ${
@@ -85,7 +93,7 @@ const Step4: FC<Step4Props> = ({ setStepNumber, stepNumber }) => {
                   }) => (
                     <div key={tag.id} id="tag">
                       <Tag
-                        text={tag.etiqueta}
+                        text={tag.nombre}
                         appearance="rounded"
                         color={tag.color}
                       />
@@ -161,7 +169,7 @@ const Step4: FC<Step4Props> = ({ setStepNumber, stepNumber }) => {
                 }) => (
                   <div key={tag.id} id="tag">
                     <Tag
-                      text={tag.etiqueta}
+                      text={tag.nombre}
                       appearance="rounded"
                       color={tag.color}
                     />
@@ -173,7 +181,7 @@ const Step4: FC<Step4Props> = ({ setStepNumber, stepNumber }) => {
 
         <div>
           <p>Usuarios seleccionados individualmente:</p>
-          <p>ENLISTAR USUARIOS EN TABLA</p>
+          <TablaUsuarios />
         </div>
       </div>
       <div className="flex gap-14 w-full items-center justify-center mt-4">
@@ -188,7 +196,7 @@ const Step4: FC<Step4Props> = ({ setStepNumber, stepNumber }) => {
         <Button
           appearance="primary"
           label="Siguiente paso"
-          //   onClick={() => }
+          type='submit'
         >
           Registrar e iniciar retrospectiva
         </Button>

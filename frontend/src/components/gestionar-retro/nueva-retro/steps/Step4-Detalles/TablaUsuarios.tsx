@@ -14,8 +14,6 @@ interface UsersTableHeadProps {
 }
 
 interface TablaUsuariosProps {
-  selectedTags: EtiquetaType[];
-  setSelectedUsers: (selectedUsers: user[]) => void;
 }
 
 const UsersTableHead: FC<UsersTableHeadProps> = ({ children }) => {
@@ -28,12 +26,6 @@ const UsersTableHead: FC<UsersTableHeadProps> = ({ children }) => {
 
 const head = {
   cells: [
-    {
-      key: 'checkbox',
-      content: <UsersTableHead>Seleccionar</UsersTableHead>,
-      isSortable: false,
-      width: 5,
-    },
     {
       key: 'nombre',
       content: <UsersTableHead>Nombre</UsersTableHead>,
@@ -72,70 +64,15 @@ interface Usuario {
   etiquetas: Etiqueta[];
 }
 
-const TablaUsuarios: FC<TablaUsuariosProps> = ({
-  selectedTags,
-  setSelectedUsers,
-}) => {
-  const context = useContext(newRetroContext);
-  const [userRow, setUserRow] = useState<Array<Usuario>>([]);
+const TablaUsuarios: FC<TablaUsuariosProps> = () => {
+  const {newRetro} = useContext(newRetroContext);
   const tableRows: RowType[] = [];
-
-  useEffect(() => {
-    getUsers();
-  }, [selectedTags]);
-
-  const getUsers = async () => {
-    const res = await axios.get(
-      'http://localhost:8000/usuarios/info'
-    );
-    const usuarios = res.data.usuarios
-      .map((usuario: Usuario) => ({
-        ...usuario,
-      }))
-      .filter((usuario: Usuario) => {
-        const userTagIds = usuario.etiquetas.map((tag) => tag.id);
-        return !selectedTags.some((tag) =>
-          userTagIds.includes(tag.id)
-        );
-      });
-    setUserRow(usuarios);
-  };
-
-  const handleUserSelection = (
-    user: any,
-    isChecked: boolean
-  ) => {
-    if (isChecked) {
-      setSelectedUsers((prevSelectedUsers) => [
-        ...prevSelectedUsers,
-        user,
-      ]);
-    } else {
-      setSelectedUsers((prevSelectedUsers) =>
-        prevSelectedUsers.filter((selUser) => selUser.id !== user.id)
-      );
-    }
-    onSelectedUsersChange(selectedUsers);
-  };
-
-  userRow.map((usuario, i) =>
+  
+  newRetro?.usuarios.map((usuario, i) =>
     tableRows.push({
-      key: usuario.id.toString(),
+      key: usuario.id,
       isHighlighted: false,
       cells: [
-        {
-          key: `checkbox-${usuario.id}`,
-          content: (
-            <Checkbox
-              onChange={(e) =>
-                handleUserSelection(
-                  usuario,
-                  e.currentTarget.checked
-                )
-              }
-            />
-          ),
-        },
         {
           key: usuario.nombre,
           content: (
@@ -167,7 +104,6 @@ const TablaUsuarios: FC<TablaUsuariosProps> = ({
     <DynamicTable
       head={head}
       rows={tableRows}
-      isLoading={userRow.length === 0}
       isFixedSize
       onSort={() => {}}
       defaultSortKey="nombre"

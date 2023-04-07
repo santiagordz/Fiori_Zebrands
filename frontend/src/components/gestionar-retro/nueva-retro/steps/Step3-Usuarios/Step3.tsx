@@ -6,6 +6,7 @@ import AddIcon from '@atlaskit/icon/glyph/add';
 import ArrowLeftIcon from '@atlaskit/icon/glyph/arrow-left';
 import ArrowRightIcon from '@atlaskit/icon/glyph/arrow-right';
 import TablaUsuarios from './TablaUsuarios';
+import axios from 'axios';
 
 interface Step3Props {
   stepNumber: number;
@@ -14,7 +15,24 @@ interface Step3Props {
 
 const Step3: FC<Step3Props> = ({ stepNumber, setStepNumber }) => {
   const { newRetro, setNewRetro } = useContext(newRetroContext);
-  const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
+  const [selectedUsers, setSelectedUsers] = useState<user[]>([]);
+  const [etiquetas, setEtiquetas] = useState([])
+
+  const getEtiquetas = async () => {
+    const res = await axios.get('http://localhost:8000/etiquetas');
+    const etiquetas = res.data.map((etiqueta: any) => ({
+      id: etiqueta.id,
+      nombre: etiqueta.nombre,
+      color: etiqueta.color,
+      id_color: etiqueta.id_color,
+    }));
+
+    setEtiquetas((prevEtiquetas) => ({ ...prevEtiquetas, etiquetas }));
+  };
+
+  useEffect(() => {
+    getEtiquetas();
+  }, []);
 
   const handleEtiquetasSeleccionadasChange = (
     etiquetas: EtiquetaType[]
@@ -27,15 +45,27 @@ const Step3: FC<Step3Props> = ({ stepNumber, setStepNumber }) => {
     });
   };
 
+  const isNextButtonDisabled = () => {
+    const selectedUsersEmpty: boolean = selectedUsers.length === 0;
+    const newRetroEtiquetasEmpty: boolean = newRetro?.etiquetas?.length === 0;
+    if (selectedUsersEmpty && newRetroEtiquetasEmpty) {
+      return true;
+    } else {
+      return false;
+    }
+
+  }
+
+
   useEffect(() => {
-    // Guarda los usuarios seleccionados en el contexto
     setNewRetro((prevNewRetro: newRetroType) => {
       return {
         ...prevNewRetro,
         usuarios: selectedUsers,
       };
     });
-  }, [selectedUsers]);
+    isNextButtonDisabled();
+  }, [selectedUsers, newRetro?.etiquetas]);
 
   return (
     <div
@@ -56,7 +86,7 @@ const Step3: FC<Step3Props> = ({ stepNumber, setStepNumber }) => {
             onEtiquetasSeleccionadasChange={
               handleEtiquetasSeleccionadasChange
             }
-            etiquetasActuales={newRetro?.etiquetas || []}
+            etiquetasActuales={etiquetas || []}
           />
         </div>
       </div>
@@ -73,8 +103,8 @@ const Step3: FC<Step3Props> = ({ stepNumber, setStepNumber }) => {
         </p>
       </div>
       <TablaUsuarios
-        selectedTags={newRetro?.etiquetas || []}
-        onSelectedUsersChange={setSelectedUsers}
+        selectedTags={etiquetas || []}
+        setSelectedUsers={setSelectedUsers}
       />
       <div className="flex gap-14 w-full items-center justify-center mt-4">
         <Button
@@ -86,11 +116,12 @@ const Step3: FC<Step3Props> = ({ stepNumber, setStepNumber }) => {
           Paso anterior
         </Button>
         <Button
+          isDisabled={isNextButtonDisabled()}
           appearance="primary"
           label="Siguiente paso"
           onClick={() => setStepNumber((prev: number) => prev + 1)}
         >
-          Enviar e iniciar retrospectiva
+          Siguiente paso
         </Button>
       </div>
     </div>
