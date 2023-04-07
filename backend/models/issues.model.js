@@ -59,16 +59,22 @@ module.exports = class Issue {
     return db.execute(`SELECT * FROM issues`);
   };
 
+  static countIssues = async () => {
+    return db.execute(`SELECT COUNT(*) AS count FROM issues`);
+  };
+
   static postIssue = async (
     clave,
     tipo,
     story_points,
-    assignee_id
+    key_epic,
+    assignee_id,
+    status
   ) => {
     try {
       return db.execute(
-        `INSERT IGNORE INTO issues (clave, tipo, story_points, assignee_id) VALUES (?, ?, ?, ?)`,
-        [clave, tipo, story_points, assignee_id]
+        `INSERT IGNORE INTO issues (clave, tipo, story_points, assignee_id, key_epic, status) VALUES (?, ?, ?, ?, ?, ?)`,
+        [clave, tipo, story_points, assignee_id, key_epic, status]
       );
     } catch (error) {
       console.error(error);
