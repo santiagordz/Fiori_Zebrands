@@ -4,5 +4,5 @@ export {
   type PreguntaType,
   type newRetroType,
   type EtiquetaType,
-  type Usuario
+  type UsuarioType,
 } from './NewRetroProvider';

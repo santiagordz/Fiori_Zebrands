@@ -2,12 +2,13 @@ import Avatar from '@atlaskit/avatar';
 import { Checkbox } from '@atlaskit/checkbox';
 import DynamicTable from '@atlaskit/dynamic-table';
 import type { RowType } from '@atlaskit/dynamic-table/dist/types/types';
-import { TagColor } from '@atlaskit/tag';
 import axios from 'axios';
-import React, { FC, useContext, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import EtiquetaIcon from '../../../../administrar-usuarios/icons/EtiquetaIcon';
-import { EtiquetaType, newRetroContext } from '../../local-contexts';
-
+import {
+  type EtiquetaType,
+  type UsuarioType,
+} from '../../local-contexts';
 
 interface UsersTableHeadProps {
   children: React.ReactNode;
@@ -15,7 +16,8 @@ interface UsersTableHeadProps {
 
 interface TablaUsuariosProps {
   selectedTags: EtiquetaType[];
-  setSelectedUsers: (selectedUsers: user[]) => void;
+  selectedUsers: UsuarioType[];
+  setSelectedUsers: (selectedUsers: UsuarioType[]) => void;
 }
 
 const UsersTableHead: FC<UsersTableHeadProps> = ({ children }) => {
@@ -55,29 +57,12 @@ const head = {
   ],
 };
 
-interface Etiqueta {
-  id: number;
-  nombre: string;
-  color: TagColor;
-  id_color: number;
-}
-
-interface Usuario {
-  id: number;
-  correo: string;
-  password: string;
-  nombre: string;
-  foto: string;
-  rol: number;
-  etiquetas: Etiqueta[];
-}
-
 const TablaUsuarios: FC<TablaUsuariosProps> = ({
   selectedTags,
   setSelectedUsers,
+  selectedUsers,
 }) => {
-  const context = useContext(newRetroContext);
-  const [userRow, setUserRow] = useState<Array<Usuario>>([]);
+  const [userRow, setUserRow] = useState<Array<UsuarioType>>([]);
   const tableRows: RowType[] = [];
 
   useEffect(() => {
@@ -89,10 +74,10 @@ const TablaUsuarios: FC<TablaUsuariosProps> = ({
       'http://localhost:8000/usuarios/info'
     );
     const usuarios = res.data.usuarios
-      .map((usuario: Usuario) => ({
+      .map((usuario: UsuarioType) => ({
         ...usuario,
       }))
-      .filter((usuario: Usuario) => {
+      .filter((usuario: UsuarioType) => {
         const userTagIds = usuario.etiquetas.map((tag) => tag.id);
         return !selectedTags.some((tag) =>
           userTagIds.includes(tag.id)
@@ -102,20 +87,16 @@ const TablaUsuarios: FC<TablaUsuariosProps> = ({
   };
 
   const handleUserSelection = (
-    user: any,
+    user: UsuarioType,
     isChecked: boolean
   ) => {
     if (isChecked) {
-      setSelectedUsers((prevSelectedUsers) => [
-        ...prevSelectedUsers,
-        user,
-      ]);
+      return [...selectedUsers, user];
     } else {
-      setSelectedUsers((prevSelectedUsers) =>
-        prevSelectedUsers.filter((selUser) => selUser.id !== user.id)
+      return selectedUsers.filter(
+        (selectedUser) => selectedUser.id !== user.id
       );
     }
-    onSelectedUsersChange(selectedUsers);
   };
 
   userRow.map((usuario, i) =>
@@ -126,18 +107,22 @@ const TablaUsuarios: FC<TablaUsuariosProps> = ({
         {
           key: `checkbox-${usuario.id}`,
           content: (
-            <Checkbox
-              onChange={(e) =>
-                handleUserSelection(
-                  usuario,
-                  e.currentTarget.checked
-                )
-              }
-            />
+            <div className="w-full flex items-center justify-center">
+              <Checkbox
+                onChange={(e) =>
+                  setSelectedUsers(
+                    handleUserSelection(
+                      usuario,
+                      e.currentTarget.checked
+                    )
+                  )
+                }
+              />
+            </div>
           ),
         },
         {
-          key: usuario.nombre,
+          key: `nombre-${usuario.id}`,
           content: (
             <span className="flex items-center gap-2 ml-5 w-full">
               <Avatar src={usuario.foto} size="small" />
@@ -148,7 +133,7 @@ const TablaUsuarios: FC<TablaUsuariosProps> = ({
           ),
         },
         {
-          key: usuario.correo,
+          key: `correo-${usuario.id}`,
           content: (
             <p className="!normal-case text-left px-3 font-semibold text-[0.8rem] text-textNormal">
               {usuario.correo}
@@ -156,7 +141,7 @@ const TablaUsuarios: FC<TablaUsuariosProps> = ({
           ),
         },
         {
-          key: usuario.etiquetas[0]?.nombre,
+          key: usuario.etiquetas[0]?.id + usuario.id,
           content: <EtiquetaIcon etiquetas={usuario.etiquetas} />,
         },
       ],

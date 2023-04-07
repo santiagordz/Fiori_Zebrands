@@ -1,21 +1,33 @@
 import Button from '@atlaskit/button';
+import { type AppearanceTypes } from '@atlaskit/flag';
 import Form from '@atlaskit/form';
 import ArrowLeftIcon from '@atlaskit/icon/glyph/arrow-left';
-import { FC, useState, useContext, useEffect } from 'react';
-import Stepper from '../../design-template/stepper/Stepper';
-import { Step2, Step4, Step1, Step3 } from './steps';
-import { stepsInformation } from './steps/stepsInformation';
-import { nanoid, customAlphabet } from 'nanoid';
-import { newRetroContext } from './local-contexts';
-import BackGestionar from '../modals/BackGestionar';
 import axios from 'axios';
-import {useNavigate} from 'react-router-dom'
+import { customAlphabet } from 'nanoid';
+import { FC, useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Stepper from '../../design-template/stepper/Stepper';
+import BackGestionar from '../modals/BackGestionar';
+import { newRetroContext } from './local-contexts';
+import { Step1, Step2, Step3, Step4 } from './steps';
+import { stepsInformation } from './steps/stepsInformation';
+import CheckCircleIcon from '@atlaskit/icon/glyph/check-circle';
+import ErrorIcon from '@atlaskit/icon/glyph/error';
 
-const URI = 'http://localhost:8000/retrospectivas/new'
+const URI = 'http://localhost:8000/retrospectivas/new';
 
-interface NuevaRetrospectivaProps {}
+interface NuevaRetrospectivaProps {
+  addFlag: (
+    title: string,
+    icon: React.ReactNode,
+    appearance: AppearanceTypes,
+    description?: string
+  ) => void;
+}
 
-const NuevaRetrospectiva: FC<NuevaRetrospectivaProps> = ({ }) => {
+const NuevaRetrospectiva: FC<NuevaRetrospectivaProps> = ({
+  addFlag,
+}) => {
   const navigate = useNavigate();
   const nanoid = customAlphabet('1234567890', 10);
   const { newRetro, setNewRetro } = useContext(newRetroContext);
@@ -23,21 +35,39 @@ const NuevaRetrospectiva: FC<NuevaRetrospectivaProps> = ({ }) => {
   const [isModalBackOpen, setIsModalBackOpen] = useState(false);
 
   const handleSubmit = async () => {
+    const retroId = Number(nanoid());
     try {
-      await axios.post(URI, newRetro);
-      setNewRetro({id: 0,
-    titulo: '',
-    descripcion: null,
-    predeterminadas: [],
-    otras: [],
-    usuarios: [],
-        etiquetas: []
-      })
-      navigate('/gestionar-retro');
+      await axios.post(URI, { ...newRetro, id: retroId });
+      navigate('/gestionar-retrospectivas');
+      addFlag(
+        '¡Genial! Tu retrospectiva se ha registrado correctamente.',
+        <CheckCircleIcon
+          label="pregunta eliminada"
+          secondaryColor="green"
+        />,
+        'success',
+        'Ahora puedes verla en el panel de gestión de retrospectivas y todos los usuarios podrán comenzar a contestarla.'
+      );
     } catch (error) {
-      console.log(error)
+      if (error instanceof Error) {
+        console.log(error);
+        addFlag(
+          'Hubo un error al iniciar la retrospectiva. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
+          <ErrorIcon label="error" secondaryColor="red" />,
+          'error',
+          error.toString()
+        );
+      } else {
+        console.log(error);
+        addFlag(
+          'Hubo un error al iniciar la retrospectiva. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
+          <ErrorIcon label="error" secondaryColor="red" />,
+          'error',
+          'Error desconocido'
+        );
+      }
     }
-  }
+  };
 
   return (
     <>
@@ -82,15 +112,18 @@ const NuevaRetrospectiva: FC<NuevaRetrospectivaProps> = ({ }) => {
                   {stepsInformation[stepNumber - 1].description}
                 </p>
               </div>
-              {/* ! AQUI VA EL ONSUBMIT DE LA BASE DE DATOS */}
               <Form onSubmit={handleSubmit}>
                 {({ formProps }) => (
                   <form
                     {...formProps}
                     className="flex flex-col items-center justify-center w-full mb-5 text-center"
                   >
-
                     <Step1
+                      setStepNumber={setStepNumber}
+                      stepNumber={stepNumber}
+                    />
+
+                    <Step2
                       setStepNumber={setStepNumber}
                       stepNumber={stepNumber}
                     />
@@ -100,14 +133,9 @@ const NuevaRetrospectiva: FC<NuevaRetrospectivaProps> = ({ }) => {
                       stepNumber={stepNumber}
                     />
 
-                    <Step2
-                      setStepNumber={setStepNumber}
-                      stepNumber={stepNumber}
-                    />
                     <Step4
                       setStepNumber={setStepNumber}
                       stepNumber={stepNumber}
-                      handleSubmit={handleSubmit}
                     />
                   </form>
                 )}

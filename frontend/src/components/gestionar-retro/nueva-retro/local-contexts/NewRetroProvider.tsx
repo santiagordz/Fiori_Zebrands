@@ -1,4 +1,5 @@
-import React, { FC, createContext, useState } from "react";
+import React, { FC, createContext, useState } from 'react';
+import { type TagColor } from '@atlaskit/tag';
 
 export interface PreguntaType {
   id: number;
@@ -11,11 +12,11 @@ export interface PreguntaType {
 export interface EtiquetaType {
   id: number;
   nombre: string;
-  color: string;
+  color: TagColor;
   id_color: number;
 }
 
-export interface Usuario {
+export interface UsuarioType {
   id: number;
   correo: string;
   password: string;
@@ -31,22 +32,18 @@ export interface newRetroType {
   descripcion?: string | null;
   predeterminadas?: PreguntaType[];
   otras?: PreguntaType[];
-  usuarios?: Usuario[];
-  etiquetas?: EtiquetaType[]; //Esta parte del contexto va a guardar las etiquetas del select de etiquetas
+  usuarios?: UsuarioType[];
+  etiquetas?: EtiquetaType[];
 }
 
 interface ContextProps {
   newRetro: newRetroType | null;
-  setNewRetro: (
-    updater: (prevNewRetro: newRetroType) => newRetroType
-  ) => void;
+  setNewRetro: (prevNewRetro: newRetroType) => newRetroType | void;
 }
 
 export const newRetroContext = createContext<ContextProps>({
   newRetro: null,
-  setNewRetro: (
-    updater: (prevNewRetro: newRetroType) => newRetroType
-  ) => {},
+  setNewRetro: (prevNewRetro: newRetroType) => {},
 });
 
 interface newRetroContextProps {

@@ -6,16 +6,31 @@ import CheckIcon from '@atlaskit/icon/glyph/check';
 interface StepProps {
   stepNumber: number;
   currentStep: number;
+  totalSteps: number;
 }
 
-const Step: React.FC<StepProps> = ({ stepNumber, currentStep }) => {
+const Step: React.FC<StepProps> = ({
+  stepNumber,
+  currentStep,
+  totalSteps,
+}) => {
   const stepClass = `aspect-square w-10 rounded-full flex items-center justify-center text-white ${
     stepNumber <= currentStep ? 'bg-selectBold' : 'bg-gray-300'
   }`;
 
+  const handleSize = () => {
+    if (currentStep === totalSteps) {
+      return 0.4;
+    } else if (totalSteps < 3 && totalSteps > 1) {
+      return 0.9;
+    } else {
+      return 1.3;
+    }
+  };
+
   const stepVariant = {
-    active: { scale: 1.3 },
-    inactive: { scale: 0.7 },
+    active: { scale: handleSize() },
+    inactive: { scale: totalSteps < 3 && totalSteps > 1 ? 0.5 : 0.7 },
   };
 
   const checkmarkVariant = {
@@ -87,6 +102,7 @@ const Stepper: React.FC<StepperProps> = ({
         key={`step-${i}`}
         stepNumber={i + 1}
         currentStep={currentStep}
+        totalSteps={totalSteps}
       />
     );
 
@@ -101,7 +117,11 @@ const Stepper: React.FC<StepperProps> = ({
   }
 
   return (
-    <div className="flex items-center w-full justify-between py-6 px-3">
+    <div
+      className={`flex items-center w-full py-6 px-3 ${
+        totalSteps > 3 ? 'justify-between' : 'justify-center'
+      }`}
+    >
       {stepsWithConnectors}
     </div>
   );

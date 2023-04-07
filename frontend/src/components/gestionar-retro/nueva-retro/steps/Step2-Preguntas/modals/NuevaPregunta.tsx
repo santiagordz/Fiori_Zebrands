@@ -35,7 +35,7 @@ const NuevaPregunta: FC<NuevaPreguntaProps> = ({
   setIsNewQuestionOpen,
   addFlag,
 }) => {
-  const nanoid = customAlphabet('1234567890', 9);
+  const nanoid = customAlphabet('1234567890', 5);
   const { setNewRetro, newRetro } = useContext(newRetroContext);
   const [newPregunta, setNewPregunta] = useState<PreguntaType>({
     id: 0,

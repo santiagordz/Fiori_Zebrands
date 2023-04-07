@@ -8,13 +8,11 @@ import React, { FC, useContext, useEffect, useState } from 'react';
 import EtiquetaIcon from '../../../../administrar-usuarios/icons/EtiquetaIcon';
 import { EtiquetaType, newRetroContext } from '../../local-contexts';
 
-
 interface UsersTableHeadProps {
   children: React.ReactNode;
 }
 
-interface TablaUsuariosProps {
-}
+interface TablaUsuariosProps {}
 
 const UsersTableHead: FC<UsersTableHeadProps> = ({ children }) => {
   return (
@@ -65,40 +63,41 @@ interface Usuario {
 }
 
 const TablaUsuarios: FC<TablaUsuariosProps> = () => {
-  const {newRetro} = useContext(newRetroContext);
+  const { newRetro } = useContext(newRetroContext);
   const tableRows: RowType[] = [];
-  
-  newRetro?.usuarios.map((usuario, i) =>
-    tableRows.push({
-      key: usuario.id,
-      isHighlighted: false,
-      cells: [
-        {
-          key: usuario.nombre,
-          content: (
-            <span className="flex items-center gap-2 ml-5 w-full">
-              <Avatar src={usuario.foto} size="small" />
-              <div className="w-full">
-                <p>{usuario.nombre || 'Nuevo usuario'} </p>
-              </div>
-            </span>
-          ),
-        },
-        {
-          key: usuario.correo,
-          content: (
-            <p className="!normal-case text-left px-3 font-semibold text-[0.8rem] text-textNormal">
-              {usuario.correo}
-            </p>
-          ),
-        },
-        {
-          key: usuario.etiquetas[0]?.nombre,
-          content: <EtiquetaIcon etiquetas={usuario.etiquetas} />,
-        },
-      ],
-    })
-  );
+
+  newRetro?.usuarios &&
+    newRetro!.usuarios.map((usuario, i) =>
+      tableRows.push({
+        key: usuario.id.toString(),
+        isHighlighted: false,
+        cells: [
+          {
+            key: usuario.nombre,
+            content: (
+              <span className="flex items-center gap-2 ml-5 w-full">
+                <Avatar src={usuario.foto} size="small" />
+                <div className="w-full">
+                  <p>{usuario.nombre || 'Nuevo usuario'} </p>
+                </div>
+              </span>
+            ),
+          },
+          {
+            key: usuario.correo,
+            content: (
+              <p className="!normal-case text-left px-3 font-semibold text-[0.8rem] text-textNormal">
+                {usuario.correo}
+              </p>
+            ),
+          },
+          {
+            key: usuario.etiquetas[0]?.nombre,
+            content: <EtiquetaIcon etiquetas={usuario.etiquetas} />,
+          },
+        ],
+      })
+    );
 
   return (
     <DynamicTable

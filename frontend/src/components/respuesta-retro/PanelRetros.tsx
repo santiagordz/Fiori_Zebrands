@@ -2,7 +2,6 @@ import { FC, useEffect } from 'react';
 import type { Retrospectiva } from '../../views/mis-retrospectivas/MisRetrospectivas';
 import Spinner from '../design-template/spinner/Spinner';
 import RetrospectivaGeneral from './reusable/RetrospectivaGeneral';
-import CheckCircleOutlineIcon from '@atlaskit/icon/glyph/check-circle-outline';
 
 interface PanelRetrosProps {
   tryFetch: boolean;
@@ -26,12 +25,12 @@ const PanelRetros: FC<PanelRetrosProps> = ({
   retrosFinalizadas,
   getRetrospectivas,
 }) => {
-  if (!tryFetch)
-    return <Spinner message="Cargando retrospectivas..." />;
-
   useEffect(() => {
     getRetrospectivas();
   }, []);
+
+  if (!tryFetch)
+    return <Spinner message="Cargando retrospectivas..." />;
 
   return (
     <div className="grid grid-cols-2 gap-5 pb-5">

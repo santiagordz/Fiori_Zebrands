@@ -1,4 +1,9 @@
 import Button from '@atlaskit/button';
+import {
+  AutoDismissFlag,
+  FlagGroup,
+  type AppearanceTypes,
+} from '@atlaskit/flag';
 import AddIcon from '@atlaskit/icon/glyph/add';
 import ArrowLeftIcon from '@atlaskit/icon/glyph/arrow-left';
 import ArrowRightIcon from '@atlaskit/icon/glyph/arrow-right';
@@ -16,11 +21,6 @@ import {
 } from '../../local-contexts';
 import Pregunta from './Pregunta';
 import { NuevaPregunta } from './modals';
-import {
-  AutoDismissFlag,
-  FlagGroup,
-  type AppearanceTypes,
-} from '@atlaskit/flag';
 
 const URI = 'http://localhost:8000/preguntas';
 
@@ -196,9 +196,9 @@ const Step2: FC<Step2Props> = ({ setStepNumber, stepNumber }) => {
               )
             )
           ) : (
-            <p className="text-danger mt-3 text-sm">
-              No hay preguntas seleccionadas, agrega al menos una
-              pregunta para continuar.
+            <p className="text-subtle text-sm">
+              No haz seleccionado ninguna pregunta, por favor
+              selecciona al menos una para continuar.
             </p>
           )}
         </div>
@@ -245,24 +245,31 @@ const Step2: FC<Step2Props> = ({ setStepNumber, stepNumber }) => {
           )}
         </div>
       </div>
-      <div className="flex gap-14 w-full items-center justify-center mt-4">
-        <Button
-          appearance="default"
-          iconBefore={<ArrowLeftIcon label="paso anterior" />}
-          label="Pregunta anterior"
-          onClick={() => setStepNumber((prev: number) => prev - 1)}
-        >
-          Paso anterior
-        </Button>
-        <Button
-          appearance="primary"
-          isDisabled={isError}
-          iconAfter={<ArrowRightIcon label="siguiente paso" />}
-          label="Siguiente paso"
-          onClick={() => setStepNumber((prev: number) => prev + 1)}
-        >
-          Siguiente paso
-        </Button>
+      <div className="flex flex-col gap-2 items-center">
+        {isError && (
+          <p className="text-xs text-information font-medium">
+            Selecciona al menos una pregunta para continuar.
+          </p>
+        )}
+        <div className="flex gap-14 w-full items-center justify-center mt-4">
+          <Button
+            appearance="default"
+            iconBefore={<ArrowLeftIcon label="paso anterior" />}
+            label="Pregunta anterior"
+            onClick={() => setStepNumber((prev: number) => prev - 1)}
+          >
+            Paso anterior
+          </Button>
+          <Button
+            appearance="primary"
+            isDisabled={isError}
+            iconAfter={<ArrowRightIcon label="siguiente paso" />}
+            label="Siguiente paso"
+            onClick={() => setStepNumber((prev: number) => prev + 1)}
+          >
+            Siguiente paso
+          </Button>
+        </div>
       </div>
     </span>
   );

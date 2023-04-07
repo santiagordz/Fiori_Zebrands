@@ -34,6 +34,7 @@ const DropdownMenu: FC<DropdownMenuProps> = ({ children }) => {
   return (
     <span className="relative">
       <button
+        type="button"
         ref={buttonRef}
         className="flex items-center justify-centerrounded-sm p-1 scale-[0.9] rounded-sm"
         onClick={() => setIsPressed((prevValue) => !prevValue)}

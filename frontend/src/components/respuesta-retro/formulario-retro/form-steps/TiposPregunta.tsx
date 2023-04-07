@@ -1,24 +1,10 @@
-import {
-  ErrorMessage,
-  Field,
-  type FieldProps,
-  HelperMessage,
-  RangeField,
-} from '@atlaskit/form';
-import Select from 'react-select';
+import { ErrorMessage, Field, HelperMessage } from '@atlaskit/form';
+import Range from '@atlaskit/range';
 import TextArea from '@atlaskit/textarea';
 import TextField from '@atlaskit/textfield';
-import {
-  ChangeEvent,
-  FC,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import { FC, useContext, useEffect, useState } from 'react';
+import Select from 'react-select';
 import { formDataContext } from '../../local-contexts/FormDataProvider';
-import type { Meta } from '@atlaskit/form/dist/types/field';
-import type { RangeFieldProps } from '@atlaskit/form';
-import Range from '@atlaskit/range';
 
 interface TiposPreguntaProps {
   idTipoPregunta: number;

@@ -94,8 +94,19 @@ module.exports = class Retrospectiva {
 
       for (const pregunta of Retrospectiva.predeterminadas) {
         await connection.execute(
-          `INSERT INTO preguntas_retrospectivas (id_pregunta, id_retrospectiva) VALUES (?,?)`,
+          `INSERT INTO preguntas_retrospectivas (id, id_pregunta, id_retrospectiva) VALUES (NULL, ?, ?);`,
           [pregunta.id, Retrospectiva.id]
+        );
+        await connection.execute(
+          'UPDATE preguntas SET predeterminada = 1 WHERE id = ?',
+          [pregunta.id]
+        );
+      }
+
+      for (const pregunta of Retrospectiva.otras) {
+        await connection.execute(
+          'UPDATE preguntas SET predeterminada = 0 WHERE id = ?',
+          [pregunta.id]
         );
       }
 
@@ -119,7 +130,7 @@ module.exports = class Retrospectiva {
           );
         }
       }
-      connection.commit();
+      await connection.commit();
     } catch (error) {
       connection.rollback();
       throw error;

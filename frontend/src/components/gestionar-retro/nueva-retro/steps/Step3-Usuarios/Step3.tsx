@@ -1,12 +1,15 @@
-import React, { FC, useContext, useEffect, useState } from 'react';
-import { newRetroContext, EtiquetaType, newRetroType } from '../../local-contexts';
-import DropdownEtiquetas from '../../../../administrar-usuarios/DropdownEtiquetas';
 import Button from '@atlaskit/button';
-import AddIcon from '@atlaskit/icon/glyph/add';
 import ArrowLeftIcon from '@atlaskit/icon/glyph/arrow-left';
 import ArrowRightIcon from '@atlaskit/icon/glyph/arrow-right';
-import TablaUsuarios from './TablaUsuarios';
 import axios from 'axios';
+import { FC, useContext, useEffect, useState } from 'react';
+import DropdownEtiquetas from '../../../../administrar-usuarios/DropdownEtiquetas';
+import {
+  EtiquetaType,
+  UsuarioType,
+  newRetroContext,
+} from '../../local-contexts';
+import TablaUsuarios from './TablaUsuarios';
 
 interface Step3Props {
   stepNumber: number;
@@ -15,8 +18,10 @@ interface Step3Props {
 
 const Step3: FC<Step3Props> = ({ stepNumber, setStepNumber }) => {
   const { newRetro, setNewRetro } = useContext(newRetroContext);
-  const [selectedUsers, setSelectedUsers] = useState<user[]>([]);
-  const [etiquetas, setEtiquetas] = useState([])
+  const [selectedUsers, setSelectedUsers] = useState<UsuarioType[]>(
+    []
+  );
+  const [etiquetas, setEtiquetas] = useState([]);
 
   const getEtiquetas = async () => {
     const res = await axios.get('http://localhost:8000/etiquetas');
@@ -27,7 +32,10 @@ const Step3: FC<Step3Props> = ({ stepNumber, setStepNumber }) => {
       id_color: etiqueta.id_color,
     }));
 
-    setEtiquetas((prevEtiquetas) => ({ ...prevEtiquetas, etiquetas }));
+    setEtiquetas((prevEtiquetas) => ({
+      ...prevEtiquetas,
+      etiquetas,
+    }));
   };
 
   useEffect(() => {
@@ -37,33 +45,35 @@ const Step3: FC<Step3Props> = ({ stepNumber, setStepNumber }) => {
   const handleEtiquetasSeleccionadasChange = (
     etiquetas: EtiquetaType[]
   ) => {
-    setNewRetro((prevNewRetro: newRetroType) => {
-      return {
-        ...prevNewRetro,
-        etiquetas,
-      };
+    if (newRetro && newRetro.usuarios!.length > 0) {
+      const etiquetasIds = etiquetas.map((etiqueta) => etiqueta.id);
+      const usuariosFiltrados = newRetro.usuarios!.filter((usuario) =>
+        usuario.etiquetas?.every(
+          (etiqueta) => !etiquetasIds.includes(etiqueta.id)
+        )
+      );
+      setSelectedUsers(usuariosFiltrados);
+    }
+    setNewRetro({
+      ...newRetro,
+      etiquetas: etiquetas,
+      usuarios: selectedUsers,
     });
   };
 
   const isNextButtonDisabled = () => {
     const selectedUsersEmpty: boolean = selectedUsers.length === 0;
-    const newRetroEtiquetasEmpty: boolean = newRetro?.etiquetas?.length === 0;
+    const newRetroEtiquetasEmpty: boolean =
+      newRetro?.etiquetas?.length === 0;
     if (selectedUsersEmpty && newRetroEtiquetasEmpty) {
       return true;
     } else {
       return false;
     }
-
-  }
-
+  };
 
   useEffect(() => {
-    setNewRetro((prevNewRetro: newRetroType) => {
-      return {
-        ...prevNewRetro,
-        usuarios: selectedUsers,
-      };
-    });
+    setNewRetro({ ...newRetro, usuarios: selectedUsers });
     isNextButtonDisabled();
   }, [selectedUsers, newRetro?.etiquetas]);
 
@@ -90,39 +100,49 @@ const Step3: FC<Step3Props> = ({ stepNumber, setStepNumber }) => {
           />
         </div>
       </div>
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-3 mt-4">
         <p className="font-semibold text-sm">
           Seleccionar usuarios individualmente
         </p>
         <p className="text-paragraph text-xs">
           Las preguntas serán enviadas a los usuarios seleccionados.
         </p>
-        <p className="flex text-sm text-information font-semibold">
+        <p className="flex text-xs text-information font-semibold">
           NOTA: Si se seleccionó una etiqueta en la parte anterior,
           los usuarios con dicha etiqueta no aparecerán en la lista.
         </p>
       </div>
       <TablaUsuarios
-        selectedTags={etiquetas || []}
+        selectedTags={newRetro?.etiquetas || []}
+        selectedUsers={selectedUsers}
         setSelectedUsers={setSelectedUsers}
       />
-      <div className="flex gap-14 w-full items-center justify-center mt-4">
-        <Button
-          appearance="default"
-          iconBefore={<ArrowLeftIcon label="paso anterior" />}
-          label="Pregunta anterior"
-          onClick={() => setStepNumber((prev: number) => prev - 1)}
-        >
-          Paso anterior
-        </Button>
-        <Button
-          isDisabled={isNextButtonDisabled()}
-          appearance="primary"
-          label="Siguiente paso"
-          onClick={() => setStepNumber((prev: number) => prev + 1)}
-        >
-          Siguiente paso
-        </Button>
+      <div className="flex flex-col gap-2 items-center">
+        {isNextButtonDisabled() && (
+          <p className="text-xs text-information font-medium">
+            Selecciona al menos una etiqueta o usuario individual para
+            continuar.
+          </p>
+        )}
+        <div className="flex gap-14 w-full items-center justify-center mt-4">
+          <Button
+            appearance="default"
+            iconBefore={<ArrowLeftIcon label="paso anterior" />}
+            label="Pregunta anterior"
+            onClick={() => setStepNumber((prev: number) => prev - 1)}
+          >
+            Paso anterior
+          </Button>
+          <Button
+            isDisabled={isNextButtonDisabled()}
+            iconAfter={<ArrowRightIcon label="siguiente paso" />}
+            appearance="primary"
+            label="Siguiente paso"
+            onClick={() => setStepNumber((prev: number) => prev + 1)}
+          >
+            Siguiente paso
+          </Button>
+        </div>
       </div>
     </div>
   );

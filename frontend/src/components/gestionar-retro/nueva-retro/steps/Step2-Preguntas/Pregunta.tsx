@@ -81,12 +81,14 @@ const Pregunta: FC<PreguntaProps> = ({
         </div>
         <DropdownMenu>
           <button
+            type="button"
             onClick={() => setIsEditModalOpen(true)}
             className="bg-white hover:bg-[#f1f2f4] text-sm inline-block whitespace-nowrap py-[0.35rem] px-5 text-textNormal"
           >
             Editar
           </button>
           <button
+            type="button"
             onClick={() => setIsDeleteModalOpen(true)}
             className="bg-white hover:bg-[#fff5f5] text-sm inline-block whitespace-nowrap py-[0.35rem] px-5 text-danger"
           >

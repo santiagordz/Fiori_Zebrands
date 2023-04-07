@@ -142,15 +142,13 @@ const RetrospectivaGeneral: FC<RetrospectivaGeneralProps> = ({
                   etiqueta: string;
                   color: TagColor;
                 }) => (
-                  <>
-                    <div key={tag.id} id="tag">
-                      <Tag
-                        text={tag.etiqueta}
-                        appearance="rounded"
-                        color={tag.color}
-                      />
-                    </div>
-                  </>
+                  <div key={tag.id} id="tag">
+                    <Tag
+                      text={tag.etiqueta}
+                      appearance="rounded"
+                      color={tag.color}
+                    />
+                  </div>
                 )
               )}
           </div>
