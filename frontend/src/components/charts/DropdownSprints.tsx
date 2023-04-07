@@ -68,7 +68,7 @@ const DropdownSprints = ({
     };
 
     return (
-        <div className="w-[30vmin]">
+        <div className="w-[42vmin]">
             <Select
                 isMulti
                 options={sprintsOptions}

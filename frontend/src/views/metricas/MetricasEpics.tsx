@@ -1,47 +1,50 @@
 import React, { FC, useState } from 'react';
-import Piechart from '../../components/charts/Piechart';
 import DropdownSprints from '../../components/charts/DropdownSprints';
-import StackedBarChart from '../../components/charts/StackedBarchart';
+import SameDataComposedChart from '../../components/charts/SameDataComposedChart';
+import Piechart from '../../components/charts/Piechart';
+import DropdownEpics from '../../components/charts/DropdownEpics';
+interface MetricasEpicsProps {}
 
-interface MetricasSprintProps {}
-
-const data = [
-  {
-    name: 'Page A',
-    uv: 4000,
-    pv: 2400,
-    amt: 2400,
-  }
-];
-
-const MetricasSprint: FC<MetricasSprintProps> = ({}) => {
+const MetricasEpics: FC<MetricasEpicsProps> = ({}) => {
   const [sprintsSeleccionadas, setSprintsSeleccionadas] =
     useState<any>([]);
   const handleSprintSeleccionados = (sprints: string[]) => {
     setSprintsSeleccionadas(sprints);
   };
-
+  const [epicsSeleccionadas, setEpicsSeleccionadas] = useState<any>(
+    []
+  );
+  const handleEpicsSeleccionados = (epics: string[]) => {
+    setEpicsSeleccionadas(epics);
+  };
   return (
     <div className="w-full">
       <div className="py-5 flex justify-left gap-6 border-b-2 border-zinc-200">
         <div className="flex items-center">
-          <label className="text-lg pr-4">Sprint:</label>
+          <label className="text-lg pr-4">Sprints:</label>
           <DropdownSprints
             sprintsActuales={[]}
             onSprintsSeleccionadasChange={handleSprintSeleccionados}
           />
         </div>
+        <div className="flex items-center">
+          <label className="text-lg pr-4">Epics: </label>
+          <DropdownEpics
+            epicsActuales={[]}
+            onEpicsSeleccionadasChange={handleEpicsSeleccionados}
+          />
+        </div>
       </div>
-      <div className="grid grid-cols-2 justify-center">
+      <div className="grid grid-cols-2 justify-center pt-8">
         <div className="grid justify-items-center">
           <div className="">
             <label className="text-2xl">
               {' '}
-              Storypoints Totales y Completados
+              Comparacion de Sprints
             </label>
           </div>
           <div className="">
-            <StackedBarChart data={data} />
+            <SameDataComposedChart />
           </div>
         </div>
         <div className="grid justify-items-center">
@@ -60,4 +63,4 @@ const MetricasSprint: FC<MetricasSprintProps> = ({}) => {
   );
 };
 
-export default MetricasSprint;
+export default MetricasEpics;

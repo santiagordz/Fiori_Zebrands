@@ -56,10 +56,9 @@ export default class Example extends PureComponent {
 
   render() {
     return (
-      <ResponsiveContainer width="100%" height="100%">
         <ComposedChart
           width={500}
-          height={400}
+          height={500}
           data={data}
           margin={{
             top: 20,
@@ -76,7 +75,6 @@ export default class Example extends PureComponent {
           <Bar dataKey="uv" barSize={20} fill="#413ea0" />
           <Line type="monotone" dataKey="uv" stroke="#ff7300" />
         </ComposedChart>
-      </ResponsiveContainer>
     );
   }
 }
