@@ -55,7 +55,7 @@ const MetricasEpics: FC<MetricasEpicsProps> = ({}) => {
             </label>
           </div>
           <div className="pl-20 pt-12">
-            <Piechart />
+            {/* <Piechart /> */}
           </div>
         </div>
       </div>

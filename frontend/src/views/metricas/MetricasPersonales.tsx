@@ -27,7 +27,7 @@ const MetricasPersonales: FC<MetricasPersonalesProps> = ({  }) => {
             </label>
           </div>
           <div className="">
-            <StackedBarChart data={data}/>
+            {/* <StackedBarChart data={data}/> */}
           </div>
         </div>
         <div className="grid justify-items-center">
@@ -38,7 +38,7 @@ const MetricasPersonales: FC<MetricasPersonalesProps> = ({  }) => {
             </label>
           </div>
           <div className='pl-20 pt-12'>
-            <Piechart />
+            {/* <Piechart /> */}
           </div>
         </div>
       </div>

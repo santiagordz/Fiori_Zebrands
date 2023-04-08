@@ -1,12 +1,12 @@
-import React, { useCallback, useState } from "react";
-import { PieChart, Pie, Cell } from "recharts";
+import React from "react";
+import { PieChart, Pie, Cell, XAxis, Legend, Line } from "recharts";
 
-const data = [
-  { name: "Group A", value: 400 },
-  { name: "Group B", value: 300 },
-  { name: "Group C", value: 300 },
-  { name: "Group D", value: 200 }
-];
+interface PiechartProps {
+  data: {
+    status: string;
+    total: number;
+  }[];
+}
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
@@ -25,6 +25,7 @@ const renderCustomizedLabel = ({
   const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
   return (
+    
     <text
       x={x}
       y={y}
@@ -36,9 +37,11 @@ const renderCustomizedLabel = ({
     </text>
   );
 };
-export default function Piechart() {
+
+export default function Piechart({ data }: PiechartProps) {
   return (
     <PieChart width={500} height={500}>
+      <Legend width={400} align="center"/>
       <Pie
         data={data}
         cx={200}
@@ -47,8 +50,11 @@ export default function Piechart() {
         label={renderCustomizedLabel}
         outerRadius={200}
         fill="#8884d8"
-        dataKey="value"
+        dataKey="total"
+        nameKey="status"
+        
       >
+        
         {data.map((entry, index) => (
           <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
         ))}
@@ -56,3 +62,4 @@ export default function Piechart() {
     </PieChart>
   );
 }
+

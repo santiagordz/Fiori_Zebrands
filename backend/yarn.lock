@@ -456,6 +456,11 @@ is-property@^1.0.2:
   resolved "https://registry.yarnpkg.com/is-property/-/is-property-1.0.2.tgz#57fe1c4e48474edd65b09911f26b1cd4095dda84"
   integrity sha512-Ks/IoX00TtClbGQr4TWXemAnktAQvYB7HzcCxDGqEZU6oCmb2INHuOoKxbtR+HFkmYWBKv/dOZtGRiAjDhj92g==
 
+jsonsql@^0.2.5:
+  version "0.2.5"
+  resolved "https://registry.yarnpkg.com/jsonsql/-/jsonsql-0.2.5.tgz#6940d0eaf4acd2247099a4299d6b4c9b2b43a661"
+  integrity sha512-aaNfeaIzF6TNb5IhLv6lVuyjHBwECwJgJ3r4uBeyXeEc+2X+yYLlSbK95hYIGyx+7WRGqy/C8LvSOlrw4RA+7w==
+
 keygrip@~1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/keygrip/-/keygrip-1.1.0.tgz#871b1681d5e159c62a445b0c74b615e0917e7226"

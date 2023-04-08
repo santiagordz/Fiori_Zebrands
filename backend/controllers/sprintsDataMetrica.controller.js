@@ -1,13 +1,24 @@
 const sprintsDataModel = require('../models/statusissues.model');
 const db = require('../database/db');
 
-exports.fetchSprintById = async (req, res, next) => {
-  const sprintId = req.params.id;
+exports.fetchSprintsByIds = async (req, res, next) => {
+  const sprintIds = req.params.ids.split(',').map(Number);
   try {
-    const sprint = await sprintsDataModel.getIssuesBySprint(sprintId);
-    res.json({ sprint });
+    const sprints = await sprintsDataModel.getIssuesBySprints(sprintIds);
+    res.json({ sprints });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Error al obtener el sprint.' });
+    res.status(500).json({ message: 'Error al obtener los sprints.' });
   }
 };
+
+exports.fetchStoryPoints = async (req, res, next) => {
+  const sprintIds = req.params.ids.split(',').map(Number);
+  try {
+    const sprints = await sprintsDataModel.getIssuesByStoryPoints(sprintIds);
+    res.json({ sprints });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al obtener los sprints.' });
+  }
+}

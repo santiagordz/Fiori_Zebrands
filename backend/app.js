@@ -49,7 +49,7 @@ const usuariosJiraRoutes = require('./routes/usuarios_jira.routes');
 const issuesJiraRoutes = require('./routes/issuesJira.routes');
 const sprintsJiraRoutes = require('./routes/sprints.routes');
 const epicJiraRoutes = require('./routes/epicsJira.routes');
-// const sprintsIssuesData = require('./routes/sprintsData.routes');
+const sprintsIssuesData = require('./routes/sprintsData.routes');
 
 app.use('/usuarios', usuariosRoutes);
 app.use('/usuarios_jira', usuariosJiraRoutes);
@@ -62,7 +62,7 @@ app.use('/respuesta', respuestaRoutes);
 app.use('/issuesjira', issuesJiraRoutes);
 app.use('/sprints', sprintsJiraRoutes);
 app.use('/epics', epicJiraRoutes);
-// app.use('/sprintsdata', sprintsIssuesData);
+app.use('/sprintsdata', sprintsIssuesData);
 
 app.get('/logout', (req, res) => {
   req.logout();
