@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 06-04-2023 a las 18:37:42
+-- Tiempo de generación: 09-04-2023 a las 16:08:03
 -- Versión del servidor: 8.0.31
 -- Versión de PHP: 8.0.26
 
@@ -166,10 +166,10 @@ CREATE TABLE IF NOT EXISTS `preguntas` (
 --
 
 INSERT INTO `preguntas` (`id`, `pregunta`, `predeterminada`, `createdAt`, `updatedAt`, `id_tipo_pregunta`) VALUES
-(3, '¿Qué hicimos bien en el Sprint que vale la pena mencionar?', 1, '2023-03-27 23:33:11', '2023-03-27 23:33:11', 1),
-(4, '¿Qué hicimos mal que debemos de hacer diferente en el siguiente sprint?', 1, '2023-03-27 23:33:11', '2023-03-27 23:33:11', 2),
-(5, '¿Cómo calificarías la calidad de las reuniones del equipo durante el último sprint?', 0, '2023-03-27 23:35:03', '2023-03-27 23:35:03', 3),
-(6, 'En una escala del 1 al 5 ¿Cómo calificas tu desempeño en el sprint?', 1, '2023-03-30 03:41:26', '2023-04-04 21:27:29', 4);
+(3, '¿Qué hicimos bien en el Sprint que vale la pena mencionar?', 0, '2023-03-27 23:33:11', '2023-04-07 05:27:07', 1),
+(4, '¿Qué hicimos mal que debemos de hacer diferente en el siguiente sprint?', 1, '2023-03-27 23:33:11', '2023-04-07 05:31:15', 2),
+(5, '¿Cómo calificarías la calidad de las reuniones del equipo durante el último sprint?', 1, '2023-03-27 23:35:03', '2023-04-07 05:27:07', 3),
+(6, 'En una escala del 1 al 5 ¿Cómo calificas tu desempeño en el sprint?', 0, '2023-03-30 03:41:26', '2023-04-07 05:27:07', 4);
 
 -- --------------------------------------------------------
 
@@ -207,11 +207,11 @@ DROP TABLE IF EXISTS `preguntas_retrospectivas`;
 CREATE TABLE IF NOT EXISTS `preguntas_retrospectivas` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_pregunta` int NOT NULL,
-  `id_retrospectiva` int NOT NULL,
+  `id_retrospectiva` bigint NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_pregunta` (`id_pregunta`),
   KEY `id_retrospectiva` (`id_retrospectiva`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Volcado de datos para la tabla `preguntas_retrospectivas`
@@ -224,7 +224,9 @@ INSERT INTO `preguntas_retrospectivas` (`id`, `id_pregunta`, `id_retrospectiva`)
 (7, 5, 6),
 (8, 3, 6),
 (9, 4, 6),
-(10, 6, 6);
+(10, 6, 6),
+(28, 4, 8217670350),
+(29, 5, 8217670350);
 
 -- --------------------------------------------------------
 
@@ -239,7 +241,7 @@ CREATE TABLE IF NOT EXISTS `reportes` (
   `archivo` varchar(5000) NOT NULL,
   `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `id_retrospectiva` int NOT NULL,
+  `id_retrospectiva` bigint NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_retrospectiva` (`id_retrospectiva`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -258,7 +260,7 @@ CREATE TABLE IF NOT EXISTS `respuestas` (
   `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `id_usuario` int DEFAULT NULL,
-  `id_retrospectiva` int NOT NULL,
+  `id_retrospectiva` bigint NOT NULL,
   `id_pregunta` int NOT NULL,
   `id_sesionRespuesta` varchar(13) NOT NULL,
   PRIMARY KEY (`id`),
@@ -282,9 +284,9 @@ INSERT INTO `respuestas` (`id`, `respuesta`, `anonimo`, `createdAt`, `updatedAt`
 
 DROP TABLE IF EXISTS `retrospectivas`;
 CREATE TABLE IF NOT EXISTS `retrospectivas` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `titulo` varchar(100) NOT NULL,
-  `descripcion` varchar(1000) NOT NULL,
+  `descripcion` varchar(251) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `fecha_inicio` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `fecha_fin` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `en_curso` tinyint(1) NOT NULL DEFAULT '1',
@@ -293,7 +295,7 @@ CREATE TABLE IF NOT EXISTS `retrospectivas` (
   `id_reporte` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `id_reporte` (`id_reporte`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8740193308 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Volcado de datos para la tabla `retrospectivas`
@@ -302,7 +304,8 @@ CREATE TABLE IF NOT EXISTS `retrospectivas` (
 INSERT INTO `retrospectivas` (`id`, `titulo`, `descripcion`, `fecha_inicio`, `fecha_fin`, `en_curso`, `createdAt`, `updatedAt`, `id_reporte`) VALUES
 (5, 'Retro 1', 'Descripcion retro 1', '2023-04-04 21:08:45', '2023-04-04 21:10:30', 0, '2023-03-28 17:49:10', '2023-04-04 21:10:30', NULL),
 (6, 'Retro 2', 'Descripcion retro 2', '2023-04-04 20:56:52', '2023-03-28 21:28:22', 1, '2023-03-28 21:28:22', '2023-03-28 21:28:22', NULL),
-(8, 'Retro 4', 'Descripcion retro 4', '2023-04-04 20:56:52', '2023-03-29 21:53:18', 1, '2023-03-29 21:53:18', '2023-03-29 21:53:18', NULL);
+(8, 'Retro 4', 'Descripcion retro 4', '2023-04-04 20:56:52', '2023-03-29 21:53:18', 1, '2023-03-29 21:53:18', '2023-03-29 21:53:18', NULL),
+(8217670350, '01-07-2023', NULL, '2023-04-07 05:46:52', '2023-04-07 05:46:52', 1, '2023-04-07 05:46:52', '2023-04-07 05:46:52', NULL);
 
 -- --------------------------------------------------------
 
@@ -313,7 +316,7 @@ INSERT INTO `retrospectivas` (`id`, `titulo`, `descripcion`, `fecha_inicio`, `fe
 DROP TABLE IF EXISTS `retrospectiva_etiquetas`;
 CREATE TABLE IF NOT EXISTS `retrospectiva_etiquetas` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `id_retrospectiva` int NOT NULL,
+  `id_retrospectiva` bigint NOT NULL,
   `id_etiqueta` int NOT NULL,
   `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -474,7 +477,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `correo`, `nombre`, `foto`, `id_google`, `id_jira`, `createdAt`, `updatedAt`, `id_rol`) VALUES
-(7, 'david.langarica@gmail.com', NULL, NULL, NULL, NULL, '2023-03-27 21:04:28', '2023-04-04 15:14:53', 1),
+(7, 'david.langarica@gmail.com', 'David Langarica', 'https://lh3.googleusercontent.com/a/AGNmyxa2A5REtTSrIzJcZ_zXz5PXZ_jMCS2G_dK3wrZZ8g=s96-c', '111190257590566899519', NULL, '2023-03-27 21:04:28', '2023-04-07 02:32:24', 1),
 (23, 'juanpablocabrera045@gmail.com', NULL, NULL, NULL, NULL, '2023-04-04 18:01:52', '2023-04-04 19:44:03', 2),
 (24, 'bailleres.frida@gmail.com', NULL, NULL, NULL, NULL, '2023-04-04 18:02:06', '2023-04-04 18:02:06', 1);
 
@@ -492,7 +495,14 @@ CREATE TABLE IF NOT EXISTS `usuarios_etiquetas` (
   PRIMARY KEY (`id`),
   KEY `id_usuario` (`id_usuario`),
   KEY `id_etiqueta` (`id_etiqueta`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Volcado de datos para la tabla `usuarios_etiquetas`
+--
+
+INSERT INTO `usuarios_etiquetas` (`id`, `id_usuario`, `id_etiqueta`) VALUES
+(1, 7, 2);
 
 -- --------------------------------------------------------
 
@@ -520,14 +530,14 @@ DROP TABLE IF EXISTS `usuarios_retrospectivas`;
 CREATE TABLE IF NOT EXISTS `usuarios_retrospectivas` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_usuario` int NOT NULL,
-  `id_retrospectiva` int NOT NULL,
+  `id_retrospectiva` bigint NOT NULL,
   `completada` tinyint(1) NOT NULL DEFAULT '0',
   `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `id_retrospectiva` (`id_retrospectiva`) USING BTREE,
   KEY `id_usuario` (`id_usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Volcado de datos para la tabla `usuarios_retrospectivas`
@@ -535,7 +545,8 @@ CREATE TABLE IF NOT EXISTS `usuarios_retrospectivas` (
 
 INSERT INTO `usuarios_retrospectivas` (`id`, `id_usuario`, `id_retrospectiva`, `completada`, `createdAt`, `updatedAt`) VALUES
 (3, 7, 5, 1, '2023-03-28 17:49:20', '2023-03-28 17:57:49'),
-(5, 7, 6, 0, '2023-03-28 22:40:21', '2023-04-03 20:34:45');
+(5, 7, 6, 0, '2023-03-28 22:40:21', '2023-04-03 20:34:45'),
+(16, 23, 8217670350, 0, '2023-04-07 05:46:52', '2023-04-07 05:46:52');
 
 --
 -- Restricciones para tablas volcadas
