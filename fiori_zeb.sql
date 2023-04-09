@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `colores` (
   `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;;
 
 --
 -- Volcado de datos para la tabla `colores`
@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `epics` (
   `id_reporte` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_reporte` (`id_reporte`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;;
 
 -- --------------------------------------------------------
 
@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `etiquetas` (
   `id_color` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_color` (`id_color`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;;
 
 --
 -- Volcado de datos para la tabla `etiquetas`
@@ -116,7 +116,7 @@ CREATE TABLE IF NOT EXISTS `issues` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `clave` (`clave`),
   KEY `id_epic` (`id_epic`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;;
 
 -- --------------------------------------------------------
 
@@ -131,7 +131,7 @@ CREATE TABLE IF NOT EXISTS `opciones_respuestas` (
   `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;;
 
 --
 -- Volcado de datos para la tabla `opciones_respuestas`
@@ -159,7 +159,7 @@ CREATE TABLE IF NOT EXISTS `preguntas` (
   `id_tipo_pregunta` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_tipo_pregunta` (`id_tipo_pregunta`)
-) ENGINE=InnoDB AUTO_INCREMENT=972260216 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=972260216 DEFAULT CHARSET=utf8mb4;;
 
 --
 -- Volcado de datos para la tabla `preguntas`
@@ -185,7 +185,7 @@ CREATE TABLE IF NOT EXISTS `preguntas_opciones` (
   PRIMARY KEY (`id`),
   KEY `id_pregunta` (`id_pregunta`),
   KEY `id_opcion` (`id_opcion`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4;;
 
 --
 -- Volcado de datos para la tabla `preguntas_opciones`
@@ -211,7 +211,7 @@ CREATE TABLE IF NOT EXISTS `preguntas_retrospectivas` (
   PRIMARY KEY (`id`),
   KEY `id_pregunta` (`id_pregunta`),
   KEY `id_retrospectiva` (`id_retrospectiva`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4;;
 
 --
 -- Volcado de datos para la tabla `preguntas_retrospectivas`
@@ -244,7 +244,7 @@ CREATE TABLE IF NOT EXISTS `reportes` (
   `id_retrospectiva` bigint NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_retrospectiva` (`id_retrospectiva`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;;
 
 -- --------------------------------------------------------
 
@@ -267,7 +267,7 @@ CREATE TABLE IF NOT EXISTS `respuestas` (
   KEY `id_retrospectiva` (`id_retrospectiva`),
   KEY `id_pregunta` (`id_pregunta`),
   KEY `id_usuario` (`id_usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4;;
 
 --
 -- Volcado de datos para la tabla `respuestas`
@@ -286,7 +286,7 @@ DROP TABLE IF EXISTS `retrospectivas`;
 CREATE TABLE IF NOT EXISTS `retrospectivas` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `titulo` varchar(100) NOT NULL,
-  `descripcion` varchar(251) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `descripcion` varchar(251) DEFAULT NULL,
   `fecha_inicio` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `fecha_fin` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `en_curso` tinyint(1) NOT NULL DEFAULT '1',
@@ -295,7 +295,7 @@ CREATE TABLE IF NOT EXISTS `retrospectivas` (
   `id_reporte` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `id_reporte` (`id_reporte`)
-) ENGINE=InnoDB AUTO_INCREMENT=8740193308 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8740193308 DEFAULT CHARSET=utf8mb4;;
 
 --
 -- Volcado de datos para la tabla `retrospectivas`
@@ -347,7 +347,7 @@ CREATE TABLE IF NOT EXISTS `roles` (
   `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;;
 
 --
 -- Volcado de datos para la tabla `roles`
@@ -372,7 +372,7 @@ CREATE TABLE IF NOT EXISTS `roles_funciones` (
   PRIMARY KEY (`id`),
   KEY `id_rol` (`id_rol`),
   KEY `id_funcion` (`id_funcion`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;;
 
 -- --------------------------------------------------------
 
@@ -391,7 +391,7 @@ CREATE TABLE IF NOT EXISTS `sprints` (
   `id_reporte` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_reporte` (`id_reporte`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;;
 
 -- --------------------------------------------------------
 
@@ -407,7 +407,7 @@ CREATE TABLE IF NOT EXISTS `sprints_epics` (
   PRIMARY KEY (`id`),
   KEY `id_sprint` (`id_sprint`),
   KEY `id_epic` (`id_epic`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;;
 
 -- --------------------------------------------------------
 
@@ -423,7 +423,7 @@ CREATE TABLE IF NOT EXISTS `sprints_issues` (
   PRIMARY KEY (`id`),
   KEY `id_sprint` (`id_sprint`),
   KEY `id_issue` (`id_issue`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;;
 
 -- --------------------------------------------------------
 
@@ -438,7 +438,7 @@ CREATE TABLE IF NOT EXISTS `tipos_preguntas` (
   `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;;
 
 --
 -- Volcado de datos para la tabla `tipos_preguntas`
@@ -470,7 +470,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `correo` (`correo`),
   KEY `id_rol` (`id_rol`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4;;
 
 --
 -- Volcado de datos para la tabla `usuarios`
@@ -495,7 +495,7 @@ CREATE TABLE IF NOT EXISTS `usuarios_etiquetas` (
   PRIMARY KEY (`id`),
   KEY `id_usuario` (`id_usuario`),
   KEY `id_etiqueta` (`id_etiqueta`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;;
 
 --
 -- Volcado de datos para la tabla `usuarios_etiquetas`
@@ -518,7 +518,7 @@ CREATE TABLE IF NOT EXISTS `usuarios_issues` (
   PRIMARY KEY (`id`),
   KEY `id_usuario` (`id_usuario`),
   KEY `id_issues` (`id_issues`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;;
 
 -- --------------------------------------------------------
 
@@ -537,7 +537,7 @@ CREATE TABLE IF NOT EXISTS `usuarios_retrospectivas` (
   PRIMARY KEY (`id`),
   KEY `id_retrospectiva` (`id_retrospectiva`) USING BTREE,
   KEY `id_usuario` (`id_usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4;;
 
 --
 -- Volcado de datos para la tabla `usuarios_retrospectivas`
