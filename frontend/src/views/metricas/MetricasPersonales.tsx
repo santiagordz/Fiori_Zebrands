@@ -1,20 +1,54 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect } from 'react'
 import StackedBarChart from '../../components/charts/StackedBarchart';
 import Piechart from '../../components/charts/Piechart';
+import { useContext } from 'react';
+import { userDataContext } from '../../contexts';
+import { useState } from 'react';
+import axios from 'axios';
+
 interface MetricasPersonalesProps {
   
 }
 
-const data = [
-  {
-    name: 'Page A',
-    uv: 4000,
-    pv: 2400,
-    amt: 2400,
-  }
-];
+
 
 const MetricasPersonales: FC<MetricasPersonalesProps> = ({  }) => {
+  const {user} = useContext(userDataContext);
+  const idjira = user?.id_jira;
+  const name = user?.nombre;
+
+  const [data, setData] = useState<any[]>([]);
+  const [data2, setData2] = useState<any[]>([]);
+
+  const getIssuesByUser = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8000/sprintsdata/user/${idjira}`);
+      console.log(idjira);
+      const data = response.data.issues[0];
+      console.log(data);
+      setData(data);
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getStoryPointsByUser = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8000/sprintsdata/userstorypoints/${idjira}`);
+      const data = response.data.issues[0];
+      setData2(data);
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getIssuesByUser();
+    getStoryPointsByUser();
+  }, [])
+
   return (
     <div className='pt-10'>
      <div className="w-full">
@@ -23,11 +57,11 @@ const MetricasPersonales: FC<MetricasPersonalesProps> = ({  }) => {
           <div className="">
             <label className="text-2xl">
               {' '}
-              Storypoints Personales
+              Story points de {name}
             </label>
           </div>
           <div className="">
-            {/* <StackedBarChart data={data}/> */}
+            <StackedBarChart data={data2}/>
           </div>
         </div>
         <div className="grid justify-items-center">
@@ -38,7 +72,7 @@ const MetricasPersonales: FC<MetricasPersonalesProps> = ({  }) => {
             </label>
           </div>
           <div className='pl-20 pt-12'>
-            {/* <Piechart /> */}
+            <Piechart data={data}/>
           </div>
         </div>
       </div>

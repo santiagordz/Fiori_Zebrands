@@ -48,4 +48,27 @@ module.exports = class StatusIssue {
     `;
     return db.execute(sql, ids);
   }
+
+  //the next method returns the status of the issues assigned to the logged in user
+  static getIssuesByUser(id) {
+    const sql = `
+    SELECT i.status, COUNT(*) AS total
+    FROM issues i
+    WHERE i.assignee_id = ?
+    AND i.status IN ('Done', 'Pull request', 'To Do', 'En curso')
+    GROUP BY i.status;
+    `;
+    return db.execute(sql, [id]);
+  }
+
+  //the next method returns the story points of the issues assigned to the logged in user in two groups: done and not done
+  static getStoryPointsByUser(id) {
+    const sql = `
+    SELECT i.status, SUM(i.story_points) AS total_story_points
+    FROM issues i
+    WHERE i.assignee_id = ?
+    GROUP BY i.status;
+    `;
+    return db.execute(sql, [id]);
+  }
 };
