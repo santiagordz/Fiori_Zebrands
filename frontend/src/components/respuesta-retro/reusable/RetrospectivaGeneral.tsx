@@ -45,7 +45,7 @@ const RetrospectivaGeneral: FC<RetrospectivaGeneralProps> = ({
   const location = useLocation().pathname;
 
   useEffect(() => {
-    if (location.includes('responder')) {
+    if (location.includes('responder') || location.includes('respuestas') ) {
       setIsInResponder(true);
     }
   }, []);
@@ -53,6 +53,9 @@ const RetrospectivaGeneral: FC<RetrospectivaGeneralProps> = ({
   const handleOnClick = () => {
     if (clickable && !isInResponder) {
       navigate(`/mis-retrospectivas/responder/${idRetrospectiva}`);
+    }
+    if (!clickable && !isInResponder) {
+      navigate(`/mis-retrospectivas/respuestas/${idRetrospectiva}`);
     }
   };
 
@@ -91,8 +94,7 @@ const RetrospectivaGeneral: FC<RetrospectivaGeneralProps> = ({
 
   return (
     <div
-      className={`flex ${
-        clickable && !isInResponder
+      className={`flex ${!isInResponder
           ? 'cursor-pointer'
           : 'cursor-default'
       }`}

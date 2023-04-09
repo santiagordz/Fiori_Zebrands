@@ -82,6 +82,26 @@ exports.finishRetrospectiva = async (req, res, next) => {
   }
 };
 
+exports.getDetailedRetrospective = async (req, res, next) => {
+  const id_retrospectiva = req.params.retroId;
+
+  try {
+    const infoResultados =
+      await Retrospectiva.fetchDetailedRetrospective(
+        id_retrospectiva
+      );
+    res
+      .status(200)
+      .json(infoResultados);
+  } catch (err) {
+    console.log(err);
+    res
+      .status(500)
+      .json({ message: 'Error no se pudo recuperar los resultados' });
+  }
+};
+
+
 exports.newRetrospectiva = async (req, res, next) => {
   try {
     await Retrospectiva.newRetrospectiva(req.body);

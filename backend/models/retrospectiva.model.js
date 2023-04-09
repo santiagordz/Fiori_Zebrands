@@ -44,6 +44,67 @@ module.exports = class Retrospectiva {
       [userId]
     );
   }
+  static async fetchDetailedRetrospective(id_retrospectiva) {
+    const [[retrospective]] = await db.execute(
+      `SELECT id, titulo, descripcion, fecha_inicio, fecha_fin, en_curso
+      FROM retrospectivas
+      WHERE id = ?`,
+      [id_retrospectiva]
+    );
+
+    if (!retrospective) {
+      throw new Error('Retrospectiva no encontrada');
+    }
+
+    const [respuestas] = await db.execute(
+      `SELECT R.respuesta, R.anonimo, R.id_usuario, R.id_pregunta
+      FROM respuestas AS R
+      WHERE R.id_retrospectiva = ?`,
+      [id_retrospectiva]
+    );
+
+    const [preguntas] = await db.execute(
+      `SELECT P.id, P.pregunta, P.id_tipo_pregunta
+      FROM preguntas AS P
+      INNER JOIN preguntas_retrospectivas AS PR ON PR.id_pregunta = P.id
+      WHERE PR.id_retrospectiva = ?`,
+      [id_retrospectiva]
+    );
+
+    for (const pregunta of preguntas) {
+      if (pregunta.id_tipo_pregunta === 3) {
+        const [opciones] = await db.execute(
+          `SELECT OP.id, OP.opcion_respuesta
+          FROM opciones_respuestas AS OP
+          INNER JOIN preguntas_opciones AS PO ON PO.id_opcion = OP.id
+          WHERE PO.id_pregunta = ?`,
+          [pregunta.id]
+        );
+        pregunta.opciones = opciones;
+      }
+    }
+
+    const [tags] = await db.execute(
+      `
+    SELECT E.id, E.etiqueta, E.id_color, C.color
+    FROM etiquetas AS E
+    INNER JOIN colores AS C ON E.id_color = C.id
+    INNER JOIN retrospectiva_etiquetas AS RE ON RE.id_etiqueta = E.id
+    WHERE RE.id_retrospectiva = ?;
+    `,
+      [id_retrospectiva]
+    );
+
+
+    const detailedRetrospective = {
+      ...retrospective,
+      respuestas,
+      preguntas,
+      tags
+    };
+
+    return detailedRetrospective;
+  }
 
   static fetchTags(id) {
     return db.execute(
