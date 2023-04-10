@@ -145,14 +145,14 @@ const EliminarPregunta: FC<EliminarPreguntaProps> = ({
             className="flex items-center justify-center
             w-full gap-8 mt-2 scale-[0.9]"
           >
-            <Button appearance="danger" onClick={handleDelete}>
-              Eliminar pregunta
-            </Button>
             <Button
               appearance="subtle"
               onClick={() => setIsDeleteModalOpen(false)}
             >
               Cancelar
+            </Button>
+            <Button appearance="danger" onClick={handleDelete}>
+              Eliminar pregunta
             </Button>
           </div>
         </div>
