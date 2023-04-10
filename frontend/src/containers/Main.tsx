@@ -1,5 +1,11 @@
-import { useContext, useEffect } from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { useContext } from 'react';
+import {
+  Navigate,
+  Route,
+  Routes,
+  useNavigate,
+} from 'react-router-dom';
+import Spinner from '../components/design-template/spinner/Spinner';
 import { userDataContext } from '../contexts';
 import {
   AdministrarUsuarios,
@@ -9,22 +15,38 @@ import {
   MisAccionables,
   MisRetrospectivas,
 } from '../views';
-import Spinner from '../components/design-template/spinner/Spinner';
+import SessionExpired from '../views/iniciar-sesion/SessionExpired';
 
 const Main = () => {
-  const { user, setUser, hasAttemptedFetch } =
-    useContext(userDataContext);
+  const navigate = useNavigate();
+  const {
+    user,
+    setUser,
+    hasAttemptedFetch,
+    sessionExpired,
+    setSessionExpired,
+  } = useContext(userDataContext);
   const idRol = user?.id_rol || -1;
 
   const adminAllowed = idRol === 1 || false;
   const responsableAllowed = idRol === 2 || false;
 
-  if (!hasAttemptedFetch) {
+  if (!hasAttemptedFetch && !sessionExpired) {
     return (
       <div className="w-full h-full flex">
         <Spinner message="Cargando, por favor espera un momento mientras preparamos todo para ti..." />
       </div>
     );
+  }
+
+  const handleCloseModal = () => {
+    setUser(null);
+    setSessionExpired(false);
+    navigate('/login', { replace: true });
+  };
+
+  if (!user) {
+    return <Navigate to={'/login'} replace />;
   }
 
   return (
@@ -66,6 +88,9 @@ const Main = () => {
         )}
         <Route path="*" element={<Navigate to={'/404'} replace />} />
       </Routes>
+      {sessionExpired && (
+        <SessionExpired handleCloseModal={handleCloseModal} />
+      )}
     </>
   );
 };

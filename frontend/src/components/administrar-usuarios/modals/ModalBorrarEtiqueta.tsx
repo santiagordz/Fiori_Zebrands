@@ -8,7 +8,7 @@ const URI = 'http://localhost:8000/etiquetas/';
 interface GestionarEtiquetasProps {
   show: boolean;
   onClose: () => void;
-  id: number;
+  id: { id: number };
 }
 
 const ModalBorrarEtiqueta: FC<GestionarEtiquetasProps> = ({

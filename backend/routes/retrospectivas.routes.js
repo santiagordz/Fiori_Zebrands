@@ -23,5 +23,9 @@ router.get(
   '/details/:retroId',
   retrospectivaController.getDetailedRetrospective
 );
+router.delete(
+  '/delete/:retroId',
+  retrospectivaController.deleteRetrospectiva
+);
 
 module.exports = router;

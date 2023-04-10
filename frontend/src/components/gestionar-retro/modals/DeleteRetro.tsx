@@ -1,9 +1,9 @@
 import Blanket from '@atlaskit/blanket';
 import Button from '@atlaskit/button';
-import CheckCircleOutlineIcon from '@atlaskit/icon/glyph/check-circle-outline';
-import CrossIcon from '@atlaskit/icon/glyph/cross';
 import EditorErrorIcon from '@atlaskit/icon/glyph/editor/error';
+import CrossIcon from '@atlaskit/icon/glyph/cross';
 import InfoIcon from '@atlaskit/icon/glyph/info';
+import TrashIcon from '@atlaskit/icon/glyph/trash';
 import WarningIcon from '@atlaskit/icon/glyph/warning';
 import axios from 'axios';
 import { motion } from 'framer-motion';
@@ -12,26 +12,26 @@ import { FlagContext } from '../../../contexts';
 
 const URI = 'http://localhost:8000/retrospectivas';
 
-interface EndRetroProps {
-  setIsEndModalOpen: (isOpen: boolean) => void;
+interface DeleteRetroProps {
+  setIsDeleteModalOpen: (isOpen: boolean) => void;
   idRetrospectiva: number;
   titulo: string;
   updateRetrospectivas: () => void | null;
 }
 
-const EndRetro: FC<EndRetroProps> = ({
-  setIsEndModalOpen,
+const DeleteRetro: FC<DeleteRetroProps> = ({
+  setIsDeleteModalOpen,
   idRetrospectiva,
   titulo,
   updateRetrospectivas,
 }) => {
   const { addFlag } = useContext(FlagContext);
-  const handleFinishRetro = async () => {
+  const handleDeleteRetro = async () => {
     try {
-      await axios.put(`${URI}/finish/${idRetrospectiva}`);
-      setIsEndModalOpen(false);
+      await axios.delete(`${URI}/delete/${idRetrospectiva}`);
+      setIsDeleteModalOpen(false);
       addFlag(
-        '¡Genial! La retrospectiva ha finalizado exitosamente. ¡Gracias por utilizar nuestra herramienta para mejorar continuamente!',
+        '¡Listo! La retrospectiva se ha eliminado satisfactoriamente.',
         InfoIcon,
         'info'
       );
@@ -40,7 +40,7 @@ const EndRetro: FC<EndRetroProps> = ({
       console.log(error);
       if (error instanceof Error) {
         addFlag(
-          'Hubo un error al intentar finalizar la retrospectiva.. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
+          'Hubo un error al intentar eliminar la retrospectiva.. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
           EditorErrorIcon,
           'error',
           error.toString()
@@ -72,32 +72,33 @@ const EndRetro: FC<EndRetroProps> = ({
         <div className="flex flex-col bg-white rounded p-10 gap-8 items-center justify-center drop-shadow-lg max-w-[40vw]">
           <div
             className="flex w-full absolute top-0 justify-end p-4"
-            onClick={() => setIsEndModalOpen(false)}
+            onClick={() => setIsDeleteModalOpen(false)}
           >
             <div className="flex items-center justify-center cursor-pointer p-1">
               <CrossIcon label="cerrar modal" size="small" />
             </div>
           </div>
           <div className="flex flex-col justify-center items-center gap-3 relative">
-            <CheckCircleOutlineIcon
-              label="finalizar retrospectiva"
-              primaryColor="#0055CC"
+            <TrashIcon
+              label="eliminar retrospectiva"
+              primaryColor="#454545"
               size="xlarge"
             />
             <h3 className="font-bold text-modalSoft text-xl text-center">
-              ¿Deseas marcar la retrospectiva {titulo} como
-              finalizada?
+              ¿De verdad deseas eliminar la retrospectiva {titulo}?
             </h3>
           </div>
-          <div className="w-full flex gap-2 items-center justify-center px-4">
+          <div className="w-full flex gap-2 items-center justify-center px-6">
             <WarningIcon
               label="warning"
               primaryColor="#FF0000"
               size="large"
             />
             <p className="flex text-xs text-textNormal">
-              No se podrá volver a abrir y solo se conservaran las
-              respuestas realizadas hasta este momento.
+              Al eliminar la retrospectiva, se eliminarán todas las
+              respuestas de los usuarios para esta retrospectiva y se
+              perderá el acceso a la misma. Esta acción no se puede
+              deshacer.
             </p>
           </div>
           <div
@@ -106,12 +107,12 @@ const EndRetro: FC<EndRetroProps> = ({
           >
             <Button
               appearance="subtle"
-              onClick={() => setIsEndModalOpen(false)}
+              onClick={() => setIsDeleteModalOpen(false)}
             >
               Cancelar
             </Button>
-            <Button appearance="primary" onClick={handleFinishRetro}>
-              Finalizar retrospectiva
+            <Button appearance="danger" onClick={handleDeleteRetro}>
+              Eliminar retrospectiva
             </Button>
           </div>
         </div>
@@ -120,4 +121,4 @@ const EndRetro: FC<EndRetroProps> = ({
   );
 };
 
-export default EndRetro;
+export default DeleteRetro;

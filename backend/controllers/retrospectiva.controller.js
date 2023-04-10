@@ -90,9 +90,7 @@ exports.getDetailedRetrospective = async (req, res, next) => {
       await Retrospectiva.fetchDetailedRetrospective(
         id_retrospectiva
       );
-    res
-      .status(200)
-      .json(infoResultados);
+    res.status(200).json(infoResultados);
   } catch (err) {
     console.log(err);
     res
@@ -100,7 +98,6 @@ exports.getDetailedRetrospective = async (req, res, next) => {
       .json({ message: 'Error no se pudo recuperar los resultados' });
   }
 };
-
 
 exports.newRetrospectiva = async (req, res, next) => {
   try {
@@ -113,5 +110,19 @@ exports.newRetrospectiva = async (req, res, next) => {
     res
       .status(500)
       .json({ message: 'Error al finalizar la retrospectiva' });
+  }
+};
+
+exports.deleteRetrospectiva = async (req, res, next) => {
+  try {
+    await Retrospectiva.deleteRetrospectiva(req.params.retroId);
+    res
+      .status(200)
+      .json({ message: 'Retrospectiva eliminada correctamente.' });
+  } catch (err) {
+    console.log(err);
+    res
+      .status(500)
+      .json({ message: 'Error al eliminar la retrospectiva' });
   }
 };

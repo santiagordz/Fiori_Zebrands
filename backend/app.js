@@ -16,7 +16,7 @@ app.use(express.json());
 
 app.use(
   cookieSession({
-    maxAge: 3600000, // The cookie will be valid for 1 hour
+    maxAge: 24 * 60 * 60 * 1000, // 24 hours
     keys: [process.env.COOKIE_KEY_1, process.env.COOKIE_KEY_2],
   })
 );

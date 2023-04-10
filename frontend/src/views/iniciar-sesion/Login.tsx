@@ -18,7 +18,8 @@ const SECRET_KEY_2 =
 
 const Login: FC<LoginProps> = ({}) => {
   const navigate = useNavigate();
-  const { user, getUser } = useContext(userDataContext);
+  const { user, getUser, setSessionExpired } =
+    useContext(userDataContext);
   const [error, setError] = useState(false);
 
   const redirectToGoogleSSO = async () => {
@@ -65,6 +66,10 @@ const Login: FC<LoginProps> = ({}) => {
     if (user) {
       getUser();
       navigate('/dashboard', { replace: true });
+    }
+
+    if (!user) {
+      setSessionExpired(false);
     }
   }, [user]);
 

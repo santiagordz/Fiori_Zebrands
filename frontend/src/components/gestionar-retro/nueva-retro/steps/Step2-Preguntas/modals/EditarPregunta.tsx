@@ -1,21 +1,19 @@
 import Blanket from '@atlaskit/blanket';
 import Button from '@atlaskit/button';
 import { Checkbox } from '@atlaskit/checkbox';
+import CheckCircleIcon from '@atlaskit/icon/glyph/check-circle';
 import CrossIcon from '@atlaskit/icon/glyph/cross';
+import EditorErrorIcon from '@atlaskit/icon/glyph/editor/error';
 import WarningIcon from '@atlaskit/icon/glyph/warning';
-import ErrorIcon from '@atlaskit/icon/glyph/error';
+import axios from 'axios';
 import { motion } from 'framer-motion';
-import { customAlphabet } from 'nanoid';
 import { FC, useContext, useEffect, useState } from 'react';
 import Select from 'react-select';
+import { FlagContext } from '../../../../../../contexts';
 import {
   newRetroContext,
   type PreguntaType,
 } from '../../../local-contexts';
-import axios from 'axios';
-import { type AppearanceTypes } from '@atlaskit/flag';
-import CheckCircleIcon from '@atlaskit/icon/glyph/check-circle';
-import InfoIcon from '@atlaskit/icon/glyph/info';
 import { tipos } from '../tiposPregunta';
 
 const URI = 'http://localhost:8000/preguntas';
@@ -28,12 +26,6 @@ interface EditarPreguntaProps {
   id_tipo_pregunta: number;
   predeterminada: boolean;
   setIsEditModalOpen: (isOpen: boolean) => void;
-  addFlag: (
-    title: string,
-    icon: React.ReactNode,
-    appearance: AppearanceTypes,
-    description?: string
-  ) => void;
 }
 
 const EditarPregunta: FC<EditarPreguntaProps> = ({
@@ -41,8 +33,8 @@ const EditarPregunta: FC<EditarPreguntaProps> = ({
   id_tipo_pregunta,
   setIsEditModalOpen,
   predeterminada,
-  addFlag,
 }) => {
+  const { addFlag } = useContext(FlagContext);
   const { setNewRetro, newRetro } = useContext(newRetroContext);
   const [editPregunta, setEditPregunta] = useState<PreguntaType>({
     id: 0,
@@ -86,7 +78,7 @@ const EditarPregunta: FC<EditarPreguntaProps> = ({
   const handleErrorPregunta = () => {
     addFlag(
       'Hubo un error al recuperar la pregunta, intenta de nuevo más tarde',
-      <ErrorIcon label="error" secondaryColor="red" />,
+      EditorErrorIcon,
       'error'
     );
     setIsEditModalOpen(false);
@@ -146,7 +138,7 @@ const EditarPregunta: FC<EditarPreguntaProps> = ({
         console.log(error);
         addFlag(
           'Hubo un error al actualizar la pregunta. Inténtalo de nuevo más tarde o contacta soporte.',
-          <InfoIcon label="pregunta eliminada" />,
+          EditorErrorIcon,
           'warning',
           error.toString()
         );
@@ -154,7 +146,7 @@ const EditarPregunta: FC<EditarPreguntaProps> = ({
         console.log(error);
         addFlag(
           'Hubo un error al actualizar la pregunta. Inténtalo de nuevo más tarde o contacta soporte.',
-          <InfoIcon label="pregunta eliminada" />,
+          EditorErrorIcon,
           'warning',
           'Error desconocido'
         );
@@ -284,10 +276,7 @@ const EditarPregunta: FC<EditarPreguntaProps> = ({
         setIsEditModalOpen(false);
         addFlag(
           '¡Genial! Tu pregunta ha sido actualizada exitosamente.',
-          <CheckCircleIcon
-            label="pregunta actualizada"
-            secondaryColor="green"
-          />,
+          CheckCircleIcon,
           'success'
         );
       } else {

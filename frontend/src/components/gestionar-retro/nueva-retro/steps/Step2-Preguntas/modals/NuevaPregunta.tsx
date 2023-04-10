@@ -1,15 +1,15 @@
 import Blanket from '@atlaskit/blanket';
 import Button from '@atlaskit/button';
 import { Checkbox } from '@atlaskit/checkbox';
-import { type AppearanceTypes } from '@atlaskit/flag';
 import CheckCircleIcon from '@atlaskit/icon/glyph/check-circle';
 import CrossIcon from '@atlaskit/icon/glyph/cross';
-import ErrorIcon from '@atlaskit/icon/glyph/error';
+import EditorErrorIcon from '@atlaskit/icon/glyph/editor/error';
 import axios from 'axios';
 import { motion } from 'framer-motion';
 import { customAlphabet } from 'nanoid';
 import { FC, useContext, useEffect, useState } from 'react';
 import Select from 'react-select';
+import { FlagContext } from '../../../../../../contexts';
 import {
   newRetroContext,
   type PreguntaType,
@@ -20,12 +20,6 @@ const URI = 'http://localhost:8000/preguntas';
 
 interface NuevaPreguntaProps {
   setIsNewQuestionOpen: (value: boolean) => void;
-  addFlag: (
-    title: string,
-    icon: React.ReactNode,
-    appearance: AppearanceTypes,
-    description?: string
-  ) => void;
 }
 
 const labelStyle =
@@ -33,8 +27,8 @@ const labelStyle =
 
 const NuevaPregunta: FC<NuevaPreguntaProps> = ({
   setIsNewQuestionOpen,
-  addFlag,
 }) => {
+  const { addFlag } = useContext(FlagContext);
   const nanoid = customAlphabet('1234567890', 5);
   const { setNewRetro, newRetro } = useContext(newRetroContext);
   const [newPregunta, setNewPregunta] = useState<PreguntaType>({
@@ -108,7 +102,7 @@ const NuevaPregunta: FC<NuevaPreguntaProps> = ({
         console.log(error);
         addFlag(
           'Hubo un error al crear la pregunta. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
-          <ErrorIcon label="error" secondaryColor="red" />,
+          EditorErrorIcon,
           'error',
           error.toString()
         );
@@ -116,7 +110,7 @@ const NuevaPregunta: FC<NuevaPreguntaProps> = ({
         console.log(error);
         addFlag(
           'Hubo un error al crear la pregunta. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
-          <ErrorIcon label="error" secondaryColor="red" />,
+          EditorErrorIcon,
           'error',
           'Error desconocido'
         );
@@ -180,10 +174,7 @@ const NuevaPregunta: FC<NuevaPreguntaProps> = ({
         setIsNewQuestionOpen(false);
         addFlag(
           '¡Excelente! Tu pregunta ha sido creada satisfactoriamente.',
-          <CheckCircleIcon
-            label="pregunta eliminada"
-            secondaryColor="green"
-          />,
+          CheckCircleIcon,
           'success'
         );
       } else {

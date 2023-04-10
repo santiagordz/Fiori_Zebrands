@@ -95,12 +95,11 @@ module.exports = class Retrospectiva {
       [id_retrospectiva]
     );
 
-
     const detailedRetrospective = {
       ...retrospective,
       respuestas,
       preguntas,
-      tags
+      tags,
     };
 
     return detailedRetrospective;
@@ -191,6 +190,36 @@ module.exports = class Retrospectiva {
           );
         }
       }
+      await connection.commit();
+    } catch (error) {
+      connection.rollback();
+      throw error;
+    } finally {
+      connection.release();
+    }
+  }
+
+  static async deleteRetrospectiva(id_retrospectiva) {
+    const connection = await db.getConnection();
+    await connection.beginTransaction();
+
+    try {
+      await connection.execute(
+        `DELETE FROM usuarios_retrospectivas WHERE id_retrospectiva = ?`,
+        [id_retrospectiva]
+      );
+      await connection.execute(
+        `DELETE FROM preguntas_retrospectivas WHERE id_retrospectiva = ?`,
+        [id_retrospectiva]
+      );
+      await connection.execute(
+        `DELETE FROM retrospectiva_etiquetas WHERE id_retrospectiva = ?`,
+        [id_retrospectiva]
+      );
+      await connection.execute(
+        `DELETE FROM retrospectivas WHERE id = ?`,
+        [id_retrospectiva]
+      );
       await connection.commit();
     } catch (error) {
       connection.rollback();

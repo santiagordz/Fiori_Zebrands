@@ -65,16 +65,16 @@ const BackGestionar: FC<BackGestionarProps> = ({
             w-full gap-10"
             >
               <Button
-                appearance="primary"
-                onClick={() => navigate('/gestionar-retrospectivas')}
-              >
-                Ir al panel de gestión de retrospectivas
-              </Button>
-              <Button
                 appearance="default"
                 onClick={() => setIsModalBackOpen(false)}
               >
                 Cancelar
+              </Button>
+              <Button
+                appearance="primary"
+                onClick={() => navigate('/gestionar-retrospectivas')}
+              >
+                Ir al panel de gestión de retrospectivas
               </Button>
             </div>
           </div>

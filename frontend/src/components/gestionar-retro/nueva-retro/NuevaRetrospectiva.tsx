@@ -1,33 +1,25 @@
 import Button from '@atlaskit/button';
-import { type AppearanceTypes } from '@atlaskit/flag';
 import Form from '@atlaskit/form';
 import ArrowLeftIcon from '@atlaskit/icon/glyph/arrow-left';
+import CheckCircleIcon from '@atlaskit/icon/glyph/check-circle';
+import ErrorIcon from '@atlaskit/icon/glyph/error';
 import axios from 'axios';
 import { customAlphabet } from 'nanoid';
 import { FC, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FlagContext } from '../../../contexts';
 import Stepper from '../../design-template/stepper/Stepper';
 import BackGestionar from '../modals/BackGestionar';
 import { newRetroContext } from './local-contexts';
 import { Step1, Step2, Step3, Step4 } from './steps';
 import { stepsInformation } from './steps/stepsInformation';
-import CheckCircleIcon from '@atlaskit/icon/glyph/check-circle';
-import ErrorIcon from '@atlaskit/icon/glyph/error';
 
 const URI = 'http://localhost:8000/retrospectivas/new';
 
-interface NuevaRetrospectivaProps {
-  addFlag: (
-    title: string,
-    icon: React.ReactNode,
-    appearance: AppearanceTypes,
-    description?: string
-  ) => void;
-}
+interface NuevaRetrospectivaProps {}
 
-const NuevaRetrospectiva: FC<NuevaRetrospectivaProps> = ({
-  addFlag,
-}) => {
+const NuevaRetrospectiva: FC<NuevaRetrospectivaProps> = ({}) => {
+  const { addFlag } = useContext(FlagContext);
   const navigate = useNavigate();
   const nanoid = customAlphabet('1234567890', 10);
   const { newRetro, setNewRetro } = useContext(newRetroContext);
@@ -41,10 +33,7 @@ const NuevaRetrospectiva: FC<NuevaRetrospectivaProps> = ({
       navigate('/gestionar-retrospectivas');
       addFlag(
         '¡Genial! Tu retrospectiva se ha registrado correctamente.',
-        <CheckCircleIcon
-          label="pregunta eliminada"
-          secondaryColor="green"
-        />,
+        CheckCircleIcon,
         'success',
         'Ahora puedes verla en el panel de gestión de retrospectivas y todos los usuarios podrán comenzar a contestarla.'
       );
@@ -53,7 +42,7 @@ const NuevaRetrospectiva: FC<NuevaRetrospectivaProps> = ({
         console.log(error);
         addFlag(
           'Hubo un error al iniciar la retrospectiva. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
-          <ErrorIcon label="error" secondaryColor="red" />,
+          ErrorIcon,
           'error',
           error.toString()
         );
@@ -61,7 +50,7 @@ const NuevaRetrospectiva: FC<NuevaRetrospectivaProps> = ({
         console.log(error);
         addFlag(
           'Hubo un error al iniciar la retrospectiva. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
-          <ErrorIcon label="error" secondaryColor="red" />,
+          ErrorIcon,
           'error',
           'Error desconocido'
         );

@@ -2,8 +2,7 @@ import { Checkbox } from '@atlaskit/checkbox';
 import { SimpleTag as Tag } from '@atlaskit/tag';
 import { FC, useState } from 'react';
 import DropdownMenu from '../../../../design-template/dropdown/DropdownMenu';
-import { EliminarPregunta, EditarPregunta } from './modals';
-import { type AppearanceTypes } from '@atlaskit/flag';
+import { EditarPregunta, EliminarPregunta } from './modals';
 
 interface PreguntaProps {
   pregunta: string;
@@ -11,11 +10,6 @@ interface PreguntaProps {
   isChecked: boolean;
   tipo: number;
   handleChecked: (checked: boolean, id: number) => void;
-  addFlag: (
-    title: string,
-    icon: React.ReactNode,
-    appearance: AppearanceTypes
-  ) => void;
 }
 
 export interface tiposPreguntaType {
@@ -35,7 +29,6 @@ const Pregunta: FC<PreguntaProps> = ({
   isChecked,
   tipo,
   handleChecked,
-  addFlag,
 }) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] =
     useState<boolean>(false);
@@ -45,7 +38,6 @@ const Pregunta: FC<PreguntaProps> = ({
     <div className="w-full flex justify-between items-center bg-[#E9F2FF] py-2 px-4 rounded">
       {isDeleteModalOpen && (
         <EliminarPregunta
-          addFlag={addFlag}
           pregunta={pregunta}
           id_tipo_pregunta={tipo}
           id_pregunta={id}
@@ -55,7 +47,6 @@ const Pregunta: FC<PreguntaProps> = ({
       )}
       {isEditModalOpen && (
         <EditarPregunta
-          addFlag={addFlag}
           id_tipo_pregunta={tipo}
           id_pregunta={id}
           predeterminada={isChecked}

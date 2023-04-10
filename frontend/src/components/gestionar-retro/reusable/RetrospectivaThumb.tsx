@@ -5,8 +5,8 @@ import { SimpleTag as Tag, TagColor } from '@atlaskit/tag';
 import { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DropdownMenu from '../../design-template/dropdown/DropdownMenu';
+import DeleteRetro from '../modals/DeleteRetro';
 import EndRetro from '../modals/EndRetro';
-import { type AppearanceTypes } from '@atlaskit/flag';
 
 interface RetrospectivaThumbProps {
   titulo: string;
@@ -22,12 +22,6 @@ interface RetrospectivaThumbProps {
     id_color: number;
     color: TagColor;
   }[];
-  addFlag: (
-    title: string,
-    icon: React.ReactNode,
-    appearance: AppearanceTypes,
-    description?: string
-  ) => void;
   updateRetrospectivas?: () => void;
 }
 
@@ -40,7 +34,6 @@ const RetrospectivaThumb: FC<RetrospectivaThumbProps> = ({
   respuestas = 0,
   completada = false,
   tags,
-  addFlag,
   updateRetrospectivas,
 }) => {
   const navigate = useNavigate();
@@ -48,6 +41,7 @@ const RetrospectivaThumb: FC<RetrospectivaThumbProps> = ({
     useState<string>('');
   const [fechaFinFormat, setFechaFinFormat] = useState<string>('');
   const [isEndModalOpen, setIsEndModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   useEffect(() => {
     const fecha_inicio = new Date(fechaInicio);
@@ -92,7 +86,15 @@ const RetrospectivaThumb: FC<RetrospectivaThumbProps> = ({
             setIsEndModalOpen={setIsEndModalOpen}
             idRetrospectiva={idRetrospectiva}
             titulo={titulo}
-            addFlag={addFlag}
+            updateRetrospectivas={updateRetrospectivas}
+          />
+        )}
+
+        {isDeleteModalOpen && updateRetrospectivas && (
+          <DeleteRetro
+            setIsDeleteModalOpen={setIsDeleteModalOpen}
+            idRetrospectiva={idRetrospectiva}
+            titulo={titulo}
             updateRetrospectivas={updateRetrospectivas}
           />
         )}
@@ -139,13 +141,31 @@ const RetrospectivaThumb: FC<RetrospectivaThumbProps> = ({
                   </div>
                 )
               )}
-            {!completada && (
+            {!completada ? (
               <DropdownMenu>
                 <button
+                  type="button"
                   onClick={() => setIsEndModalOpen(true)}
-                  className="bg-white hover:bg-[#fff5f5] text-xs inline-block whitespace-nowrap py-[0.35rem] px-5 text-danger"
+                  className="bg-white hover:bg-[#f1f2f4] text-xs inline-block whitespace-nowrap py-[0.35rem] px-5 text-textNormal"
                 >
                   Finalizar retrospectiva
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setIsDeleteModalOpen(true)}
+                  className="bg-white hover:bg-[#fff5f5] text-xs inline-block whitespace-nowrap py-[0.35rem] px-5 text-danger"
+                >
+                  Eliminar retrospectiva
+                </button>
+              </DropdownMenu>
+            ) : (
+              <DropdownMenu>
+                <button
+                  type="button"
+                  onClick={() => setIsDeleteModalOpen(true)}
+                  className="bg-white hover:bg-[#fff5f5] text-xs inline-block whitespace-nowrap py-[0.35rem] px-5 text-danger"
+                >
+                  Eliminar retrospectiva
                 </button>
               </DropdownMenu>
             )}

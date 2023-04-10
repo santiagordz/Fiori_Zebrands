@@ -8,6 +8,7 @@ const SECRET_KEY_1 =
 const SECRET_KEY_2 =
   import.meta.env.VITE_APP_COOKIE_KEY_2 || 'secret2';
 
+const URI_LOGOUT = 'http://localhost:8000/logout';
 const URI_LOGIN = 'http://localhost:8000/user';
 
 export interface UserType {
@@ -25,6 +26,8 @@ interface ContextProps {
   hasAttemptedFetch: boolean;
   setHasAttemptedFetch: (attempted: boolean) => void;
   getUser: () => void;
+  sessionExpired: boolean;
+  setSessionExpired: (expired: boolean) => void;
 }
 
 export const userDataContext = createContext<ContextProps>({
@@ -33,6 +36,8 @@ export const userDataContext = createContext<ContextProps>({
   hasAttemptedFetch: false,
   setHasAttemptedFetch: (attempted: boolean) => {},
   getUser: () => {},
+  sessionExpired: false,
+  setSessionExpired: (expired: boolean) => {},
 });
 
 // Enfoque de cifrado en cascada, en el que los datos se cifran con varias claves de cifrado en secuencia.
@@ -63,6 +68,8 @@ const decryptData = (
   return decryptedData2;
 };
 
+let sessionTimer: ReturnType<typeof setTimeout>;
+
 interface UserContextProps {
   children: React.ReactNode;
 }
@@ -70,6 +77,8 @@ interface UserContextProps {
 const UserContext: FC<UserContextProps> = ({ children }) => {
   const [user, setUser] = useState<UserType | null>(null!);
   const [hasAttemptedFetch, setHasAttemptedFetch] = useState(false);
+  const [sessionExpired, setSessionExpired] =
+    useState<boolean>(false);
 
   const setEncryptedUserCookie = (userData: UserType) => {
     const encryptedData = encryptData(
@@ -90,6 +99,7 @@ const UserContext: FC<UserContextProps> = ({ children }) => {
         if (Cookies.get('user')) {
           Cookies.remove('user');
         }
+        setSessionExpired(false);
         setUser(response.data);
         setEncryptedUserCookie(response.data);
       }
@@ -122,6 +132,36 @@ const UserContext: FC<UserContextProps> = ({ children }) => {
     }
   }, []);
 
+  const handleSessionExpired = async () => {
+    try {
+      await axios.get(`${URI_LOGOUT}`, {
+        withCredentials: true,
+      });
+    } catch (err) {
+      console.log(err);
+    } finally {
+      Cookies.remove('user');
+    }
+  };
+
+  useEffect(() => {
+    const resetTimer = () => {
+      clearTimeout(sessionTimer);
+      sessionTimer = setTimeout(() => {
+        setSessionExpired(true);
+        handleSessionExpired();
+      }, 60 * 60 * 1000); // 1 hora
+    };
+
+    window.addEventListener('mousemove', resetTimer);
+    window.addEventListener('keydown', resetTimer);
+
+    return () => {
+      window.removeEventListener('mousemove', resetTimer);
+      window.removeEventListener('keydown', resetTimer);
+    };
+  }, []);
+
   return (
     <userDataContext.Provider
       value={{
@@ -130,6 +170,8 @@ const UserContext: FC<UserContextProps> = ({ children }) => {
         hasAttemptedFetch,
         setHasAttemptedFetch,
         getUser,
+        sessionExpired,
+        setSessionExpired,
       }}
     >
       {children}

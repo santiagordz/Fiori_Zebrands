@@ -2,18 +2,19 @@ import Blanket from '@atlaskit/blanket';
 import Button from '@atlaskit/button';
 import CrossIcon from '@atlaskit/icon/glyph/cross';
 import CrossCircleIcon from '@atlaskit/icon/glyph/cross-circle';
+import EditorErrorIcon from '@atlaskit/icon/glyph/editor/error';
+import InfoIcon from '@atlaskit/icon/glyph/info';
 import WarningIcon from '@atlaskit/icon/glyph/warning';
-import { FC, useEffect, useContext } from 'react';
-import { tiposPregunta } from '../Pregunta';
 import { SimpleTag as Tag } from '@atlaskit/tag';
+import axios from 'axios';
+import { motion } from 'framer-motion';
+import { FC, useContext, useEffect } from 'react';
+import { FlagContext } from '../../../../../../contexts';
 import {
   newRetroContext,
   type PreguntaType,
 } from '../../../local-contexts';
-import axios from 'axios';
-import InfoIcon from '@atlaskit/icon/glyph/info';
-import { motion } from 'framer-motion';
-import { type AppearanceTypes } from '@atlaskit/flag';
+import { tiposPregunta } from '../Pregunta';
 
 const URI = 'http://localhost:8000/preguntas';
 
@@ -23,12 +24,6 @@ interface EliminarPreguntaProps {
   pregunta: string;
   predeterminada: boolean;
   setIsDeleteModalOpen: (isOpen: boolean) => void;
-  addFlag: (
-    title: string,
-    icon: React.ReactNode,
-    appearance: AppearanceTypes,
-    description?: string
-  ) => void;
 }
 
 const EliminarPregunta: FC<EliminarPreguntaProps> = ({
@@ -37,8 +32,8 @@ const EliminarPregunta: FC<EliminarPreguntaProps> = ({
   pregunta,
   setIsDeleteModalOpen,
   predeterminada,
-  addFlag,
 }) => {
+  const { addFlag } = useContext(FlagContext);
   const { setNewRetro, newRetro } = useContext(newRetroContext);
   useEffect(() => {
     document.body.classList.add('modal-open');
@@ -69,21 +64,21 @@ const EliminarPregunta: FC<EliminarPreguntaProps> = ({
       setIsDeleteModalOpen(false);
       addFlag(
         '¡Listo! Tu pregunta ha sido eliminada correctamente.',
-        <InfoIcon label="pregunta eliminada" secondaryColor="gray" />,
+        InfoIcon,
         'info'
       );
     } catch (error) {
       if (error instanceof Error) {
         addFlag(
           'Hubo un error al eliminar la pregunta. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
-          <InfoIcon label="pregunta eliminada" />,
+          EditorErrorIcon,
           'warning',
           error.toString()
         );
       } else {
         addFlag(
           'Hubo un error al eliminar la pregunta. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
-          <InfoIcon label="pregunta eliminada" />,
+          EditorErrorIcon,
           'warning',
           'Error desconocido'
         );
