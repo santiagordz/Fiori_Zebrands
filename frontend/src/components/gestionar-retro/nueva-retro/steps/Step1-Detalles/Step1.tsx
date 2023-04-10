@@ -109,7 +109,7 @@ const Step1: FC<Step1Props> = ({ setStepNumber, stepNumber }) => {
 
             <div className="w-full flex flex-col justify-end items-end">
               <HelperMessage>
-                Caracteres: {descripcion.length}/250
+                Caracteres: {descripcion.length} / 250
               </HelperMessage>
               {showMaxDescriptionWarning && (
                 <ErrorMessage>
