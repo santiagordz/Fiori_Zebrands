@@ -47,6 +47,17 @@ exports.fetchUserIssues = async (req, res, next) => {
   }
 };
 
+exports.fetchUserIssuesSolo = async (req, res, next) => {
+  const userId = req.params.id;
+  try {
+    const issues = await sprintsDataModel.getIssuesByUserSolo(userId);
+    res.json({ issues });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al obtener los issues.' });
+  }
+};
+
 exports.fetchUserStoryPoints = async (req, res, next) => {
   const userId = req.params.id;
   try {
