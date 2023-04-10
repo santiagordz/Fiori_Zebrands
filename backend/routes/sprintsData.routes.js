@@ -14,4 +14,6 @@ router.get(
   sprintsDataController.fetchUserStoryPoints
 );
 
+router.get('/user/:id', sprintsDataController.fetchUserIssuesSolo);
+
 module.exports = router;

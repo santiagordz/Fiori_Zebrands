@@ -70,6 +70,17 @@ module.exports = class StatusIssue {
     );
   }
 
+  static getIssuesByUserSolo(id) {
+    const sql = `
+    SELECT i.status, COUNT(*) AS total
+    FROM issues i
+    WHERE i.status IN ("Done", "To Do", "En Curso")
+    AND i.assignee_id = ?
+    GROUP BY i.status
+    `;
+    return db.execute(sql, [id]);
+  }
+
   //the next method returns the story points of the issues assigned to the logged in user in two groups: done and not done
   static getStoryPointsByUser(id) {
     const sql = `
