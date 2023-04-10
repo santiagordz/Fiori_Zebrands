@@ -7,12 +7,17 @@ import Resultados from "./Resultados";
 
 const URI = "http://localhost:8000/retrospectivas";
 
+export interface OpcionesType {
+  id: number;
+  opcion_respuesta: string;
+}
+
 interface PreguntaType {
   id: number;
   pregunta: string;
   predeterminada: boolean;
   id_tipo_pregunta: number;
-  opciones?: string | null;
+  opciones?: OpcionesType[] | null;
 }
 
 interface RespuestaType {
@@ -62,11 +67,14 @@ const Respuestas: FC = ({}) => {
         const respuestasFiltered = infoRetro?.respuestas.filter(
           (respuesta) => respuesta.id_pregunta === pregunta.id
         );
+
         return (
           <Resultados
+            key={pregunta.id}
             id_tipo_pregunta={pregunta.id_tipo_pregunta}
             pregunta={pregunta.pregunta}
             respuestas={respuestasFiltered}
+            opciones={pregunta.opciones ? pregunta.opciones : null}
           />
         );
       })}

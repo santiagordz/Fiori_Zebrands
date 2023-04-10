@@ -1,9 +1,11 @@
 import React, { FC, useMemo, useState, useEffect } from "react";
-import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from "recharts";
+import { PieChart } from "../charts";
+import type { OpcionesType } from "./Respuestas";
 
 interface ResultadosProps {
   id_tipo_pregunta: number;
   pregunta: string;
+  opciones: OpcionesType[] | null;
   respuestas: {
     respuesta: string;
     id_pregunta: number;
@@ -12,21 +14,47 @@ interface ResultadosProps {
   }[];
 }
 
+interface DataType {
+  status: string;
+  total: number;
+}
+
 const Resultados: FC<ResultadosProps> = ({
   id_tipo_pregunta,
   pregunta,
   respuestas,
+  opciones,
 }) => {
   const [numRespuestas, setNumRespuestas] = useState<number>(0);
 
+  const [data, setData] = useState<DataType[]>([]);
+
+  const handleData = (): DataType[] => {
+    const opcionesData: DataType[] = opciones?.map((opcion) => {
+      const valueRespuestas = respuestas.filter(
+        (respuesta) => respuesta.respuesta === opcion.opcion_respuesta
+      ).length;
+      return {
+        status: opcion.opcion_respuesta,
+        total: valueRespuestas,
+      };
+    }) as DataType[];
+    return opcionesData;
+  };
+
   useEffect(() => {
     setNumRespuestas(respuestas.length);
+    setData(handleData);
   }, [respuestas]);
 
   const Case = useMemo(() => {
     switch (id_tipo_pregunta) {
       case 3:
-        return <div>Respuestas de tipo 3</div>;
+        return (
+          <div>
+            <PieChart data={data} />
+          </div>
+        );
       case 4:
         return <div>Respuestas de tipo 4</div>;
       default:
@@ -40,6 +68,7 @@ const Resultados: FC<ResultadosProps> = ({
     shadow-sm
     }`}
     >
+      <h2>{pregunta}</h2>
       {Case}
     </div>
   );
