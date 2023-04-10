@@ -57,9 +57,9 @@ module.exports = class Retrospectiva {
     }
 
     const [respuestas] = await db.execute(
-      `SELECT R.respuesta, R.anonimo, R.id_usuario, R.id_pregunta
-      FROM respuestas AS R
-      WHERE R.id_retrospectiva = ?`,
+      `SELECT R.respuesta, R.anonimo, R.id_usuario, R.id_pregunta, U.nombre
+      FROM respuestas AS R, usuarios AS U
+      WHERE R.id_retrospectiva = ? AND R.id_usuario = U.id`,
       [id_retrospectiva]
     );
 

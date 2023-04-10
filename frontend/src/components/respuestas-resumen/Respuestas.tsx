@@ -1,11 +1,11 @@
-import React, { FC, useEffect, useState } from "react";
-import RetrospectivaGeneral from "../respuesta-retro/reusable/RetrospectivaGeneral";
-import type { Retrospectiva } from "../../views/mis-retrospectivas/MisRetrospectivas";
-import { useParams } from "react-router-dom";
-import axios from "axios";
-import Resultados from "./Resultados";
+import React, { FC, useEffect, useState } from 'react';
+import RetrospectivaGeneral from '../respuesta-retro/reusable/RetrospectivaGeneral';
+import type { Retrospectiva } from '../../views/mis-retrospectivas/MisRetrospectivas';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import Resultados from './Resultados';
 
-const URI = "http://localhost:8000/retrospectivas";
+const URI = 'http://localhost:8000/retrospectivas';
 
 export interface OpcionesType {
   id: number;
@@ -25,6 +25,7 @@ interface RespuestaType {
   id_pregunta: number;
   id_usuario: number;
   anonimo: boolean;
+  nombre: string;
 }
 
 interface DetailedRetrospectiva extends Retrospectiva {
@@ -35,7 +36,9 @@ interface DetailedRetrospectiva extends Retrospectiva {
 const Respuestas: FC = ({}) => {
   const { retroId } = useParams();
 
-  const [infoRetro, setInfoRetro] = useState<DetailedRetrospectiva>(null!); //State es una vaiable que puede cambiar con el timepo, para darle un valor, se lo das al setter
+  const [infoRetro, setInfoRetro] = useState<DetailedRetrospectiva>(
+    null!
+  ); //State es una vaiable que puede cambiar con el timepo, para darle un valor, se lo das al setter
 
   const getInfo = async () => {
     try {
@@ -55,12 +58,12 @@ const Respuestas: FC = ({}) => {
     <div className="">
       {infoRetro && (
         <RetrospectivaGeneral
-          descripcion={infoRetro.descripcion || ""}
+          descripcion={infoRetro.descripcion || ''}
           titulo={infoRetro.titulo}
           tags={infoRetro.tags}
           fechaInicio={infoRetro.fecha_inicio}
           idRetrospectiva={infoRetro.id}
-          fechaFin={!infoRetro.en_curso ? infoRetro.fecha_fin : ""}
+          fechaFin={!infoRetro.en_curso ? infoRetro.fecha_fin : ''}
         />
       )}
       {infoRetro?.preguntas.map((pregunta: PreguntaType) => {

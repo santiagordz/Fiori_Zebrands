@@ -1,6 +1,6 @@
-import React, { FC, useMemo, useState, useEffect } from "react";
-import { PieChart, BarChart } from "../charts";
-import type { OpcionesType } from "./Respuestas";
+import React, { FC, useMemo, useState, useEffect } from 'react';
+import { PieChart, BarChart } from '../charts';
+import type { OpcionesType } from './Respuestas';
 
 interface ResultadosProps {
   id_tipo_pregunta: number;
@@ -84,7 +84,7 @@ const Resultados: FC<ResultadosProps> = ({
           </div>
         );
       default:
-        return <div>Respuestas de tipo default</div>;
+        return <div></div>;
     }
   }, [id_tipo_pregunta, pregunta, respuestas]);
 
