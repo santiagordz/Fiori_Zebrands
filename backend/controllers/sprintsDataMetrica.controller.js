@@ -39,6 +39,7 @@ exports.fetchUserIssues = async (req, res, next) => {
       userId,
       sprintIds
     );
+    console.log(issues);
     res.json({ issues });
   } catch (error) {
     console.error(error);
