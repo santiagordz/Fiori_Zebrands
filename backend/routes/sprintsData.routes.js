@@ -8,9 +8,9 @@ router.get(
   sprintsDataController.fetchStoryPoints
 );
 
-router.get('/user/:id', sprintsDataController.fetchUserIssues);
+router.get('/user/:id/:ids', sprintsDataController.fetchUserIssues);
 router.get(
-  '/userstorypoints/:id',
+  '/userstorypoints/:id/:ids',
   sprintsDataController.fetchUserStoryPoints
 );
 

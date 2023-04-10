@@ -44,7 +44,7 @@ const MetricasEpics: FC<MetricasEpicsProps> = ({}) => {
             </label>
           </div>
           <div className="">
-            <SameDataComposedChart />
+            {/* <SameDataComposedChart /> */}
           </div>
         </div>
         <div className="grid justify-items-center">

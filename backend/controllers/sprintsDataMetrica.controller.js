@@ -33,8 +33,12 @@ exports.fetchStoryPoints = async (req, res, next) => {
 
 exports.fetchUserIssues = async (req, res, next) => {
   const userId = req.params.id;
+  const sprintIds = req.params.ids.split(',').map(Number);
   try {
-    const issues = await sprintsDataModel.getIssuesByUser(userId);
+    const issues = await sprintsDataModel.getIssuesByUser(
+      userId,
+      sprintIds
+    );
     res.json({ issues });
   } catch (error) {
     console.error(error);

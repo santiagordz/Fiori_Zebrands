@@ -49,16 +49,26 @@ module.exports = class StatusIssue {
     return db.execute(sql, ids);
   }
 
-  //the next method returns the status of the issues assigned to the logged in user
-  static getIssuesByUser(id) {
+  //the next method returns the status of the issues assigned to the logged in user depending to the selected sprint
+  static getIssuesByUser(id, ids) {
+    const placeholders = Array(ids.length).fill('?').join(',');
+    console.log(placeholders);
     const sql = `
-    SELECT i.status, COUNT(*) AS total
-    FROM issues i
-    WHERE i.assignee_id = ?
-    AND i.status IN ('Done', 'Pull request', 'To Do', 'En curso')
-    GROUP BY i.status;
+
     `;
-    return db.execute(sql, [id]);
+    return db.execute(
+      `
+      SELECT i.status, COUNT(*)
+      FROM issues i, sprints s, sprints_issues si
+      WHERE i.clave = si.id_issue 
+      AND i.status IN ("Done", "To Do", "En Curso")
+      AND si.id_sprint = s.id_jira
+      AND i.assignee_id = ?
+      AND s.id_jira IN (${placeholders})
+      GROUP BY i.status
+    `,
+      [id, ...ids]
+    );
   }
 
   //the next method returns the story points of the issues assigned to the logged in user in two groups: done and not done
