@@ -36,7 +36,6 @@ const MetricasPersonales: FC<MetricasPersonalesProps> = ({  }) => {
     try {
       const urlPath = sprintsValuesArray.join(',');
       const response = await axios.get(`http://localhost:8000/sprintsdata/user/${idjira}/${urlPath}`);
-      console.log(idjira);
       const data = response.data.issues[0];
       console.log(data);
       setData(data);
