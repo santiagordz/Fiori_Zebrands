@@ -52,13 +52,12 @@ module.exports = class StatusIssue {
   //the next method returns the status of the issues assigned to the logged in user depending to the selected sprint
   static getIssuesByUser(id, ids) {
     const placeholders = Array(ids.length).fill('?').join(',');
-    console.log(id, ids);
     const sql = `
 
     `;
     return db.execute(
       `
-      SELECT i.status, COUNT(*)
+      SELECT i.status, COUNT(*) AS total
       FROM issues i, sprints s, sprints_issues si
       WHERE i.clave = si.id_issue 
       AND i.status IN ("Done", "To Do", "En Curso")
