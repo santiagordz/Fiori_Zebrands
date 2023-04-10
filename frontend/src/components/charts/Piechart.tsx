@@ -8,7 +8,7 @@ interface PiechartProps {
   }[];
 }
 
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+const COLORS = ["#0E9CFF", "#1D7AFC", "#FFBB28", "#FF8042"];
 
 const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({
@@ -18,14 +18,13 @@ const renderCustomizedLabel = ({
   innerRadius,
   outerRadius,
   percent,
-  index
+  index,
 }: any) => {
   const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
   const x = cx + radius * Math.cos(-midAngle * RADIAN);
   const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
   return (
-    
     <text
       x={x}
       y={y}
@@ -41,7 +40,7 @@ const renderCustomizedLabel = ({
 export default function Piechart({ data }: PiechartProps) {
   return (
     <PieChart width={500} height={500}>
-      <Legend width={400} align="center"/>
+      <Legend width={400} align="center" />
       <Pie
         data={data}
         cx={200}
@@ -52,9 +51,7 @@ export default function Piechart({ data }: PiechartProps) {
         fill="#8884d8"
         dataKey="total"
         nameKey="status"
-        
       >
-        
         {data.map((entry, index) => (
           <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
         ))}
@@ -62,4 +59,3 @@ export default function Piechart({ data }: PiechartProps) {
     </PieChart>
   );
 }
-

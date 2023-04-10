@@ -73,6 +73,7 @@ const Resultados: FC<ResultadosProps> = ({
       case 3:
         return (
           <div>
+            <br></br>
             <PieChart data={data} />
           </div>
         );

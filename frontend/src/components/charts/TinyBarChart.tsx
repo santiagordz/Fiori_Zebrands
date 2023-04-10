@@ -21,13 +21,16 @@ interface TinyBarChartProps {
 
 const TinyBarChart: FC<TinyBarChartProps> = ({ data }) => {
   return (
-    <BarChart width={400} height={400} data={data}>
-      <Bar dataKey="total" fill="#8884d8" />
-      <XAxis dataKey="status" />
-      <YAxis />
-      <Tooltip />
-      <Legend />
-    </BarChart>
+    <div>
+      <br></br>
+      <BarChart width={400} height={400} data={data}>
+        <Bar dataKey="total" fill="#0E9CFF" />
+        <XAxis dataKey="status" />
+        <YAxis />
+        <Tooltip />
+        <Legend />
+      </BarChart>
+    </div>
   );
 };
 
