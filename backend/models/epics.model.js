@@ -33,16 +33,25 @@ module.exports = class Epic {
         status: epic.fields.status.name,
         type: epic.fields.issuetype.name,
         color: epic.fields.status.statusCategory.colorName,
+        createdAt: epic.fields.created,
+        updatedAt: epic.fields.updated,
       };
     });
 
     return epics;
   };
 
-  static postEpicsJira = async (key, summary, status, color) => {
+  static postEpicsJira = async (
+    key,
+    summary,
+    status,
+    color,
+    createdAt,
+    updatedAt
+  ) => {
     return db.execute(
-      `INSERT IGNORE INTO epics (id_jira, nombre, status, color) VALUES (?, ?, ?, ?)`,
-      [key, summary, status, color]
+      `INSERT IGNORE INTO epics (id_jira, nombre, status, color, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?)`,
+      [key, summary, status, color, createdAt, updatedAt]
     );
   };
 

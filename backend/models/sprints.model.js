@@ -53,6 +53,21 @@ class Sprint {
       [id, nombre, fecha_inicio, fecha_fin, state, boardId]
     );
   };
+
+  static getSprints = async () => {
+    return db.execute(`SELECT * FROM SPRINTS`);
+  };
+
+  static deleteSprints = async (id) => {
+    return db.execute(`DELETE FROM SPRINTS WHERE id_jira = ?`, [id]);
+  };
+
+  static updateSprint = async (id, state) => {
+    return db.execute(
+      `UPDATE SPRINTS SET state = ? WHERE id_jira = ?`,
+      [id, state]
+    );
+  };
 }
 
 module.exports = Sprint;
