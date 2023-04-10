@@ -1,4 +1,5 @@
-import React, { FC, useMemo } from "react";
+import React, { FC, useMemo, useState, useEffect } from "react";
+import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from "recharts";
 
 interface ResultadosProps {
   id_tipo_pregunta: number;
@@ -16,6 +17,12 @@ const Resultados: FC<ResultadosProps> = ({
   pregunta,
   respuestas,
 }) => {
+  const [numRespuestas, setNumRespuestas] = useState<number>(0);
+
+  useEffect(() => {
+    setNumRespuestas(respuestas.length);
+  }, [respuestas]);
+
   const Case = useMemo(() => {
     switch (id_tipo_pregunta) {
       case 3:
@@ -26,6 +33,7 @@ const Resultados: FC<ResultadosProps> = ({
         return <div>Respuestas de tipo default</div>;
     }
   }, [id_tipo_pregunta, pregunta, respuestas]);
+
   return (
     <div
       className={`flex flex-col py-3 px-5 w-full gap-1 rounded bg-white 

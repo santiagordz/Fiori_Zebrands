@@ -59,14 +59,14 @@ const Respuestas: FC = ({}) => {
         />
       )}
       {infoRetro?.preguntas.map((pregunta: PreguntaType) => {
-        const respuestas = infoRetro?.respuestas.filter(
+        const respuestasFiltered = infoRetro?.respuestas.filter(
           (respuesta) => respuesta.id_pregunta === pregunta.id
         );
         return (
           <Resultados
             id_tipo_pregunta={pregunta.id_tipo_pregunta}
             pregunta={pregunta.pregunta}
-            respuestas={respuestas}
+            respuestas={respuestasFiltered}
           />
         );
       })}
