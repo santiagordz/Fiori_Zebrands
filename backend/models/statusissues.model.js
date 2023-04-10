@@ -91,4 +91,17 @@ module.exports = class StatusIssue {
     `;
     return db.execute(sql, [id]);
   }
+
+  static getIssuesByEpic(id) {
+    return db.execute(
+      `
+      SELECT i.status, COUNT(*) AS total
+      FROM issues i
+      WHERE i.key_epic = ?
+      AND i.status IN ("Done", "To Do", "En Curso")
+      GROUP BY i.status
+      `,
+      [id]
+    );
+  }
 };

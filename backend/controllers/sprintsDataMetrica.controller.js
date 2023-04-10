@@ -39,7 +39,6 @@ exports.fetchUserIssues = async (req, res, next) => {
       userId,
       sprintIds
     );
-    console.log(issues);
     res.json({ issues });
   } catch (error) {
     console.error(error);
@@ -64,6 +63,16 @@ exports.fetchUserStoryPoints = async (req, res, next) => {
     const issues = await sprintsDataModel.getStoryPointsByUser(
       userId
     );
+    res.json({ issues });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al obtener los issues.' });
+  }
+};
+exports.fetchIssuesByEpic = async (req, res, next) => {
+  const epicId = req.params.id;
+  try {
+    const issues = await sprintsDataModel.getIssuesByEpic(epicId);
     res.json({ issues });
   } catch (error) {
     console.error(error);

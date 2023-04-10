@@ -35,7 +35,6 @@ exports.postIssuesJira = async (req, res, next) => {
       }
       if (issue.sprints !== null) {
         issue.sprints.map(async (sprint) => {
-          console.log(sprint);
           await sprint_issues.postSprintIssue(
             sprint.id,
             issue.clave,

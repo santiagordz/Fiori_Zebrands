@@ -14,6 +14,7 @@ router.get(
   sprintsDataController.fetchUserStoryPoints
 );
 
+router.get('/epic/:id', sprintsDataController.fetchIssuesByEpic);
 router.get('/user/:id', sprintsDataController.fetchUserIssuesSolo);
 
 module.exports = router;

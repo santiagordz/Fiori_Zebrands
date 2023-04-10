@@ -10,6 +10,15 @@ exports.getEpicsJira = async (req, res, next) => {
   }
 };
 
+exports.getEpicsWithIssues = async (req, res, next) => {
+  try {
+    res.json(await epicsModel.getEpicsWithIssues());
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al obtener los epics.' });
+  }
+};
+
 exports.postEpicsJira = async (req, res, next) => {
   try {
     const epics = await epicsModel.fetchEpicsJira();

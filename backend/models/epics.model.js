@@ -45,4 +45,14 @@ module.exports = class Epic {
       [key, summary, status, color]
     );
   };
+
+  static getEpicsWithIssues = async () => {
+    return db.execute(`
+    SELECT epics.id_jira AS 'key', epics.nombre AS 'summary'
+    FROM epics, issues
+    WHERE epics.id_jira = issues.key_epic
+    AND issues.key_epic IS NOT NULL
+    GROUP BY epics.nombre
+    `);
+  };
 };

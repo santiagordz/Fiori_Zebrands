@@ -20,13 +20,13 @@ const MetricasSprint: FC<MetricasSprintProps> = ({}) => {
   });
 
   const [chartData, setChartData] = useState<any[]>([]);
-  const [chart2Data, setChart2Data] = useState<any[]>([])
+  const [chart2Data, setChart2Data] = useState<any[]>([]);
 
   const getDataSprintsById = async () => {
     if (sprintsValuesArray.length === 0) {
       return setChartData([]);
     }
-  
+
     try {
       const urlPath = sprintsValuesArray.join(',');
       const response = await axios.get(`${URI}/${urlPath}`);
@@ -42,13 +42,15 @@ const MetricasSprint: FC<MetricasSprintProps> = ({}) => {
     if (sprintsValuesArray.length === 0) {
       return setChart2Data([]);
     }
-  
+
     try {
       const urlPath = sprintsValuesArray.join(',');
-      const response = await axios.get(`${URI}/storypoints/${urlPath}`);
+      const response = await axios.get(
+        `${URI}/storypoints/${urlPath}`
+      );
       const data = response.data.sprints[0];
       setChart2Data(data);
-      console.log(chart2Data)
+      console.log(chart2Data);
       return data;
     } catch (error) {
       console.error(error);
@@ -57,7 +59,7 @@ const MetricasSprint: FC<MetricasSprintProps> = ({}) => {
 
   useEffect(() => {
     getDataSprintsById();
-    getDataStoryPointsById()
+    getDataStoryPointsById();
   }, [sprintsSeleccionadas]);
 
   return (
