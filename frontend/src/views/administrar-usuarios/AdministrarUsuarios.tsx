@@ -1,9 +1,9 @@
-import { FC } from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { FC } from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
 import {
   AdministradorUsuarios,
   GestionarEtiquetas,
-} from '../../components/administrar-usuarios';
+} from "../../components/administrar-usuarios";
 
 interface AdministrarUsuariosProps {}
 
@@ -13,10 +13,7 @@ const AdministrarUsuarios: FC<AdministrarUsuariosProps> = ({}) => {
       <Routes>
         <Route path="*" element={<Navigate to="/404" replace />} />
         <Route path="/" element={<AdministradorUsuarios />} />
-        <Route
-          path="/gestionar-etiquetas"
-          element={<GestionarEtiquetas />}
-        />
+        <Route path="/gestionar-etiquetas" element={<GestionarEtiquetas />} />
       </Routes>
     </>
   );

@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@atlaskit/tabs": "^13.3.13",
+    "recharts": "^2.5.0"
+  }
+}

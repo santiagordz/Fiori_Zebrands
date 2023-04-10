@@ -12,10 +12,10 @@ module.exports = class Usuarios {
     this.idEtiqueta = usuario.idEtiqueta || null;
   }
 
-  static async createUsuario(correo, rol) {
+  static async createUsuario(correo, rol, usuarioJira) {
     const [result] = await db.execute(
-      `INSERT INTO usuarios (correo, id_rol) VALUES (?, ?)`,
-      [correo, rol]
+      `INSERT INTO usuarios (correo, id_rol, id_jira) VALUES (?, ?, ?)`,
+      [correo, rol, usuarioJira]
     );
     const usuarioId = result.insertId;
     return { id: usuarioId, correo };

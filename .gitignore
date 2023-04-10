@@ -24,6 +24,7 @@ dist-ssr
 *.sln
 *.sw?
 
-# Archivos
-.env
-backend/database/db.js
+
+.env*
+.env.*
+*.env 

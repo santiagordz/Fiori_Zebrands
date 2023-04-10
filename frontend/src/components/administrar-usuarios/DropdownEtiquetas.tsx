@@ -66,7 +66,7 @@ const DropdownEtiquetas = ({
 
   useEffect(() => {
     getOptionsEtiquetas();
-  }, []);
+  }, [etiquetasOptions]);
 
   const colorStyles = {
     control: (styles: any, state: any) => ({

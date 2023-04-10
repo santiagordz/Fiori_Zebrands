@@ -8,7 +8,7 @@ import {
 } from 'react';
 import DropdownEtiquetas from '../DropdownEtiquetas';
 import DropdowRoles from '../DropdownRoles';
-import '../css/ModalEditarUsuarios.css';
+import DropdownUsuariosJira from '../DropdownUsuariosJira';
 import CrossIcon from '@atlaskit/icon/glyph/cross';
 import SectionMessage from '@atlaskit/section-message';
 import { userDataContext } from '../../../contexts';
@@ -89,20 +89,20 @@ const ModalEditarUsuarios: FC<ModalEditarUsuariosProps> = ({
   } else {
     return (
       <>
-        <div className="modal z-[10000] bg-blueRGBA">
-          <div className="modal-content px-10 py-[18rem]">
-            <div className="modal-header">
-              <div className="modal-title">
+        <div className="z-[1000] bg-blueRGBA fixed top-0 bottom-0 right-0 left-0 flex items-center justify-center">
+          <div className="p-10 bg-white rounded-xl flex flex-col">
+            <div className="w-full flex flex-col items-center">
+              <div className="w-full text-xl font-bold mb-1 flex items-center justify-between">
                 <h4>Modificar Usuario</h4>
                 <button onClick={handleClose}>
                   <CrossIcon label="Cross Icon" />
                 </button>
               </div>
-              <div className="modal-subtitle">
+              <div className="w-full text-sm text-[#44546f] mb-5">
                 Modifica los datos de un usuario en el sistema.
               </div>
             </div>
-            <div className="modal-body">
+            <div className="w-full flex flex-col justify center">
               <p className="font-bold text-left mb-4">
                 Detalles de usuario
               </p>
@@ -180,7 +180,7 @@ const ModalEditarUsuarios: FC<ModalEditarUsuariosProps> = ({
                 </div>
               </form>
             </div>
-            <div className="modal-footer">
+            <div className="w-full flex items-center justify-end">
               <div className="flex gap-10 mt-8">
                 <button
                   className="rounded-none hover:text-blue-500 text-sm"

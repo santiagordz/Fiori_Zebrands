@@ -1,11 +1,10 @@
-import axios from 'axios';
-import { FC, FormEvent, useEffect, useState } from 'react';
-import DropdownColores from '../DropdownColores';
-import '../css/ModalEditarUsuarios.css';
-import CrossIcon from '@atlaskit/icon/glyph/cross';
-import Tag, { type TagColor } from '@atlaskit/tag';
+import axios from "axios";
+import { FC, FormEvent, useEffect, useState } from "react";
+import DropdownColores from "../DropdownColores";
+import CrossIcon from "@atlaskit/icon/glyph/cross";
+import Tag, { type TagColor } from "@atlaskit/tag";
 
-const URI = 'http://localhost:8000/etiquetas/';
+const URI = "http://localhost:8000/etiquetas/";
 
 interface Etiqueta {
   id: number;
@@ -30,8 +29,8 @@ const ModalEditarEtiqueta: FC<ModalEditarEtiquetaProps> = ({
   onClose,
   info,
 }) => {
-  const [nombre, setNombre] = useState('');
-  const [color, setColor] = useState<TagColor>('standard');
+  const [nombre, setNombre] = useState("");
+  const [color, setColor] = useState<TagColor>("standard");
   const [etiqueta, setEtiqueta] = useState<Etiqueta>({} as Etiqueta);
 
   const handleClose = () => {
@@ -65,10 +64,10 @@ const ModalEditarEtiqueta: FC<ModalEditarEtiquetaProps> = ({
 
   useEffect(() => {
     getEtiqueta(info.id);
-    show && document.body.classList.add('modal-open');
+    show && document.body.classList.add("modal-open");
 
     return () => {
-      show && document.body.classList.remove('modal-open');
+      show && document.body.classList.remove("modal-open");
     };
   }, [show]);
 
@@ -77,23 +76,21 @@ const ModalEditarEtiqueta: FC<ModalEditarEtiquetaProps> = ({
   } else {
     return (
       <>
-        <div className="modal z-[1000] bg-blueRGBA">
-          <div className="modal-content px-8 py-10">
-            <div className="modal-header">
-              <div className="modal-title">
+        <div className="z-[1000] bg-blueRGBA fixed top-0 bottom-0 right-0 left-0 flex items-center justify-center">
+          <div className="p-10 bg-white rounded-xl flex flex-col">
+            <div className="w-full flex flex-col items-center">
+              <div className="w-full text-xl font-bold mb-1 flex items-center justify-between">
                 <h4>Modificar Etiqueta</h4>
                 <button onClick={handleClose}>
                   <CrossIcon label="Cross Icon" />
                 </button>
               </div>
-              <div className="modal-subtitle">
+              <div className="w-full text-sm text-[#44546f] mb-5">
                 Modifica los datos de una etiqueta en el sistema.
               </div>
             </div>
-            <div className="modal-body">
-              <p className="font-bold text-left mb-4">
-                Detalles de etiqueta
-              </p>
+            <div className="w-full flex flex-col justify center">
+              <p className="font-bold text-left mb-4">Detalles de etiqueta</p>
               <div className="flex justify-center" id="tag">
                 <Tag
                   text={nombre}
@@ -138,16 +135,14 @@ const ModalEditarEtiqueta: FC<ModalEditarEtiquetaProps> = ({
                       Color:
                     </label>
                     <DropdownColores
-                      onColorSeleccionadoChange={
-                        handleColorSeleccionado
-                      }
+                      onColorSeleccionadoChange={handleColorSeleccionado}
                       colorActual={etiqueta.color}
                     />
                   </div>
                 </div>
               </form>
             </div>
-            <div className="modal-footer justify-center">
+            <div className="w-full flex items-center justify-center">
               <div className="flex gap-10 mt-8">
                 <button
                   className="rounded-none hover:text-blue-500 text-sm"
