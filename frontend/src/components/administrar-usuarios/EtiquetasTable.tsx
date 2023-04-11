@@ -2,12 +2,10 @@ import DynamicTable from '@atlaskit/dynamic-table';
 import type { RowType } from '@atlaskit/dynamic-table/dist/types/types';
 import Tag from '@atlaskit/tag';
 import axios from 'axios';
-import { FC, useEffect, useState } from 'react';
-import type { Etiqueta } from './UsersTable';
+import { FC, useEffect, useState, useContext } from 'react';
 import './css/etiquetasTable.css';
 import { BorrarEtiquetaIcon, EditarEtiquetaIcon } from './icons';
-
-const URI = 'http://localhost:8000/etiquetas';
+import { getEtiquetasContext } from './local-contexts';
 
 interface EtiquetasTableProps {}
 
@@ -26,23 +24,8 @@ const EtiquetasTableHead: FC<EtiquetasTableHeadProps> = ({
 };
 
 const EtiquetasTable: FC<EtiquetasTableProps> = ({}) => {
-  const [etiquetas, setEtiquetas] = useState<Array<Etiqueta>>([]);
+  const { etiquetas } = useContext(getEtiquetasContext);
   const tableRows: RowType[] = [];
-
-  const getEtiquetas = () => {
-    try {
-      const res = axios.get(`${URI}`);
-      res.then((res) => {
-        setEtiquetas(res.data);
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    getEtiquetas();
-  }, []);
 
   const tableHead = {
     cells: [
@@ -80,7 +63,7 @@ const EtiquetasTable: FC<EtiquetasTableProps> = ({}) => {
       isHighlighted: false,
       cells: [
         {
-          key: etiqueta.id,
+          key: `tag-${etiqueta.id}`,
           content: (
             <div id="tag" className="w-full flex justify-center">
               <Tag
@@ -93,7 +76,7 @@ const EtiquetasTable: FC<EtiquetasTableProps> = ({}) => {
           ),
         },
         {
-          key: etiqueta.id,
+          key: `nombre-${etiqueta.id}`,
           content: (
             <div className="text-sm w-full text-center">
               {etiqueta.nombre}
@@ -101,7 +84,7 @@ const EtiquetasTable: FC<EtiquetasTableProps> = ({}) => {
           ),
         },
         {
-          key: etiqueta.id,
+          key: `color-${etiqueta.id}`,
           content: (
             <div
               className={`text-sm w-full text-center bg-${etiqueta.color}`}
@@ -111,11 +94,11 @@ const EtiquetasTable: FC<EtiquetasTableProps> = ({}) => {
           ),
         },
         {
-          key: etiqueta.id,
+          key: `editar-${etiqueta.id}`,
           content: <EditarEtiquetaIcon etiqueta={etiqueta} />,
         },
         {
-          key: etiqueta.id,
+          key: `borrar-${etiqueta.id}`,
           content: <BorrarEtiquetaIcon etiqueta={etiqueta} />,
         },
       ],

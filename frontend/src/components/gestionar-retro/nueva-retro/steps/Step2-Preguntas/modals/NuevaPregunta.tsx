@@ -101,7 +101,7 @@ const NuevaPregunta: FC<NuevaPreguntaProps> = ({
       if (error instanceof Error) {
         console.log(error);
         addFlag(
-          'Hubo un error al crear la pregunta. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
+          '¡Oh no! Hubo un error al crear la pregunta. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
           EditorErrorIcon,
           'error',
           error.toString()
@@ -109,7 +109,7 @@ const NuevaPregunta: FC<NuevaPreguntaProps> = ({
       } else {
         console.log(error);
         addFlag(
-          'Hubo un error al crear la pregunta. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
+          '¡Oh no! Hubo un error al crear la pregunta. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
           EditorErrorIcon,
           'error',
           'Error desconocido'
@@ -223,8 +223,6 @@ const NuevaPregunta: FC<NuevaPreguntaProps> = ({
                 Pregunta
               </label>
               <input
-                pattern="^[a-zA-Z0-9._-¿?!¡]+"
-                title="Solo se permiten letras, números, puntos, guiones, guiones bajos, signos de interrogación y de exclamación"
                 value={newPregunta.pregunta}
                 onChange={(e) => {
                   setIsErrorPregunta(false);
@@ -308,8 +306,6 @@ const NuevaPregunta: FC<NuevaPreguntaProps> = ({
                     className="flex items-center gap-2"
                   >
                     <input
-                      pattern="^[a-zA-Z0-9._-¿?!¡]+"
-                      title="Solo se permiten letras, números, puntos, guiones, guiones bajos, signos de interrogación y de exclamación"
                       value={opcion}
                       onChange={(e) =>
                         handleOpcionChange(index, e.target.value)

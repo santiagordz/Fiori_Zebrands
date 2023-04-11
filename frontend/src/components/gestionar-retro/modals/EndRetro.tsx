@@ -40,14 +40,14 @@ const EndRetro: FC<EndRetroProps> = ({
       console.log(error);
       if (error instanceof Error) {
         addFlag(
-          'Hubo un error al intentar finalizar la retrospectiva.. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
+          '¡Oh no! Hubo un error al intentar finalizar la retrospectiva.. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
           EditorErrorIcon,
           'error',
           error.toString()
         );
       } else {
         addFlag(
-          'Hubo un error al intentar finalizar la retrospectiva. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
+          '¡Oh no! Hubo un error al intentar finalizar la retrospectiva. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
           EditorErrorIcon,
           'error',
           'Error desconocido'

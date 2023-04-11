@@ -2,8 +2,8 @@ import EditFilledIcon from '@atlaskit/icon/glyph/edit-filled';
 import { N500, Y300 } from '@atlaskit/theme/colors';
 import { token } from '@atlaskit/tokens';
 import React, { FC, useState } from 'react';
-import { Etiqueta } from '../UsersTable';
 import ModalEditarEtiqueta from '../modals/ModalEditarEtiqueta';
+import type { Etiqueta } from '../local-contexts';
 
 interface EdtarEtiquetaIconProps {
   etiqueta: Etiqueta;

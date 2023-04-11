@@ -1,10 +1,20 @@
-import axios from "axios";
-import { FC, FormEvent, useEffect, useState } from "react";
-import DropdownColores from "../DropdownColores";
-import CrossIcon from "@atlaskit/icon/glyph/cross";
-import Tag, { type TagColor } from "@atlaskit/tag";
+import CheckCircleIcon from '@atlaskit/icon/glyph/check-circle';
+import CrossIcon from '@atlaskit/icon/glyph/cross';
+import EditorErrorIcon from '@atlaskit/icon/glyph/editor/error';
+import Tag, { type TagColor } from '@atlaskit/tag';
+import axios from 'axios';
+import {
+  FC,
+  FormEvent,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
+import { FlagContext } from '../../../contexts';
+import DropdownColores from '../DropdownColores';
+import { getEtiquetasContext } from '../local-contexts';
 
-const URI = "http://localhost:8000/etiquetas/";
+const URI = 'http://localhost:8000/etiquetas/';
 
 interface Etiqueta {
   id: number;
@@ -12,12 +22,6 @@ interface Etiqueta {
   id_color: number;
   color: TagColor;
 }
-
-interface Color {
-  id: number;
-  color: TagColor;
-}
-
 interface ModalEditarEtiquetaProps {
   show: boolean;
   onClose: () => void;
@@ -29,28 +33,50 @@ const ModalEditarEtiqueta: FC<ModalEditarEtiquetaProps> = ({
   onClose,
   info,
 }) => {
-  const [nombre, setNombre] = useState("");
-  const [color, setColor] = useState<TagColor>("standard");
+  const { addFlag } = useContext(FlagContext);
+  const { getEtiquetas } = useContext(getEtiquetasContext);
+  const [nombre, setNombre] = useState('');
+  const [color, setColor] = useState<TagColor>('standard');
   const [etiqueta, setEtiqueta] = useState<Etiqueta>({} as Etiqueta);
-
-  const handleClose = () => {
-    onClose();
-  };
 
   const handleColorSeleccionado = (color: TagColor) => {
     setColor(color);
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
     try {
       const id = info.id;
-      axios
-        .put(`${URI}${id}`, { etiqueta: nombre, color: color })
-        .then(() => window.location.reload());
+      await axios.put(`${URI}${id}`, {
+        etiqueta: nombre,
+        color: color,
+      });
+      getEtiquetas();
+      addFlag(
+        '¡Bien! La etiqueta ha sido actualizada exitosamente.',
+        CheckCircleIcon,
+        'success'
+      );
+      onClose();
     } catch (error) {
-      window.alert(error);
+      if (error instanceof Error) {
+        console.log(error);
+        addFlag(
+          '¡Oh no! Hubo un error al actualizar la etiqueta. Inténtalo de nuevo más tarde o contacta soporte.',
+          EditorErrorIcon,
+          'warning',
+          error.toString()
+        );
+      } else {
+        console.log(error);
+        addFlag(
+          '¡Oh no! Hubo un error al actualizar la etiqueta. Inténtalo de nuevo más tarde o contacta soporte.',
+          EditorErrorIcon,
+          'warning',
+          'Error desconocido'
+        );
+      }
     }
-    onClose();
   };
 
   const getEtiqueta = (id: number) => {
@@ -64,10 +90,10 @@ const ModalEditarEtiqueta: FC<ModalEditarEtiquetaProps> = ({
 
   useEffect(() => {
     getEtiqueta(info.id);
-    show && document.body.classList.add("modal-open");
+    show && document.body.classList.add('modal-open');
 
     return () => {
-      show && document.body.classList.remove("modal-open");
+      show && document.body.classList.remove('modal-open');
     };
   }, [show]);
 
@@ -81,7 +107,7 @@ const ModalEditarEtiqueta: FC<ModalEditarEtiquetaProps> = ({
             <div className="w-full flex flex-col items-center">
               <div className="w-full text-xl font-bold mb-1 flex items-center justify-between">
                 <h4>Modificar Etiqueta</h4>
-                <button onClick={handleClose}>
+                <button onClick={() => onClose()}>
                   <CrossIcon label="Cross Icon" />
                 </button>
               </div>
@@ -90,7 +116,9 @@ const ModalEditarEtiqueta: FC<ModalEditarEtiquetaProps> = ({
               </div>
             </div>
             <div className="w-full flex flex-col justify center">
-              <p className="font-bold text-left mb-4">Detalles de etiqueta</p>
+              <p className="font-bold text-left mb-4">
+                Detalles de etiqueta
+              </p>
               <div className="flex justify-center" id="tag">
                 <Tag
                   text={nombre}
@@ -122,7 +150,7 @@ const ModalEditarEtiqueta: FC<ModalEditarEtiquetaProps> = ({
                       id="nombre"
                       type="text"
                       defaultValue={etiqueta.nombre}
-                      pattern="^[a-zA-Z0-9!@#$%^&*()_+\/-]{1,15}$"
+                      pattern="^[a-zA-Z0-9!@#$%^&*()_+\/\-\sáéíóúÁÉÍÓÚñÑ]{1,15}$"
                       title="El nombre de la etiqueta debe tener entre 1 y 15 caracteres alfanuméricos"
                       onChange={(e) => setNombre(e.target.value)}
                     />
@@ -135,7 +163,9 @@ const ModalEditarEtiqueta: FC<ModalEditarEtiquetaProps> = ({
                       Color:
                     </label>
                     <DropdownColores
-                      onColorSeleccionadoChange={handleColorSeleccionado}
+                      onColorSeleccionadoChange={
+                        handleColorSeleccionado
+                      }
                       colorActual={etiqueta.color}
                     />
                   </div>
@@ -146,7 +176,7 @@ const ModalEditarEtiqueta: FC<ModalEditarEtiquetaProps> = ({
               <div className="flex gap-10 mt-8">
                 <button
                   className="rounded-none hover:text-blue-500 text-sm"
-                  onClick={handleClose}
+                  onClick={() => onClose()}
                 >
                   Cancelar
                 </button>

@@ -13,6 +13,9 @@ import CrossIcon from '@atlaskit/icon/glyph/cross';
 import SectionMessage from '@atlaskit/section-message';
 import { userDataContext } from '../../../contexts';
 import { type Etiqueta, getUsersContext } from '../local-contexts';
+import CheckCircleIcon from '@atlaskit/icon/glyph/check-circle';
+import EditorErrorIcon from '@atlaskit/icon/glyph/editor/error';
+import { FlagContext } from '../../../contexts';
 
 const URI = 'http://localhost:8000/usuarios/';
 
@@ -27,6 +30,7 @@ const ModalEditarUsuarios: FC<ModalEditarUsuariosProps> = ({
   onClose,
   info,
 }) => {
+  const { addFlag } = useContext(FlagContext);
   const { getUsers } = useContext(getUsersContext);
   const { user } = useContext(userDataContext);
   const [nombre, setNombre] = useState('');
@@ -52,10 +56,31 @@ const ModalEditarUsuarios: FC<ModalEditarUsuariosProps> = ({
       });
       res.then(() => {
         getUsers();
+        addFlag(
+          '¡Bien! Los datos del usuario se han actualizado exitosamente.',
+          CheckCircleIcon,
+          'success'
+        );
         onClose();
       });
     } catch (error) {
-      window.alert(error);
+      if (error instanceof Error) {
+        console.log(error);
+        addFlag(
+          '¡Oh no! Hubo un error al actualizar los datos del usuario. Inténtalo de nuevo más tarde o contacta soporte.',
+          EditorErrorIcon,
+          'warning',
+          error.toString()
+        );
+      } else {
+        console.log(error);
+        addFlag(
+          '¡Oh no! Hubo un error al actualizar los datos del usuario. Inténtalo de nuevo más tarde o contacta soporte.',
+          EditorErrorIcon,
+          'warning',
+          'Error desconocido'
+        );
+      }
     }
   };
 

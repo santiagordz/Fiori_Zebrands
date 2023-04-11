@@ -41,7 +41,7 @@ const NuevaRetrospectiva: FC<NuevaRetrospectivaProps> = ({}) => {
       if (error instanceof Error) {
         console.log(error);
         addFlag(
-          'Hubo un error al iniciar la retrospectiva. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
+          '¡Oh no! Hubo un error al iniciar la retrospectiva. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
           ErrorIcon,
           'error',
           error.toString()
@@ -49,7 +49,7 @@ const NuevaRetrospectiva: FC<NuevaRetrospectivaProps> = ({}) => {
       } else {
         console.log(error);
         addFlag(
-          'Hubo un error al iniciar la retrospectiva. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
+          '¡Oh no! Hubo un error al iniciar la retrospectiva. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
           ErrorIcon,
           'error',
           'Error desconocido'

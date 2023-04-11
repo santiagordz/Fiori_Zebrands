@@ -1,17 +1,14 @@
+import CheckCircleIcon from '@atlaskit/icon/glyph/check-circle';
 import CrossIcon from '@atlaskit/icon/glyph/cross';
+import EditorErrorIcon from '@atlaskit/icon/glyph/editor/error';
+import Tag, { type TagColor } from '@atlaskit/tag';
 import axios from 'axios';
-import { FC, FormEvent, useState } from 'react';
+import { FC, FormEvent, useContext, useState } from 'react';
+import { FlagContext } from '../../../contexts';
 import DropdownColores from '../DropdownColores';
-import type { TagColor } from '@atlaskit/tag';
+import { getEtiquetasContext } from '../local-contexts';
 
 const URI = 'http://localhost:8000/etiquetas/';
-
-interface Etiqueta {
-  id: number;
-  nombre: string;
-  id_color: number;
-  color: string;
-}
 
 interface RegistrarEtiquetaProps {
   show: boolean;
@@ -22,6 +19,8 @@ const ModalRegistrarEtiqueta: FC<RegistrarEtiquetaProps> = ({
   show,
   onClose,
 }) => {
+  const { addFlag } = useContext(FlagContext);
+  const { getEtiquetas } = useContext(getEtiquetasContext);
   const [nombre, setNombre] = useState('');
   const [color, setColor] = useState<TagColor>('standard');
 
@@ -31,11 +30,40 @@ const ModalRegistrarEtiqueta: FC<RegistrarEtiquetaProps> = ({
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    const res = axios.post(URI, { etiqueta: nombre, color: color });
-    res.then((response) => {
-      window.location.reload();
-    });
-    onClose();
+    try {
+      axios
+        .post(URI, {
+          etiqueta: nombre,
+          color: color,
+        })
+        .then(() => {
+          getEtiquetas();
+          addFlag(
+            '¡Excelente! La etiqueta se ha registrado correctamente.',
+            CheckCircleIcon,
+            'success'
+          );
+          onClose();
+        });
+    } catch (error) {
+      if (error instanceof Error) {
+        addFlag(
+          '¡Oh no! Hubo un error al registrar la etiqueta. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
+          EditorErrorIcon,
+          'error',
+          error.toString()
+        );
+      } else {
+        addFlag(
+          '¡Oh no! Hubo un error al registrar la etiqueta. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
+          EditorErrorIcon,
+          'error',
+          'Error desconocido'
+        );
+      }
+    }
+    setColor('standard');
+    setNombre('');
   };
 
   const handleClose = () => {
@@ -68,6 +96,14 @@ const ModalRegistrarEtiqueta: FC<RegistrarEtiquetaProps> = ({
             <p className="font-bold text-left mb-4">
               Detalles de la nueva etiqueta
             </p>
+            <div className="flex justify-center" id="tag">
+              <Tag
+                text={nombre}
+                color={color}
+                isRemovable={false}
+                appearance="rounded"
+              />
+            </div>
             <form
               onSubmit={handleSubmit}
               className="w-full"

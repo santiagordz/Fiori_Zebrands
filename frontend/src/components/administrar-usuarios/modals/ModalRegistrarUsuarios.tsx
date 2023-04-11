@@ -13,6 +13,9 @@ import DropdowRoles from '../DropdownRoles';
 import DropdownUsuariosJira from '../DropdownUsuariosJira';
 import '../css/modalRegistrarUsuarios.css';
 import { getUsersContext, type Etiqueta } from '../local-contexts';
+import CheckCircleIcon from '@atlaskit/icon/glyph/check-circle';
+import EditorErrorIcon from '@atlaskit/icon/glyph/editor/error';
+import { FlagContext } from '../../../contexts';
 
 const URI = 'http://localhost:8000/usuarios/createUser';
 
@@ -25,6 +28,7 @@ const ModalRegistrarUsuarios: FC<RegistrarUsuariosProps> = ({
   show,
   onClose,
 }) => {
+  const { addFlag } = useContext(FlagContext);
   const { getUsers } = useContext(getUsersContext);
   const [correo, setCorreo] = useState('');
   const [dominioCorreo, setDominioCorreo] = useState('@zeb.mx');
@@ -55,9 +59,30 @@ const ModalRegistrarUsuarios: FC<RegistrarUsuariosProps> = ({
         usuario_jira: usuarioJira,
       });
       getUsers();
+      addFlag(
+        '¡Perfecto! El usuario ha sido registrado exitosamente.',
+        CheckCircleIcon,
+        'success'
+      );
       onClose();
-    } catch {
-      window.alert('Hubo un error al registrar el usuario');
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log(error);
+        addFlag(
+          '¡Oh no! Hubo un error al registrar al usuario. Inténtalo de nuevo más tarde o contacta soporte.',
+          EditorErrorIcon,
+          'warning',
+          error.toString()
+        );
+      } else {
+        console.log(error);
+        addFlag(
+          '¡Oh no! Hubo un error al registrar al usuario. Inténtalo de nuevo más tarde o contacta soporte.',
+          EditorErrorIcon,
+          'warning',
+          'Error desconocido'
+        );
+      }
     }
     try {
       emailjs.send(
@@ -70,13 +95,14 @@ const ModalRegistrarUsuarios: FC<RegistrarUsuariosProps> = ({
       );
     } catch (error) {
       console.log(
-        'Hubo un error al enviar el correo al usuario',
+        '¡Oh no! Hubo un error al enviar el correo al usuario',
         error
       );
     }
+    setOtroDominio(false);
+    setDominioCorreo('');
     setCorreo('');
     setRol('');
-    onClose();
   };
 
   const handleClose = () => {

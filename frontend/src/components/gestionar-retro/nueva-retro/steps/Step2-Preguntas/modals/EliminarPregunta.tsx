@@ -70,14 +70,14 @@ const EliminarPregunta: FC<EliminarPreguntaProps> = ({
     } catch (error) {
       if (error instanceof Error) {
         addFlag(
-          'Hubo un error al eliminar la pregunta. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
+          '¡Oh no! Hubo un error al eliminar la pregunta. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
           EditorErrorIcon,
           'warning',
           error.toString()
         );
       } else {
         addFlag(
-          'Hubo un error al eliminar la pregunta. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
+          '¡Oh no! Hubo un error al eliminar la pregunta. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
           EditorErrorIcon,
           'warning',
           'Error desconocido'

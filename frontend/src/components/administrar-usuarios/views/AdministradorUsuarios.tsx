@@ -12,28 +12,28 @@ const AdministradorUsuarios = () => {
   const navigate = useNavigate();
 
   return (
-    <GetUsersProvider>
-      <DesignTemplate
-        buttons={
-          <>
-            <Button
-              appearance="link"
-              onClick={() =>
-                navigate('/administrar-usuarios/gestionar-etiquetas')
-              }
-            >
-              Gestionar etiquetas
-            </Button>
-            <Button
-              onClick={() => setIsOpen(true)}
-              appearance="primary"
-              iconBefore={<AddIcon label="" />}
-            >
-              Registrar usuario
-            </Button>
-          </>
-        }
-      >
+    <DesignTemplate
+      buttons={
+        <>
+          <Button
+            appearance="link"
+            onClick={() =>
+              navigate('/administrar-usuarios/gestionar-etiquetas')
+            }
+          >
+            Gestionar etiquetas
+          </Button>
+          <Button
+            onClick={() => setIsOpen(true)}
+            appearance="primary"
+            iconBefore={<AddIcon label="" />}
+          >
+            Registrar usuario
+          </Button>
+        </>
+      }
+    >
+      <GetUsersProvider>
         <div className="flex justify-center w-full shadow-sm rounded">
           <UsersTable />
         </div>
@@ -43,8 +43,8 @@ const AdministradorUsuarios = () => {
             setIsOpen(false);
           }}
         />
-      </DesignTemplate>
-    </GetUsersProvider>
+      </GetUsersProvider>
+    </DesignTemplate>
   );
 };
 

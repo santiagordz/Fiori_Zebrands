@@ -41,7 +41,6 @@ const DropdownUsuariosJira: FC<DropdownUsuariosJiraProps> = ({
 
   useEffect(() => {
     getUsuariosJira();
-    console.log(usuario);
   }, []);
 
   return (

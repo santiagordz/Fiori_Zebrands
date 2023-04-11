@@ -2,8 +2,9 @@ import Button from '@atlaskit/button/standard-button';
 import InfoIcon from '@atlaskit/icon/glyph/info';
 import axios from 'axios';
 import { FC, useContext, useEffect } from 'react';
-import { UserType } from '../../../contexts/UserContext';
 import { getUsersContext } from '../local-contexts';
+import { FlagContext } from '../../../contexts';
+import EditorErrorIcon from '@atlaskit/icon/glyph/editor/error';
 
 const URI = 'http://localhost:8000/usuarios/updateUserRole/';
 
@@ -26,6 +27,7 @@ const ModalAsignarResponsable: FC<AsignarResponsableProps> = ({
   usuario,
   setRolActual,
 }) => {
+  const { addFlag } = useContext(FlagContext);
   const { getUsers } = useContext(getUsersContext);
   const nombre =
     (usuario?.nombre ? usuario?.nombre : usuario?.correo) ||
@@ -49,10 +51,30 @@ const ModalAsignarResponsable: FC<AsignarResponsableProps> = ({
       res.then(() => {
         getUsers();
         setRolActual(2);
+        addFlag(
+          `¡Excelente! ${nombre} ahora tiene el rol de responsable,`,
+          InfoIcon,
+          'info'
+        );
         onClose();
       });
     } catch (error) {
       console.log(error);
+      if (error instanceof Error) {
+        addFlag(
+          '¡Oh no! Hubo un error al tratar de asignar el rol. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
+          EditorErrorIcon,
+          'error',
+          error.toString()
+        );
+      } else {
+        addFlag(
+          '¡Oh no! Hubo un error al tratar de asignar el rol. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
+          EditorErrorIcon,
+          'error',
+          'Error desconocido'
+        );
+      }
     }
   };
 
@@ -62,10 +84,30 @@ const ModalAsignarResponsable: FC<AsignarResponsableProps> = ({
       res.then(() => {
         getUsers();
         setRolActual(3);
+        addFlag(
+          `¡Listo! ${nombre} ya no tiene el rol de responsable.`,
+          InfoIcon,
+          'info'
+        );
         onClose();
       });
     } catch (error) {
       console.log(error);
+      if (error instanceof Error) {
+        addFlag(
+          '¡Oh no! Hubo un error al tratar de asignar el rol. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
+          EditorErrorIcon,
+          'error',
+          error.toString()
+        );
+      } else {
+        addFlag(
+          '¡Oh no! Hubo un error al tratar de asignar el rol. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
+          EditorErrorIcon,
+          'error',
+          'Error desconocido'
+        );
+      }
     }
   };
 
@@ -87,7 +129,7 @@ const ModalAsignarResponsable: FC<AsignarResponsableProps> = ({
                 <span className="text-jiraBlue">{` ${nombre}`}</span>?
               </h4>
             </div>
-            <div className="w-full text-sm text-[#44546f] mb-5 text-center">
+            <div className="w-full text-xs text-[#44546f] mb-5 text-center">
               {`${nombre} podrá iniciar y finalizar retrospectivas`}
             </div>
           </div>
@@ -124,13 +166,13 @@ const ModalAsignarResponsable: FC<AsignarResponsableProps> = ({
                 size="xlarge"
               />
             </div>
-            <div className="w-full text-xl font-bold mb-1 flex items-center justify-between">
+            <div className="w-full font-bold mb-1 flex items-center justify-between">
               <h4 className="text-lg text-center">
                 ¿Deseas eliminar el rol de responsable de
                 <span className="text-jiraBlue">{` ${nombre}`}</span>?
               </h4>
             </div>
-            <div className="w-full text-sm text-[#44546f] mb-5 text-center">
+            <div className="w-full text-xs text-[#44546f] mb-5 text-center">
               {`${nombre} ya no podrá iniciar y finalizar retrospectivas`}
             </div>
           </div>
