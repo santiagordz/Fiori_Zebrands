@@ -22,7 +22,8 @@
   height: 2rem;
 }
 
-#input-correo::placeholder {
+#input-correo::placeholder,
+#input-dominio-correo::placeholder {
   font-size: 0.75rem;
   line-height: 0.75rem;
   vertical-align: middle;

@@ -25,13 +25,14 @@ const DropdownEtiquetas = ({
   onEtiquetasSeleccionadasChange,
   etiquetasActuales,
 }: Props) => {
-  const etiquetasPreseleccionadas = etiquetasActuales.length > 0 ? etiquetasActuales.map(
-    (etiqueta: Etiqueta) => ({
-      value: etiqueta.id,
-      label: etiqueta.nombre,
-      color: etiqueta.color,
-    })
-  ): [];
+  const etiquetasPreseleccionadas =
+    etiquetasActuales.length > 0
+      ? etiquetasActuales.map((etiqueta: Etiqueta) => ({
+          value: etiqueta.id,
+          label: etiqueta.nombre,
+          color: etiqueta.color,
+        }))
+      : [];
 
   const [etiquetasSeleccionadas, setEtiquetasSeleccionadas] =
     useState<OptionsEtiquetas[]>(etiquetasPreseleccionadas);
@@ -66,7 +67,7 @@ const DropdownEtiquetas = ({
 
   useEffect(() => {
     getOptionsEtiquetas();
-  }, [etiquetasOptions]);
+  }, []);
 
   const colorStyles = {
     control: (styles: any, state: any) => ({

@@ -128,6 +128,7 @@ const ModalEditarUsuarios: FC<ModalEditarUsuariosProps> = ({
                       Nombre
                     </label>
                     <input
+                      required
                       autoComplete="off"
                       type="text"
                       name="nombre"

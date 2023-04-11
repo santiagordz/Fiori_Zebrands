@@ -63,7 +63,7 @@ const UsersTable = () => {
               <div className="w-full">
                 <p>
                   {usuario.nombre ||
-                    'Nuevo usuario (sin registrar con google)'}{' '}
+                    'Nuevo usuario (sin registrar con Google)'}
                   {user?.id_usuario === usuario.id ? '(Tú)' : ''}
                 </p>
               </div>
