@@ -5,13 +5,18 @@ import TextArea from '@atlaskit/textarea';
 import React, { FC, useContext, useState } from 'react';
 import Select from 'react-select';
 import { newRetroContext } from '../../local-contexts';
+import axios from 'axios';
 
-const fecha = [
-  '01-06-2023',
-  '01-07-2023',
-  '01-08-2023',
-  '01-09-2023',
-];
+const URI = "http://localhost:8000/sprints"
+
+interface Sprint {
+  nombre: string;
+}
+
+const response = await axios.get(URI);
+const options = response.data.map((sprint: Sprint) => ({
+  label: sprint.nombre}))
+
 const maxCaracteres = 250;
 
 interface Step1Props {
@@ -42,7 +47,7 @@ const Step1: FC<Step1Props> = ({ setStepNumber, stepNumber }) => {
   const handleTituloChange = (value: any) => {
     setNewRetro({
       ...newRetro,
-      titulo: value.value,
+      titulo: value.label,
     });
     setIsDateSelected(true);
   };
@@ -83,10 +88,7 @@ const Step1: FC<Step1Props> = ({ setStepNumber, stepNumber }) => {
             <Select
               styles={selectStyles}
               className="text-xs"
-              options={fecha.map((fecha) => ({
-                value: fecha,
-                label: fecha,
-              }))}
+              options= {options}
               onChange={handleTituloChange}
               placeholder="Selecciona un sprint"
             />
