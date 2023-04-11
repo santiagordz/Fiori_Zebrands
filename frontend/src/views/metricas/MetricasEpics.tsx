@@ -30,7 +30,6 @@ const MetricasEpics: FC<MetricasEpicsProps> = ({}) => {
 
   useEffect(() => {
     getData();
-    console.log(epicsSeleccionadas);
   }, [epicsSeleccionadas]);
 
   return (

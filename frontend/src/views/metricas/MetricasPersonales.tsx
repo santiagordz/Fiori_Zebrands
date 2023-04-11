@@ -38,7 +38,6 @@ const MetricasPersonales: FC<MetricasPersonalesProps> = ({  }) => {
       const urlPath = sprintsValuesArray.join(',');
       const response = await axios.get(`http://localhost:8000/sprintsdata/user/${idjira}/${urlPath}`);
       const data = response.data.issues[0];
-      console.log(data);
       setData(data);
       return data;
     } catch (error) {
@@ -49,7 +48,6 @@ const MetricasPersonales: FC<MetricasPersonalesProps> = ({  }) => {
   try{
     const response = await axios.get(`http://localhost:8000/sprintsdata/user/${idjira}`);
     const data = response.data.issues[0];
-    console.log(data);
     setData(data);
     return data;
   } catch (error) {
