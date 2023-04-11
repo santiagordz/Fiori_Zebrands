@@ -10,7 +10,7 @@ const Spinner: FC<SpinnerProps> = ({ message }) => {
     <div className="flex flex-col justify-center items-center w-full h-full gap-9 py-12">
       <div className="flex flex-col justify-center items-center">
         <Circles
-          height={'50%'}
+          height={100}
           width={100}
           color="#0055cc"
           ariaLabel="loading"
@@ -18,7 +18,9 @@ const Spinner: FC<SpinnerProps> = ({ message }) => {
         />
       </div>
 
-      <p className="text-md font-semibold text-center">{message}</p>
+      <p className="text-md font-semibold text-center text-slate-600">
+        {message}
+      </p>
     </div>
   );
 };

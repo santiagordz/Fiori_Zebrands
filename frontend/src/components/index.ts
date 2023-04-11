@@ -13,3 +13,6 @@ export { default as NuevaRetrospectiva } from './gestionar-retro/nueva-retro/Nue
 
 // Visualizar respuestas retrospectivas
 export { default as Respuestas } from './respuestas-resumen/Respuestas';
+
+// Reporte
+export { default as Reporte } from './reporte/Reporte';
