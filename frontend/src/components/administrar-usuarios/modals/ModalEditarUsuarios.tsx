@@ -12,14 +12,9 @@ import DropdownUsuariosJira from '../DropdownUsuariosJira';
 import CrossIcon from '@atlaskit/icon/glyph/cross';
 import SectionMessage from '@atlaskit/section-message';
 import { userDataContext } from '../../../contexts';
+import { type Etiqueta, getUsersContext } from '../local-contexts';
 
 const URI = 'http://localhost:8000/usuarios/';
-
-interface Etiqueta {
-  id: string;
-  nombre: string;
-  color: string;
-}
 
 interface ModalEditarUsuariosProps {
   show: boolean;
@@ -32,6 +27,7 @@ const ModalEditarUsuarios: FC<ModalEditarUsuariosProps> = ({
   onClose,
   info,
 }) => {
+  const { getUsers } = useContext(getUsersContext);
   const { user } = useContext(userDataContext);
   const [nombre, setNombre] = useState('');
   const [correo, setCorreo] = useState('');
@@ -46,10 +42,6 @@ const ModalEditarUsuarios: FC<ModalEditarUsuariosProps> = ({
     setEtiquetas(etiquetas);
   };
 
-  const handleClose = () => {
-    onClose();
-  };
-
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     try {
@@ -58,11 +50,13 @@ const ModalEditarUsuarios: FC<ModalEditarUsuariosProps> = ({
         rol: rol,
         etiquetas: etiquetas,
       });
-      res.then(() => window.location.reload());
+      res.then(() => {
+        getUsers();
+        onClose();
+      });
     } catch (error) {
       window.alert(error);
     }
-    onClose();
   };
 
   const getUsuario = () => {
@@ -70,7 +64,7 @@ const ModalEditarUsuarios: FC<ModalEditarUsuariosProps> = ({
       const res = axios.get(`${URI}info/${info}`);
       res.then((response) => {
         const usuario = response.data.usuario.shift();
-        setNombre(usuario.nombre);
+        setNombre(usuario.nombre || 'Nuevo usuario');
         setCorreo(usuario.correo);
         setRol(usuario.rol);
         setEtiquetas(usuario.etiquetas);
@@ -94,7 +88,7 @@ const ModalEditarUsuarios: FC<ModalEditarUsuariosProps> = ({
             <div className="w-full flex flex-col items-center">
               <div className="w-full text-xl font-bold mb-1 flex items-center justify-between">
                 <h4>Modificar Usuario</h4>
-                <button onClick={handleClose}>
+                <button onClick={() => onClose()}>
                   <CrossIcon label="Cross Icon" />
                 </button>
               </div>
@@ -185,7 +179,7 @@ const ModalEditarUsuarios: FC<ModalEditarUsuariosProps> = ({
               <div className="flex gap-10 mt-8">
                 <button
                   className="rounded-none hover:text-blue-500 text-sm"
-                  onClick={handleClose}
+                  onClick={() => onClose()}
                 >
                   Cancelar
                 </button>

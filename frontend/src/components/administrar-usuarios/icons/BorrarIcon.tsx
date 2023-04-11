@@ -1,10 +1,9 @@
 import TrashIcon from '@atlaskit/icon/glyph/trash';
 import { N500, R400 } from '@atlaskit/theme/colors';
-import { token } from '@atlaskit/tokens';
-import React, { useState, FC, useContext, useEffect } from 'react';
-import ModalBorrarUsuarios from '../modals/ModalBorrarUsuarios';
-import { userDataContext } from '../../../contexts';
+import React, { FC, useContext, useEffect, useState } from 'react';
 import { Tooltip } from 'react-tooltip';
+import { userDataContext } from '../../../contexts';
+import ModalBorrarUsuarios from '../modals/ModalBorrarUsuarios';
 
 interface BorrarIconProps {
   idUsuario: number;

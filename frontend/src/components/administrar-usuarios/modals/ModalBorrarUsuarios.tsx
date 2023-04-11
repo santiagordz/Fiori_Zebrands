@@ -1,6 +1,7 @@
 import Button from '@atlaskit/button/standard-button';
 import axios from 'axios';
-import { FC } from 'react';
+import { FC, useContext } from 'react';
+import { getUsersContext } from '../local-contexts';
 
 const URI = 'http://localhost:8000/usuarios/deleteUser/';
 
@@ -15,9 +16,7 @@ const ModalBorrarUsuarios: FC<GestionarEtiquetasProps> = ({
   onClose,
   id,
 }) => {
-  const handleOut = () => {
-    onClose();
-  };
+  const { getUsers } = useContext(getUsersContext);
 
   if (!show) {
     return null;
@@ -26,8 +25,8 @@ const ModalBorrarUsuarios: FC<GestionarEtiquetasProps> = ({
   const handleDelete = async (id: number) => {
     try {
       await axios.delete(`${URI}${id}`);
+      getUsers();
       onClose();
-      window.location.reload();
     } catch {
       window.alert(
         'Hubo un error al eliminar el usuario, intenta de nuevo.'
@@ -52,7 +51,7 @@ const ModalBorrarUsuarios: FC<GestionarEtiquetasProps> = ({
 
         <div className="w-full flex items-center justify-center">
           <div className="flex gap-10">
-            <Button onClick={handleOut}>Cancelar</Button>
+            <Button onClick={() => onClose()}>Cancelar</Button>
             <Button
               appearance="danger"
               onClick={() => handleDelete(id)}

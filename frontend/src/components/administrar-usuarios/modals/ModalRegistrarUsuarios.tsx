@@ -1,12 +1,18 @@
-import axios from 'axios';
-import { FC, FormEvent, useEffect, useState } from 'react';
-import '../css/modalRegistrarUsuarios.css';
 import CrossIcon from '@atlaskit/icon/glyph/cross';
+import emailjs from '@emailjs/browser';
+import axios from 'axios';
+import {
+  FC,
+  FormEvent,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import DropdownEtiquetas from '../DropdownEtiquetas';
 import DropdowRoles from '../DropdownRoles';
 import DropdownUsuariosJira from '../DropdownUsuariosJira';
-import { Etiqueta } from '../UsersTable';
-import emailjs from '@emailjs/browser';
+import '../css/modalRegistrarUsuarios.css';
+import { getUsersContext, type Etiqueta } from '../local-contexts';
 
 const URI = 'http://localhost:8000/usuarios/createUser';
 
@@ -19,11 +25,12 @@ const ModalRegistrarUsuarios: FC<RegistrarUsuariosProps> = ({
   show,
   onClose,
 }) => {
+  const { getUsers } = useContext(getUsersContext);
   const [correo, setCorreo] = useState('');
   const [dominioCorreo, setDominioCorreo] = useState('@zeb.mx');
   const [rol, setRol] = useState('');
   const [etiquetas, setEtiquetas] = useState<Etiqueta[]>([]);
-  const [usuarioJira, setUsuarioJira] = useState();
+  const [usuarioJira, setUsuarioJira] = useState(null);
   const [otroDominio, setOtroDominio] = useState(false);
 
   const handleRolSeleccionado = (rol: string) => {
@@ -47,8 +54,8 @@ const ModalRegistrarUsuarios: FC<RegistrarUsuariosProps> = ({
         etiquetas: etiquetas,
         usuario_jira: usuarioJira,
       });
-
-      window.location.reload();
+      getUsers();
+      onClose();
     } catch {
       window.alert('Hubo un error al registrar el usuario');
     }
@@ -158,6 +165,7 @@ const ModalRegistrarUsuarios: FC<RegistrarUsuariosProps> = ({
                   {otroDominio ? (
                     <>
                       <input
+                        required
                         value={dominioCorreo}
                         onChange={(e) =>
                           setDominioCorreo(e.target.value)
