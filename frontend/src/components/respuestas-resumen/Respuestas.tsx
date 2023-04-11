@@ -55,7 +55,7 @@ const Respuestas: FC = ({}) => {
   }, []);
 
   return (
-    <div className="">
+    <div className="flex gap-5 flex-col p-2">
       {infoRetro && (
         <RetrospectivaGeneral
           descripcion={infoRetro.descripcion || ''}
@@ -71,14 +71,16 @@ const Respuestas: FC = ({}) => {
           (respuesta) => respuesta.id_pregunta === pregunta.id
         );
 
-        return (
+          return (
+            <div className=''>
           <Resultados
             key={pregunta.id}
             id_tipo_pregunta={pregunta.id_tipo_pregunta}
             pregunta={pregunta.pregunta}
             respuestas={respuestasFiltered}
             opciones={pregunta.opciones ? pregunta.opciones : null}
-          />
+                  />
+            </div>
         );
       })}
     </div>
