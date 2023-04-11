@@ -94,3 +94,21 @@ exports.fetchIssuesByEpic = async (req, res, next) => {
     res.status(500).json({ message: 'Error al obtener los issues.' });
   }
 };
+
+exports.fetchPersonalStoryPointsLastSpritns = async (
+  req,
+  res,
+  next
+) => {
+  const userId = req.params.id;
+  try {
+    const issues =
+      await sprintsDataModel.getPersonalStoryPointsLastSprints(
+        userId
+      );
+    res.json({ issues });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al obtener los issues.' });
+  }
+};

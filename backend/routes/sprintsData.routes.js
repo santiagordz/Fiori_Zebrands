@@ -23,4 +23,9 @@ router.get(
   sprintsDataController.fetchUserStoryPointsSolo
 );
 
+router.get(
+  '/lastsprintsstorypoints/:id',
+  sprintsDataController.fetchPersonalStoryPointsLastSpritns
+);
+
 module.exports = router;

@@ -6,6 +6,7 @@ import { userDataContext } from '../../contexts';
 import { useState } from 'react';
 import axios from 'axios';
 import DropdownSprints from '../../components/charts/DropdownSprints';
+import SameDataComposedChart from '../../components/charts/SameDataComposedChart';
 
 interface MetricasPersonalesProps {
   
@@ -31,6 +32,7 @@ const MetricasPersonales: FC<MetricasPersonalesProps> = ({  }) => {
 
   const [data, setData] = useState<any[]>([]);
   const [data2, setData2] = useState<any[]>([]);
+  const [data3, setData3] = useState<any[]>([]);
 
   const getIssuesByUser = async () => {
     if(sprintsValuesArray.length != 0){
@@ -82,9 +84,21 @@ const MetricasPersonales: FC<MetricasPersonalesProps> = ({  }) => {
   }
   };
 
+  const getLastSprintsStorypoints = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8000/sprintsdata/lastsprintsstorypoints/${idjira}`);
+      const data = response.data.issues[0];
+      setData3(data);
+      return data;
+    } catch (error) {
+      console.error(error);
+    };
+  };
+
   useEffect(() => {
     getIssuesByUser();
     getStoryPointsByUser();
+    getLastSprintsStorypoints();
   }, [sprintsSeleccionadas])
 
   return (
@@ -120,6 +134,17 @@ const MetricasPersonales: FC<MetricasPersonalesProps> = ({  }) => {
           <div className="pl-20 pt-12">
             <Piechart data={data} />
           </div>
+        </div>
+        <div className="grid justify-items-center">
+        <div>
+          <label className="text-2xl">
+            {' '}
+            Storypoints de los issues completados de {name}
+          </label>
+          <div className="pl-20 pt-12">
+            <SameDataComposedChart data={data3} />
+            </div>
+        </div>
         </div>
       </div>
     </div>
