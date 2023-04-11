@@ -2,10 +2,10 @@ import React, { FC, useState, useEffect } from 'react';
 import Select, { StylesConfig } from 'react-select';
 import axios from 'axios';
 
-const URI = 'http://localhost:8000/epics';
+const URI = 'http://localhost:8000/epics/issues';
 
 interface Epics {
-  id: number;
+  key: number;
   summary: string;
 }
 
@@ -24,21 +24,22 @@ const DropdownEpics = ({
   epicsActuales,
 }: Props) => {
   const epicsPreseleccionadas = epicsActuales.map((epics: Epics) => ({
-    value: epics.id,
+    value: epics.key,
     label: epics.summary,
   }));
 
   const [epicsSeleccionadas, setEpicsSeleccionadas] = useState<
     OptionsEpics[]
   >(epicsPreseleccionadas);
+
   const [epicsOptions, setEpicsOptions] = useState<OptionsEpics[]>(
     []
   );
 
   const getOptionsEpics = () => {
     axios.get(URI).then((response) => {
-      const options = response.data.map((epics: Epics) => ({
-        value: epics.id,
+      const options = response.data[0].map((epics: Epics) => ({
+        value: epics.key,
         label: epics.summary,
       }));
 
@@ -61,7 +62,6 @@ const DropdownEpics = ({
 
   useEffect(() => {
     onEpicsSeleccionadasChange(epicsSeleccionadas);
-    console.log(epicsSeleccionadas);
   }, [epicsSeleccionadas]);
 
   const handleEpicsSeleccionadasChange = (epics: any) => {
@@ -71,7 +71,6 @@ const DropdownEpics = ({
   return (
     <div className="w-[42vmin]">
       <Select
-        isMulti={false}
         options={epicsOptions}
         value={epicsSeleccionadas}
         onChange={handleEpicsSeleccionadasChange}

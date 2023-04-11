@@ -7,15 +7,15 @@ const auth = {
 };
 
 module.exports = class Issue {
-  static fetchIssuesJira = async () => {
+  static fetchIssuesJira = async (start) => {
     const maxResults = 100; // Número máximo de issues a recuperar por solicitud
-    let startAt = 0; // Punto de inicio para recuperar issues en cada solicitud
+    let startAt = start; // Punto de inicio para recuperar issues en cada solicitud
     let isLast = false; // Indicador para verificar si se han recuperado todos los issues
     let issuesJira = []; // Arreglo para almacenar todos los issues recuperados
 
     while (!isLast) {
       const response = await axios.get(
-        `https://zebrands.atlassian.net/rest/api/2/search?jql=project=TPECG&startAt=${startAt}&maxResults=${maxResults}`,
+        `https://zebrands.atlassian.net/rest/api/2/search?jql=project=TPECG ORDER BY created ASC&startAt=${startAt}&maxResults=${maxResults}`,
         {
           auth: auth,
         }
@@ -55,6 +55,14 @@ module.exports = class Issue {
     return issues;
   };
 
+  static getIssues = async () => {
+    return db.execute(`SELECT * FROM issues`);
+  };
+
+  static countIssues = async () => {
+    return db.execute(`SELECT COUNT(*) AS count FROM issues`);
+  };
+
   static postIssue = async (
     clave,
     tipo,
@@ -65,11 +73,15 @@ module.exports = class Issue {
   ) => {
     try {
       return db.execute(
-        `INSERT IGNORE INTO issues (clave, tipo, story_points, key_epic, assignee_id, status) VALUES (?, ?, ?, ?, ?, ?)`,
-        [clave, tipo, story_points, key_epic, assignee_id, status]
+        `INSERT IGNORE INTO issues (clave, tipo, story_points, assignee_id, key_epic, status) VALUES (?, ?, ?, ?, ?, ?)`,
+        [clave, tipo, story_points, assignee_id, key_epic, status]
       );
     } catch (error) {
       console.error(error);
     }
+  };
+
+  static getCountIssues = async () => {
+    return db.execute(`SELECT COUNT(*) AS 'count' FROM issues`);
   };
 };
