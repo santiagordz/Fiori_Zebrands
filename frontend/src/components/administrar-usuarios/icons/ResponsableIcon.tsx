@@ -5,7 +5,7 @@ import React, { FC, useEffect, useState } from 'react';
 import { Tooltip } from 'react-tooltip';
 import { ModalAsignarResponsable } from '../modals';
 
-const URI = 'http://localhost:8000/usuarios/';
+const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/usuarios/`;
 
 interface ResponsableIconProps {
   usuario: {

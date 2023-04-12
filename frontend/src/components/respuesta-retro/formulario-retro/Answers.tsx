@@ -11,7 +11,7 @@ import type { Retrospectiva } from '../../../views/mis-retrospectivas/MisRetrosp
 import { formDataContext, questionsContext } from '../local-contexts';
 import type { Respuestas } from './Cuestionario';
 
-const URI = 'http://localhost:8000/respuesta';
+const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/respuesta`;
 
 interface AnswersProps {
   setIsRespuestas: (value: boolean) => void;

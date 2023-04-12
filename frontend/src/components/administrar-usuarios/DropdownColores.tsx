@@ -2,7 +2,7 @@ import React, { FC, useState, useEffect } from 'react';
 import axios from 'axios';
 import type { TagColor } from '@atlaskit/tag';
 
-const URI = 'http://localhost:8000/colores';
+const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/colores`;
 
 interface Color {
   id: number;

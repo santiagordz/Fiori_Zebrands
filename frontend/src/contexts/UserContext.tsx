@@ -8,8 +8,8 @@ const SECRET_KEY_1 =
 const SECRET_KEY_2 =
   import.meta.env.VITE_APP_COOKIE_KEY_2 || 'secret2';
 
-const URI_LOGOUT = 'http://localhost:8000/logout';
-const URI_LOGIN = 'http://localhost:8000/user';
+const URI_LOGOUT = `${import.meta.env.VITE_APP_BACKEND_URI}/logout`;
+const URI_LOGIN = `${import.meta.env.VITE_APP_BACKEND_URI}/user`;
 
 export interface UserType {
   correo: string;

@@ -5,7 +5,7 @@ import DropdownSprints from '../../components/charts/DropdownSprints';
 import StackedBarChart from '../../components/charts/StackedBarchart';
 
 interface MetricasSprintProps {}
-const URI = 'http://localhost:8000/sprintsdata';
+const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/sprintsdata`;
 
 const MetricasSprint: FC<MetricasSprintProps> = ({}) => {
   const [sprintsSeleccionadas, setSprintsSeleccionadas] =

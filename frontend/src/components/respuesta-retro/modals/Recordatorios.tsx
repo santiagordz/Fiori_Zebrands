@@ -11,7 +11,7 @@ import { questionsContext } from '../local-contexts';
 import BannerRetro from '../reusable/BannerRetro';
 import type { Retrospectiva } from '../../../views/mis-retrospectivas/MisRetrospectivas';
 
-const URI = 'http://localhost:8000/retrospectivas';
+const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/retrospectivas`;
 
 interface RecordatoriosProps {
   setIsOpen: (isOpen: boolean) => void;

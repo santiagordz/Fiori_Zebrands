@@ -5,7 +5,7 @@ import { N500, Y300 } from '@atlaskit/theme/colors';
 import EditFilledIcon from '@atlaskit/icon/glyph/edit-filled';
 import ModalEditarUsuarios from '../modals/ModalEditarUsuarios';
 
-const URI = 'http://localhost:8000/usuarios/';
+const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/usuarios/`;
 
 interface EditarIconProps {
   id: number;

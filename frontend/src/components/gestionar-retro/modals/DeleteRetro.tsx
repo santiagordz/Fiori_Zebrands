@@ -9,7 +9,7 @@ import { motion } from 'framer-motion';
 import { FC, useContext, useEffect } from 'react';
 import { FlagContext } from '../../../contexts';
 
-const URI = 'http://localhost:8000/retrospectivas';
+const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/retrospectivas`;
 
 interface DeleteRetroProps {
   setIsDeleteModalOpen: (isOpen: boolean) => void;
