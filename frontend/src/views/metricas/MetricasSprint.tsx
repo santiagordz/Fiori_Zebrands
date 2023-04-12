@@ -3,6 +3,7 @@ import axios from 'axios';
 import Piechart from '../../components/charts/Piechart';
 import DropdownSprints from '../../components/charts/DropdownSprints';
 import StackedBarChart from '../../components/charts/StackedBarchart';
+import SameDataComposedChart from '../../components/charts/SameDataComposedChart';
 
 interface MetricasSprintProps {}
 const URI = 'http://localhost:8000/sprintsdata';
@@ -21,6 +22,7 @@ const MetricasSprint: FC<MetricasSprintProps> = ({}) => {
 
   const [chartData, setChartData] = useState<any[]>([]);
   const [chart2Data, setChart2Data] = useState<any[]>([]);
+  const [chart3Data, setChart3Data] = useState<any[]>([]);
 
   const getDataSprintsById = async () => {
     if (sprintsValuesArray.length === 0) {
@@ -51,6 +53,19 @@ const MetricasSprint: FC<MetricasSprintProps> = ({}) => {
       const data = response.data.sprints[0];
       setChart2Data(data);
       console.log(chart2Data);
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getStoryPointsDoneLastSpritns = async () => {
+    try {
+      const response = await axios.get(
+        `${URI}/lastsprintsdoneestorypointsglobal`
+      );
+      const data = response.data.issues[0];
+      setChart3Data(data);
       return data;
     } catch (error) {
       console.error(error);
@@ -94,6 +109,17 @@ const MetricasSprint: FC<MetricasSprintProps> = ({}) => {
           </div>
           <div className="pl-20 pt-12">
             <Piechart data={chartData} />
+          </div>
+        </div>
+        <div className="grid justify-items-center">
+          <div>
+            <label className="text-2xl">
+              {' '}
+              Issues Totales y Completados
+            </label>
+          </div>
+          <div className="pl-20 pt-12">
+            <SameDataComposedChart data={chart3Data} />
           </div>
         </div>
       </div>

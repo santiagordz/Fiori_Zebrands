@@ -95,7 +95,7 @@ exports.fetchIssuesByEpic = async (req, res, next) => {
   }
 };
 
-exports.fetchPersonalStoryPointsLastSpritns = async (
+exports.fetchPersonalStoryPointsLastSprints = async (
   req,
   res,
   next
@@ -107,6 +107,35 @@ exports.fetchPersonalStoryPointsLastSpritns = async (
         userId
       );
     res.json({ issues });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al obtener los issues.' });
+  }
+};
+
+exports.fetchPersonalToDoStoryPointsLastSprints = async (
+  req,
+  res,
+  next
+) => {
+  const userId = req.params.id;
+  try {
+    const issues =
+      await sprintsDataModel.getPersonalToDoStoryPointsLastSprints(
+        userId
+      );
+    res.json({ issues });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al obtener los issues.' });
+  }
+};
+
+exports.fetchDoneStoryPointsLastSprints = async (req, res, next) => {
+  try {
+    const sprints =
+      await sprintsDataModel.getDoneStoryPointsLastSprints();
+    res.json({ sprints });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error al obtener los issues.' });

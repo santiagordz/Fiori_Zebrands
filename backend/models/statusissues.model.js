@@ -135,4 +135,34 @@ module.exports = class StatusIssue {
       [id]
     );
   }
+
+  static getPersonalToDoStoryPointsLastSprints(id) {
+    return db.execute(
+      `
+      SELECT s.nombre, SUM(i.story_points) AS total_story_points
+      FROM issues i, sprints s, sprints_issues si
+      WHERE i.clave = si.id_issue
+      AND si.id_sprint = s.id_jira
+      AND i.assignee_id = ?
+      AND i.status = "To Do"
+      GROUP BY s.nombre
+      ORDER BY s.nombre ASC
+      `,
+      [id]
+    );
+  }
+
+  static getDoneStoryPointsLastSprints() {
+    return db.execute(
+      `
+      SELECT s.nombre, SUM(i.story_points) AS total_story_points
+      FROM issues i, sprints s, sprints_issues si
+      WHERE i.clave = si.id_issue
+      AND si.id_sprint = s.id_jira
+      AND i.status = "Done"
+      GROUP BY s.nombre
+      ORDER BY s.nombre ASC
+      `
+    );
+  }
 };

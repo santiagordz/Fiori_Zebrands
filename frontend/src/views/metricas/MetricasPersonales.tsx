@@ -33,6 +33,7 @@ const MetricasPersonales: FC<MetricasPersonalesProps> = ({  }) => {
   const [data, setData] = useState<any[]>([]);
   const [data2, setData2] = useState<any[]>([]);
   const [data3, setData3] = useState<any[]>([]);
+  const [data4, setData4] = useState<any[]>([]);
 
   const getIssuesByUser = async () => {
     if(sprintsValuesArray.length != 0){
@@ -95,10 +96,22 @@ const MetricasPersonales: FC<MetricasPersonalesProps> = ({  }) => {
     };
   };
 
+  const getLastSprintsToDoStorypoints = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8000/sprintsdata/lastsprintstodostorypoints/${idjira}`);
+      const data = response.data.issues[0];
+      setData4(data);
+      return data;
+    } catch (error) {
+      console.error(error);
+    };
+  };
+
   useEffect(() => {
     getIssuesByUser();
     getStoryPointsByUser();
     getLastSprintsStorypoints();
+    getLastSprintsToDoStorypoints();
   }, [sprintsSeleccionadas])
 
   return (
@@ -139,13 +152,24 @@ const MetricasPersonales: FC<MetricasPersonalesProps> = ({  }) => {
         <div>
           <label className="text-2xl">
             {' '}
-            Storypoints de los issues completados de {name}
+            Storypoints completados por {name}
           </label>
           <div className="pl-20 pt-12">
             <SameDataComposedChart data={data3} />
             </div>
         </div>
         </div>
+        <div className="grid justify-items-center">
+        <div>
+          <label className="text-2xl">
+            {' '}
+            Storypoints pendientes por {name}
+          </label>
+          <div className="pl-20 pt-12">
+            <SameDataComposedChart data={data4} />
+            </div>
+            </div>
+            </div>
       </div>
     </div>
   )

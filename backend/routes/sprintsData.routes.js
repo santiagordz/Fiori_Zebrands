@@ -25,7 +25,17 @@ router.get(
 
 router.get(
   '/lastsprintsstorypoints/:id',
-  sprintsDataController.fetchPersonalStoryPointsLastSpritns
+  sprintsDataController.fetchPersonalStoryPointsLastSprints
+);
+
+router.get(
+  '/lastsprintstodostorypoints/:id',
+  sprintsDataController.fetchPersonalToDoStoryPointsLastSprints
+);
+
+router.get(
+  '/lastsprintsdonestorypointsglobal/',
+  sprintsDataController.fetchDoneStoryPointsLastSprints
 );
 
 module.exports = router;
