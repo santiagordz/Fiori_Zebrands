@@ -49,6 +49,7 @@ const PanelRetros: FC<PanelRetrosProps> = ({
                   descripcion={retrospectiva.descripcion || ''}
                   fechaInicio={retrospectiva.fecha_inicio || ''}
                   tags={retrospectiva.tags}
+                  respuestas={retrospectiva.num_respuestas}
                 />
               );
             })
@@ -76,6 +77,7 @@ const PanelRetros: FC<PanelRetrosProps> = ({
                   clickable={false}
                   completada={true}
                   tags={retrospectiva.tags}
+                  respuestas={retrospectiva.num_respuestas}
                 />
               );
             })
@@ -104,6 +106,7 @@ const PanelRetros: FC<PanelRetrosProps> = ({
                   clickable={false}
                   assigned={false}
                   tags={retrospectiva.tags}
+                  respuestas={retrospectiva.num_respuestas}
                 />
               );
             })

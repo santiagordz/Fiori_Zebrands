@@ -59,7 +59,7 @@ const BackMyRetros: FC<BackMyRetrosProps> = ({
               </p>
             </div>
             <div
-              className="flex items-center justify-between
+              className="flex items-center justify-center
             w-full gap-10"
             >
               <Button

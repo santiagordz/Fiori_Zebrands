@@ -6,7 +6,7 @@ import {
   DesignTemplate,
   PanelRetros,
   ResponderRetro,
-  Respuestas
+  Respuestas,
 } from '../../components';
 import { userDataContext } from '../../contexts';
 
@@ -136,10 +136,7 @@ const MisRetrospectivas: FC<MisRetrospectivasProps> = ({}) => {
         />
         <Route
           path="/respuestas/:retroId/"
-          element={
-            <Respuestas
-            />
-          }
+          element={<Respuestas />}
         />
       </Routes>
     </DesignTemplate>

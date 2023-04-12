@@ -19,7 +19,7 @@ const Step: React.FC<StepProps> = ({
   }`;
 
   const handleSize = () => {
-    if (currentStep === totalSteps) {
+    if (currentStep === totalSteps && totalSteps < 2) {
       return 0.4;
     } else if (totalSteps < 3 && totalSteps > 1) {
       return 0.9;
