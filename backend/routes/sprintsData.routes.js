@@ -41,5 +41,20 @@ router.get(
   sprintsDataController.fetchDoneStoryPointsLastSprints
 );
 
+router.get(
+  '/sprintstodoglobal',
+  sprintsDataController.fetchToDoStoryPointsLastSprints
+);
+
+router.get(
+  '/epicsdoneglobal',
+  sprintsDataController.fetchDoneStoryPointsLastEpics
+);
+
+router.get(
+  '/epicstodoglobal',
+  sprintsDataController.fetchToDoStoryPointsLastEpics
+);
+
 router.get('/:ids', sprintsDataController.fetchSprintsByIds);
 module.exports = router;

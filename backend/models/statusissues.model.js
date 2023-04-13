@@ -177,4 +177,44 @@ module.exports = class StatusIssue {
       `
     );
   }
+
+  static getToDoStoryPointsLastSprints() {
+    return db.execute(
+      `
+      SELECT s.nombre, SUM(i.story_points) AS total_story_points
+      FROM issues i, sprints s, sprints_issues si
+      WHERE i.clave = si.id_issue
+      AND si.id_sprint = s.id_jira
+      AND i.status = "To Do"
+      GROUP BY s.nombre
+      ORDER BY s.nombre ASC
+      `
+    );
+  }
+
+  static getDoneStoryPointsLastEpics() {
+    return db.execute(
+      `
+      SELECT e.nombre, SUM(i.story_points) AS total_story_points
+      FROM issues i, epics e
+      WHERE i.key_epic = e.id_jira
+      AND i.status = "Done"
+      GROUP BY e.nombre
+      ORDER BY e.nombre ASC
+      `
+    );
+  }
+
+  static getToDoStoryPointsLastEpics() {
+    return db.execute(
+      `
+      SELECT e.nombre, SUM(i.story_points) AS total_story_points
+      FROM issues i, epics e
+      WHERE i.key_epic = e.id_jira
+      AND i.status = "To Do"
+      GROUP BY e.nombre
+      ORDER BY e.nombre ASC
+      `
+    );
+  }
 };

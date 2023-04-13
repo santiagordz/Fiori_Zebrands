@@ -32,6 +32,7 @@ const MetricasSprint: FC<MetricasSprintProps> = ({}) => {
   const [chartData, setChartData] = useState<any[]>([]);
   const [chart2Data, setChart2Data] = useState<any[]>([]);
   const [chart3Data, setChart3Data] = useState<any[]>([]);
+  const [chart4Data, setChart4Data] = useState<any[]>([]);
 
   const getDataSprintsById = async () => {
     if (sprintsValuesArray.length === 0) {
@@ -80,10 +81,24 @@ const MetricasSprint: FC<MetricasSprintProps> = ({}) => {
     }
   };
 
+  const getStoryPointsToDoLastSprints = async () => {
+    try {
+      const response = await axios.get(
+        `${URI}/sprintstodoglobal`
+      );
+      const data = response.data.sprints[0];
+      setChart4Data(data);
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     getDataSprintsById();
     getDataStoryPointsById();
     getStoryPointsDoneLastSprints();
+    getStoryPointsToDoLastSprints();
   }, [sprintsSeleccionadas]);
 
   console.log(chart3Data)
@@ -129,6 +144,17 @@ const MetricasSprint: FC<MetricasSprintProps> = ({}) => {
           </label>
           <div className="pl-20 pt-12">
             <SameDataComposedChart data={chart3Data} />
+            </div>
+            </div>
+            </div>
+            <div className="grid justify-items-center">
+        <div>
+          <label className="text-2xl">
+            {' '}
+            Storypoints completados en los ultimos sprints
+          </label>
+          <div className="pl-20 pt-12">
+            <SameDataComposedChart data={chart4Data} />
             </div>
             </div>
             </div>

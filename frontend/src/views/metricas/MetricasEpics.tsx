@@ -19,6 +19,9 @@ const MetricasEpics: FC<MetricasEpicsProps> = ({}) => {
 
   const [chartData, setChartData] = useState<any[]>([]);
   const [chart2Data, setChart2Data] = useState<any[]>([]);
+  const [chart3Data, setChart3Data] = useState<any[]>([]);
+  const [chart4Data, setChart4Data] = useState<any[]>([]);
+
 
   const getData = async () => {
     const response = await fetch(
@@ -29,8 +32,19 @@ const MetricasEpics: FC<MetricasEpicsProps> = ({}) => {
       `http://localhost:8000/sprintsdata/epic/storypoints/${epicsSeleccionadas.value}`
     );
     const data2 = await response2.json();
+    const response3 = await fetch(
+      `http://localhost:8000/sprintsdata/epicsdoneglobal`
+    );
+    const data3 = await response3.json();
+    const response4 = await fetch(
+      `http://localhost:8000/sprintsdata/epicstodoglobal`
+    );
+    const data4 = await response4.json();
+
     setChartData(data.issues[0]);
     setChart2Data(data2.issues[0]);
+    setChart3Data(data3.issues[0]);
+    setChart4Data(data4.issues[0]);
   };
 
   useEffect(() => {
@@ -78,14 +92,17 @@ const MetricasEpics: FC<MetricasEpicsProps> = ({}) => {
           </div>
         </div>
         <div className="grid justify-items-center">
-          <div>
+          <div className="">
             <label className="text-2xl">
               {' '}
-              Issues Totales y Completados
+              Comparacion de Sprints
             </label>
           </div>
-          <div className="pl-20 pt-12">{/* <Piechart /> */}</div>
+          <div className="">
+            <SameDataComposedChart data={chart3Data} />
+          </div>
         </div>
+        
       </div>
     </div>
   );

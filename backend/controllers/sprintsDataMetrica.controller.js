@@ -154,3 +154,36 @@ exports.fetchDoneStoryPointsLastSprints = async (req, res, next) => {
     res.status(500).json({ message: 'Error al obtener los issues.' });
   }
 };
+
+exports.fetchToDoStoryPointsLastSprints = async (req, res, next) => {
+  try {
+    const sprints =
+      await sprintsDataModel.getToDoStoryPointsLastSprints();
+    res.json({ sprints });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al obtener los issues.' });
+  }
+};
+
+exports.fetchDoneStoryPointsLastEpics = async (req, res, next) => {
+  try {
+    const sprints =
+      await sprintsDataModel.getDoneStoryPointsLastEpics();
+    res.json({ sprints });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al obtener los epics.' });
+  }
+};
+
+exports.fetchToDoStoryPointsLastEpics = async (req, res, next) => {
+  try {
+    const sprints =
+      await sprintsDataModel.getToDoStoryPointsLastEpics();
+    res.json({ sprints });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al obtener los epics.' });
+  }
+};
