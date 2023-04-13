@@ -22,7 +22,7 @@ import {
 import Pregunta from './Pregunta';
 import { NuevaPregunta } from './modals';
 
-const URI = 'http://localhost:8000/preguntas';
+const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/preguntas`;
 
 interface Step2Props {
   setStepNumber: (updater: (prev: number) => number) => void;

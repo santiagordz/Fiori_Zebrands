@@ -71,7 +71,7 @@ const TablaUsuarios: FC<TablaUsuariosProps> = ({
 
   const getUsers = async () => {
     const res = await axios.get(
-      'http://localhost:8000/usuarios/info'
+      `${import.meta.env.VITE_APP_BACKEND_URI}/usuarios/info`
     );
     const usuarios = res.data.usuarios
       .map((usuario: UsuarioType) => ({

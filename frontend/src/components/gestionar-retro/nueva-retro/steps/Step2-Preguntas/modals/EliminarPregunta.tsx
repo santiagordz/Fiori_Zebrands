@@ -16,7 +16,7 @@ import {
 } from '../../../local-contexts';
 import { tiposPregunta } from '../Pregunta';
 
-const URI = 'http://localhost:8000/preguntas';
+const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/preguntas`;
 
 interface EliminarPreguntaProps {
   id_pregunta: number;
@@ -70,14 +70,14 @@ const EliminarPregunta: FC<EliminarPreguntaProps> = ({
     } catch (error) {
       if (error instanceof Error) {
         addFlag(
-          'Hubo un error al eliminar la pregunta. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
+          '¡Oh no! Hubo un error al eliminar la pregunta. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
           EditorErrorIcon,
           'warning',
           error.toString()
         );
       } else {
         addFlag(
-          'Hubo un error al eliminar la pregunta. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
+          '¡Oh no! Hubo un error al eliminar la pregunta. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
           EditorErrorIcon,
           'warning',
           'Error desconocido'

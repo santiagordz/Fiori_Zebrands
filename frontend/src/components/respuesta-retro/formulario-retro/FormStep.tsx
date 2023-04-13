@@ -142,14 +142,25 @@ const FormStep: FC<FormStepProps> = ({
           />
         </div>
         <div className="flex items-center justify-end w-full">
-          <p className="text-xs font-semibold">
-            Enviar como respuesta anónima
-          </p>
-          <AnonymousToggle
-            isDisabled={formData !== null && !formData[question.id]}
-            isChecked={isAnonymous}
-            onChange={handleAnonToggle}
-          />
+          {question.id_tipo_pregunta === 1 ||
+          question.id_tipo_pregunta === 2 ? (
+            <>
+              <p className="text-xs font-semibold">
+                Enviar como respuesta anónima
+              </p>
+              <AnonymousToggle
+                isDisabled={
+                  formData !== null && !formData[question.id]
+                }
+                isChecked={isAnonymous}
+                onChange={handleAnonToggle}
+              />
+            </>
+          ) : (
+            <p className="text-xs font-semibold">
+              No se mostrará tu nombre para este tipo de respuestas.
+            </p>
+          )}
         </div>
       </div>
       {numPregunta === 1 ? (

@@ -1,7 +1,8 @@
 import React, { FC, useMemo, useState, useEffect } from 'react';
 import { PieChart, BarChart } from '../charts';
 import type { OpcionesType } from './Respuestas';
-
+import { ReactComponent as IncognitoSVG } from '@/assets/icons/incognito.svg';
+import { Tooltip } from 'react-tooltip';
 interface ResultadosProps {
   id_tipo_pregunta: number;
   pregunta: string;
@@ -11,6 +12,7 @@ interface ResultadosProps {
     id_pregunta: number;
     id_usuario: number;
     anonimo: boolean;
+    nombre: string;
   }[];
 }
 
@@ -18,17 +20,13 @@ interface DataType {
   status: string;
   total: number;
 }
-
 const Resultados: FC<ResultadosProps> = ({
   id_tipo_pregunta,
   pregunta,
   respuestas,
   opciones,
 }) => {
-  const [numRespuestas, setNumRespuestas] = useState<number>(0);
-
   const [data, setData] = useState<DataType[]>([]);
-
   const handleDataType3 = (): DataType[] => {
     const opcionesData: DataType[] = opciones?.map((opcion) => {
       const valueRespuestas = respuestas.filter(
@@ -42,6 +40,20 @@ const Resultados: FC<ResultadosProps> = ({
     return opcionesData;
   };
 
+  const [esAnonimo, setEsAnonimo] = useState<boolean>(false);
+  const handleAnonimo = () => {
+    const valueRespuestas = respuestas.filter(
+      (respuesta) => !!respuesta.anonimo === true
+    ).length;
+    if (valueRespuestas > 0) {
+      setEsAnonimo(true);
+    }
+  };
+
+  useEffect(() => {
+    handleAnonimo();
+  }, []);
+
   const handleDataType4 = (): DataType[] => {
     const opcionesData: DataType[] = [];
 
@@ -49,9 +61,13 @@ const Resultados: FC<ResultadosProps> = ({
       const valueRespuestas = respuestas.filter(
         (respuesta) => Number(respuesta.respuesta) === index
       ).length;
+      const total = (
+        (valueRespuestas / respuestas?.length) *
+        100
+      ).toFixed(3);
       opcionesData.push({
         status: index.toString(),
-        total: valueRespuestas,
+        total: Number(total) || 0,
       });
     }
 
@@ -59,7 +75,6 @@ const Resultados: FC<ResultadosProps> = ({
   };
 
   useEffect(() => {
-    setNumRespuestas(respuestas.length);
     if (id_tipo_pregunta === 3) {
       setData(handleDataType3);
     }
@@ -72,30 +87,73 @@ const Resultados: FC<ResultadosProps> = ({
     switch (id_tipo_pregunta) {
       case 3:
         return (
-          <div>
-            <br></br>
+          <div className="flex w-full h-[20rem] justify-center items-center">
             <PieChart data={data} />
           </div>
         );
       case 4:
         return (
-          <div>
+          <div className="flex w-full h-[20rem] justify-center items-center">
             <BarChart data={data} />
           </div>
         );
       default:
-        return <div></div>;
+        return (
+          <div className="flex flex-col gap-3">
+            {respuestas.map((respuesta) => (
+              <div
+                className="flex flex-col gap-1 border-2 border-gray rounded-sm p-4"
+                key={respuesta.id_usuario}
+              >
+                <p className="text-gray-600 font-medium text-[0.9rem]">
+                  {esAnonimo ? 'Usuario anónimo' : respuesta.nombre}
+                </p>
+
+                <p className="text-gray-700 text-[0.8rem]">
+                  {respuesta.respuesta}
+                </p>
+              </div>
+            ))}
+          </div>
+        );
     }
   }, [id_tipo_pregunta, pregunta, respuestas]);
 
   return (
-    <div
-      className={`flex flex-col py-3 px-5 w-full gap-1 rounded bg-white 
-    shadow-sm
-    }`}
-    >
-      <h2>{pregunta}</h2>
-      {Case}
+    <div className="flex flex-col py-8 px-10 w-full h-full max-h-[50rem] overflow-y-auto gap-5 rounded bg-white shadow-sm">
+      <div className="flex flex-col gap-2">
+        <div className="flex w-full justify-between items-center">
+          <h2 className="text-sm text-textNormal font-semibold">
+            {pregunta}
+          </h2>
+          {esAnonimo && (
+            <a
+              data-tooltip-id="anon-tooltip"
+              data-tooltip-content={
+                'Un usuario ha respondido de forma anónima, por lo cual no se mostrarán los nombres de los usuarios.'
+              }
+            >
+              <IncognitoSVG
+                width={20}
+                height={20}
+                className="incognito-resumen"
+              />
+            </a>
+          )}
+        </div>
+        <p className="text-xs">Respuestas: {respuestas.length}</p>
+      </div>
+      {respuestas.length > 0 ? (
+        Case
+      ) : (
+        <p className="text-xs">
+          No hay respuestas registradas para esta pregunta.
+        </p>
+      )}
+      <Tooltip
+        id="anon-tooltip"
+        className="text-xs bg-deepBlue max-w-sm"
+      />
     </div>
   );
 };

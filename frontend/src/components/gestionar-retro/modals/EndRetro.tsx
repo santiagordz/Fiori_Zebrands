@@ -10,7 +10,7 @@ import { motion } from 'framer-motion';
 import { FC, useContext, useEffect } from 'react';
 import { FlagContext } from '../../../contexts';
 
-const URI = 'http://localhost:8000/retrospectivas';
+const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/retrospectivas`;
 
 interface EndRetroProps {
   setIsEndModalOpen: (isOpen: boolean) => void;
@@ -40,14 +40,14 @@ const EndRetro: FC<EndRetroProps> = ({
       console.log(error);
       if (error instanceof Error) {
         addFlag(
-          'Hubo un error al intentar finalizar la retrospectiva.. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
+          '¡Oh no! Hubo un error al intentar finalizar la retrospectiva.. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
           EditorErrorIcon,
           'error',
           error.toString()
         );
       } else {
         addFlag(
-          'Hubo un error al intentar finalizar la retrospectiva. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
+          '¡Oh no! Hubo un error al intentar finalizar la retrospectiva. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
           EditorErrorIcon,
           'error',
           'Error desconocido'

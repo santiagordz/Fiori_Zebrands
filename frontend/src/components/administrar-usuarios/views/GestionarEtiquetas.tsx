@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DesignTemplate from '../../design-template/DesignTemplate';
 import EtiquetasTable from '../EtiquetasTable';
+import { GetEtiquetasProvider } from '../local-contexts';
 
 import ModalRegistrarEtiqueta from '../modals/ModalRegistrarEtiqueta';
 
@@ -30,13 +31,15 @@ const GestionarEtiquetas = () => {
         </>
       }
     >
-      <div className="flex items-center justify-center w-full bg-white py-4 shadow-sm rounded">
-        <EtiquetasTable />
-        <ModalRegistrarEtiqueta
-          show={isOpen}
-          onClose={() => setIsOpen(false)}
-        />
-      </div>
+      <GetEtiquetasProvider>
+        <div className="flex items-center justify-center w-full bg-white py-4 shadow-sm rounded">
+          <EtiquetasTable />
+          <ModalRegistrarEtiqueta
+            show={isOpen}
+            onClose={() => setIsOpen(false)}
+          />
+        </div>
+      </GetEtiquetasProvider>
     </DesignTemplate>
   );
 };

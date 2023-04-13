@@ -1,16 +1,15 @@
 import Blanket from '@atlaskit/blanket';
 import Button from '@atlaskit/button';
-import EditorErrorIcon from '@atlaskit/icon/glyph/editor/error';
 import CrossIcon from '@atlaskit/icon/glyph/cross';
+import EditorErrorIcon from '@atlaskit/icon/glyph/editor/error';
 import InfoIcon from '@atlaskit/icon/glyph/info';
-import TrashIcon from '@atlaskit/icon/glyph/trash';
 import WarningIcon from '@atlaskit/icon/glyph/warning';
 import axios from 'axios';
 import { motion } from 'framer-motion';
 import { FC, useContext, useEffect } from 'react';
 import { FlagContext } from '../../../contexts';
 
-const URI = 'http://localhost:8000/retrospectivas';
+const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/retrospectivas`;
 
 interface DeleteRetroProps {
   setIsDeleteModalOpen: (isOpen: boolean) => void;
@@ -40,14 +39,14 @@ const DeleteRetro: FC<DeleteRetroProps> = ({
       console.log(error);
       if (error instanceof Error) {
         addFlag(
-          'Hubo un error al intentar eliminar la retrospectiva.. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
+          '¡Oh no! Hubo un error al intentar eliminar la retrospectiva. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
           EditorErrorIcon,
           'error',
           error.toString()
         );
       } else {
         addFlag(
-          'Hubo un error al intentar finalizar la retrospectiva. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
+          '¡Oh no! Hubo un error al intentar finalizar la retrospectiva. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
           EditorErrorIcon,
           'error',
           'Error desconocido'
@@ -69,7 +68,7 @@ const DeleteRetro: FC<DeleteRetroProps> = ({
         animate={{ opacity: 1 }}
         className="flex flex-col w-full h-full items-center justify-center opacity-0"
       >
-        <div className="flex flex-col bg-white rounded p-10 gap-8 items-center justify-center drop-shadow-lg max-w-[40vw]">
+        <div className="flex flex-col bg-white rounded py-12 px-10 gap-8 items-center justify-center drop-shadow-lg max-w-[40vw]">
           <div
             className="flex w-full absolute top-0 justify-end p-4"
             onClick={() => setIsDeleteModalOpen(false)}
@@ -79,11 +78,6 @@ const DeleteRetro: FC<DeleteRetroProps> = ({
             </div>
           </div>
           <div className="flex flex-col justify-center items-center gap-3 relative">
-            <TrashIcon
-              label="eliminar retrospectiva"
-              primaryColor="#454545"
-              size="xlarge"
-            />
             <h3 className="font-bold text-modalSoft text-xl text-center">
               ¿De verdad deseas eliminar la retrospectiva {titulo}?
             </h3>

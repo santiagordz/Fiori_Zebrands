@@ -49,3 +49,7 @@ h6 {
   box-shadow: -4px 0px 6px -1px rgba(0, 0, 0, 0.1),
     -2px 0px 4px -1px rgba(0, 0, 0, 0.06);
 }
+
+.incognito-resumen path {
+  fill: #0000006b;
+}

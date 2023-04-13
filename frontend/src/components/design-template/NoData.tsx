@@ -20,7 +20,7 @@ const NoData: FC<NotFound404Props> = ({}) => {
       </div>
       <div className="w-full items-center justify-center flex flex-col gap-4">
         <h2 className="text-2xl font-bold text-information">
-          Uy! Parece que hubo un error al recuperar los datos.
+          Uy! Parece que ¡Oh no! Hubo un error al recuperar los datos.
         </h2>
 
         <div>

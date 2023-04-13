@@ -19,7 +19,7 @@ import Answers from './Answers';
 import Cuestionario from './Cuestionario';
 import ResponderRetroInfo from './ResponderRetroInfo';
 
-const URI = 'http://localhost:8000/retrospectivas';
+const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/retrospectivas`;
 
 interface ResponderRetroProps {
   retroPendientes: Retrospectiva[];

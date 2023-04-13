@@ -14,7 +14,9 @@ import { newRetroContext } from './local-contexts';
 import { Step1, Step2, Step3, Step4 } from './steps';
 import { stepsInformation } from './steps/stepsInformation';
 
-const URI = 'http://localhost:8000/retrospectivas/new';
+const URI = `${
+  import.meta.env.VITE_APP_BACKEND_URI
+}/retrospectivas/new`;
 
 interface NuevaRetrospectivaProps {}
 
@@ -41,7 +43,7 @@ const NuevaRetrospectiva: FC<NuevaRetrospectivaProps> = ({}) => {
       if (error instanceof Error) {
         console.log(error);
         addFlag(
-          'Hubo un error al iniciar la retrospectiva. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
+          '¡Oh no! Hubo un error al iniciar la retrospectiva. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
           ErrorIcon,
           'error',
           error.toString()
@@ -49,7 +51,7 @@ const NuevaRetrospectiva: FC<NuevaRetrospectivaProps> = ({}) => {
       } else {
         console.log(error);
         addFlag(
-          'Hubo un error al iniciar la retrospectiva. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
+          '¡Oh no! Hubo un error al iniciar la retrospectiva. Por favor, inténtalo de nuevo más tarde o contacta soporte.',
           ErrorIcon,
           'error',
           'Error desconocido'

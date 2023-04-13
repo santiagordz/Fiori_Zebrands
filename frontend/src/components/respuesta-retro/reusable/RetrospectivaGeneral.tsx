@@ -23,6 +23,8 @@ interface RetrospectivaGeneralProps {
     id_color: number;
     color: TagColor;
   }[];
+  respuestas?: number;
+  noIcon?: boolean;
 }
 
 const RetrospectivaGeneral: FC<RetrospectivaGeneralProps> = ({
@@ -36,6 +38,8 @@ const RetrospectivaGeneral: FC<RetrospectivaGeneralProps> = ({
   completada = false,
   tags,
   assigned = true,
+  respuestas = 0,
+  noIcon = false,
 }) => {
   const navigate = useNavigate();
   const [isInResponder, setIsInResponder] = useState<boolean>(false);
@@ -45,7 +49,10 @@ const RetrospectivaGeneral: FC<RetrospectivaGeneralProps> = ({
   const location = useLocation().pathname;
 
   useEffect(() => {
-    if (location.includes('responder') || location.includes('respuestas') ) {
+    if (
+      location.includes('responder') ||
+      location.includes('respuestas')
+    ) {
       setIsInResponder(true);
     }
   }, []);
@@ -94,9 +101,8 @@ const RetrospectivaGeneral: FC<RetrospectivaGeneralProps> = ({
 
   return (
     <div
-      className={`flex ${!isInResponder
-          ? 'cursor-pointer'
-          : 'cursor-default'
+      className={`flex ${
+        !isInResponder ? 'cursor-pointer' : 'cursor-default'
       }`}
       onClick={handleOnClick}
     >
@@ -107,29 +113,30 @@ const RetrospectivaGeneral: FC<RetrospectivaGeneralProps> = ({
             : 'shadow-sm'
         }`}
       >
-        <div className="flex w-full justify-between ">
+        <div className="flex w-full justify-between">
           <div className="gap-2 flex flex-row items-center">
-            {completada ? (
-              <CheckIcon
-                label="retrospectiva-completada"
-                primaryColor="#12ab17"
-              />
-            ) : assigned ? (
-              <FlagFilledIcon
-                label="retrospectiva-pendiente"
-                primaryColor="#8270DB"
-              />
-            ) : !enCurso ? (
-              <CheckCircleOutlineIcon
-                label="finalizar retrospectiva"
-                primaryColor="#0055CC"
-              />
-            ) : (
-              <PdfIcon
-                label="otra retrospectiva"
-                primaryColor="#709ddb"
-              />
-            )}
+            {!noIcon &&
+              (completada ? (
+                <CheckIcon
+                  label="retrospectiva-completada"
+                  primaryColor="#12ab17"
+                />
+              ) : assigned ? (
+                <FlagFilledIcon
+                  label="retrospectiva-pendiente"
+                  primaryColor="#8270DB"
+                />
+              ) : !enCurso ? (
+                <CheckCircleOutlineIcon
+                  label="finalizar retrospectiva"
+                  primaryColor="#0055CC"
+                />
+              ) : (
+                <PdfIcon
+                  label="otra retrospectiva"
+                  primaryColor="#709ddb"
+                />
+              ))}
             <h3 className="font-bold text-sm">{titulo}</h3>
           </div>
           <div
@@ -155,7 +162,12 @@ const RetrospectivaGeneral: FC<RetrospectivaGeneralProps> = ({
               )}
           </div>
         </div>
-        <div className="flex text-[0.8rem]">
+        <span className="w-full flex justify-between">
+          <p className="text-xs text-discovery font-medium">
+            Respuestas registradas: {respuestas ? respuestas : 0}
+          </p>
+        </span>
+        <div className="flex text-[0.8rem] mt-2">
           <p>{descripcion}</p>
         </div>
         <div className="flex flex-row text-[0.7rem] justify-between mt-3">

@@ -16,7 +16,7 @@ import {
 } from '../../../local-contexts';
 import { tipos } from '../tiposPregunta';
 
-const URI = 'http://localhost:8000/preguntas';
+const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/preguntas`;
 
 const labelStyle =
   "after:content-['*'] after:text-[#ae2a19] text-xs font-semibold text-label";
@@ -77,7 +77,7 @@ const EditarPregunta: FC<EditarPreguntaProps> = ({
 
   const handleErrorPregunta = () => {
     addFlag(
-      'Hubo un error al recuperar la pregunta, intenta de nuevo más tarde',
+      '¡Oh no! Hubo un error al recuperar la pregunta, intenta de nuevo más tarde',
       EditorErrorIcon,
       'error'
     );
@@ -137,7 +137,7 @@ const EditarPregunta: FC<EditarPreguntaProps> = ({
       if (error instanceof Error) {
         console.log(error);
         addFlag(
-          'Hubo un error al actualizar la pregunta. Inténtalo de nuevo más tarde o contacta soporte.',
+          '¡Oh no! Hubo un error al actualizar la pregunta. Inténtalo de nuevo más tarde o contacta soporte.',
           EditorErrorIcon,
           'warning',
           error.toString()
@@ -145,7 +145,7 @@ const EditarPregunta: FC<EditarPreguntaProps> = ({
       } else {
         console.log(error);
         addFlag(
-          'Hubo un error al actualizar la pregunta. Inténtalo de nuevo más tarde o contacta soporte.',
+          '¡Oh no! Hubo un error al actualizar la pregunta. Inténtalo de nuevo más tarde o contacta soporte.',
           EditorErrorIcon,
           'warning',
           'Error desconocido'

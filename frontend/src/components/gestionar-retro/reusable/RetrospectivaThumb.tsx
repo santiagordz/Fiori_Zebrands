@@ -43,6 +43,10 @@ const RetrospectivaThumb: FC<RetrospectivaThumbProps> = ({
   const [isEndModalOpen, setIsEndModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
+  const handleOnClick = () => {
+    navigate(`/mis-retrospectivas/respuestas/${idRetrospectiva}`);
+  };
+
   useEffect(() => {
     const fecha_inicio = new Date(fechaInicio);
 
@@ -77,122 +81,121 @@ const RetrospectivaThumb: FC<RetrospectivaThumbProps> = ({
   }, [fechaFin]);
 
   return (
-    <>
-      <div
-        className={`flex flex-col py-3 px-5 w-full gap-3 rounded bg-white hover:bg-[#fafbfc] border border-solid border-gray`}
-      >
-        {isEndModalOpen && updateRetrospectivas && (
-          <EndRetro
-            setIsEndModalOpen={setIsEndModalOpen}
-            idRetrospectiva={idRetrospectiva}
-            titulo={titulo}
-            updateRetrospectivas={updateRetrospectivas}
-          />
-        )}
+    <div
+      className={`flex flex-col py-3 px-5 w-full gap-3 rounded bg-white hover:bg-[#fafbfc] border border-solid border-gray cursor-pointer`}
+      onClick={handleOnClick}
+    >
+      {isEndModalOpen && updateRetrospectivas && (
+        <EndRetro
+          setIsEndModalOpen={setIsEndModalOpen}
+          idRetrospectiva={idRetrospectiva}
+          titulo={titulo}
+          updateRetrospectivas={updateRetrospectivas}
+        />
+      )}
 
-        {isDeleteModalOpen && updateRetrospectivas && (
-          <DeleteRetro
-            setIsDeleteModalOpen={setIsDeleteModalOpen}
-            idRetrospectiva={idRetrospectiva}
-            titulo={titulo}
-            updateRetrospectivas={updateRetrospectivas}
-          />
-        )}
-        <div className="flex w-full justify-between">
-          <div className="flex items-start justify-start gap-2">
+      {isDeleteModalOpen && updateRetrospectivas && (
+        <DeleteRetro
+          setIsDeleteModalOpen={setIsDeleteModalOpen}
+          idRetrospectiva={idRetrospectiva}
+          titulo={titulo}
+          updateRetrospectivas={updateRetrospectivas}
+        />
+      )}
+      <div className="flex w-full justify-between">
+        <div className="flex items-start justify-start gap-2">
+          {completada ? (
+            <CheckIcon
+              label="retrospectiva-completada"
+              primaryColor="#12ab17"
+            />
+          ) : (
+            <FlagFilledIcon
+              label="retrospectiva-pendiente"
+              primaryColor="#8270DB"
+            />
+          )}
+          <div>
+            <h3 className="font-bold text-sm">{titulo}</h3>
             {completada ? (
-              <CheckIcon
-                label="retrospectiva-completada"
-                primaryColor="#12ab17"
-              />
+              <p className="text-xs text-gray-600">Finalizada</p>
             ) : (
-              <FlagFilledIcon
-                label="retrospectiva-pendiente"
-                primaryColor="#8270DB"
-              />
-            )}
-            <div>
-              <h3 className="font-bold text-sm">{titulo}</h3>
-              {completada ? (
-                <p className="text-xs text-gray-600">Finalizada</p>
-              ) : (
-                <p className="text-xs text-accentGreen">En curso</p>
-              )}
-            </div>
-          </div>
-          <div
-            className={`${
-              tags.length > 4 ? 'grid grid-cols-2' : 'flex flex-row'
-            } items-end text-right`}
-          >
-            {tags &&
-              tags.map(
-                (tag: {
-                  id: number;
-                  etiqueta: string;
-                  color: TagColor;
-                }) => (
-                  <div key={tag.id} id="tag">
-                    <Tag
-                      text={tag.etiqueta}
-                      appearance="rounded"
-                      color={tag.color}
-                    />
-                  </div>
-                )
-              )}
-            {!completada ? (
-              <DropdownMenu>
-                <button
-                  type="button"
-                  onClick={() => setIsEndModalOpen(true)}
-                  className="bg-white hover:bg-[#f1f2f4] text-xs inline-block whitespace-nowrap py-[0.35rem] px-5 text-textNormal"
-                >
-                  Finalizar retrospectiva
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setIsDeleteModalOpen(true)}
-                  className="bg-white hover:bg-[#fff5f5] text-xs inline-block whitespace-nowrap py-[0.35rem] px-5 text-danger"
-                >
-                  Eliminar retrospectiva
-                </button>
-              </DropdownMenu>
-            ) : (
-              <DropdownMenu>
-                <button
-                  type="button"
-                  onClick={() => setIsDeleteModalOpen(true)}
-                  className="bg-white hover:bg-[#fff5f5] text-xs inline-block whitespace-nowrap py-[0.35rem] px-5 text-danger"
-                >
-                  Eliminar retrospectiva
-                </button>
-              </DropdownMenu>
+              <p className="text-xs text-accentGreen">En curso</p>
             )}
           </div>
         </div>
-        <span className="w-full flex justify-between">
-          <p className="text-xs text-discovery font-medium">
-            Respuestas registradas: {respuestas}
-          </p>
-        </span>
-        {descripcion && (
-          <div className="flex text-[0.8rem]">
-            <p>{descripcion}</p>
-          </div>
-        )}
-        <div className="flex flex-row text-[0.7rem] justify-between items-center">
-          {fechaInicioFormat && (
-            <p>Fecha de inicio: {fechaInicioFormat}</p>
+        <div
+          className={`${
+            tags.length > 4 ? 'grid grid-cols-2' : 'flex flex-row'
+          } items-end text-right`}
+        >
+          {tags &&
+            tags.map(
+              (tag: {
+                id: number;
+                etiqueta: string;
+                color: TagColor;
+              }) => (
+                <div key={tag.id} id="tag">
+                  <Tag
+                    text={tag.etiqueta}
+                    appearance="rounded"
+                    color={tag.color}
+                  />
+                </div>
+              )
+            )}
+          {!completada ? (
+            <DropdownMenu>
+              <button
+                type="button"
+                onClick={() => setIsEndModalOpen(true)}
+                className="bg-white hover:bg-[#f1f2f4] text-xs inline-block whitespace-nowrap py-[0.35rem] px-5 text-textNormal"
+              >
+                Finalizar retrospectiva
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsDeleteModalOpen(true)}
+                className="bg-white hover:bg-[#fff5f5] text-xs inline-block whitespace-nowrap py-[0.35rem] px-5 text-danger"
+              >
+                Eliminar retrospectiva
+              </button>
+            </DropdownMenu>
+          ) : (
+            <DropdownMenu>
+              <button
+                type="button"
+                onClick={() => setIsDeleteModalOpen(true)}
+                className="bg-white hover:bg-[#fff5f5] text-xs inline-block whitespace-nowrap py-[0.35rem] px-5 text-danger"
+              >
+                Eliminar retrospectiva
+              </button>
+            </DropdownMenu>
           )}
-          {fechaFinFormat && <p>Fecha de fin: {fechaFinFormat}</p>}
-          <ChevronRightLargeIcon
-            label="flecha"
-            primaryColor="#1D7AFC "
-          />
         </div>
       </div>
-    </>
+      <span className="w-full flex justify-between">
+        <p className="text-xs text-discovery font-medium">
+          Respuestas registradas: {respuestas}
+        </p>
+      </span>
+      {descripcion && (
+        <div className="flex text-[0.8rem]">
+          <p>{descripcion}</p>
+        </div>
+      )}
+      <div className="flex flex-row text-[0.7rem] justify-between items-center">
+        {fechaInicioFormat && (
+          <p>Fecha de inicio: {fechaInicioFormat}</p>
+        )}
+        {fechaFinFormat && <p>Fecha de fin: {fechaFinFormat}</p>}
+        <ChevronRightLargeIcon
+          label="flecha"
+          primaryColor="#1D7AFC "
+        />
+      </div>
+    </div>
   );
 };
 

@@ -9,9 +9,18 @@ router.get(
 );
 
 router.get('/user/:id/:ids', sprintsDataController.fetchUserIssues);
+router.get('/user/:id', sprintsDataController.fetchUserIssuesSolo);
+
 router.get(
   '/userstorypoints/:id/:ids',
   sprintsDataController.fetchUserStoryPoints
+);
+
+router.get('/epic/:id', sprintsDataController.fetchIssuesByEpic);
+router.get('/user/:id', sprintsDataController.fetchUserIssuesSolo);
+router.get(
+  '/userstorypoints/:id',
+  sprintsDataController.fetchUserStoryPointsSolo
 );
 
 module.exports = router;

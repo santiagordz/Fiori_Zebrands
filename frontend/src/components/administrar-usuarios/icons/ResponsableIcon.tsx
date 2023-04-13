@@ -1,19 +1,22 @@
 import AppAccessIcon from '@atlaskit/icon/glyph/app-access';
 import { B200, B300, N200, N500, Y300 } from '@atlaskit/theme/colors';
 import { token } from '@atlaskit/tokens';
-import axios from 'axios';
 import React, { FC, useEffect, useState } from 'react';
-import { ModalAsignarResponsable } from '../modals';
 import { Tooltip } from 'react-tooltip';
+import { ModalAsignarResponsable } from '../modals';
 
-const URI = 'http://localhost:8000/usuarios/';
+const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/usuarios/`;
 
 interface ResponsableIconProps {
-  idUsuario: number;
+  usuario: {
+    id: number;
+    rol: number;
+    nombre: string;
+    correo: string;
+  };
 }
 
-const ResponsableIcon: FC<ResponsableIconProps> = ({ idUsuario }) => {
-  const [user, setUser] = useState();
+const ResponsableIcon: FC<ResponsableIconProps> = ({ usuario }) => {
   const [color, setColor] = useState(true);
   const [colorHover, setColorHover] = useState(true);
   const [clicked, setClicked] = useState(false);
@@ -21,21 +24,8 @@ const ResponsableIcon: FC<ResponsableIconProps> = ({ idUsuario }) => {
 
   const [rolActual, setRolActual] = useState(0);
 
-  const getUsuario = (id: number) => {
-    try {
-      const res = axios.get(`${URI}info/${id}`);
-      res.then((response) => {
-        const usuario = response.data.usuario.shift();
-        setUser(usuario);
-        setRolActual(usuario.rol);
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
-    getUsuario(idUsuario);
+    setRolActual(usuario.rol);
   }, []);
 
   const handleMouseOverResponsable = (
@@ -99,8 +89,9 @@ const ResponsableIcon: FC<ResponsableIconProps> = ({ idUsuario }) => {
         </button>
         <ModalAsignarResponsable
           show={isOpen}
+          setRolActual={setRolActual}
           onClose={() => setIsOpen(false)}
-          usuario={user}
+          usuario={usuario}
         />
       </>
     );
@@ -119,8 +110,9 @@ const ResponsableIcon: FC<ResponsableIconProps> = ({ idUsuario }) => {
         </button>
         <ModalAsignarResponsable
           show={isOpen}
+          setRolActual={setRolActual}
           onClose={() => setIsOpen(false)}
-          usuario={user}
+          usuario={usuario}
         />
       </>
     );

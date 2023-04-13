@@ -4,11 +4,13 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DesignTemplate from '../../design-template/DesignTemplate';
 import UsersTable from '../UsersTable';
+import { GetUsersProvider } from '../local-contexts';
 import ModalRegistrarUsuarios from '../modals/ModalRegistrarUsuarios';
 
 const AdministradorUsuarios = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+
   return (
     <DesignTemplate
       buttons={
@@ -31,13 +33,17 @@ const AdministradorUsuarios = () => {
         </>
       }
     >
-      <div className="flex justify-center w-full shadow-sm rounded">
-        <UsersTable />
-      </div>
-      <ModalRegistrarUsuarios
-        show={isOpen}
-        onClose={() => setIsOpen(false)}
-      />
+      <GetUsersProvider>
+        <div className="flex justify-center w-full shadow-sm rounded">
+          <UsersTable />
+        </div>
+        <ModalRegistrarUsuarios
+          show={isOpen}
+          onClose={() => {
+            setIsOpen(false);
+          }}
+        />
+      </GetUsersProvider>
     </DesignTemplate>
   );
 };

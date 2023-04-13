@@ -11,7 +11,7 @@ import type { Retrospectiva } from '../../../views/mis-retrospectivas/MisRetrosp
 import { formDataContext, questionsContext } from '../local-contexts';
 import type { Respuestas } from './Cuestionario';
 
-const URI = 'http://localhost:8000/respuesta';
+const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/respuesta`;
 
 interface AnswersProps {
   setIsRespuestas: (value: boolean) => void;
@@ -128,7 +128,11 @@ const Answers: FC<AnswersProps> = ({
                         )}
                         {answers[question.id]?.anonimo ? (
                           <div className="flex gap-2 opacity-60 mt-5 text-xs items-center">
-                            <IncognitoSVG width={15} height={15} />
+                            <IncognitoSVG
+                              width={15}
+                              height={15}
+                              fill="white"
+                            />
                             Marcaste esta respuesta como anónima,
                             todas las respuestas de todo el equipo a
                             esta pregunta serán anónimas.
