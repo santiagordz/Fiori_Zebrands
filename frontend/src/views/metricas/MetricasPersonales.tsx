@@ -41,7 +41,6 @@ const MetricasPersonales: FC<MetricasPersonalesProps> = ({  }) => {
       const urlPath = sprintsValuesArray.join(',');
       const response = await axios.get(`http://localhost:8000/sprintsdata/user/${idjira}/${urlPath}`);
       const data = response.data.issues[0];
-      console.log(data);
       setData(data);
       return data;
     } catch (error) {
@@ -52,7 +51,6 @@ const MetricasPersonales: FC<MetricasPersonalesProps> = ({  }) => {
   try{
     const response = await axios.get(`http://localhost:8000/sprintsdata/user/${idjira}`);
     const data = response.data.issues[0];
-    console.log(data);
     setData(data);
     return data;
   } catch (error) {
@@ -114,6 +112,7 @@ const MetricasPersonales: FC<MetricasPersonalesProps> = ({  }) => {
     getLastSprintsToDoStorypoints();
   }, [sprintsSeleccionadas])
 
+  console.log(data3)
   return (
     <div className="w-full">
       <div className="py-5 flex justify-left gap-6 border-b-2 border-zinc-200">

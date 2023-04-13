@@ -8,6 +8,15 @@ import SameDataComposedChart from '../../components/charts/SameDataComposedChart
 interface MetricasSprintProps {}
 const URI = 'http://localhost:8000/sprintsdata';
 
+
+const data5 = [
+  { nombre: 'Sprint 1', total_story_points: 12 },
+  { nombre: 'Sprint 2', total_story_points: 4 },
+  { nombre: 'Sprint 3', total_story_points: 2 },
+  { nombre: 'Sprint 4', total_story_points: 2 },
+  { nombre: 'Sprint 5', total_story_points: 8 },
+  { nombre: 'Sprint 6', total_story_points: 3 },
+];
 const MetricasSprint: FC<MetricasSprintProps> = ({}) => {
   const [sprintsSeleccionadas, setSprintsSeleccionadas] =
     useState<any>([]);
@@ -52,19 +61,18 @@ const MetricasSprint: FC<MetricasSprintProps> = ({}) => {
       );
       const data = response.data.sprints[0];
       setChart2Data(data);
-      console.log(chart2Data);
       return data;
     } catch (error) {
       console.error(error);
     }
   };
 
-  const getStoryPointsDoneLastSpritns = async () => {
+  const getStoryPointsDoneLastSprints = async () => {
     try {
       const response = await axios.get(
-        `${URI}/lastsprintsdoneestorypointsglobal`
+        `${URI}/sprintsdoneglobal`
       );
-      const data = response.data.issues[0];
+      const data = response.data.sprints[0];
       setChart3Data(data);
       return data;
     } catch (error) {
@@ -75,8 +83,10 @@ const MetricasSprint: FC<MetricasSprintProps> = ({}) => {
   useEffect(() => {
     getDataSprintsById();
     getDataStoryPointsById();
+    getStoryPointsDoneLastSprints();
   }, [sprintsSeleccionadas]);
 
+  console.log(chart3Data)
   return (
     <div className="w-full">
       <div className="py-5 flex justify-left gap-6 border-b-2 border-zinc-200">
@@ -112,16 +122,16 @@ const MetricasSprint: FC<MetricasSprintProps> = ({}) => {
           </div>
         </div>
         <div className="grid justify-items-center">
-          <div>
-            <label className="text-2xl">
-              {' '}
-              Issues Totales y Completados
-            </label>
-          </div>
+        <div>
+          <label className="text-2xl">
+            {' '}
+            Storypoints completados en los ultimos sprints
+          </label>
           <div className="pl-20 pt-12">
             <SameDataComposedChart data={chart3Data} />
-          </div>
-        </div>
+            </div>
+            </div>
+            </div>
       </div>
     </div>
   );

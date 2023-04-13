@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const sprintsDataController = require('../controllers/sprintsDataMetrica.controller');
 
-router.get('/:ids', sprintsDataController.fetchSprintsByIds);
 router.get(
   '/storypoints/:ids',
   sprintsDataController.fetchStoryPoints
@@ -34,8 +33,9 @@ router.get(
 );
 
 router.get(
-  '/lastsprintsdonestorypointsglobal/',
+  '/sprintsdoneglobal',
   sprintsDataController.fetchDoneStoryPointsLastSprints
 );
 
+router.get('/:ids', sprintsDataController.fetchSprintsByIds);
 module.exports = router;
