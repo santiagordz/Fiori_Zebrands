@@ -23,10 +23,7 @@ const DropdownEpics = ({
   onEpicsSeleccionadasChange,
   epicsActuales,
 }: Props) => {
-  const epicsPreseleccionadas = epicsActuales.map((epics: Epics) => ({
-    value: epics.key,
-    label: epics.summary,
-  }));
+  const epicsPreseleccionadas = epicsActuales;
 
   const [epicsSeleccionadas, setEpicsSeleccionadas] = useState<
     OptionsEpics[]

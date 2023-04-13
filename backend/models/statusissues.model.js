@@ -118,4 +118,16 @@ module.exports = class StatusIssue {
       [id]
     );
   }
+
+  static getStoryPointsByEpic(id) {
+    return db.execute(
+      `
+      SELECT i.status, SUM(i.story_points) AS total_story_points
+      FROM issues i
+      WHERE i.key_epic = ?
+      GROUP BY i.status
+      `,
+      [id]
+    );
+  }
 };
