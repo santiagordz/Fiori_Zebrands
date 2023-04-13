@@ -7,7 +7,9 @@ import InfoIcon from '@atlaskit/icon/glyph/info';
 import { FlagContext } from '../../../contexts';
 import { getUsersContext } from '../local-contexts';
 
-const URI = 'http://localhost:8000/usuarios/deleteUser/';
+const URI = `${
+  import.meta.env.VITE_APP_BACKEND_URI
+}/usuarios/deleteUser/`;
 
 interface GestionarEtiquetasProps {
   show: boolean;

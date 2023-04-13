@@ -25,7 +25,7 @@ module.exports = class Retrospectiva {
 
   static fetchOne(id_retrospectiva, id_usuario) {
     return db.execute(
-      `SELECT R.id, titulo, fecha_inicio, fecha_fin, descripcion, R.updatedAt, completada 
+      `SELECT R.id, titulo, fecha_inicio, fecha_fin, descripcion, R.updatedAt, completada
       FROM retrospectivas R, usuarios_retrospectivas UR
       WHERE R.id = UR.id_retrospectiva
       AND R.id = ?
@@ -37,9 +37,11 @@ module.exports = class Retrospectiva {
   static fetchRetrospectivasByUserId(userId) {
     return db.execute(
       `
-    SELECT r.*, ur.id_usuario, ur.completada, IF(ur.id_usuario IS NOT NULL, 1, 0) as asignada, r.en_curso
+    SELECT r.*, ur.id_usuario, ur.completada, IF(ur.id_usuario IS NOT NULL, 1, 0) as asignada, r.en_curso, COUNT(DISTINCT res.id_sesionRespuesta) AS num_respuestas
     FROM retrospectivas r
     LEFT JOIN usuarios_retrospectivas ur ON r.id = ur.id_retrospectiva AND ur.id_usuario = ?
+    LEFT JOIN respuestas res ON r.id = res.id_retrospectiva
+    GROUP BY r.id, ur.id_usuario, ur.completada, asignada, r.en_curso;
     `,
       [userId]
     );
@@ -57,9 +59,11 @@ module.exports = class Retrospectiva {
     }
 
     const [respuestas] = await db.execute(
-      `SELECT R.respuesta, R.anonimo, R.id_usuario, R.id_pregunta, U.nombre
-      FROM respuestas AS R, usuarios AS U
-      WHERE R.id_retrospectiva = ? AND R.id_usuario = U.id`,
+      `SELECT R.respuesta, R.anonimo, R.id_usuario, R.id_pregunta,
+        IF(R.id_usuario IS NOT NULL, U.nombre, 'Usuario anónimo') AS nombre
+        FROM respuestas AS R
+        LEFT JOIN usuarios AS U ON R.id_usuario = U.id
+        WHERE R.id_retrospectiva = ?;`,
       [id_retrospectiva]
     );
 
@@ -95,11 +99,19 @@ module.exports = class Retrospectiva {
       [id_retrospectiva]
     );
 
+    const [[numTotalRespuestas]] = await db.execute(
+      `SELECT COUNT(DISTINCT id_sesionRespuesta) AS num_respuestas
+      FROM respuestas
+      WHERE id_retrospectiva = ?`,
+      [id_retrospectiva]
+    );
+
     const detailedRetrospective = {
       ...retrospective,
       respuestas,
       preguntas,
       tags,
+      num_respuestas: numTotalRespuestas.num_respuestas,
     };
 
     return detailedRetrospective;

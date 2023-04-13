@@ -17,7 +17,9 @@ import CheckCircleIcon from '@atlaskit/icon/glyph/check-circle';
 import EditorErrorIcon from '@atlaskit/icon/glyph/editor/error';
 import { FlagContext } from '../../../contexts';
 
-const URI = 'http://localhost:8000/usuarios/createUser';
+const URI = `${
+  import.meta.env.VITE_APP_BACKEND_URI
+}/usuarios/createUser`;
 
 interface RegistrarUsuariosProps {
   show: boolean;
@@ -129,7 +131,9 @@ const ModalRegistrarUsuarios: FC<RegistrarUsuariosProps> = ({
   };
 
   useEffect(() => {
-    axios.get('http://localhost:8000/usuarios_jira/fetch');
+    axios.get(
+      `${import.meta.env.VITE_APP_BACKEND_URI}/usuarios_jira/fetch`
+    );
   }, []);
 
   if (!show) {

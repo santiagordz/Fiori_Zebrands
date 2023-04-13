@@ -14,7 +14,9 @@ import { newRetroContext } from './local-contexts';
 import { Step1, Step2, Step3, Step4 } from './steps';
 import { stepsInformation } from './steps/stepsInformation';
 
-const URI = 'http://localhost:8000/retrospectivas/new';
+const URI = `${
+  import.meta.env.VITE_APP_BACKEND_URI
+}/retrospectivas/new`;
 
 interface NuevaRetrospectivaProps {}
 

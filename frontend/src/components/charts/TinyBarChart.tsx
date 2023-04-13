@@ -8,9 +8,28 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-} from "recharts";
+} from 'recharts';
 
-import React, { FC } from "react";
+import React, { FC } from 'react';
+
+function CustomTooltip({ payload, label, active }: any) {
+  if (active) {
+    return (
+      <div
+        className="custom-tooltip"
+        style={{
+          backgroundColor: 'white',
+          padding: '10px',
+          border: '1px solid #ccc',
+        }}
+      >
+        <p className="label">{`Opción: ${label.toUpperCase()}`}</p>
+        <p className="total">{`Total: ${payload[0].value}%`}</p>
+      </div>
+    );
+  }
+  return null;
+}
 
 interface TinyBarChartProps {
   data: {
@@ -21,16 +40,19 @@ interface TinyBarChartProps {
 
 const TinyBarChart: FC<TinyBarChartProps> = ({ data }) => {
   return (
-    <div>
-      <br></br>
-      <BarChart width={400} height={400} data={data}>
+    <ResponsiveContainer width="90%" height="90%">
+      <BarChart
+        width={200}
+        height={200}
+        data={data}
+        margin={{ top: 20 }}
+      >
         <Bar dataKey="total" fill="#0E9CFF" />
         <XAxis dataKey="status" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
+        <YAxis domain={[0, 100]} />
+        <Tooltip content={<CustomTooltip />} />
       </BarChart>
-    </div>
+    </ResponsiveContainer>
   );
 };
 

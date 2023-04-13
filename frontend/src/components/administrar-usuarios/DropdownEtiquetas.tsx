@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Select, { StylesConfig } from 'react-select';
 
-const URI = 'http://localhost:8000/etiquetas';
+const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/etiquetas`;
 
 interface Etiqueta {
   id: string;

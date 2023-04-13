@@ -7,7 +7,7 @@ import { FC, useContext } from 'react';
 import { FlagContext } from '../../../contexts';
 import { getEtiquetasContext } from '../local-contexts';
 
-const URI = 'http://localhost:8000/etiquetas/';
+const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/etiquetas/`;
 
 interface GestionarEtiquetasProps {
   show: boolean;

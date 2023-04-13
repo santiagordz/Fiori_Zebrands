@@ -6,7 +6,7 @@ import StackedBarChart from '../../components/charts/StackedBarchart';
 import SameDataComposedChart from '../../components/charts/SameDataComposedChart';
 
 interface MetricasSprintProps {}
-const URI = 'http://localhost:8000/sprintsdata';
+const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/sprintsdata`;
 
 
 const data5 = [

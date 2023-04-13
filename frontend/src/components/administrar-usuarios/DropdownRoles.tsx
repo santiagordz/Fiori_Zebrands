@@ -12,7 +12,7 @@ interface Props {
   active?: boolean;
 }
 
-const URI = 'http://localhost:8000/roles';
+const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/roles`;
 
 const DropdowRoles = ({
   onRolSeleccionadoChange,

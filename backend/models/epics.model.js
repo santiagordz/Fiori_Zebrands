@@ -61,7 +61,7 @@ module.exports = class Epic {
     FROM epics, issues
     WHERE epics.id_jira = issues.key_epic
     AND issues.key_epic IS NOT NULL
-    GROUP BY epics.nombre
+    GROUP BY epics.id_jira, epics.nombre
     `);
   };
 };

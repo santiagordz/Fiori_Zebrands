@@ -8,8 +8,8 @@ import { userDataContext } from '../../contexts';
 import axios from 'axios';
 interface LoginProps {}
 
-const URI = 'http://localhost:8000/login/google';
-const URI_LOGIN = 'http://localhost:8000/user';
+const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/login/google`;
+const URI_LOGIN = `${import.meta.env.VITE_APP_BACKEND_URI}/user`;
 
 const SECRET_KEY_1 =
   import.meta.env.VITE_APP_COOKIE_KEY_1 || 'secret1';

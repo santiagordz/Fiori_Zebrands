@@ -17,7 +17,7 @@ import CheckCircleIcon from '@atlaskit/icon/glyph/check-circle';
 import EditorErrorIcon from '@atlaskit/icon/glyph/editor/error';
 import { FlagContext } from '../../../contexts';
 
-const URI = 'http://localhost:8000/usuarios/';
+const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/usuarios/`;
 
 interface ModalEditarUsuariosProps {
   show: boolean;

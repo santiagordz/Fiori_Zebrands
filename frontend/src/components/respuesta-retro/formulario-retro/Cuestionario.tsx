@@ -14,8 +14,10 @@ import {
 import { BackMyRetros, ConfirmacionRetro } from '../modals';
 import FormStep from './FormStep';
 
-const URI = 'http://localhost:8000/respuesta/new';
-const URI_COMPLETE = 'http://localhost:8000/respuesta/update';
+const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/respuesta/new`;
+const URI_COMPLETE = `${
+  import.meta.env.VITE_APP_BACKEND_URI
+}/respuesta/update`;
 
 interface CuestionarioProps {}
 
