@@ -1,5 +1,5 @@
-import React from "react";
-import { PieChart, Pie, Cell, XAxis, Legend, Line } from "recharts";
+import React from 'react';
+import { PieChart, Pie, Cell, XAxis, Legend, Line } from 'recharts';
 
 interface PiechartProps {
   data: {
@@ -19,6 +19,7 @@ const renderCustomizedLabel = ({
   outerRadius,
   percent,
   index,
+  index,
 }: any) => {
   const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
   const x = cx + radius * Math.cos(-midAngle * RADIAN);
@@ -29,7 +30,7 @@ const renderCustomizedLabel = ({
       x={x}
       y={y}
       fill="white"
-      textAnchor={x > cx ? "start" : "end"}
+      textAnchor={x > cx ? 'start' : 'end'}
       dominantBaseline="central"
     >
       {`${(percent * 100).toFixed(0)}%`}
@@ -43,7 +44,7 @@ export default function Piechart({ data }: PiechartProps) {
       <Legend width={400} align="center" />
       <Pie
         data={data}
-        cx={200}
+        cx={250}
         cy={200}
         labelLine={false}
         label={renderCustomizedLabel}
@@ -53,7 +54,10 @@ export default function Piechart({ data }: PiechartProps) {
         nameKey="status"
       >
         {data.map((entry, index) => (
-          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          <Cell
+            key={`cell-${index}`}
+            fill={COLORS[index % COLORS.length]}
+          />
         ))}
       </Pie>
     </PieChart>

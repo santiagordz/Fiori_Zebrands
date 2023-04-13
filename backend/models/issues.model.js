@@ -15,7 +15,7 @@ module.exports = class Issue {
 
     while (!isLast) {
       const response = await axios.get(
-        `https://zebrands.atlassian.net/rest/api/2/search?jql=project=TPECG ORDER BY created ASC&startAt=${startAt}&maxResults=${maxResults}`,
+        `https://zebrands.atlassian.net/rest/api/2/search?jql=project=TPECG AND issuetype in (Bug, Story, Task) ORDER BY created ASC &startAt=${startAt}&maxResults=${maxResults}`,
         {
           auth: auth,
         }

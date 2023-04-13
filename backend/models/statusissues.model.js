@@ -119,6 +119,18 @@ module.exports = class StatusIssue {
     );
   }
 
+  static getStoryPointsByEpic(id) {
+    return db.execute(
+      `
+      SELECT i.status, SUM(i.story_points) AS total_story_points
+      FROM issues i
+      WHERE i.key_epic = ?
+      GROUP BY i.status
+      `,
+      [id]
+    );
+  }
+
   //the next method returns the personal story points grouped from the last 5 sprints
   static getPersonalStoryPointsLastSprints(id) {
     return db.execute(

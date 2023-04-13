@@ -16,6 +16,10 @@ router.get(
 );
 
 router.get('/epic/:id', sprintsDataController.fetchIssuesByEpic);
+router.get(
+  '/epic/storypoints/:id',
+  sprintsDataController.fetchStoryPointsByEpic
+);
 router.get('/user/:id', sprintsDataController.fetchUserIssuesSolo);
 router.get(
   '/userstorypoints/:id',

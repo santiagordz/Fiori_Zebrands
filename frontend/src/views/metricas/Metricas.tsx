@@ -38,7 +38,9 @@ const Metricas: FC<MetricasProps> = ({}) => {
         </TabPanel>
         <TabPanel>
           <Panel>
-            <MetricasEpics />
+            <div className="w-full">
+              <MetricasEpics />
+            </div>
           </Panel>
         </TabPanel>
       </Tabs>
