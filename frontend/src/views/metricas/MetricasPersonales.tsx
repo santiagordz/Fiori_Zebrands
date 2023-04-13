@@ -34,6 +34,8 @@ const MetricasPersonales: FC<MetricasPersonalesProps> = ({  }) => {
   const [data2, setData2] = useState<any[]>([]);
   const [data3, setData3] = useState<any[]>([]);
   const [data4, setData4] = useState<any[]>([]);
+  const [data5, setData5] = useState<any[]>([]);
+  const [data6, setData6] = useState<any[]>([]);
 
   const getIssuesByUser = async () => {
     if(sprintsValuesArray.length != 0){
@@ -105,11 +107,35 @@ const MetricasPersonales: FC<MetricasPersonalesProps> = ({  }) => {
     };
   };
 
+  const getPersonalStorypointsProgressive = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8000/sprintsdata/personalSUM/${idjira}`);
+      const data = response.data.issues[0];
+      setData5(data);
+      return data;
+    } catch (error) {
+      console.error(error);
+    };
+  };
+
+  const getPersonalStorypointsProgressive2 = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8000/sprintsdata/personalSUMtodo/${idjira}`);
+      const data = response.data.issues[0];
+      setData6(data);
+      return data;
+    } catch (error) {
+      console.error(error);
+    };
+  };
+
   useEffect(() => {
     getIssuesByUser();
     getStoryPointsByUser();
     getLastSprintsStorypoints();
     getLastSprintsToDoStorypoints();
+    getPersonalStorypointsProgressive();
+    getPersonalStorypointsProgressive2();
   }, [sprintsSeleccionadas])
 
   console.log(data3)
@@ -166,6 +192,28 @@ const MetricasPersonales: FC<MetricasPersonalesProps> = ({  }) => {
           </label>
           <div className="pl-20 pt-12">
             <SameDataComposedChart data={data4} />
+            </div>
+            </div>
+            </div>
+            <div className="grid justify-items-center">
+        <div>
+          <label className="text-2xl">
+            {' '}
+            Storypoints done acumulados por sprint de {name}
+          </label>
+          <div className="pl-20 pt-12">
+            <SameDataComposedChart data={data5} />
+            </div>
+            </div>
+            </div>
+            <div className="grid justify-items-center">
+        <div>
+          <label className="text-2xl">
+            {' '}
+            Storypoints to do acumulados por sprint de {name}
+          </label>
+          <div className="pl-20 pt-12">
+            <SameDataComposedChart data={data6} />
             </div>
             </div>
             </div>

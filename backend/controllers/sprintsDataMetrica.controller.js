@@ -187,3 +187,99 @@ exports.fetchToDoStoryPointsLastEpics = async (req, res, next) => {
     res.status(500).json({ message: 'Error al obtener los epics.' });
   }
 };
+
+exports.fetchPersonalStoryPointsProgressiveLastSprints = async (
+  req,
+  res,
+  next
+) => {
+  const userId = req.params.id;
+  try {
+    const issues =
+      await sprintsDataModel.getPersonalStoryPointsProgressiveLastSprints(
+        userId
+      );
+    res.json({ issues });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al obtener los issues.' });
+  }
+};
+
+exports.fetchPersonalToDoStoryPointsProgressiveLastSprints = async (
+  req,
+  res,
+  next
+) => {
+  const userId = req.params.id;
+  try {
+    const issues =
+      await sprintsDataModel.getPersonalToDoStoryPointsProgressiveLastSprints(
+        userId
+      );
+    res.json({ issues });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al obtener los issues.' });
+  }
+};
+
+exports.fetchDoneStoryPointsProgressiveLastSprints = async (
+  req,
+  res,
+  next
+) => {
+  try {
+    const sprints =
+      await sprintsDataModel.getDoneStoryPointsProgressiveLastSprints();
+    res.json({ sprints });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al obtener los issues.' });
+  }
+};
+
+exports.fetchToDoStoryPointsProgressiveLastSprints = async (
+  req,
+  res,
+  next
+) => {
+  try {
+    const sprints =
+      await sprintsDataModel.getToDoStoryPointsProgressiveLastSprints();
+    res.json({ sprints });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al obtener los issues.' });
+  }
+};
+
+exports.fetchDoneStoryPointsProgressiveLastEpics = async (
+  req,
+  res,
+  next
+) => {
+  try {
+    const sprints =
+      await sprintsDataModel.getDoneStoryPointsProgressiveLastEpics();
+    res.json({ sprints });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al obtener los epics.' });
+  }
+};
+
+exports.fetchToDoStoryPointsProgressiveLastEpics = async (
+  req,
+  res,
+  next
+) => {
+  try {
+    const sprints =
+      await sprintsDataModel.getToDoStoryPointsProgressiveLastEpics();
+    res.json({ sprints });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al obtener los epics.' });
+  }
+};

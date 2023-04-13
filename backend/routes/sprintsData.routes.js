@@ -56,5 +56,35 @@ router.get(
   sprintsDataController.fetchToDoStoryPointsLastEpics
 );
 
-router.get('/:ids', sprintsDataController.fetchSprintsByIds);
+router.get(
+  '/personalSUM/:id',
+  sprintsDataController.fetchPersonalStoryPointsProgressiveLastSprints
+);
+
+router.get(
+  '/personalSUMtodo/:id',
+  sprintsDataController.fetchPersonalToDoStoryPointsProgressiveLastSprints
+);
+
+router.get(
+  '/SUMdoneglobal',
+  sprintsDataController.fetchDoneStoryPointsProgressiveLastSprints
+);
+
+router.get(
+  '/SUMtodoglobal',
+  sprintsDataController.fetchToDoStoryPointsProgressiveLastSprints
+);
+
+router.get(
+  '/epicsSUMdoneglobal',
+  sprintsDataController.fetchDoneStoryPointsProgressiveLastEpics
+);
+
+router.get(
+  '/epicsSUMtodoglobal',
+  sprintsDataController.fetchToDoStoryPointsProgressiveLastEpics
+);
+
+router.get('/sprints/:ids', sprintsDataController.fetchSprintsByIds);
 module.exports = router;

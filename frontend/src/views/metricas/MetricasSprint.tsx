@@ -33,6 +33,8 @@ const MetricasSprint: FC<MetricasSprintProps> = ({}) => {
   const [chart2Data, setChart2Data] = useState<any[]>([]);
   const [chart3Data, setChart3Data] = useState<any[]>([]);
   const [chart4Data, setChart4Data] = useState<any[]>([]);
+  const [chart5Data, setChart5Data] = useState<any[]>([]);
+  const [chart6Data, setChart6Data] = useState<any[]>([]);
 
   const getDataSprintsById = async () => {
     if (sprintsValuesArray.length === 0) {
@@ -41,7 +43,7 @@ const MetricasSprint: FC<MetricasSprintProps> = ({}) => {
 
     try {
       const urlPath = sprintsValuesArray.join(',');
-      const response = await axios.get(`${URI}/${urlPath}`);
+      const response = await axios.get(`${URI}/sprints/${urlPath}`);
       const data = response.data.sprints[0];
       setChartData(data);
       return data;
@@ -93,12 +95,40 @@ const MetricasSprint: FC<MetricasSprintProps> = ({}) => {
       console.error(error);
     }
   };
+  
+  const getStoryPointsDoneLastSprintsProgressive = async () => {
+    try {
+      const response = await axios.get(
+        `${URI}/SUMdoneglobal`
+      );
+      const data = response.data.sprints[0];
+      setChart5Data(data);
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getStoryPointsToDoLastSprintsProgressive = async () => {
+    try {
+      const response = await axios.get(
+        `${URI}/SUMtodoglobal`
+      );
+      const data = response.data.sprints[0];
+      setChart6Data(data);
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     getDataSprintsById();
     getDataStoryPointsById();
     getStoryPointsDoneLastSprints();
     getStoryPointsToDoLastSprints();
+    getStoryPointsDoneLastSprintsProgressive();
+    getStoryPointsToDoLastSprintsProgressive();
   }, [sprintsSeleccionadas]);
 
   console.log(chart3Data)
@@ -155,6 +185,28 @@ const MetricasSprint: FC<MetricasSprintProps> = ({}) => {
           </label>
           <div className="pl-20 pt-12">
             <SameDataComposedChart data={chart4Data} />
+            </div>
+            </div>
+            </div>
+            <div className="grid justify-items-center">
+        <div>
+          <label className="text-2xl">
+            {' '}
+            Storypoints DONE acumulados en los ultimos sprints
+          </label>
+          <div className="pl-20 pt-12">
+            <SameDataComposedChart data={chart5Data} />
+            </div>
+            </div>
+            </div>
+            <div className="grid justify-items-center">
+        <div>
+          <label className="text-2xl">
+            {' '}
+            Storypoints To Do acumulados en los ultimos sprints
+          </label>
+          <div className="pl-20 pt-12">
+            <SameDataComposedChart data={chart6Data} />
             </div>
             </div>
             </div>

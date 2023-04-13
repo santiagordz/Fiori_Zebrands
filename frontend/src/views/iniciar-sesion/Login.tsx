@@ -5,7 +5,7 @@ import GoogleLogo from '../../assets/Google__G__Logo.svg';
 import Geometry from '../../assets/geometry.png';
 import zebrandsLogo from '../../assets/zebrandsLogo.svg';
 import { userDataContext } from '../../contexts';
-
+import axios from 'axios';
 interface LoginProps {}
 
 const URI = 'http://localhost:8000/login/google';
@@ -37,6 +37,7 @@ const Login: FC<LoginProps> = ({}) => {
       timer = setInterval(() => {
         if (popUp.closed) {
           getUser();
+          axios.post(`localhost:8000/issues`)
           if (timer) {
             clearInterval(timer);
           }

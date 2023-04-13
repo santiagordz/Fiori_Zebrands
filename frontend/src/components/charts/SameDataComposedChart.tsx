@@ -49,7 +49,7 @@ export default function SameDataComposedChart({ data }: SameDataComposedChartPro
         <CartesianGrid stroke="#f5f5f5" />
         <XAxis dataKey="nombre" tick={false} /> {/* Aquí se configura el eje X para ocultar los ticks */}
         <YAxis domain={[minY - yAxisPadding, maxY + yAxisPadding]} />
-        <Tooltip content={<CustomTooltip />} />
+        <Tooltip  />
         <Legend />
         <Bar dataKey="total_story_points" barSize={20} fill="#413ea0" />
         <Line type="monotone" dataKey="total_story_points" stroke="#ff7300" />
