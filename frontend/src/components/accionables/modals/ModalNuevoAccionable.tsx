@@ -7,6 +7,7 @@ import CrossIcon from "@atlaskit/icon/glyph/cross";
 
 interface ModalNuevoAccionableProps {
   setIsNewAccionableOpen: (value: boolean) => void;
+  agregarAccionable: (accionable: any) => void;
 }
 
 const labelStyle =
@@ -16,12 +17,14 @@ const Style: React.CSSProperties = {};
 
 const ModalNuevoAccionable: FC<ModalNuevoAccionableProps> = ({
   setIsNewAccionableOpen,
+  agregarAccionable,
 }) => {
   const nanoid = customAlphabet("1234567890", 5);
 
   const [newAccionable, setNewAccionable] = useState<any>({
     id: 0,
     accionable: "",
+    fecha: new Date().toLocaleDateString(),
   });
 
   //ponerErrores
@@ -62,6 +65,12 @@ const ModalNuevoAccionable: FC<ModalNuevoAccionableProps> = ({
               <label htmlFor="accionable" className={labelStyle}>
                 Accionable
               </label>
+
+              <p className="text-xs max-w-xl">
+                Escribe el accionable que te gustaría agregar. Recuerda que debe
+                ser un objetivo que puedas cumplir.
+              </p>
+
               <input
                 value={newAccionable.accionable}
                 onChange={(e) => {
@@ -89,7 +98,18 @@ const ModalNuevoAccionable: FC<ModalNuevoAccionableProps> = ({
             >
               Cancelar
             </Button>
-            <Button appearance="primary">Agregar accionable</Button>
+            <Button
+              appearance="primary"
+              onClick={() => {
+                agregarAccionable({
+                  ...newAccionable,
+                  fecha: new Date().toLocaleDateString(),
+                });
+                setIsNewAccionableOpen(false);
+              }}
+            >
+              Agregar accionable
+            </Button>
           </div>
         </div>
       </motion.div>

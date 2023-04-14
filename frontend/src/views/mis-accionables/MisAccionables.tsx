@@ -5,14 +5,26 @@ import { useNavigate } from "react-router-dom";
 import DesignTemplate from "../../components/design-template/DesignTemplate";
 import ModalNuevoAccionable from "../../components/accionables/modals/ModalNuevoAccionable";
 import BoxAccionable from "../../components/accionables/modals/accionable/BoxAccionable";
-import Tag from "@atlaskit/tag/dist/types/tag";
+import ErrorIcon from "@atlaskit/icon/glyph/error";
+import WarningIcon from "@atlaskit/icon/glyph/warning";
+import CheckCircleIcon from "@atlaskit/icon/glyph/check-circle";
 
-interface MisAccionablesProps {}
+interface MisAccionablesProps {
+  setIsNewAccionableOpen: (value: boolean) => void;
+  agregarAccionable: (accionable: any) => void;
+}
 
 const MisAccionables = ({}) => {
   const [isNewAccionableOpen, setIsNewAccionableOpen] =
     useState<boolean>(false);
-  const navigate = useNavigate();
+  const [accionables, setAccionables] = useState<any[]>([]);
+
+  const agregarAccionable = (accionable: any) => {
+    setAccionables((prevAccionables) => [
+      ...prevAccionables,
+      { ...accionable, fecha: new Date().toLocaleDateString() },
+    ]);
+  };
 
   return (
     <>
@@ -21,7 +33,7 @@ const MisAccionables = ({}) => {
           <Button
             appearance="subtle"
             iconBefore={
-              <AddIcon label="agregar accionable" primaryColor="#0055CC" />
+              <AddIcon label="agregar accionable" primaryColor="#00B050" />
             }
             onClick={() => setIsNewAccionableOpen(true)}
           >
@@ -29,41 +41,43 @@ const MisAccionables = ({}) => {
           </Button>
         }
       >
-        <div className="flex flex-col gap-3">
-          <div>
-            <p className="font-semibold text-m text-red-700 ">Prioridad Alta</p>
-          </div>
-
-          <BoxAccionable accionable={"hola"} id={0} />
-          <BoxAccionable accionable={"adiós"} id={0} />
-          <BoxAccionable accionable={"ven"} id={0} />
-
-          <div className="flex items-center">
-            <div id="tag" className="scale-[0.9]">
-              <Tag text="Prioridad Alta" appearance="rounded" color="green" />
-            </div>
-          </div>
+        <div className="grid grid-cols-2 gap-5 pb-5">
+          <div className="flex flex-col gap-5 bg-[#ffffff] py-5 px-5 rounded-sm shadow-sm overflow-y-auto max-h-[40rem] min-w-[28rem]"></div>
         </div>
 
-        <div className="flex flex-col gap-3">
-          <div>
-            <p className="font-semibold text-m text-amber-500 ">
-              Prioridad Media
-            </p>
-          </div>
+        <div className="flex items-center">
+          <p className=" font-semibold flex flex-row text-s text-danger">
+            Prioridad Alta
+          </p>
         </div>
 
-        <div className="flex flex-col gap-3">
-          <div>
-            <p className="font-semibold text-m text-lime-600 ">
-              Prioridad Baja
-            </p>
-          </div>
+        <div className="flex items-center">
+          <p className=" font-semibold flex flex-row text-s text-mediumDanger">
+            Prioridad Media
+          </p>
+        </div>
+
+        <div className="flex items-center">
+          <p className=" font-semibold flex flex-row text-s text-green">
+            Prioridad Baja
+          </p>
+
+          {accionables.map((accionable) => (
+            <BoxAccionable
+              key={accionable.id}
+              accionable={accionable.accionable}
+              id={accionable.id}
+              fecha={accionable.fecha}
+            />
+          ))}
         </div>
       </DesignTemplate>
 
       {isNewAccionableOpen && (
-        <ModalNuevoAccionable setIsNewAccionableOpen={setIsNewAccionableOpen} />
+        <ModalNuevoAccionable
+          setIsNewAccionableOpen={setIsNewAccionableOpen}
+          agregarAccionable={agregarAccionable}
+        />
       )}
     </>
   );
