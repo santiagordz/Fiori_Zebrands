@@ -117,12 +117,12 @@ const FormStep: FC<FormStepProps> = ({
 
   return (
     <div
-      className={`w-full flex flex-col justify-center items-center gap-9 ${
+      className={`min-w-full flex flex-col justify-center items-center gap-9 ${
         numPregunta != formPage && 'hidden'
       }`}
     >
-      <div className="flex flex-col items-center justify-center gap-3 w-full">
-        <div className="flex flex-col items-center justify-center gap-2 w-full ">
+      <div className="flex flex-col items-center justify-center gap-3 w-auto">
+        <div className="flex flex-col items-center justify-center gap-2">
           <p className="uppercase text-selectBold text-xs font-bold">
             Pregunta {numPregunta}/{totalPreguntas}
           </p>
@@ -130,7 +130,7 @@ const FormStep: FC<FormStepProps> = ({
             {question.pregunta}
           </h2>
         </div>
-        <div className="w-full text-left z-[2]">
+        <div className="w-full text-left">
           <TiposPregunta
             idTipoPregunta={question.id_tipo_pregunta}
             opciones={getOpciones()}
@@ -141,7 +141,7 @@ const FormStep: FC<FormStepProps> = ({
             handleRangeOnchange={handleRangeChange}
           />
         </div>
-        <div className="flex items-center justify-end w-full">
+        <div className="flex items-center !justify-end w-full">
           {question.id_tipo_pregunta === 1 ||
           question.id_tipo_pregunta === 2 ? (
             <>
@@ -166,7 +166,7 @@ const FormStep: FC<FormStepProps> = ({
       {numPregunta === 1 ? (
         nextButton
       ) : (
-        <div className="flex gap-14">
+        <div className="flex gap-0 lg:gap-40 lg:pb-2 pb-4">
           <Button
             appearance="default"
             iconBefore={<ArrowLeftIcon label="pregunta anterior" />}

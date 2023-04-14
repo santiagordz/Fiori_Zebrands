@@ -13,9 +13,9 @@ interface PanelRetrosProps {
 }
 
 const divGroupsStyle =
-  'flex flex-col gap-5 bg-[#ffffff] py-5 px-5 rounded-sm shadow-sm overflow-y-auto max-h-[40rem] min-w-[28rem]';
+  'flex flex-col gap-2 lg:gap-5 bg-[#ffffff] py-4 px-4 lg:py-5 lg:px-5 rounded-sm shadow-sm overflow-y-auto min-w-auto min-h-auto lg:max-h-[40rem] lg:min-w-[28rem]';
 
-const cardsTitles = 'text-sm font-semibold text-information';
+const cardsTitles = 'text-sm font-semibold text-information text-center';
 
 const PanelRetros: FC<PanelRetrosProps> = ({
   tryFetch,
@@ -33,7 +33,7 @@ const PanelRetros: FC<PanelRetrosProps> = ({
     return <Spinner message="Cargando retrospectivas..." />;
 
   return (
-    <div className="grid grid-cols-2 gap-5 pb-5">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-5 pb-2 lg:pb-5">
       <div className={divGroupsStyle}>
         <h2 className={cardsTitles}>
           Mis retrospectivas pendientes de responder
@@ -64,7 +64,7 @@ const PanelRetros: FC<PanelRetrosProps> = ({
         <h2 className={cardsTitles}>
           Mis retrospectivas recientemente completadas
         </h2>
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-2 lg:gap-5">
           {retrosCompletadas.length > 0 ? (
             retrosCompletadas.map((retrospectiva: Retrospectiva) => {
               return (
@@ -93,7 +93,7 @@ const PanelRetros: FC<PanelRetrosProps> = ({
         <h2 className={cardsTitles}>
           Otras retrospectivas en curso del equipo
         </h2>
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-2 lg:gap-5">
           {otrasRetros.length > 0 ? (
             otrasRetros.map((retrospectiva: Retrospectiva) => {
               return (
@@ -119,7 +119,7 @@ const PanelRetros: FC<PanelRetrosProps> = ({
       </div>
       <div className={divGroupsStyle}>
         <h2 className={cardsTitles}>Retrospectivas finalizadas</h2>
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-2 lg:gap-5">
           {retrosFinalizadas.length > 0 ? (
             retrosFinalizadas.map((retrospectiva: Retrospectiva) => {
               return (
