@@ -26,3 +26,17 @@ exports.postJiraUsers = async (req, res, next) => {
   }
   res.send('Usuarios de Jira guardados en la base de datos.');
 };
+
+exports.getOneJiraUser = async (req, res, next) => {
+  const id_jira = req.params.id_jira;
+  try {
+    const usuario = await usuarios_jiraModel
+      .getOneJiraUser(id_jira)
+      .then(([rows, fieldData]) => {
+        res.json(rows);
+      });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al obtener el usuario.' });
+  }
+};

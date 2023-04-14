@@ -54,7 +54,7 @@ const ModalAsignarResponsable: FC<AsignarResponsableProps> = ({
         getUsers();
         setRolActual(2);
         addFlag(
-          `¡Excelente! ${nombre} ahora tiene el rol de responsable,`,
+          `¡Excelente! ${nombre} ahora tiene el rol de responsable.`,
           InfoIcon,
           'info'
         );
