@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DesignTemplate from "../../components/design-template/DesignTemplate";
 import ModalNuevoAccionable from "../../components/accionables/modals/ModalNuevoAccionable";
+import BoxAccionable from "../../components/accionables/modals/accionable/BoxAccionable";
+import Tag from "@atlaskit/tag/dist/types/tag";
 
 interface MisAccionablesProps {}
 
@@ -29,12 +31,32 @@ const MisAccionables = ({}) => {
       >
         <div className="flex flex-col gap-3">
           <div>
-            <p className="font-semibold text-xs">¿Qué es un accionable?</p>
-            <p className="text-xs text-[#626F86] mt-1">
-              Las preguntas en este espacio se harán predeterminadas, lo que
-              quiere decir que se establecerán como las preguntas seleccionadas
-              por default para las futuras retrospectivas una vez que inicies
-              esta retrospectiva.
+            <p className="font-semibold text-m text-red-700 ">Prioridad Alta</p>
+          </div>
+
+          <BoxAccionable accionable={"hola"} id={0} />
+          <BoxAccionable accionable={"adiós"} id={0} />
+          <BoxAccionable accionable={"ven"} id={0} />
+
+          <div className="flex items-center">
+            <div id="tag" className="scale-[0.9]">
+              <Tag text="Prioridad Alta" appearance="rounded" color="green" />
+            </div>
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-3">
+          <div>
+            <p className="font-semibold text-m text-amber-500 ">
+              Prioridad Media
+            </p>
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-3">
+          <div>
+            <p className="font-semibold text-m text-lime-600 ">
+              Prioridad Baja
             </p>
           </div>
         </div>
