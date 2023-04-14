@@ -8,7 +8,7 @@ interface PiechartProps {
   }[];
 }
 
-const COLORS = ["#0E9CFF", "#1D7AFC", "#FFBB28", "#FF8042"];
+const COLORS = ["#0E9CFF", "#1D7AFC", "#CCCCCC", "#FF8042"];
 
 const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({
