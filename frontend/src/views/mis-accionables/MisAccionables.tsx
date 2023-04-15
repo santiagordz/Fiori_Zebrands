@@ -33,7 +33,7 @@ const MisAccionables = ({}) => {
           <Button
             appearance="subtle"
             iconBefore={
-              <AddIcon label="agregar accionable" primaryColor="#00B050" />
+              <AddIcon label="agregar accionable" primaryColor="#5a67d8" />
             }
             onClick={() => setIsNewAccionableOpen(true)}
           >
@@ -41,35 +41,38 @@ const MisAccionables = ({}) => {
           </Button>
         }
       >
-        <div className="grid grid-cols-2 gap-5 pb-5">
-          <div className="flex flex-col gap-5 bg-[#ffffff] py-5 px-5 rounded-sm shadow-sm overflow-y-auto max-h-[40rem] min-w-[28rem]"></div>
-        </div>
+        <div className="grid grid-cols-3 gap-5 pb-5">
+          <div className="flex flex-col gap-5 bg-[#ffffff] py-5 px-5 rounded-sm shadow-sm overflow-y-auto max-h-[40rem] min-w-[28rem]">
+            <div className="flex items-center">
+              <p className=" font-semibold flex flex-row text-s text-danger">
+                Prioridad Alta
+              </p>
+            </div>
+          </div>
 
-        <div className="flex items-center">
-          <p className=" font-semibold flex flex-row text-s text-danger">
-            Prioridad Alta
-          </p>
-        </div>
+          <div className="flex flex-col gap-5 bg-[#ffffff] py-5 px-5 rounded-sm shadow-sm overflow-y-auto max-h-[40rem] min-w-[28rem]">
+            <div className="flex items-center">
+              <p className=" font-semibold flex flex-row text-s text-mediumDanger">
+                Prioridad Media
+              </p>
+            </div>
+          </div>
 
-        <div className="flex items-center">
-          <p className=" font-semibold flex flex-row text-s text-mediumDanger">
-            Prioridad Media
-          </p>
-        </div>
-
-        <div className="flex items-center">
-          <p className=" font-semibold flex flex-row text-s text-green">
-            Prioridad Baja
-          </p>
-
-          {accionables.map((accionable) => (
-            <BoxAccionable
-              key={accionable.id}
-              accionable={accionable.accionable}
-              id={accionable.id}
-              fecha={accionable.fecha}
-            />
-          ))}
+          <div className="flex flex-col gap-5 bg-[#ffffff] py-5 px-5 rounded-sm shadow-sm overflow-y-auto max-h-[40rem] min-w-[28rem]">
+            <div className="flex flex-col gap-3 ">
+              <p className=" font-semibold flex flex-row text-s text-green">
+                Prioridad Baja
+              </p>
+              {accionables.map((accionable) => (
+                <BoxAccionable
+                  key={accionable.id}
+                  accionable={accionable.accionable}
+                  id={accionable.id}
+                  fecha={accionable.fecha}
+                />
+              ))}
+            </div>
+          </div>
         </div>
       </DesignTemplate>
 
