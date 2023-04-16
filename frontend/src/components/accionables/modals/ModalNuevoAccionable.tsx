@@ -4,6 +4,7 @@ import Blanket from "@atlaskit/blanket";
 import Button from "@atlaskit/button";
 import { motion } from "framer-motion";
 import CrossIcon from "@atlaskit/icon/glyph/cross";
+import TextArea from "@atlaskit/textarea";
 
 interface ModalNuevoAccionableProps {
   setIsNewAccionableOpen: (value: boolean) => void;
@@ -12,8 +13,6 @@ interface ModalNuevoAccionableProps {
 
 const labelStyle =
   "after:content-['*'] after:text-[#ae2a19] text-xs font-semibold text-label";
-
-const Style: React.CSSProperties = {};
 
 const ModalNuevoAccionable: FC<ModalNuevoAccionableProps> = ({
   setIsNewAccionableOpen,
@@ -62,16 +61,10 @@ const ModalNuevoAccionable: FC<ModalNuevoAccionableProps> = ({
 
           <div className="w-full flex flex-col gap-6 h-fit max-h-[55vh] px-3 overflow-y-auto pb-2">
             <div className="flex flex-col gap-2">
-              <label htmlFor="accionable" className={labelStyle}>
-                Accionable
-              </label>
+              <p className="font-semibold text-xs">Accionable:</p>
+              <p className="text-xs text-[#626F86] mt-1">yay yay yupi</p>
 
-              <p className="text-xs max-w-xl">
-                Escribe el accionable que te gustaría agregar. Recuerda que debe
-                ser un objetivo que puedas cumplir.
-              </p>
-
-              <input
+              <TextArea
                 value={newAccionable.accionable}
                 onChange={(e) => {
                   setNewAccionable({
@@ -79,7 +72,6 @@ const ModalNuevoAccionable: FC<ModalNuevoAccionableProps> = ({
                     accionable: e.target.value,
                   });
                 }}
-                type="text"
                 name="accionable"
                 className="text-sm w-full border-2 rounded-sm p-2 focus:border-blue-500 hover:bg-gray-100 placeholder:text-xs h-10"
                 autoComplete="off"
