@@ -1,4 +1,6 @@
 import React, { FC, useState, useEffect } from "react";
+import { ErrorMessage, HelperMessage } from "@atlaskit/form";
+
 import { customAlphabet } from "nanoid";
 import Blanket from "@atlaskit/blanket";
 import Button from "@atlaskit/button";
@@ -11,8 +13,7 @@ interface ModalNuevoAccionableProps {
   agregarAccionable: (accionable: any) => void;
 }
 
-const labelStyle =
-  "after:content-['*'] after:text-[#ae2a19] text-xs font-semibold text-label";
+const MAX_CARACTERES = 200;
 
 const ModalNuevoAccionable: FC<ModalNuevoAccionableProps> = ({
   setIsNewAccionableOpen,
@@ -26,7 +27,15 @@ const ModalNuevoAccionable: FC<ModalNuevoAccionableProps> = ({
     fecha: new Date().toLocaleDateString(),
   });
 
-  //ponerErrores
+  const [excedeLimite, setExcedeLimite] = useState(false);
+
+  const verificarLimite = (texto: string) => {
+    if (texto.length > MAX_CARACTERES) {
+      setExcedeLimite(true);
+    } else {
+      setExcedeLimite(false);
+    }
+  };
 
   useEffect(() => {
     setNewAccionable({
@@ -71,12 +80,21 @@ const ModalNuevoAccionable: FC<ModalNuevoAccionableProps> = ({
                     ...newAccionable,
                     accionable: e.target.value,
                   });
+                  verificarLimite(e.target.value);
                 }}
                 name="accionable"
                 className="text-sm w-full border-2 rounded-sm p-2 focus:border-blue-500 hover:bg-gray-100 placeholder:text-xs h-10"
                 autoComplete="off"
                 placeholder="Ingresa tu nuevo accionable"
               />
+
+              <div className="w-full flex flex-col justify-end items-end">
+                {excedeLimite && (
+                  <ErrorMessage>
+                    Tu respuesta excede el número de caracteres permitidos
+                  </ErrorMessage>
+                )}
+              </div>
             </div>
           </div>
 
@@ -93,11 +111,15 @@ const ModalNuevoAccionable: FC<ModalNuevoAccionableProps> = ({
             <Button
               appearance="primary"
               onClick={() => {
-                agregarAccionable({
-                  ...newAccionable,
-                  fecha: new Date().toLocaleDateString(),
-                });
-                setIsNewAccionableOpen(false);
+                if (newAccionable.accionable.length <= MAX_CARACTERES) {
+                  agregarAccionable({
+                    ...newAccionable,
+                    fecha: new Date().toLocaleDateString(),
+                  });
+                  setIsNewAccionableOpen(false);
+                } else {
+                  setExcedeLimite(true);
+                }
               }}
               isDisabled={!newAccionable.accionable.trim()}
             >
