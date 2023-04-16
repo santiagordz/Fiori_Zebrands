@@ -20,24 +20,43 @@ const MisAccionables = ({}) => {
   const [accionables, setAccionables] = useState<any[]>([]);
 
   const agregarAccionable = (accionable: any) => {
+    const hoy = new Date();
+    const fechaAccionable = new Date(accionable.fecha);
+    const diasTranscurridos = Math.floor(
+      (hoy.getTime() - fechaAccionable.getTime()) / (1000 * 3600 * 24)
+    );
+    let prioridad = "baja";
+    if (diasTranscurridos >= 14 && diasTranscurridos < 21) {
+      prioridad = "media";
+    } else if (diasTranscurridos >= 21) {
+      prioridad = "alta";
+    }
     setAccionables((prevAccionables) => [
       ...prevAccionables,
-      { ...accionable, fecha: new Date().toLocaleDateString() },
+      { ...accionable, fecha: new Date().toLocaleDateString(), prioridad },
     ]);
   };
+
+  const accionablesPrioridadBaja = accionables.filter(
+    (accionable) => accionable.prioridad === "baja"
+  );
+  const accionablesPrioridadMedia = accionables.filter(
+    (accionable) => accionable.prioridad === "media"
+  );
+  const accionablesPrioridadAlta = accionables.filter(
+    (accionable) => accionable.prioridad === "alta"
+  );
 
   return (
     <>
       <DesignTemplate
         buttons={
           <Button
-            appearance="subtle"
-            iconBefore={
-              <AddIcon label="agregar accionable" primaryColor="#5a67d8" />
-            }
+            appearance="primary"
+            iconBefore={<AddIcon label="agregar accionable" />}
             onClick={() => setIsNewAccionableOpen(true)}
           >
-            <p className="text-information">Nuevo Accionable</p>
+            Agregar accionable
           </Button>
         }
       >
@@ -48,6 +67,14 @@ const MisAccionables = ({}) => {
                 Prioridad Alta
               </p>
             </div>
+            {accionablesPrioridadAlta.map((accionable) => (
+              <BoxAccionable
+                key={accionable.id}
+                accionable={accionable.accionable}
+                id={accionable.id}
+                fecha={accionable.fecha}
+              />
+            ))}
           </div>
 
           <div className="flex flex-col gap-5 bg-[#ffffff] py-5 px-5 rounded-sm shadow-sm overflow-y-auto max-h-[40rem] min-w-[28rem]">
@@ -56,6 +83,14 @@ const MisAccionables = ({}) => {
                 Prioridad Media
               </p>
             </div>
+            {accionablesPrioridadMedia.map((accionable) => (
+              <BoxAccionable
+                key={accionable.id}
+                accionable={accionable.accionable}
+                id={accionable.id}
+                fecha={accionable.fecha}
+              />
+            ))}
           </div>
 
           <div className="flex flex-col gap-5 bg-[#ffffff] py-5 px-5 rounded-sm shadow-sm overflow-y-auto max-h-[40rem] min-w-[28rem]">
@@ -63,7 +98,7 @@ const MisAccionables = ({}) => {
               <p className=" font-semibold flex flex-row text-s text-green">
                 Prioridad Baja
               </p>
-              {accionables.map((accionable) => (
+              {accionablesPrioridadBaja.map((accionable) => (
                 <BoxAccionable
                   key={accionable.id}
                   accionable={accionable.accionable}

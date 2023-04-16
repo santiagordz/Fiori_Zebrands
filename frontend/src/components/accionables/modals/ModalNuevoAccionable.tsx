@@ -99,6 +99,7 @@ const ModalNuevoAccionable: FC<ModalNuevoAccionableProps> = ({
                 });
                 setIsNewAccionableOpen(false);
               }}
+              isDisabled={!newAccionable.accionable.trim()}
             >
               Agregar accionable
             </Button>
