@@ -63,7 +63,8 @@ const MisAccionables = ({}) => {
         <div className="grid grid-cols-3 gap-5 pb-5">
           <div className="flex flex-col gap-5 bg-[#ffffff] py-5 px-5 rounded-sm shadow-sm overflow-y-auto max-h-[40rem] min-w-[28rem]">
             <div className="flex items-center">
-              <p className=" font-semibold flex flex-row text-s text-danger">
+              <ErrorIcon label="error" size="medium" primaryColor="#DE350B" />
+              <p className="font-semibold flex flex-row text-s text-danger ml-2">
                 Prioridad Alta
               </p>
             </div>
@@ -79,7 +80,12 @@ const MisAccionables = ({}) => {
 
           <div className="flex flex-col gap-5 bg-[#ffffff] py-5 px-5 rounded-sm shadow-sm overflow-y-auto max-h-[40rem] min-w-[28rem]">
             <div className="flex items-center">
-              <p className=" font-semibold flex flex-row text-s text-mediumDanger">
+              <WarningIcon
+                size="medium"
+                label="Prioridad media"
+                primaryColor="#CD742D"
+              />
+              <p className="font-semibold flex flex-row text-s text-mediumDanger ml-2">
                 Prioridad Media
               </p>
             </div>
@@ -94,19 +100,24 @@ const MisAccionables = ({}) => {
           </div>
 
           <div className="flex flex-col gap-5 bg-[#ffffff] py-5 px-5 rounded-sm shadow-sm overflow-y-auto max-h-[40rem] min-w-[28rem]">
-            <div className="flex flex-col gap-3 ">
-              <p className=" font-semibold flex flex-row text-s text-green">
+            <div className="flex items-center">
+              <CheckCircleIcon
+                size="medium"
+                label="Prioridad media"
+                primaryColor="#4E9E70"
+              />
+              <p className="font-semibold flex flex-row text-s text-green ml-2">
                 Prioridad Baja
               </p>
-              {accionablesPrioridadBaja.map((accionable) => (
-                <BoxAccionable
-                  key={accionable.id}
-                  accionable={accionable.accionable}
-                  id={accionable.id}
-                  fecha={accionable.fecha}
-                />
-              ))}
             </div>
+            {accionablesPrioridadBaja.map((accionable) => (
+              <BoxAccionable
+                key={accionable.id}
+                accionable={accionable.accionable}
+                id={accionable.id}
+                fecha={accionable.fecha}
+              />
+            ))}
           </div>
         </div>
       </DesignTemplate>
