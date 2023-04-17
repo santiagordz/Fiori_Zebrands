@@ -42,8 +42,8 @@ module.exports = class StatusIssue {
     SELECT i.status, SUM(i.story_points) AS total_story_points
     FROM issues i
     JOIN sprints_issues isp ON i.clave = isp.id_issue
-    JOIN sprints ts ON ts.id = isp.id_sprint
-    WHERE ts.id IN (${placeholders})
+    JOIN sprints ts ON ts.id_jira = isp.id_sprint
+    WHERE ts.id_jira IN (${placeholders})
     GROUP BY i.status;
     `;
     return db.execute(sql, ids);

@@ -44,7 +44,6 @@ const MetricasSprint: FC<MetricasSprintProps> = ({}) => {
       const response = await axios.get(`${URI}/sprints/${urlPath}`);
       const data = response.data.sprints[0];
       setChartData(data);
-      console.log(data);
       return data;
     } catch (error) {
       console.error(error);
@@ -58,11 +57,9 @@ const MetricasSprint: FC<MetricasSprintProps> = ({}) => {
 
     try {
       const urlPath = sprintsValuesArray.join(',');
-      console.log(urlPath);
       const response = await axios.get(
         `${URI}/storypoints/${urlPath}`
       );
-      console.log(response);
       setChart2Data(response.data);
     } catch (error) {
       console.error(error);
@@ -155,11 +152,11 @@ const MetricasSprint: FC<MetricasSprintProps> = ({}) => {
           />
         </ChartCards>
 
-        <ChartCards title="Storypoints completados en los ultimos sprints">
+        <ChartCards title="Storypoints en To Do de los ultimos sprints">
           <SameDataComposedChart data={chart4Data} />
         </ChartCards>
 
-        <ChartCards title="Storypoints To Do acumulados en los ultimos sprints">
+        <ChartCards title="Storypoints en To Do acumulados por los ultimos sprints">
           <SameDataComposedChart
             data={chart6Data}
             barColor="#8bbbfd"
@@ -177,7 +174,7 @@ const MetricasSprint: FC<MetricasSprintProps> = ({}) => {
             )}
           </ChartCards>
 
-          <ChartCards title="Issues Totales y Completado">
+          <ChartCards title="Issues totales y completado">
             {chartData && chartData.length > 0 ? (
               <Piechart data={chartData} />
             ) : (

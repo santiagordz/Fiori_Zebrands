@@ -1,11 +1,11 @@
-import React, { FC, useState, useEffect } from 'react';
-import Select, { StylesConfig } from 'react-select';
 import axios from 'axios';
+import { useEffect, useState } from 'react';
+import Select from 'react-select';
 
 const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/sprints`;
 
 interface Sprint {
-  id: number;
+  id_jira: number;
   nombre: string;
 }
 
@@ -32,7 +32,7 @@ const DropdownSprints = ({ onSprintsSeleccionadasChange }: Props) => {
       const response = await axios.get(URI);
 
       const options = response.data.map((sprint: Sprint) => ({
-        value: sprint.id,
+        value: sprint.id_jira,
         label: sprint.nombre,
       }));
 
@@ -57,7 +57,6 @@ const DropdownSprints = ({ onSprintsSeleccionadasChange }: Props) => {
 
   useEffect(() => {
     onSprintsSeleccionadasChange(sprintsSeleccionadas);
-    console.log(sprintsSeleccionadas);
   }, [sprintsSeleccionadas]);
 
   const handleSprintsSeleccionadasChange = (sprints: any) => {
