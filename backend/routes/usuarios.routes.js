@@ -7,7 +7,7 @@ router.get('/auth', isAuth, async (req, res, next) => {
   res.json(req.user);
 });
 
-router.get('/info/:id', usuariosController.fetchUsuarioById);
+router.get('/info/one/:id', usuariosController.fetchUsuarioById);
 router.get('/info', usuariosController.fetchUsuarios);
 router.post('/createUser', usuariosController.createUsuario);
 router.delete(

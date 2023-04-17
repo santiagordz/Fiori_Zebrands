@@ -1,10 +1,9 @@
-import React, { FC } from "react";
-import DesignTemplate from "../../components/design-template/DesignTemplate";
-import Tabs, { Tab, TabList, TabPanel } from "@atlaskit/tabs";
-import MetricasSprint from "./MetricasSprint";
-import MetricasEpics from "./MetricasEpics";
-import MetricasPersonales from "./MetricasPersonales";
-import SameDataControlledChart from "../../components/charts/SameDataComposedChart";
+import Tabs, { Tab, TabList, TabPanel } from '@atlaskit/tabs';
+import React, { FC } from 'react';
+import DesignTemplate from '../../components/design-template/DesignTemplate';
+import MetricasEpics from './MetricasEpics';
+import MetricasPersonales from './MetricasPersonales';
+import MetricasSprint from './MetricasSprint';
 
 interface MetricasProps {}
 
@@ -18,30 +17,29 @@ export const Panel = ({
 
 const Metricas: FC<MetricasProps> = ({}) => {
   return (
-    <DesignTemplate>
-      <Tabs
-        onChange={(index) => console.log("Selected Tab", index + 1)}
-        id="default"
-      >
-        <TabList>
-          <Tab>Personales</Tab>
-          <Tab>Sprint</Tab>
-          <Tab>Epic</Tab>
-        </TabList>
+    <DesignTemplate tab={<div className="mt-5"></div>}>
+      <Tabs id="default">
+        <div className="absolute top-[-64px] w-full">
+          <TabList>
+            <Tab>Personales</Tab>
+            <Tab>Sprint</Tab>
+            <Tab>Epic</Tab>
+          </TabList>
+        </div>
         <TabPanel>
-          <Panel>
+          <div className="w-full">
             <MetricasPersonales />
-          </Panel>
+          </div>
         </TabPanel>
         <TabPanel>
-          <MetricasSprint />
+          <div className="w-full">
+            <MetricasSprint />
+          </div>
         </TabPanel>
         <TabPanel>
-          <Panel>
-            <div className="w-full">
-              <MetricasEpics />
-            </div>
-          </Panel>
+          <div className="w-full">
+            <MetricasEpics />
+          </div>
         </TabPanel>
       </Tabs>
     </DesignTemplate>

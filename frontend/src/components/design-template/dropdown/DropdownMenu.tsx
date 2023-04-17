@@ -37,7 +37,10 @@ const DropdownMenu: FC<DropdownMenuProps> = ({ children }) => {
         type="button"
         ref={buttonRef}
         className="flex items-center justify-centerrounded-sm p-1 scale-[0.9] rounded-sm"
-        onClick={() => setIsPressed((prevValue) => !prevValue)}
+        onClick={(e) => {
+          e.stopPropagation();
+          setIsPressed((prevValue) => !prevValue);
+        }}
       >
         <MoreVerticalIcon
           label="mas"

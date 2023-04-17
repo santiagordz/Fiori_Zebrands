@@ -4,10 +4,10 @@ import Piechart from '../../components/charts/Piechart';
 import DropdownSprints from '../../components/charts/DropdownSprints';
 import StackedBarChart from '../../components/charts/StackedBarchart';
 import SameDataComposedChart from '../../components/charts/SameDataComposedChart';
+import { ChartCards } from '../../components';
 
 interface MetricasSprintProps {}
 const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/sprintsdata`;
-
 
 const data5 = [
   { nombre: 'Sprint 1', total_story_points: 12 },
@@ -72,9 +72,7 @@ const MetricasSprint: FC<MetricasSprintProps> = ({}) => {
 
   const getStoryPointsDoneLastSprints = async () => {
     try {
-      const response = await axios.get(
-        `${URI}/sprintsdoneglobal`
-      );
+      const response = await axios.get(`${URI}/sprintsdoneglobal`);
       const data = response.data.sprints[0];
       setChart3Data(data);
       return data;
@@ -85,9 +83,7 @@ const MetricasSprint: FC<MetricasSprintProps> = ({}) => {
 
   const getStoryPointsToDoLastSprints = async () => {
     try {
-      const response = await axios.get(
-        `${URI}/sprintstodoglobal`
-      );
+      const response = await axios.get(`${URI}/sprintstodoglobal`);
       const data = response.data.sprints[0];
       setChart4Data(data);
       return data;
@@ -95,12 +91,10 @@ const MetricasSprint: FC<MetricasSprintProps> = ({}) => {
       console.error(error);
     }
   };
-  
+
   const getStoryPointsDoneLastSprintsProgressive = async () => {
     try {
-      const response = await axios.get(
-        `${URI}/SUMdoneglobal`
-      );
+      const response = await axios.get(`${URI}/SUMdoneglobal`);
       const data = response.data.sprints[0];
       setChart5Data(data);
       return data;
@@ -111,9 +105,7 @@ const MetricasSprint: FC<MetricasSprintProps> = ({}) => {
 
   const getStoryPointsToDoLastSprintsProgressive = async () => {
     try {
-      const response = await axios.get(
-        `${URI}/SUMtodoglobal`
-      );
+      const response = await axios.get(`${URI}/SUMtodoglobal`);
       const data = response.data.sprints[0];
       setChart6Data(data);
       return data;
@@ -131,18 +123,20 @@ const MetricasSprint: FC<MetricasSprintProps> = ({}) => {
     getStoryPointsToDoLastSprintsProgressive();
   }, [sprintsSeleccionadas]);
 
-  console.log(chart3Data)
   return (
-    <div className="w-full">
-      <div className="py-5 flex justify-left gap-6 border-b-2 border-zinc-200">
-        <div className="flex items-center">
-          <label className="text-lg pr-4">Sprint:</label>
+    <div className="flex flex-col gap-5">
+      <div className="gap-4 flex flex-col justify-left p-7 w-full rounded border border-gray-200 bg-white items-center">
+        <h2 className="flex-nowrap w-full font-medium text-sm text-information">
+          Métricas generales por sprint
+        </h2>
+        <div className="flex flex-col items-baseline gap-1 w-full">
+          <p className="font-semibold text-xs text-label">Sprints</p>
           <DropdownSprints
-            sprintsActuales={[]}
             onSprintsSeleccionadasChange={handleSprintSeleccionados}
           />
         </div>
       </div>
+<<<<<<< HEAD
       <div className="grid xl:grid-cols-2 sm:grid-cols-1 justify-center pt-10">
         <div className="grid justify-items-center">
           <div className="">
@@ -152,64 +146,42 @@ const MetricasSprint: FC<MetricasSprintProps> = ({}) => {
             </label>
           </div>
           <div className="">
+=======
+      <div className="grid grid-cols-3 grid-rows-2 justify-center gap-5 w-full h-[50rem]">
+        <ChartCards title="Story points del sprint">
+          {chart2Data && chart2Data.length > 0 ? (
+>>>>>>> 24cee3a952ef89854d82c014f6b9ab1b0d745a66
             <StackedBarChart data={chart2Data} />
-          </div>
-        </div>
-        <div className="grid justify-items-center">
-          <div>
-            <label className="text-2xl">
-              {' '}
-              Issues Totales y Completados
-            </label>
-          </div>
-          <div className="pl-20 pt-12">
+          ) : (
+            <p className="text-xs">
+              No hay datos para graficar con los filtros actuales
+            </p>
+          )}
+        </ChartCards>
+        <ChartCards title="Issues Totales y Completado">
+          {chartData && chartData.length > 0 ? (
             <Piechart data={chartData} />
-          </div>
-        </div>
-        <div className="grid justify-items-center">
-        <div>
-          <label className="text-2xl">
-            {' '}
-            Storypoints completados en los ultimos sprints
-          </label>
-          <div className="pl-20 pt-12">
-            <SameDataComposedChart data={chart3Data} />
-            </div>
-            </div>
-            </div>
-            <div className="grid justify-items-center">
-        <div>
-          <label className="text-2xl">
-            {' '}
-            Storypoints completados en los ultimos sprints
-          </label>
-          <div className="pl-20 pt-12">
-            <SameDataComposedChart data={chart4Data} />
-            </div>
-            </div>
-            </div>
-            <div className="grid justify-items-center">
-        <div>
-          <label className="text-2xl">
-            {' '}
-            Storypoints DONE acumulados en los ultimos sprints
-          </label>
-          <div className="pl-20 pt-12">
-            <SameDataComposedChart data={chart5Data} />
-            </div>
-            </div>
-            </div>
-            <div className="grid justify-items-center">
-        <div>
-          <label className="text-2xl">
-            {' '}
-            Storypoints To Do acumulados en los ultimos sprints
-          </label>
-          <div className="pl-20 pt-12">
-            <SameDataComposedChart data={chart6Data} />
-            </div>
-            </div>
-            </div>
+          ) : (
+            <p className="text-xs">
+              No hay datos para graficar con los filtros actuales
+            </p>
+          )}
+        </ChartCards>
+        <ChartCards title="Storypoints completados en los ultimos sprint">
+          <SameDataComposedChart data={chart3Data} />
+        </ChartCards>
+
+        <ChartCards title="Storypoints completados en los ultimos sprints">
+          <SameDataComposedChart data={chart4Data} />
+        </ChartCards>
+
+        <ChartCards title="Storypoints DONE acumulados en los ultimos sprints">
+          <SameDataComposedChart data={chart5Data} />
+        </ChartCards>
+
+        <ChartCards title="Storypoints To Do acumulados en los ultimos sprints">
+          <SameDataComposedChart data={chart6Data} />
+        </ChartCards>
       </div>
     </div>
   );

@@ -1,16 +1,13 @@
 import {
-  BarChart,
   Bar,
-  Cell,
+  BarChart,
+  ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
 } from 'recharts';
 
-import React, { FC } from 'react';
+import { FC } from 'react';
 
 function CustomTooltip({ payload, label, active }: any) {
   if (active) {

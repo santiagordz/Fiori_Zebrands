@@ -13,8 +13,6 @@ const MetricasEpics: FC<MetricasEpicsProps> = ({}) => {
     value: 'TPECG-3202',
     label: 'Implementar secciones de la aplicación',
   });
-
-  console.log(epicsSeleccionadas);
   const handleEpicsSeleccionados = (epics: string[]) => {
     setEpicsSeleccionadas(epics);
   };
@@ -25,7 +23,6 @@ const MetricasEpics: FC<MetricasEpicsProps> = ({}) => {
   const [chart4Data, setChart4Data] = useState<any[]>([]);
   const [chart5Data, setChart5Data] = useState<any[]>([]);
   const [chart6Data, setChart6Data] = useState<any[]>([]);
-
 
   const getData = async () => {
     const response = await fetch(
@@ -99,11 +96,9 @@ const MetricasEpics: FC<MetricasEpicsProps> = ({}) => {
     getToDoEpicsDoneGlobal();
     getEpicsDone();
     getToDoEpicsDone();
-
   }, [epicsSeleccionadas]);
 
-
-  console.log(chart3Data)
+  console.log(chart3Data);
   return (
     <div className="">
       <div className="py-5 flex justify-left gap-6 border-b-2 border-zinc-200 w-full">

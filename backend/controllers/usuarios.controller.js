@@ -17,8 +17,8 @@ exports.fetchUsuarios = async (req, res, next) => {
 };
 
 exports.fetchUsuarioById = async (req, res, next) => {
-  const usuarioId = req.params.id;
   try {
+    const usuarioId = req.params.id;
     const usuario = await Usuario.fetchUsuarioById(usuarioId);
     res.json({ usuario });
   } catch (error) {
@@ -65,9 +65,9 @@ exports.deleteUsuarioById = async (req, res, next) => {
 
 exports.updateUsuarioById = (req, res, next) => {
   const usuarioId = req.params.id;
-  const { nombre, rol, etiquetas } = req.body;
+  const { nombre, rol, etiquetas, id_jira } = req.body;
   try {
-    Usuario.updateUsuarioById(usuarioId, nombre, rol);
+    Usuario.updateUsuarioById(usuarioId, nombre, rol, id_jira);
     UsuarioEtiqueta.deleteEtiquetasUsuario(usuarioId);
     for (let etiqueta of etiquetas) {
       Etiqueta.getEtiquetaById(etiqueta.id).then((etiquetaObj) => {

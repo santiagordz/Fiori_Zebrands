@@ -1,39 +1,68 @@
-import React, { PureComponent } from 'react';
-import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import React, { FC } from 'react';
+import {
+  BarChart,
+  Bar,
+  Cell,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from 'recharts';
 
-// Definición de la interfaz para las propiedades del componente
 interface ChartData {
   data: {
     status: string;
-    total: number;
+    total_story_points: number;
   }[];
+  barColor?: string;
+  hoverColor?: string;
 }
 
-export default class Example extends PureComponent<ChartData> {
-
-  render() {
-    const { data } = this.props; // Extrae el prop 'data' de las propiedades del componente
-
+function CustomTooltip({ payload, label, active }: any) {
+  if (active && payload && label) {
     return (
+      <div className="bg-white p-2 text-xs border-2 rounded">
+        <p>Sprint: {label}</p>
+        <p>Story Points: {payload[0].value} </p>
+      </div>
+    );
+  }
+  return null;
+}
+
+export default function StackedBarChart({
+  data,
+  barColor,
+  hoverColor,
+}: ChartData) {
+  const maxY = Math.max(...data.map((d) => d.total_story_points));
+  return (
+    <ResponsiveContainer width="90%" height="90%">
       <BarChart
-        width={600}
-        height={500}
+        width={100}
+        height={100}
         data={data}
         margin={{
           top: 20,
-          right: 30,
-          left: 20,
           bottom: 5,
         }}
       >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="status" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Bar dataKey="total_story_points" fill="#8884d8" />
+        <CartesianGrid strokeDasharray="3 6" />
+        <XAxis dataKey="status" fontSize={13} />
+        <YAxis domain={[0, maxY + 20]} fontSize={13} />
+        <Tooltip
+          content={<CustomTooltip />}
+          cursor={{ fill: hoverColor || '#e7f0fe' }}
+        />
+        <Bar
+          dataKey="total_story_points"
+          fill={barColor || '#388bff'}
+          name="Story Points"
+          label={{ position: 'top', fontSize: 12 }}
+        />
       </BarChart>
-    );
-  }
+    </ResponsiveContainer>
+  );
 }
-

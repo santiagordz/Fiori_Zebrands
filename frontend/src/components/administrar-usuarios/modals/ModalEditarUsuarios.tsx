@@ -37,6 +37,7 @@ const ModalEditarUsuarios: FC<ModalEditarUsuariosProps> = ({
   const [correo, setCorreo] = useState('');
   const [rol, setRol] = useState('');
   const [etiquetas, setEtiquetas] = useState<Etiqueta[]>();
+  const [usuarioJira, setUsuarioJira] = useState(null);
 
   const handleRolSeleccionado = (rol: string) => {
     setRol(rol);
@@ -46,6 +47,10 @@ const ModalEditarUsuarios: FC<ModalEditarUsuariosProps> = ({
     setEtiquetas(etiquetas);
   };
 
+  const handleUsuarioSeleccionado = (usuario: any) => {
+    setUsuarioJira(usuario);
+  };
+
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     try {
@@ -53,6 +58,7 @@ const ModalEditarUsuarios: FC<ModalEditarUsuariosProps> = ({
         nombre: nombre,
         rol: rol,
         etiquetas: etiquetas,
+        id_jira: usuarioJira,
       });
       res.then(() => {
         getUsers();
@@ -86,13 +92,14 @@ const ModalEditarUsuarios: FC<ModalEditarUsuariosProps> = ({
 
   const getUsuario = () => {
     try {
-      const res = axios.get(`${URI}info/${info}`);
+      const res = axios.get(`${URI}info/one/${info}`);
       res.then((response) => {
         const usuario = response.data.usuario.shift();
         setNombre(usuario.nombre || 'Nuevo usuario');
         setCorreo(usuario.correo);
         setRol(usuario.rol);
         setEtiquetas(usuario.etiquetas);
+        setUsuarioJira(usuario.id_jira);
       });
     } catch (error) {
       console.log(error);
@@ -154,6 +161,20 @@ const ModalEditarUsuarios: FC<ModalEditarUsuariosProps> = ({
                       className="h-8 border-2 border-gray0 rounded-sm p-2 focus:outline-gray-400 hover:bg-gray-100"
                       defaultValue={nombre}
                       onChange={(e) => setNombre(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-col mb-5">
+                  <label className="text-xs text-[#626f86] font-semibold">
+                    Usuario de Jira
+                  </label>
+                  <div className="flex w-full gap-4">
+                    <DropdownUsuariosJira
+                      isRequired={false}
+                      usuarioActual={usuarioJira}
+                      onUsuarioSeleccionadoChange={
+                        handleUsuarioSeleccionado
+                      }
                     />
                   </div>
                 </div>
