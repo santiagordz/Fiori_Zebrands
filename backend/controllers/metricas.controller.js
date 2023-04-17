@@ -19,7 +19,7 @@ exports.fetchSprintsByIds = async (req, res, next) => {
 exports.fetchStoryPoints = async (req, res, next) => {
   const sprintIds = req.params.ids.split(',').map(Number);
   try {
-    const [sprints] = await sprintsDataModel.getIssuesByStoryPoints(
+    const sprints = await sprintsDataModel.getIssuesByStoryPoints(
       sprintIds
     );
     res.json({ sprints });
