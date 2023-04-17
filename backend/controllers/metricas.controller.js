@@ -1,4 +1,4 @@
-const sprintsDataModel = require('../models/statusissues.model');
+const sprintsDataModel = require('../models/metricas.model');
 const db = require('../database/db');
 
 exports.fetchSprintsByIds = async (req, res, next) => {

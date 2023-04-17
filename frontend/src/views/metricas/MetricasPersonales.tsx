@@ -39,7 +39,7 @@ const MetricasPersonales: FC<MetricasPersonalesProps> = ({}) => {
         const response = await axios.get(
           `${
             import.meta.env.VITE_APP_BACKEND_URI
-          }/sprintsdata/user/${idjira}/${urlPath}`
+          }/metricas/user/${idjira}/${urlPath}`
         );
         const data = response.data.issues[0];
         setData(data);
@@ -52,7 +52,7 @@ const MetricasPersonales: FC<MetricasPersonalesProps> = ({}) => {
         const response = await axios.get(
           `${
             import.meta.env.VITE_APP_BACKEND_URI
-          }/sprintsdata/user/${idjira}`
+          }/metricas/user/${idjira}`
         );
         const data = response.data.issues[0];
         setData(data);
@@ -70,7 +70,7 @@ const MetricasPersonales: FC<MetricasPersonalesProps> = ({}) => {
         const response = await axios.get(
           `${
             import.meta.env.VITE_APP_BACKEND_URI
-          }/sprintsdata/userstorypoints/${idjira}/${urlPath}`
+          }/metricas/userstorypoints/${idjira}/${urlPath}`
         );
         const data = response.data.issues[0];
         setData2(data);
@@ -83,7 +83,7 @@ const MetricasPersonales: FC<MetricasPersonalesProps> = ({}) => {
         const response = await axios.get(
           `${
             import.meta.env.VITE_APP_BACKEND_URI
-          }/sprintsdata/userstorypoints/${idjira}`
+          }/metricas/userstorypoints/${idjira}`
         );
         const data = response.data.issues[0];
         setData2(data);
@@ -97,7 +97,7 @@ const MetricasPersonales: FC<MetricasPersonalesProps> = ({}) => {
   const getLastSprintsStorypoints = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/sprintsdata/lastsprintsstorypoints/${idjira}`
+        `http://localhost:8000/metricas/lastsprintsstorypoints/${idjira}`
       );
       const data = response.data.issues[0];
       setData3(data);
@@ -110,7 +110,7 @@ const MetricasPersonales: FC<MetricasPersonalesProps> = ({}) => {
   const getLastSprintsToDoStorypoints = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/sprintsdata/lastsprintstodostorypoints/${idjira}`
+        `http://localhost:8000/metricas/lastsprintstodostorypoints/${idjira}`
       );
       const data = response.data.issues[0];
       setData4(data);
@@ -123,7 +123,7 @@ const MetricasPersonales: FC<MetricasPersonalesProps> = ({}) => {
   const getPersonalStorypointsProgressive = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/sprintsdata/personalSUM/${idjira}`
+        `http://localhost:8000/metricas/personalSUM/${idjira}`
       );
       const data = response.data.issues[0];
       setData5(data);
@@ -136,7 +136,7 @@ const MetricasPersonales: FC<MetricasPersonalesProps> = ({}) => {
   const getPersonalStorypointsProgressive2 = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/sprintsdata/personalSUMtodo/${idjira}`
+        `http://localhost:8000/metricas/personalSUMtodo/${idjira}`
       );
       const data = response.data.issues[0];
       setData6(data);
@@ -159,7 +159,7 @@ const MetricasPersonales: FC<MetricasPersonalesProps> = ({}) => {
     <div className="flex flex-col gap-5">
       <div className="gap-4 flex flex-col justify-left p-7 w-full rounded border border-gray-200 bg-white items-center">
         <h2 className="flex-nowrap w-full font-medium text-sm text-information">
-          Mis métricas personales
+          Mis métricas
         </h2>
         <div className="flex flex-col items-baseline gap-1 w-full">
           <p className="font-semibold text-xs text-label">Sprints</p>
@@ -170,33 +170,33 @@ const MetricasPersonales: FC<MetricasPersonalesProps> = ({}) => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-3 justify-center gap-7 w-full h-auto md:h-[70rem]">
-        <div className="md:col-span-2">
+        <div className="md:col-span-3 flex flex-col md:flex-row gap-7">
           <ChartCards title="Storypoints en Done acumulados por sprint">
-            <SameDataComposedChart data={data5} />
+            <SameDataComposedChart data={data5} barColor="#8bbbfd" />
+          </ChartCards>
+          <ChartCards title="Storypoints en To Do acumulados por sprint">
+            <SameDataComposedChart data={data6} />
           </ChartCards>
         </div>
-        <ChartCards title="Story points">
-          {data2 && data2.length > 0 ? (
-            <StackedBarChart data={data2} />
-          ) : (
-            <p className="text-xs">
-              No hay datos para graficar con los filtros actuales
-            </p>
-          )}
-        </ChartCards>
 
         <div className="md:col-span-3 flex flex-col md:flex-row gap-7">
           <ChartCards title="Storypoints pendientes">
             <SameDataComposedChart data={data4} />
           </ChartCards>
           <ChartCards title="Storypoints completados">
-            <SameDataComposedChart data={data3} />
+            <SameDataComposedChart data={data3} barColor="#8bbbfd" />
           </ChartCards>
         </div>
 
         <div className="md:col-span-2">
-          <ChartCards title="Storypoints en To Do acumulados por sprint">
-            <SameDataComposedChart data={data6} />
+          <ChartCards title="Story points">
+            {data2 && data2.length > 0 ? (
+              <StackedBarChart data={data2} />
+            ) : (
+              <p className="text-xs">
+                No hay datos para graficar con el sprint elegido
+              </p>
+            )}
           </ChartCards>
         </div>
         <ChartCards title="Issues totales y completados">
@@ -204,7 +204,7 @@ const MetricasPersonales: FC<MetricasPersonalesProps> = ({}) => {
             <Piechart data={data} />
           ) : (
             <p className="text-xs">
-              No hay datos para graficar con los filtros actuales
+              No hay datos para graficar con el sprint elegido
             </p>
           )}
         </ChartCards>

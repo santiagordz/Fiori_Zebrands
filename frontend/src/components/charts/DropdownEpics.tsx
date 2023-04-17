@@ -16,18 +16,12 @@ interface OptionsEpics {
 
 interface Props {
   onEpicsSeleccionadasChange: (epics: any) => void;
-  epicsActuales: any;
 }
 
-const DropdownEpics = ({
-  onEpicsSeleccionadasChange,
-  epicsActuales,
-}: Props) => {
-  const epicsPreseleccionadas = epicsActuales;
-
+const DropdownEpics = ({ onEpicsSeleccionadasChange }: Props) => {
   const [epicsSeleccionadas, setEpicsSeleccionadas] = useState<
     OptionsEpics[]
-  >(epicsPreseleccionadas);
+  >([]);
 
   const [epicsOptions, setEpicsOptions] = useState<OptionsEpics[]>(
     []
@@ -66,8 +60,11 @@ const DropdownEpics = ({
   };
 
   return (
-    <div className="w-[42vmin]">
+    <div className="w-full">
       <Select
+        isClearable
+        placeholder="Selecciona uno o varios epics"
+        className="text-xs"
         options={epicsOptions}
         value={epicsSeleccionadas}
         onChange={handleEpicsSeleccionadasChange}

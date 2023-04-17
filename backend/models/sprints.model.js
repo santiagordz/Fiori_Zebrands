@@ -8,10 +8,10 @@ const auth = {
 
 class Sprint {
   static fetchSprintsJira = async () => {
-    const maxResults = 100; // Número máximo de issues a recuperar por solicitud
-    let startAt = 0; // Punto de inicio para recuperar issues en cada solicitud
-    let isLast = false; // Indicador para verificar si se han recuperado todos los issues
-    let sprintsJira = []; // Arreglo para almacenar todos los issues recuperados
+    const maxResults = 100;
+    let startAt = 0;
+    let isLast = false;
+    let sprintsJira = [];
 
     while (!isLast) {
       const response = await axios.get(
@@ -55,7 +55,7 @@ class Sprint {
   };
 
   static getSprints = async () => {
-    return db.execute(`SELECT * FROM SPRINTS`);
+    return db.execute(`SELECT * FROM sprints`);
   };
 
   static deleteSprints = async (id) => {

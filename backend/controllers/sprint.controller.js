@@ -1,9 +1,9 @@
 const sprintModel = require('../models/sprints.model');
-const db = require('../database/db');
 
 exports.getSprintsJira = async (req, res, next) => {
   try {
-    res.json(await sprintModel.fetchSprintsJira());
+    const [sprints] = await sprintModel.getSprints();
+    res.json(sprints);
   } catch (error) {
     console.error(error);
     res
