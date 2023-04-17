@@ -14,6 +14,21 @@ exports.getIssuesJira = async (req, res, next) => {
   }
 };
 
+exports.fetchIssuesJiraUpdated = async (req, res, next) => {
+  let lastUpdate = await issuesModel.getLastUpdate();
+  lastUpdate = (lastUpdate[0][0].updatedAt)
+  lastUpdate = lastUpdate.toISOString().slice(0, 10)
+
+  try {
+    res.json(await issuesModel.fetchIssuesJiraUpdated(0, lastUpdate));
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ message: 'Error al obtener los issues actualizados.' });
+  }
+};
+
 exports.postIssuesJira = async (req, res, next) => {
   axios.post('http://localhost:8000/usuarios_jira');
   axios.post('http://localhost:8000/epics');
@@ -24,12 +39,16 @@ exports.postIssuesJira = async (req, res, next) => {
   issuesDB = issuesDB.shift();
   countIssuesDB = countIssuesDB[0][0].count;
 
+  let lastUpdate = await issuesModel.getLastUpdate();
+  lastUpdate = (lastUpdate[0][0].updatedAt)
+  lastUpdate = lastUpdate.toISOString().slice(0, 10)
+
   let sprintsDB = await sprints.getSprints();
   sprintsDB = sprintsDB.shift();
 
-  console.log(countIssuesDB);
-
   const issues = await issuesModel.fetchIssuesJira(countIssuesDB);
+  const issuesUpdated = await issuesModel.fetchIssuesJiraUpdated(0, lastUpdate)
+
   try {
     issues.map(async (issue) => {
       await issuesModel.postIssue(
@@ -55,7 +74,10 @@ exports.postIssuesJira = async (req, res, next) => {
           );
         });
       }
-    });
+    })
+    issuesUpdated.map(async (issue, id) => {
+      await issuesModel.updateIssues(issue.status, issue.clave);
+    })
     res.send('ya');
   } catch (error) {
     console.error(error);
