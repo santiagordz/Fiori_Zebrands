@@ -37,7 +37,6 @@ const Login: FC<LoginProps> = ({}) => {
       timer = setInterval(() => {
         if (popUp.closed) {
           getUser();
-          axios.post(`localhost:8000/issues`)
           if (timer) {
             clearInterval(timer);
           }
