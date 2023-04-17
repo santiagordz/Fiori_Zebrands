@@ -159,7 +159,7 @@ const MetricasPersonales: FC<MetricasPersonalesProps> = ({}) => {
     <div className="flex flex-col gap-5">
       <div className="gap-4 flex flex-col justify-left p-7 w-full rounded border border-gray-200 bg-white items-center">
         <h2 className="flex-nowrap w-full font-medium text-sm text-information">
-          Mis métricas personales
+          Mis métricas
         </h2>
         <div className="flex flex-col items-baseline gap-1 w-full">
           <p className="font-semibold text-xs text-label">Sprints</p>
@@ -170,20 +170,14 @@ const MetricasPersonales: FC<MetricasPersonalesProps> = ({}) => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-3 justify-center gap-7 w-full h-auto md:h-[70rem]">
-        <div className="md:col-span-2">
+        <div className="md:col-span-3 flex flex-col md:flex-row gap-7">
           <ChartCards title="Storypoints en Done acumulados por sprint">
             <SameDataComposedChart data={data5} />
           </ChartCards>
+          <ChartCards title="Storypoints en To Do acumulados por sprint">
+            <SameDataComposedChart data={data6} />
+          </ChartCards>
         </div>
-        <ChartCards title="Story points">
-          {data2 && data2.length > 0 ? (
-            <StackedBarChart data={data2} />
-          ) : (
-            <p className="text-xs">
-              No hay datos para graficar con los filtros actuales
-            </p>
-          )}
-        </ChartCards>
 
         <div className="md:col-span-3 flex flex-col md:flex-row gap-7">
           <ChartCards title="Storypoints pendientes">
@@ -195,8 +189,14 @@ const MetricasPersonales: FC<MetricasPersonalesProps> = ({}) => {
         </div>
 
         <div className="md:col-span-2">
-          <ChartCards title="Storypoints en To Do acumulados por sprint">
-            <SameDataComposedChart data={data6} />
+          <ChartCards title="Story points">
+            {data2 && data2.length > 0 ? (
+              <StackedBarChart data={data2} />
+            ) : (
+              <p className="text-xs">
+                No hay datos para graficar con el sprint elegido
+              </p>
+            )}
           </ChartCards>
         </div>
         <ChartCards title="Issues totales y completados">
@@ -204,7 +204,7 @@ const MetricasPersonales: FC<MetricasPersonalesProps> = ({}) => {
             <Piechart data={data} />
           ) : (
             <p className="text-xs">
-              No hay datos para graficar con los filtros actuales
+              No hay datos para graficar con el sprint elegido
             </p>
           )}
         </ChartCards>

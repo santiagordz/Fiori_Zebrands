@@ -136,40 +136,46 @@ const MetricasSprint: FC<MetricasSprintProps> = ({}) => {
           />
         </div>
       </div>
-      <div className="grid grid-cols-3 grid-rows-2 justify-center gap-5 w-full h-[50rem]">
-        <ChartCards title="Story points del sprint">
-          {chart2Data && chart2Data.length > 0 ? (
-            <StackedBarChart data={chart2Data} />
-          ) : (
-            <p className="text-xs">
-              No hay datos para graficar con los filtros actuales
-            </p>
-          )}
-        </ChartCards>
-        <ChartCards title="Issues Totales y Completado">
-          {chartData && chartData.length > 0 ? (
-            <Piechart data={chartData} />
-          ) : (
-            <p className="text-xs">
-              No hay datos para graficar con los filtros actuales
-            </p>
-          )}
-        </ChartCards>
+      <div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-3 justify-center gap-7 w-full h-auto md:h-[70rem]">
+        <div className="md:col-span-3">
+          <ChartCards title="Storypoints completados en los ultimos sprints">
+            <SameDataComposedChart data={chart4Data} />
+          </ChartCards>
+        </div>
+
         <ChartCards title="Storypoints completados en los ultimos sprint">
           <SameDataComposedChart data={chart3Data} />
         </ChartCards>
 
-        <ChartCards title="Storypoints completados en los ultimos sprints">
-          <SameDataComposedChart data={chart4Data} />
-        </ChartCards>
-
-        <ChartCards title="Storypoints DONE acumulados en los ultimos sprints">
+        <ChartCards title="Storypoints en Done acumulados en los ultimos sprints">
           <SameDataComposedChart data={chart5Data} />
         </ChartCards>
 
         <ChartCards title="Storypoints To Do acumulados en los ultimos sprints">
           <SameDataComposedChart data={chart6Data} />
         </ChartCards>
+
+        <div className="md:col-span-3 flex flex-col md:flex-row gap-7">
+          <ChartCards title="Story points del sprint">
+            {chart2Data && chart2Data.length > 0 ? (
+              <StackedBarChart data={chart2Data} />
+            ) : (
+              <p className="text-xs">
+                No hay datos para graficar con el sprint elegido
+              </p>
+            )}
+          </ChartCards>
+
+          <ChartCards title="Issues Totales y Completado">
+            {chartData && chartData.length > 0 ? (
+              <Piechart data={chartData} />
+            ) : (
+              <p className="text-xs">
+                No hay datos para graficar con el sprint elegido
+              </p>
+            )}
+          </ChartCards>
+        </div>
       </div>
     </div>
   );

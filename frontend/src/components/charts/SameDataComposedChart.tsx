@@ -20,7 +20,7 @@ interface SameDataComposedChartProps {
 }
 
 function CustomTooltip({ payload, label, active }: any) {
-  if (active && payload && label) {
+  if (active && payload.length > 0 && label) {
     return (
       <div className="bg-white p-2 text-xs border-2 rounded">
         <p>Sprint: {label}</p>

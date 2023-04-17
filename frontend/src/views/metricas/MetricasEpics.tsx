@@ -5,6 +5,7 @@ import Piechart from '../../components/charts/Piechart';
 import StackedBarChart from '../../components/charts/StackedBarchart';
 import DropdownEpics from '../../components/charts/DropdownEpics';
 import axios from 'axios';
+import { ChartCards } from '../../components';
 
 interface MetricasEpicsProps {}
 
@@ -98,90 +99,59 @@ const MetricasEpics: FC<MetricasEpicsProps> = ({}) => {
     getToDoEpicsDone();
   }, [epicsSeleccionadas]);
 
-  console.log(chart3Data);
   return (
-    <div className="">
-      <div className="py-5 flex justify-left gap-6 border-b-2 border-zinc-200 w-full">
-        <div className="flex items-center">
-          <label className="text-lg pr-4">Epics: </label>
+    <div className="flex flex-col gap-5">
+      <div className="gap-4 flex flex-col justify-left p-7 w-full rounded border border-gray-200 bg-white items-center">
+        <h2 className="flex-nowrap w-full font-medium text-sm text-information">
+          Métricas generales por epic
+        </h2>
+        <div className="flex flex-col items-baseline gap-1 w-full">
+          <p className="font-semibold text-xs text-label">Epics</p>
           <DropdownEpics
-            epicsActuales={[epicsSeleccionadas]}
             onEpicsSeleccionadasChange={handleEpicsSeleccionados}
           />
         </div>
       </div>
-      <div className="grid grid-cols-2 justify-center pt-8">
-        <div className="grid justify-items-center">
-          <div className="">
-            <label className="text-2xl"> StoryPoints Del Epic</label>
-          </div>
-          <div className="flex">
-            {chartData.length === 0 && (
-              <div className="text-center">
-                <label className="text-lg">
-                  {' '}
-                  No hay datos para mostrar
-                </label>
-              </div>
-            )}
-            <StackedBarChart data={chart2Data} />{' '}
-          </div>
-        </div>
-        <div className="grid justify-items-center">
-          <div className="">
-            <label className="text-2xl">
-              {' '}
-              Comparacion de Sprints
-            </label>
-          </div>
-          <div className="">
-            <Piechart data={chartData} />
-          </div>
-        </div>
-        <div className="grid justify-items-center">
-          <div className="">
-            <label className="text-2xl">
-              {' '}
-              Storypoints en estado done por epic
-            </label>
-          </div>
-          <div className="w-full">
+
+      <div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-3 justify-center gap-7 w-full h-auto md:h-[70rem]">
+        <div className="md:col-span-3 flex flex-col md:flex-row gap-7">
+          <ChartCards title="Story points en Done por epic">
             <SameDataComposedChart data={chart3Data} />
-          </div>
-        </div>
-        <div className="grid justify-items-center">
-          <div className="">
-            <label className="text-2xl">
-              {' '}
-              Storypoints en estado to do por epic
-            </label>
-          </div>
-          <div className="w-full">
+          </ChartCards>
+
+          <ChartCards title="Story points en To Do por epic">
             <SameDataComposedChart data={chart4Data} />
-          </div>
+          </ChartCards>
         </div>
-        <div className="grid justify-items-center">
-          <div className="">
-            <label className="text-2xl">
-              {' '}
-              Storypoints en estado to do por epic
-            </label>
-          </div>
-          <div className="w-full">
-            <SameDataComposedChart data={chart5Data} />
-          </div>
+
+        <ChartCards title="Story points en Done acumulados por epic">
+          <SameDataComposedChart data={chart5Data} />
+        </ChartCards>
+        <ChartCards title="Story points en To Do acumulados por epic">
+          <SameDataComposedChart data={chart6Data} />
+        </ChartCards>
+
+        <div className="md:col-span-2 ">
+          <ChartCards title="Story points del epic">
+            {chart2Data && chart2Data.length > 0 ? (
+              <StackedBarChart data={chart2Data} />
+            ) : (
+              <p className="text-xs">
+                No hay datos para graficar con el epic elegido
+              </p>
+            )}
+          </ChartCards>
         </div>
-        <div className="grid justify-items-center">
-          <div className="">
-            <label className="text-2xl">
-              {' '}
-              Storypoints en estado to do por epic
-            </label>
-          </div>
-          <div className="w-full">
-            <SameDataComposedChart data={chart6Data} />
-          </div>
-        </div>
+
+        <ChartCards title="Comparación de sprints">
+          {chartData && chartData.length > 0 ? (
+            <Piechart data={chartData} />
+          ) : (
+            <p className="text-xs">
+              No hay datos para graficar con el epic elegido
+            </p>
+          )}
+        </ChartCards>
       </div>
     </div>
   );

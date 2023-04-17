@@ -21,7 +21,7 @@ interface ChartData {
 }
 
 function CustomTooltip({ payload, label, active }: any) {
-  if (active && payload && label) {
+  if (active && payload.length > 0 && label) {
     return (
       <div className="bg-white p-2 text-xs border-2 rounded">
         <p>Sprint: {label}</p>
@@ -40,17 +40,9 @@ export default function StackedBarChart({
   const maxY = Math.max(...data.map((d) => d.total_story_points));
   return (
     <ResponsiveContainer width="90%" height="90%">
-      <BarChart
-        width={100}
-        height={100}
-        data={data}
-        margin={{
-          top: 20,
-          bottom: 5,
-        }}
-      >
+      <BarChart width={100} height={100} data={data}>
         <CartesianGrid strokeDasharray="3 6" />
-        <XAxis dataKey="status" fontSize={13} />
+        <XAxis dataKey="status" fontSize={12} />
         <YAxis domain={[0, maxY + 20]} fontSize={13} />
         <Tooltip
           content={<CustomTooltip />}
