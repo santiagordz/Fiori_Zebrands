@@ -1,12 +1,14 @@
 import React, { FC, useState, useEffect } from "react";
-import { ErrorMessage, HelperMessage } from "@atlaskit/form";
-
+import { ErrorMessage } from "@atlaskit/form";
+import axios from "axios";
 import { customAlphabet } from "nanoid";
 import Blanket from "@atlaskit/blanket";
 import Button from "@atlaskit/button";
 import { motion } from "framer-motion";
 import CrossIcon from "@atlaskit/icon/glyph/cross";
 import TextArea from "@atlaskit/textarea";
+
+const URI = "http://localhost:8000/accionables/";
 
 interface ModalNuevoAccionableProps {
   setIsNewAccionableOpen: (value: boolean) => void;
@@ -19,6 +21,7 @@ const ModalNuevoAccionable: FC<ModalNuevoAccionableProps> = ({
   setIsNewAccionableOpen,
   agregarAccionable,
 }) => {
+  //cambiar estoooo!!!!!
   const nanoid = customAlphabet("1234567890", 5);
 
   const [newAccionable, setNewAccionable] = useState<any>({
