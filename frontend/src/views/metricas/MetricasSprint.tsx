@@ -136,21 +136,9 @@ const MetricasSprint: FC<MetricasSprintProps> = ({}) => {
           />
         </div>
       </div>
-<<<<<<< HEAD
-      <div className="grid xl:grid-cols-2 sm:grid-cols-1 justify-center pt-10">
-        <div className="grid justify-items-center">
-          <div className="">
-            <label className="text-2xl">
-              {' '}
-              Storypoints Del Sprint
-            </label>
-          </div>
-          <div className="">
-=======
       <div className="grid grid-cols-3 grid-rows-2 justify-center gap-5 w-full h-[50rem]">
         <ChartCards title="Story points del sprint">
           {chart2Data && chart2Data.length > 0 ? (
->>>>>>> 24cee3a952ef89854d82c014f6b9ab1b0d745a66
             <StackedBarChart data={chart2Data} />
           ) : (
             <p className="text-xs">
