@@ -27,11 +27,11 @@ const MetricasEpics: FC<MetricasEpicsProps> = ({}) => {
 
   const getData = async () => {
     const response = await fetch(
-      `http://localhost:8000/sprintsdata/epic/${epicsSeleccionadas.value}`
+      `http://localhost:8000/metricas/epic/${epicsSeleccionadas.value}`
     );
     const data = await response.json();
     const response2 = await fetch(
-      `http://localhost:8000/sprintsdata/epic/storypoints/${epicsSeleccionadas.value}`
+      `http://localhost:8000/metricas/epic/storypoints/${epicsSeleccionadas.value}`
     );
     const data2 = await response2.json();
 
@@ -42,7 +42,7 @@ const MetricasEpics: FC<MetricasEpicsProps> = ({}) => {
   const getEpicsDoneGlobal = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/sprintsdata/epicsdoneglobal`
+        `http://localhost:8000/metricas/epicsdoneglobal`
       );
       const data = response.data.sprints[0];
       setChart3Data(data);
@@ -55,7 +55,7 @@ const MetricasEpics: FC<MetricasEpicsProps> = ({}) => {
   const getToDoEpicsDoneGlobal = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/sprintsdata/epicstodoglobal`
+        `http://localhost:8000/metricas/epicstodoglobal`
       );
       const data = response.data.sprints[0];
       setChart4Data(data);
@@ -68,7 +68,7 @@ const MetricasEpics: FC<MetricasEpicsProps> = ({}) => {
   const getEpicsDone = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/sprintsdata/epicsSUMdoneglobal`
+        `http://localhost:8000/metricas/epicsSUMdoneglobal`
       );
       const data = response.data.sprints[0];
       setChart5Data(data);
@@ -81,7 +81,7 @@ const MetricasEpics: FC<MetricasEpicsProps> = ({}) => {
   const getToDoEpicsDone = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/sprintsdata/epicsSUMtodoglobal`
+        `http://localhost:8000/metricas/epicsSUMtodoglobal`
       );
       const data = response.data.sprints[0];
       setChart6Data(data);
@@ -115,6 +115,15 @@ const MetricasEpics: FC<MetricasEpicsProps> = ({}) => {
 
       <div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-3 justify-center gap-7 w-full h-auto md:h-[70rem]">
         <div className="md:col-span-3 flex flex-col md:flex-row gap-7">
+          <ChartCards title="Story points en Done acumulados por epic">
+            <SameDataComposedChart data={chart5Data} />
+          </ChartCards>
+          <ChartCards title="Story points en To Do acumulados por epic">
+            <SameDataComposedChart data={chart6Data} />
+          </ChartCards>
+        </div>
+
+        <div className="md:col-span-3 flex flex-col md:flex-row gap-7">
           <ChartCards title="Story points en Done por epic">
             <SameDataComposedChart data={chart3Data} />
           </ChartCards>
@@ -123,13 +132,6 @@ const MetricasEpics: FC<MetricasEpicsProps> = ({}) => {
             <SameDataComposedChart data={chart4Data} />
           </ChartCards>
         </div>
-
-        <ChartCards title="Story points en Done acumulados por epic">
-          <SameDataComposedChart data={chart5Data} />
-        </ChartCards>
-        <ChartCards title="Story points en To Do acumulados por epic">
-          <SameDataComposedChart data={chart6Data} />
-        </ChartCards>
 
         <div className="md:col-span-2 ">
           <ChartCards title="Story points del epic">

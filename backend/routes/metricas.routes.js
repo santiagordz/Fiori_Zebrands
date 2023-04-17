@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const sprintsDataController = require('../controllers/sprintsDataMetrica.controller');
+const sprintsDataController = require('../controllers/metricas.controller');
 
 router.get(
   '/storypoints/:ids',

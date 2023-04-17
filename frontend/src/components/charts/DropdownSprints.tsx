@@ -30,6 +30,7 @@ const DropdownSprints = ({ onSprintsSeleccionadasChange }: Props) => {
   const getOptionsSprints = async () => {
     try {
       const response = await axios.get(URI);
+
       const options = response.data.map((sprint: Sprint) => ({
         value: sprint.id,
         label: sprint.nombre,
@@ -56,6 +57,7 @@ const DropdownSprints = ({ onSprintsSeleccionadasChange }: Props) => {
 
   useEffect(() => {
     onSprintsSeleccionadasChange(sprintsSeleccionadas);
+    console.log(sprintsSeleccionadas);
   }, [sprintsSeleccionadas]);
 
   const handleSprintsSeleccionadasChange = (sprints: any) => {

@@ -7,7 +7,7 @@ import SameDataComposedChart from '../../components/charts/SameDataComposedChart
 import { ChartCards } from '../../components';
 
 interface MetricasSprintProps {}
-const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/sprintsdata`;
+const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/metricas`;
 
 const data5 = [
   { nombre: 'Sprint 1', total_story_points: 12 },
@@ -21,13 +21,11 @@ const MetricasSprint: FC<MetricasSprintProps> = ({}) => {
   const [sprintsSeleccionadas, setSprintsSeleccionadas] =
     useState<any>([]);
 
+  const [sprintsValuesArray, setSprintsValuesArray] = useState([]);
+
   const handleSprintSeleccionados = (sprints: any[]) => {
     setSprintsSeleccionadas(sprints);
   };
-
-  const sprintsValuesArray = sprintsSeleccionadas.map((obj: any) => {
-    return obj.value;
-  });
 
   const [chartData, setChartData] = useState<any[]>([]);
   const [chart2Data, setChart2Data] = useState<any[]>([]);
@@ -37,15 +35,16 @@ const MetricasSprint: FC<MetricasSprintProps> = ({}) => {
   const [chart6Data, setChart6Data] = useState<any[]>([]);
 
   const getDataSprintsById = async () => {
-    if (sprintsValuesArray.length === 0) {
-      return setChartData([]);
-    }
+    // if (sprintsValuesArray.length === 0) {
+    //   return setChartData([]);
+    // }
 
     try {
       const urlPath = sprintsValuesArray.join(',');
       const response = await axios.get(`${URI}/sprints/${urlPath}`);
       const data = response.data.sprints[0];
       setChartData(data);
+      console.log(data);
       return data;
     } catch (error) {
       console.error(error);
@@ -53,18 +52,18 @@ const MetricasSprint: FC<MetricasSprintProps> = ({}) => {
   };
 
   const getDataStoryPointsById = async () => {
-    if (sprintsValuesArray.length === 0) {
-      return setChart2Data([]);
-    }
+    // if (sprintsValuesArray.length === 0) {
+    //   return setChart2Data([]);
+    // }
 
     try {
       const urlPath = sprintsValuesArray.join(',');
+      console.log(urlPath);
       const response = await axios.get(
         `${URI}/storypoints/${urlPath}`
       );
-      const data = response.data.sprints[0];
-      setChart2Data(data);
-      return data;
+      console.log(response);
+      setChart2Data(response.data);
     } catch (error) {
       console.error(error);
     }
@@ -121,6 +120,12 @@ const MetricasSprint: FC<MetricasSprintProps> = ({}) => {
     getStoryPointsToDoLastSprints();
     getStoryPointsDoneLastSprintsProgressive();
     getStoryPointsToDoLastSprintsProgressive();
+
+    setSprintsValuesArray(
+      sprintsSeleccionadas.map((obj: any) => {
+        return obj.value;
+      })
+    );
   }, [sprintsSeleccionadas]);
 
   return (
@@ -138,21 +143,27 @@ const MetricasSprint: FC<MetricasSprintProps> = ({}) => {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-3 justify-center gap-7 w-full h-auto md:h-[70rem]">
         <div className="md:col-span-3">
-          <ChartCards title="Storypoints completados en los ultimos sprints">
-            <SameDataComposedChart data={chart4Data} />
+          <ChartCards title="Storypoints en Done acumulados en los ultimos sprints">
+            <SameDataComposedChart data={chart5Data} />
           </ChartCards>
         </div>
 
         <ChartCards title="Storypoints completados en los ultimos sprint">
-          <SameDataComposedChart data={chart3Data} />
+          <SameDataComposedChart
+            data={chart3Data}
+            barColor="#8bbbfd"
+          />
         </ChartCards>
 
-        <ChartCards title="Storypoints en Done acumulados en los ultimos sprints">
-          <SameDataComposedChart data={chart5Data} />
+        <ChartCards title="Storypoints completados en los ultimos sprints">
+          <SameDataComposedChart data={chart4Data} />
         </ChartCards>
 
         <ChartCards title="Storypoints To Do acumulados en los ultimos sprints">
-          <SameDataComposedChart data={chart6Data} />
+          <SameDataComposedChart
+            data={chart6Data}
+            barColor="#8bbbfd"
+          />
         </ChartCards>
 
         <div className="md:col-span-3 flex flex-col md:flex-row gap-7">
