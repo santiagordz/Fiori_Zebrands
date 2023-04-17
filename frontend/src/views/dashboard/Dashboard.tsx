@@ -12,7 +12,15 @@ const Dashboard: FC<DashboardProps> = ({}) => {
   if (!user) {
     navigate('/login');
   }
-  return <DesignTemplate>En construcción</DesignTemplate>;
+  return <DesignTemplate>
+    <div>
+      <div className='bg-[#FFFFFF] rounded-md p-5 border border-solid border-[rgba(9, 30, 66, 0.141176)]'>
+        <h1>
+          Metricas
+        </h1>
+      </div>
+    </div>
+  </DesignTemplate>;
 };
 
 export default Dashboard;
