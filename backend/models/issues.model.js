@@ -83,5 +83,5 @@ module.exports = class Issue {
 
   static getCountIssues = async () => {
     return db.execute(`SELECT COUNT(*) AS 'count' FROM issues`);
-  };
+    };
 };

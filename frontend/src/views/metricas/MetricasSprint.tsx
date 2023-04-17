@@ -143,7 +143,7 @@ const MetricasSprint: FC<MetricasSprintProps> = ({}) => {
           />
         </div>
       </div>
-      <div className="grid grid-cols-2 justify-center pt-10">
+      <div className="grid xl:grid-cols-2 sm:grid-cols-1 justify-center pt-10">
         <div className="grid justify-items-center">
           <div className="">
             <label className="text-2xl">
