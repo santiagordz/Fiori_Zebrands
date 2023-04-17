@@ -9,14 +9,6 @@ import { ChartCards } from '../../components';
 interface MetricasSprintProps {}
 const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/metricas`;
 
-const data5 = [
-  { nombre: 'Sprint 1', total_story_points: 12 },
-  { nombre: 'Sprint 2', total_story_points: 4 },
-  { nombre: 'Sprint 3', total_story_points: 2 },
-  { nombre: 'Sprint 4', total_story_points: 2 },
-  { nombre: 'Sprint 5', total_story_points: 8 },
-  { nombre: 'Sprint 6', total_story_points: 3 },
-];
 const MetricasSprint: FC<MetricasSprintProps> = ({}) => {
   const [sprintsSeleccionadas, setSprintsSeleccionadas] =
     useState<any>([]);
@@ -43,7 +35,6 @@ const MetricasSprint: FC<MetricasSprintProps> = ({}) => {
       const urlPath = sprintsValuesArray.join(',');
       const response = await axios.get(`${URI}/sprints/${urlPath}`);
       const data = response.data.sprints[0];
-      console.log(data);
       setChartData(data);
       return data;
     } catch (error) {
@@ -61,7 +52,8 @@ const MetricasSprint: FC<MetricasSprintProps> = ({}) => {
       const response = await axios.get(
         `${URI}/storypoints/${urlPath}`
       );
-      setChart2Data(response.data);
+      const data = response.data.sprints[0];
+      setChart2Data(data);
     } catch (error) {
       console.error(error);
     }
@@ -112,19 +104,19 @@ const MetricasSprint: FC<MetricasSprintProps> = ({}) => {
   };
 
   useEffect(() => {
+    setSprintsValuesArray(
+      sprintsSeleccionadas.map((obj: any) => {
+        return obj.value;
+      })
+    );
+
     getDataSprintsById();
     getDataStoryPointsById();
     getStoryPointsDoneLastSprints();
     getStoryPointsToDoLastSprints();
     getStoryPointsDoneLastSprintsProgressive();
     getStoryPointsToDoLastSprintsProgressive();
-
-    setSprintsValuesArray(
-      sprintsSeleccionadas.map((obj: any) => {
-        return obj.value;
-      })
-    );
-  }, [sprintsSeleccionadas]);
+  }, [sprintsSeleccionadas, sprintsValuesArray]);
 
   return (
     <div className="flex flex-col gap-5">
