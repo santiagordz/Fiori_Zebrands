@@ -7,9 +7,9 @@ import DropdownEpics from '../../components/charts/DropdownEpics';
 import axios from 'axios';
 import { ChartCards } from '../../components';
 
-interface MetricasEpicsProps {}
+const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/metricas`;
 
-const MetricasEpics: FC<MetricasEpicsProps> = ({}) => {
+const MetricasEpics: FC = ({}) => {
   const [epicsSeleccionadas, setEpicsSeleccionadas] = useState<any>({
     value: 'TPECG-3202',
     label: 'Implementar secciones de la aplicación',
@@ -27,11 +27,11 @@ const MetricasEpics: FC<MetricasEpicsProps> = ({}) => {
 
   const getData = async () => {
     const response = await fetch(
-      `http://localhost:8000/metricas/epic/${epicsSeleccionadas.value}`
+      `${URI}/epic/${epicsSeleccionadas.value}`
     );
     const data = await response.json();
     const response2 = await fetch(
-      `http://localhost:8000/metricas/epic/storypoints/${epicsSeleccionadas.value}`
+      `${URI}/epic/storypoints/${epicsSeleccionadas.value}`
     );
     const data2 = await response2.json();
 
@@ -41,9 +41,7 @@ const MetricasEpics: FC<MetricasEpicsProps> = ({}) => {
 
   const getEpicsDoneGlobal = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:8000/metricas/epicsdoneglobal`
-      );
+      const response = await axios.get(`${URI}/epicsdoneglobal`);
       const data = response.data.sprints[0];
       setChart3Data(data);
       return data;
@@ -54,9 +52,7 @@ const MetricasEpics: FC<MetricasEpicsProps> = ({}) => {
 
   const getToDoEpicsDoneGlobal = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:8000/metricas/epicstodoglobal`
-      );
+      const response = await axios.get(`${URI}/epicstodoglobal`);
       const data = response.data.sprints[0];
       setChart4Data(data);
       return data;
@@ -67,9 +63,7 @@ const MetricasEpics: FC<MetricasEpicsProps> = ({}) => {
 
   const getEpicsDone = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:8000/metricas/epicsSUMdoneglobal`
-      );
+      const response = await axios.get(`${URI}/epicsSUMdoneglobal`);
       const data = response.data.sprints[0];
       setChart5Data(data);
       return data;
@@ -80,9 +74,7 @@ const MetricasEpics: FC<MetricasEpicsProps> = ({}) => {
 
   const getToDoEpicsDone = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:8000/metricas/epicsSUMtodoglobal`
-      );
+      const response = await axios.get(`${URI}/epicsSUMtodoglobal`);
       const data = response.data.sprints[0];
       setChart6Data(data);
       return data;

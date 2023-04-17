@@ -6,10 +6,9 @@ import StackedBarChart from '../../components/charts/StackedBarchart';
 import SameDataComposedChart from '../../components/charts/SameDataComposedChart';
 import { ChartCards } from '../../components';
 
-interface MetricasSprintProps {}
 const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/metricas`;
 
-const MetricasSprint: FC<MetricasSprintProps> = ({}) => {
+const MetricasSprint: FC = ({}) => {
   const [sprintsSeleccionadas, setSprintsSeleccionadas] =
     useState<any>([]);
 

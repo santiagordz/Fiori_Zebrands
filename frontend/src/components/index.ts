@@ -14,5 +14,6 @@ export { default as NuevaRetrospectiva } from './gestionar-retro/nueva-retro/Nue
 // Visualizar respuestas retrospectivas
 export { default as Respuestas } from './respuestas-resumen/Respuestas';
 
-// Card
+// Metricas
 export { default as ChartCards } from './chart-cards/ChartCards';
+export { default as ModalUpdateIssues } from './metricas/ModalUpdateIssues';

@@ -7,9 +7,9 @@ import StackedBarChart from '../../components/charts/StackedBarchart';
 import { userDataContext } from '../../contexts';
 import { ChartCards } from '../../components';
 
-interface MetricasPersonalesProps {}
+const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/metricas`;
 
-const MetricasPersonales: FC<MetricasPersonalesProps> = ({}) => {
+const MetricasPersonales: FC = ({}) => {
   const [sprintsSeleccionadas, setSprintsSeleccionadas] =
     useState<any>([]);
 
@@ -37,9 +37,7 @@ const MetricasPersonales: FC<MetricasPersonalesProps> = ({}) => {
       try {
         const urlPath = sprintsValuesArray.join(',');
         const response = await axios.get(
-          `${
-            import.meta.env.VITE_APP_BACKEND_URI
-          }/metricas/user/${idjira}/${urlPath}`
+          `${URI}/user/${idjira}/${urlPath}`
         );
         const data = response.data.issues[0];
         setData(data);
@@ -49,11 +47,7 @@ const MetricasPersonales: FC<MetricasPersonalesProps> = ({}) => {
       }
     } else {
       try {
-        const response = await axios.get(
-          `${
-            import.meta.env.VITE_APP_BACKEND_URI
-          }/metricas/user/${idjira}`
-        );
+        const response = await axios.get(`${URI}/user/${idjira}`);
         const data = response.data.issues[0];
         setData(data);
         return data;
@@ -68,9 +62,7 @@ const MetricasPersonales: FC<MetricasPersonalesProps> = ({}) => {
       try {
         const urlPath = sprintsValuesArray.join(',');
         const response = await axios.get(
-          `${
-            import.meta.env.VITE_APP_BACKEND_URI
-          }/metricas/userstorypoints/${idjira}/${urlPath}`
+          `${URI}/userstorypoints/${idjira}/${urlPath}`
         );
         const data = response.data.issues[0];
         setData2(data);
@@ -81,9 +73,7 @@ const MetricasPersonales: FC<MetricasPersonalesProps> = ({}) => {
     } else {
       try {
         const response = await axios.get(
-          `${
-            import.meta.env.VITE_APP_BACKEND_URI
-          }/metricas/userstorypoints/${idjira}`
+          `${URI}/userstorypoints/${idjira}`
         );
         const data = response.data.issues[0];
         setData2(data);
@@ -97,7 +87,7 @@ const MetricasPersonales: FC<MetricasPersonalesProps> = ({}) => {
   const getLastSprintsStorypoints = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/metricas/lastsprintsstorypoints/${idjira}`
+        `${URI}/lastsprintsstorypoints/${idjira}`
       );
       const data = response.data.issues[0];
       setData3(data);
@@ -110,7 +100,7 @@ const MetricasPersonales: FC<MetricasPersonalesProps> = ({}) => {
   const getLastSprintsToDoStorypoints = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/metricas/lastsprintstodostorypoints/${idjira}`
+        `${URI}/lastsprintstodostorypoints/${idjira}`
       );
       const data = response.data.issues[0];
       setData4(data);
@@ -123,7 +113,7 @@ const MetricasPersonales: FC<MetricasPersonalesProps> = ({}) => {
   const getPersonalStorypointsProgressive = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/metricas/personalSUM/${idjira}`
+        `${URI}/personalSUM/${idjira}`
       );
       const data = response.data.issues[0];
       setData5(data);
@@ -136,7 +126,7 @@ const MetricasPersonales: FC<MetricasPersonalesProps> = ({}) => {
   const getPersonalStorypointsProgressive2 = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/metricas/personalSUMtodo/${idjira}`
+        `${URI}/personalSUMtodo/${idjira}`
       );
       const data = response.data.issues[0];
       setData6(data);
