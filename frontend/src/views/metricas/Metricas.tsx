@@ -27,19 +27,19 @@ const Metricas: FC<MetricasProps> = ({}) => {
           </TabList>
         </div>
         <TabPanel>
-          <Panel>
+          <div className="w-full">
             <MetricasPersonales />
-          </Panel>
+          </div>
         </TabPanel>
         <TabPanel>
-          <MetricasSprint />
+          <div className="w-full">
+            <MetricasSprint />
+          </div>
         </TabPanel>
         <TabPanel>
-          <Panel>
-            <div className="w-full">
-              <MetricasEpics />
-            </div>
-          </Panel>
+          <div className="w-full">
+            <MetricasEpics />
+          </div>
         </TabPanel>
       </Tabs>
     </DesignTemplate>

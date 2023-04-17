@@ -1,12 +1,11 @@
-import React, { FC, useEffect } from 'react';
-import StackedBarChart from '../../components/charts/StackedBarchart';
-import Piechart from '../../components/charts/Piechart';
-import { useContext } from 'react';
-import { userDataContext } from '../../contexts';
-import { useState } from 'react';
 import axios from 'axios';
+import { FC, useContext, useEffect, useState } from 'react';
 import DropdownSprints from '../../components/charts/DropdownSprints';
+import Piechart from '../../components/charts/Piechart';
 import SameDataComposedChart from '../../components/charts/SameDataComposedChart';
+import StackedBarChart from '../../components/charts/StackedBarchart';
+import { userDataContext } from '../../contexts';
+import { ChartCards } from '../../components';
 
 interface MetricasPersonalesProps {}
 
@@ -156,82 +155,59 @@ const MetricasPersonales: FC<MetricasPersonalesProps> = ({}) => {
     getPersonalStorypointsProgressive2();
   }, [sprintsSeleccionadas]);
 
-  console.log(data3);
   return (
-    <div className="w-full">
-      <div className="py-5 flex justify-left gap-6 border-b-2 border-zinc-200">
-        <div className="flex items-center">
-          <label className="text-lg pr-4">Sprint:</label>
+    <div className="flex flex-col gap-5">
+      <div className="gap-4 flex flex-col justify-left p-7 w-full rounded border border-gray-200 bg-white items-center">
+        <h2 className="flex-nowrap w-full font-medium text-sm text-information">
+          Mis métricas personales
+        </h2>
+        <div className="flex flex-col items-baseline gap-1 w-full">
+          <p className="font-semibold text-xs text-label">Sprints</p>
           <DropdownSprints
-            sprintsActuales={[]}
             onSprintsSeleccionadasChange={handleSprintSeleccionados}
           />
         </div>
       </div>
-      <div className="grid grid-cols-2 justify-center pt-10">
-        <div className="grid justify-items-center">
-          <div className="">
-            <label className="text-2xl"> Storypoints de {name}</label>
-          </div>
-          <div className="">
+
+      <div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-3 justify-center gap-7 w-full h-auto md:h-[70rem]">
+        <div className="md:col-span-2">
+          <ChartCards title="Storypoints en Done acumulados por sprint">
+            <SameDataComposedChart data={data5} />
+          </ChartCards>
+        </div>
+        <ChartCards title="Story points">
+          {data2 && data2.length > 0 ? (
             <StackedBarChart data={data2} />
-          </div>
+          ) : (
+            <p className="text-xs">
+              No hay datos para graficar con los filtros actuales
+            </p>
+          )}
+        </ChartCards>
+
+        <div className="md:col-span-3 flex flex-col md:flex-row gap-7">
+          <ChartCards title="Storypoints pendientes">
+            <SameDataComposedChart data={data4} />
+          </ChartCards>
+          <ChartCards title="Storypoints completados">
+            <SameDataComposedChart data={data3} />
+          </ChartCards>
         </div>
-        <div className="grid justify-items-center">
-          <div>
-            <label className="text-2xl">
-              {' '}
-              Issues Totales y Completados
-            </label>
-          </div>
-          <div className="pl-20 pt-12">
+
+        <div className="md:col-span-2">
+          <ChartCards title="Storypoints en To Do acumulados por sprint">
+            <SameDataComposedChart data={data6} />
+          </ChartCards>
+        </div>
+        <ChartCards title="Issues totales y completados">
+          {data && data.length > 0 ? (
             <Piechart data={data} />
-          </div>
-        </div>
-        <div className="grid justify-items-center">
-          <div>
-            <label className="text-2xl">
-              {' '}
-              Storypoints completados por {name}
-            </label>
-            <div className="pl-20 pt-12">
-              <SameDataComposedChart data={data3} />
-            </div>
-          </div>
-        </div>
-        <div className="grid justify-items-center">
-          <div>
-            <label className="text-2xl">
-              {' '}
-              Storypoints pendientes por {name}
-            </label>
-            <div className="pl-20 pt-12">
-              <SameDataComposedChart data={data4} />
-            </div>
-          </div>
-        </div>
-        <div className="grid justify-items-center">
-          <div>
-            <label className="text-2xl">
-              {' '}
-              Storypoints done acumulados por sprint de {name}
-            </label>
-            <div className="pl-20 pt-12">
-              <SameDataComposedChart data={data5} />
-            </div>
-          </div>
-        </div>
-        <div className="grid justify-items-center">
-          <div>
-            <label className="text-2xl">
-              {' '}
-              Storypoints to do acumulados por sprint de {name}
-            </label>
-            <div className="pl-20 pt-12">
-              <SameDataComposedChart data={data6} />
-            </div>
-          </div>
-        </div>
+          ) : (
+            <p className="text-xs">
+              No hay datos para graficar con los filtros actuales
+            </p>
+          )}
+        </ChartCards>
       </div>
     </div>
   );

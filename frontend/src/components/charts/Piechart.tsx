@@ -1,11 +1,8 @@
-import React from 'react';
 import {
-  PieChart,
-  Pie,
   Cell,
-  XAxis,
   Legend,
-  Line,
+  Pie,
+  PieChart,
   ResponsiveContainer,
 } from 'recharts';
 
@@ -47,7 +44,7 @@ const renderCustomizedLabel = ({
 
 export default function Piechart({ data }: PiechartProps) {
   return (
-    <ResponsiveContainer width="100%" height="100%">
+    <ResponsiveContainer width="100%" height="90%">
       <PieChart
         width={200}
         height={200}

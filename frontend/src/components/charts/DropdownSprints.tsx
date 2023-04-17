@@ -16,23 +16,12 @@ interface OptionsSprints {
 
 interface Props {
   onSprintsSeleccionadasChange: (sprints: any) => void;
-  sprintsActuales: any;
 }
 
-const DropdownSprints = ({
-  onSprintsSeleccionadasChange,
-  sprintsActuales,
-}: Props) => {
-  const sprintsPreseleccionadas = sprintsActuales.map(
-    (sprint: Sprint) => ({
-      value: sprint.id,
-      label: sprint.nombre,
-    })
-  );
-
+const DropdownSprints = ({ onSprintsSeleccionadasChange }: Props) => {
   const [sprintsSeleccionadas, setSprintsSeleccionadas] = useState<
     OptionsSprints[]
-  >(sprintsPreseleccionadas);
+  >([]);
 
   const [sprintsOptions, setSprintsOptions] = useState<
     OptionsSprints[]
@@ -45,10 +34,6 @@ const DropdownSprints = ({
         value: sprint.id,
         label: sprint.nombre,
       }));
-
-      if (options.length > 0) {
-        setSprintsSeleccionadas([options[options.length - 1]]);
-      }
 
       const newOptions = options.filter((option: any) => {
         for (let i = 0; i < sprintsSeleccionadas.length; i++) {
@@ -78,9 +63,11 @@ const DropdownSprints = ({
   };
 
   return (
-    <div className="w-[48vmin]">
+    <div className="w-full">
       <Select
         isMulti
+        placeholder="Selecciona uno o varios sprints"
+        className="text-xs"
         options={sprintsOptions}
         value={sprintsSeleccionadas}
         onChange={handleSprintsSeleccionadasChange}
