@@ -37,6 +37,13 @@ module.exports = class Usuarios_Jira {
     );
   };
 
+  static getOneJiraUser = async (id_jira) => {
+    return await db.execute(
+      'SELECT * FROM usuarios_jira WHERE id_jira = ?',
+      [id_jira]
+    );
+  };
+
   static postJiraUser = async (id_jira, nombre_jira) => {
     return db.execute(
       `INSERT IGNORE INTO usuarios_jira (id_jira, nombre_jira) VALUES (?, ?)`,

@@ -130,12 +130,6 @@ const ModalRegistrarUsuarios: FC<RegistrarUsuariosProps> = ({
     setDominioCorreo('@zeb.mx');
   };
 
-  useEffect(() => {
-    axios.get(
-      `${import.meta.env.VITE_APP_BACKEND_URI}/usuarios_jira/fetch`
-    );
-  }, []);
-
   if (!show) {
     return null;
   }

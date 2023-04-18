@@ -5,11 +5,11 @@ import GoogleLogo from '../../assets/Google__G__Logo.svg';
 import Geometry from '../../assets/geometry.png';
 import zebrandsLogo from '../../assets/zebrandsLogo.svg';
 import { userDataContext } from '../../contexts';
-
+import axios from 'axios';
 interface LoginProps {}
 
 const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/login/google`;
-const URI_LOGIN = `${import.meta.env.VITE_APP_BACKEND_URI}/user`;
+const URI_JIRA = `${import.meta.env.VITE_APP_BACKEND_URI}/issues`;
 
 const SECRET_KEY_1 =
   import.meta.env.VITE_APP_COOKIE_KEY_1 || 'secret1';
@@ -21,6 +21,14 @@ const Login: FC<LoginProps> = ({}) => {
   const { user, getUser, setSessionExpired } =
     useContext(userDataContext);
   const [error, setError] = useState(false);
+
+  const postIssues = async () => {
+    try {
+      await axios.post(URI_JIRA);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const redirectToGoogleSSO = async () => {
     let timer: ReturnType<typeof setTimeout> | null = null;
@@ -37,6 +45,7 @@ const Login: FC<LoginProps> = ({}) => {
       timer = setInterval(() => {
         if (popUp.closed) {
           getUser();
+          postIssues();
           if (timer) {
             clearInterval(timer);
           }

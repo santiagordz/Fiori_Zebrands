@@ -52,7 +52,7 @@ const DropdowRoles = ({
   return (
     <>
       <select
-        disabled={active ? active : false}
+        disabled={active}
         required
         value={rol}
         onChange={hanldeRolChange}

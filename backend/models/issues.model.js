@@ -8,14 +8,14 @@ const auth = {
 
 module.exports = class Issue {
   static fetchIssuesJira = async (start) => {
-    const maxResults = 100; // Número máximo de issues a recuperar por solicitud
-    let startAt = start; // Punto de inicio para recuperar issues en cada solicitud
-    let isLast = false; // Indicador para verificar si se han recuperado todos los issues
-    let issuesJira = []; // Arreglo para almacenar todos los issues recuperados
+    const maxResults = 100;
+    let startAt = start;
+    let isLast = false;
+    let issuesJira = [];
 
     while (!isLast) {
       const response = await axios.get(
-        `https://zebrands.atlassian.net/rest/api/2/search?jql=project=TPECG ORDER BY created ASC&startAt=${startAt}&maxResults=${maxResults}`,
+        `https://zebrands.atlassian.net/rest/api/2/search?jql=project=TPECG AND issuetype in (Bug, Story, Task) ORDER BY created ASC &startAt=${startAt}&maxResults=${maxResults}`,
         {
           auth: auth,
         }
@@ -55,6 +55,66 @@ module.exports = class Issue {
     return issues;
   };
 
+  static getLastUpdate = async () => {
+    return db.execute(`
+    SELECT updatedAt FROM last_fetch
+    `);
+  };
+
+  static fetchIssuesJiraUpdated = async (start, fecha) => {
+    const maxResults = 100;
+    let startAt = start;
+    let isLast = false;
+    let issuesJira = [];
+    const date = new Date();
+    const today = date.toISOString().slice(0, 10);
+
+    while (!isLast) {
+      const response = await axios.get(
+        `https://zebrands.atlassian.net/rest/api/2/search?jql=project=TPECG AND issuetype in (Bug, Story, Task) AND updated >= ${fecha} AND updated <= ${today} ORDER BY created ASC &startAt=${startAt}&maxResults=${maxResults}`,
+        {
+          auth: auth,
+        }
+      );
+
+      issuesJira = issuesJira.concat(response.data.issues);
+      isLast = startAt + maxResults >= response.data.total;
+      startAt += maxResults;
+    }
+
+    const issues = issuesJira
+      .map((issue) => {
+        if (issue.fields.issuetype.name != 'Epic') {
+          const newIssue = {
+            id: issue.id,
+            clave: issue.key,
+            tipo: issue.fields.issuetype.name,
+            story_points: issue.fields.customfield_10042,
+            key_epic: issue.fields.parent
+              ? issue.fields.parent.key
+              : null,
+            assignee_id: issue.fields.assignee
+              ? issue.fields.assignee.accountId
+              : null,
+            status: issue.fields.status.name,
+            sprints: issue.fields.customfield_10010,
+          };
+          return Object.fromEntries(
+            Object.entries(newIssue).filter(
+              ([_, v]) => v !== undefined
+            )
+          );
+        }
+      })
+      .filter((issue) => issue);
+
+    await db.execute(
+      `UPDATE last_fetch SET updatedAt = CURRENT_TIMESTAMP`
+    );
+
+    return issues;
+  };
+
   static getIssues = async () => {
     return db.execute(`SELECT * FROM issues`);
   };
@@ -81,7 +141,18 @@ module.exports = class Issue {
     }
   };
 
+  static updateIssues = async (status, id) => {
+    return db.execute(`UPDATE issues SET status = ? WHERE id = ?`, [
+      status,
+      id,
+    ]);
+  };
+
   static getCountIssues = async () => {
     return db.execute(`SELECT COUNT(*) AS 'count' FROM issues`);
+  };
+
+  static getLastFetch = async () => {
+    return db.execute(`SELECT updatedAt FROM last_fetch`);
   };
 };

@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontFamily: 'Inter',
     fontWeight: 800,
-    color: '#1A3B6A',
+    color: '#0055CC',
     marginBottom: 20,
   },
   subtitle: {

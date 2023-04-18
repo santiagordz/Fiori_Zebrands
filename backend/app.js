@@ -50,7 +50,7 @@ const usuariosJiraRoutes = require('./routes/usuarios_jira.routes');
 const issuesJiraRoutes = require('./routes/issuesJira.routes');
 const sprintsJiraRoutes = require('./routes/sprints.routes');
 const epicJiraRoutes = require('./routes/epicsJira.routes');
-const sprintsIssuesData = require('./routes/sprintsData.routes');
+const metricasRoutes = require('./routes/metricas.routes');
 
 app.use('/usuarios', usuariosRoutes);
 app.use('/usuarios_jira', usuariosJiraRoutes);
@@ -63,7 +63,7 @@ app.use('/respuesta', respuestaRoutes);
 app.use('/issues', issuesJiraRoutes);
 app.use('/sprints', sprintsJiraRoutes);
 app.use('/epics', epicJiraRoutes);
-app.use('/sprintsdata', sprintsIssuesData);
+app.use('/metricas', metricasRoutes);
 
 app.use('/issuesjira', issuesJiraRoutes);
 app.use('/preguntas', preguntaRoutes);

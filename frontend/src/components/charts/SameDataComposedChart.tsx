@@ -1,49 +1,74 @@
-import React, { PureComponent } from 'react';
 import {
-  ComposedChart,
-  Line,
-  Area,
   Bar,
+  CartesianGrid,
+  ComposedChart,
+  Legend,
+  Line,
+  ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
 } from 'recharts';
 
 interface SameDataComposedChartProps {
   data: {
-    sprint: string;
+    nombre: string;
     total_story_points: number;
   }[];
+  barColor?: string;
+  lineColor?: string;
 }
 
-export default class Example extends PureComponent {
-  static demoUrl =
-    'https://codesandbox.io/s/composed-chart-of-same-data-i67zd';
-
-  render() {
+function CustomTooltip({ payload, label, active }: any) {
+  if (payload && payload.length > 0 && label !== undefined) {
     return (
+      <div className="bg-white p-2 text-xs border-2 rounded">
+        <p>Sprint: {label}</p>
+        <p>Story Points: {payload[0].value} </p>
+      </div>
+    );
+  }
+  return null;
+}
+
+export default function SameDataComposedChart({
+  data,
+  barColor,
+  lineColor,
+}: SameDataComposedChartProps) {
+  const maxY = Math.max(
+    ...data.map((item) => item.total_story_points)
+  );
+
+  return (
+    <ResponsiveContainer width="100%" height="100%">
       <ComposedChart
-        width={500}
-        height={500}
+        width={100}
+        height={100}
         data={data}
         margin={{
           top: 20,
-          right: 20,
           bottom: 20,
-          left: 20,
         }}
       >
         <CartesianGrid stroke="#f5f5f5" />
-        <XAxis dataKey="name" scale="band" />
-        <YAxis />
-        <Tooltip />
+        <XAxis dataKey="nombre" tick={false} />
+        <YAxis domain={[0, maxY + 3]} />
+        <Tooltip content={<CustomTooltip />} />
         <Legend />
-        <Bar dataKey="uv" barSize={20} fill="#413ea0" />
-        <Line type="monotone" dataKey="uv" stroke="#ff7300" />
+        <Bar
+          dataKey="total_story_points"
+          name="Story Points"
+          barSize={20}
+          fill={barColor || '#388bff'}
+        />
+        <Line
+          type="monotone"
+          name={'Total'}
+          dataKey="total_story_points"
+          stroke={lineColor || '#5E4DB2'}
+        />
       </ComposedChart>
-    );
-  }
+    </ResponsiveContainer>
+  );
 }

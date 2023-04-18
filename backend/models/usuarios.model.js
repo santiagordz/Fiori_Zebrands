@@ -63,13 +63,13 @@ module.exports = class Usuarios {
       `
     SELECT 
       u.id, 
+      u.id_jira,
       u.nombre, 
       u.correo, 
       u.foto, 
       u.id_rol,
       GROUP_CONCAT(DISTINCT CONCAT_WS(':', e.id, e.etiqueta, c.color) SEPARATOR ';') AS etiquetas
     FROM usuarios u
-    
     LEFT JOIN usuarios_etiquetas ue ON u.id = ue.id_usuario
     LEFT JOIN etiquetas e ON e.id = ue.id_etiqueta
     LEFT JOIN colores c ON e.id_color = c.id
@@ -93,6 +93,7 @@ module.exports = class Usuarios {
         correo: row.correo,
         foto: row.foto,
         rol: row.id_rol,
+        id_jira: row.id_jira,
         etiquetas,
       };
     });
@@ -108,10 +109,10 @@ module.exports = class Usuarios {
     return result;
   }
 
-  static updateUsuarioById(id, nombre, rol) {
+  static updateUsuarioById(id, nombre, rol, id_jira) {
     return db.execute(
-      `UPDATE usuarios SET nombre = ?, id_rol = ?, updatedAt = CURTIME() WHERE id = ?`,
-      [nombre, rol, id]
+      `UPDATE usuarios SET nombre = ?, id_rol = ?, id_jira = ?, updatedAt = CURTIME() WHERE id = ?`,
+      [nombre, rol, id_jira, id]
     );
   }
 
@@ -119,28 +120,6 @@ module.exports = class Usuarios {
     return db.execute(
       `UPDATE usuarios SET id_rol = ?, updatedAt = CURTIME() WHERE id = ?`,
       [rol, id]
-    );
-  }
-
-  static async fetchOne(correo) {
-    return db.execute(
-      `SELECT correo, nombre, foto, id_jira, id_rol
-        FROM usuarios
-        WHERE correo = ?`,
-      [correo]
-    );
-  }
-
-  static async updateData(
-    nombre,
-    foto,
-    id_google,
-    correo,
-    fechaActual
-  ) {
-    return db.execute(
-      `UPDATE usuarios SET nombre = ?, foto = ?, id_google = ?, updatedAt = ? WHERE correo = ?;`,
-      [nombre, foto, id_google, correo, fechaActual]
     );
   }
 

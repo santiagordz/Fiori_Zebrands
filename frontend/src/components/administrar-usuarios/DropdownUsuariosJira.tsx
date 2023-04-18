@@ -10,19 +10,34 @@ interface UsuarioJira {
 
 interface DropdownUsuariosJiraProps {
   onUsuarioSeleccionadoChange: (valor: any) => void;
+  usuarioActual?: any;
+  isRequired?: boolean;
 }
 
 const DropdownUsuariosJira: FC<DropdownUsuariosJiraProps> = ({
   onUsuarioSeleccionadoChange,
+  usuarioActual,
+  isRequired = true,
 }) => {
   const [usuarios, setUsuarios] = useState<UsuarioJira[]>([]);
-  const [usuario, setUsuario] = useState('');
+  const [usuario, setUsuario] = useState(
+    usuarioActual ? usuarioActual : ''
+  );
 
   const getUsuariosJira = () => {
     try {
+      const one = usuarioActual
+        ? axios.get(`${URI}/one/${usuarioActual}`)
+        : null;
       const res = axios.get(URI);
       res.then((res) => {
-        setUsuarios(res.data);
+        if (one) {
+          one.then((one) => {
+            setUsuarios([...one.data, ...res.data]);
+          });
+        } else {
+          setUsuarios(res.data);
+        }
       });
     } catch {
       console.log('Error al obtener los usuarios');
@@ -34,18 +49,26 @@ const DropdownUsuariosJira: FC<DropdownUsuariosJiraProps> = ({
   ) => {
     const target = e.target as HTMLSelectElement;
     const value = target.value as any;
-    const colorSeleccionado = value;
-    setUsuario(colorSeleccionado);
-    onUsuarioSeleccionadoChange(colorSeleccionado);
+    const id_jira = value;
+    setUsuario(id_jira);
+    onUsuarioSeleccionadoChange(id_jira);
   };
 
   useEffect(() => {
     getUsuariosJira();
   }, []);
 
+  useEffect(() => {
+    if (usuarioActual) {
+      setUsuario(usuarioActual);
+    } else {
+      setUsuario('');
+    }
+  }, [usuarioActual]);
+
   return (
     <select
-      required
+      required={isRequired}
       onChange={handleUsuarioChange}
       value={usuario}
       name="usuarios-jira"

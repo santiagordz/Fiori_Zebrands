@@ -9,11 +9,13 @@ import { pathInfo } from '../../utils/templateData';
 interface DesignTemplateProps {
   children: React.ReactNode;
   buttons?: JSX.Element;
+  tab?: JSX.Element;
 }
 
 const DesignTemplate: FC<DesignTemplateProps> = ({
   children,
   buttons,
+  tab,
 }) => {
   const { user } = useContext(userDataContext);
   const location = useLocation().pathname;
@@ -44,8 +46,11 @@ const DesignTemplate: FC<DesignTemplateProps> = ({
           </div>
           <div className="flex gap-2">{buttons}</div>
         </div>
-        <div className="bg-background w-full h-auto rounded-lg p-7 text-paragraph">
-          {children}
+        <div className="flex flex-col w-full">
+          {tab}
+          <div className="bg-background w-full h-auto rounded-lg p-7 text-paragraph">
+            {children}
+          </div>
         </div>
       </div>
     </>

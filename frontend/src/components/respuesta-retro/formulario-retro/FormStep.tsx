@@ -163,7 +163,7 @@ const FormStep: FC<FormStepProps> = ({
           )}
         </div>
       </div>
-      {numPregunta === 1 ? (
+      {numPregunta === 1 && totalPreguntas > 1 ? (
         nextButton
       ) : (
         <div className="flex gap-14">

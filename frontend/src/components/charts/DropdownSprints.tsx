@@ -1,11 +1,11 @@
-import React, { FC, useState, useEffect } from 'react';
-import Select, { StylesConfig } from 'react-select';
 import axios from 'axios';
+import { useEffect, useState } from 'react';
+import Select from 'react-select';
 
 const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/sprints`;
 
 interface Sprint {
-  id: number;
+  id_jira: number;
   nombre: string;
 }
 
@@ -16,23 +16,12 @@ interface OptionsSprints {
 
 interface Props {
   onSprintsSeleccionadasChange: (sprints: any) => void;
-  sprintsActuales: any;
 }
 
-const DropdownSprints = ({
-  onSprintsSeleccionadasChange,
-  sprintsActuales,
-}: Props) => {
-  const sprintsPreseleccionadas = sprintsActuales.map(
-    (sprint: Sprint) => ({
-      value: sprint.id,
-      label: sprint.nombre,
-    })
-  );
-
+const DropdownSprints = ({ onSprintsSeleccionadasChange }: Props) => {
   const [sprintsSeleccionadas, setSprintsSeleccionadas] = useState<
     OptionsSprints[]
-  >(sprintsPreseleccionadas);
+  >([]);
 
   const [sprintsOptions, setSprintsOptions] = useState<
     OptionsSprints[]
@@ -41,14 +30,11 @@ const DropdownSprints = ({
   const getOptionsSprints = async () => {
     try {
       const response = await axios.get(URI);
+
       const options = response.data.map((sprint: Sprint) => ({
-        value: sprint.id,
+        value: sprint.id_jira,
         label: sprint.nombre,
       }));
-
-      if (options.length > 0) {
-        setSprintsSeleccionadas([options[options.length - 1]]);
-      }
 
       const newOptions = options.filter((option: any) => {
         for (let i = 0; i < sprintsSeleccionadas.length; i++) {
@@ -65,6 +51,9 @@ const DropdownSprints = ({
     }
   };
 
+  const handleSprintsSeleccionadasChange = (sprints: any) => {
+    setSprintsSeleccionadas(sprints);
+  };
   useEffect(() => {
     getOptionsSprints();
   }, []);
@@ -73,14 +62,12 @@ const DropdownSprints = ({
     onSprintsSeleccionadasChange(sprintsSeleccionadas);
   }, [sprintsSeleccionadas]);
 
-  const handleSprintsSeleccionadasChange = (sprints: any) => {
-    setSprintsSeleccionadas(sprints);
-  };
-
   return (
-    <div className="w-[48vmin]">
+    <div className="w-full">
       <Select
         isMulti
+        placeholder="Selecciona uno o varios sprints"
+        className="text-xs"
         options={sprintsOptions}
         value={sprintsSeleccionadas}
         onChange={handleSprintsSeleccionadasChange}

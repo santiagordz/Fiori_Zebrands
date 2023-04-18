@@ -2,92 +2,160 @@ import React, { FC, useEffect, useState } from 'react';
 import DropdownSprints from '../../components/charts/DropdownSprints';
 import SameDataComposedChart from '../../components/charts/SameDataComposedChart';
 import Piechart from '../../components/charts/Piechart';
+import StackedBarChart from '../../components/charts/StackedBarchart';
 import DropdownEpics from '../../components/charts/DropdownEpics';
-interface MetricasEpicsProps {}
+import axios from 'axios';
+import { ChartCards } from '../../components';
 
-const MetricasEpics: FC<MetricasEpicsProps> = ({}) => {
-  const [sprintsSeleccionadas, setSprintsSeleccionadas] =
-    useState<any>([]);
-  const handleSprintSeleccionados = (sprints: string[]) => {
-    setSprintsSeleccionadas(sprints);
-  };
-  const [epicsSeleccionadas, setEpicsSeleccionadas] = useState<any>(
-    []
-  );
+const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/metricas`;
+
+const MetricasEpics: FC = ({}) => {
+  const [epicsSeleccionadas, setEpicsSeleccionadas] = useState<any>({
+    value: 'TPECG-3202',
+    label: 'Implementar secciones de la aplicación',
+  });
   const handleEpicsSeleccionados = (epics: string[]) => {
     setEpicsSeleccionadas(epics);
   };
 
   const [chartData, setChartData] = useState<any[]>([]);
+  const [chart2Data, setChart2Data] = useState<any[]>([]);
+  const [chart3Data, setChart3Data] = useState<any[]>([]);
+  const [chart4Data, setChart4Data] = useState<any[]>([]);
+  const [chart5Data, setChart5Data] = useState<any[]>([]);
+  const [chart6Data, setChart6Data] = useState<any[]>([]);
 
   const getData = async () => {
     const response = await fetch(
-      `http://localhost:8000/sprintsdata/epic/${epicsSeleccionadas.value}`
+      `${URI}/epic/${epicsSeleccionadas.value}`
     );
     const data = await response.json();
+    const response2 = await fetch(
+      `${URI}/epic/storypoints/${epicsSeleccionadas.value}`
+    );
+    const data2 = await response2.json();
+
     setChartData(data.issues[0]);
+    setChart2Data(data2.issues[0]);
+  };
+
+  const getEpicsDoneGlobal = async () => {
+    try {
+      const response = await axios.get(`${URI}/epicsdoneglobal`);
+      const data = response.data.sprints[0];
+      setChart3Data(data);
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getToDoEpicsDoneGlobal = async () => {
+    try {
+      const response = await axios.get(`${URI}/epicstodoglobal`);
+      const data = response.data.sprints[0];
+      setChart4Data(data);
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getEpicsDone = async () => {
+    try {
+      const response = await axios.get(`${URI}/epicsSUMdoneglobal`);
+      const data = response.data.sprints[0];
+      setChart5Data(data);
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getToDoEpicsDone = async () => {
+    try {
+      const response = await axios.get(`${URI}/epicsSUMtodoglobal`);
+      const data = response.data.sprints[0];
+      setChart6Data(data);
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
     getData();
+    getEpicsDoneGlobal();
+    getToDoEpicsDoneGlobal();
+    getEpicsDone();
+    getToDoEpicsDone();
   }, [epicsSeleccionadas]);
 
+  console.log(chart2Data);
+
   return (
-    <div className="w-full">
-      <div className="py-5 flex justify-left gap-6 border-b-2 border-zinc-200">
-        <div className="flex items-center">
-          <label className="text-lg pr-4">Epics: </label>
+    <div className="flex flex-col gap-5">
+      <div className="gap-4 flex flex-col justify-left p-7 w-full rounded border border-gray-200 bg-white items-center">
+        <h2 className="flex-nowrap w-full font-medium text-sm text-information">
+          Métricas generales por epic
+        </h2>
+        <div className="flex flex-col items-baseline gap-1 w-full">
+          <p className="font-semibold text-xs text-label">Epics</p>
           <DropdownEpics
-            epicsActuales={[]}
             onEpicsSeleccionadasChange={handleEpicsSeleccionados}
           />
         </div>
-        <div className="flex items-center">
-          <label className="text-lg pr-4">Sprints:</label>
-          <DropdownSprints
-            sprintsActuales={[]}
-            onSprintsSeleccionadasChange={handleSprintSeleccionados}
-          />
-        </div>
       </div>
-      <div className="grid grid-cols-2 justify-center pt-8">
-        <div className="grid justify-items-center">
-          <div className="">
-            <label className="text-2xl">
-              {' '}
-              StoryPoints Del Sprint
-            </label>
-          </div>
-          <div className="">
-            {chartData.length === 0 && (
-              <div className="text-center">
-                <label className="text-lg">
-                  {' '}
-                  No hay datos para mostrar
-                </label>
-              </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-3 justify-center gap-7 w-full h-auto md:h-[70rem]">
+        <div className="md:col-span-3 flex flex-col md:flex-row gap-7">
+          <ChartCards title="Story points en Done acumulados por epic">
+            <SameDataComposedChart data={chart5Data} />
+          </ChartCards>
+          <ChartCards title="Story points en To Do acumulados por epic">
+            <SameDataComposedChart
+              data={chart6Data}
+              barColor="#8838ff"
+              lineColor="#388bff"
+            />
+          </ChartCards>
+        </div>
+
+        <div className="md:col-span-3 flex flex-col md:flex-row gap-7">
+          <ChartCards title="Story points en Done por epic">
+            <SameDataComposedChart
+              data={chart3Data}
+              barColor="#8838ff"
+              lineColor="#388bff"
+            />
+          </ChartCards>
+
+          <ChartCards title="Story points en To Do por epic">
+            <SameDataComposedChart data={chart4Data} />
+          </ChartCards>
+        </div>
+
+        <div className="md:col-span-2 ">
+          <ChartCards title="Story points del epic">
+            {chart2Data && chart2Data.length > 0 ? (
+              <StackedBarChart data={chart2Data} />
+            ) : (
+              <p className="text-xs">
+                No hay datos para graficar con el epic elegido
+              </p>
             )}
+          </ChartCards>
+        </div>
+
+        <ChartCards title="Comparación de sprints">
+          {chartData && chartData.length > 0 ? (
             <Piechart data={chartData} />
-          </div>
-        </div>
-        <div className="grid justify-items-center">
-          <div className="">
-            <label className="text-2xl">
-              {' '}
-              Comparacion de Sprints
-            </label>
-          </div>
-          <div className="">{/* <SameDataComposedChart /> */}</div>
-        </div>
-        <div className="grid justify-items-center">
-          <div>
-            <label className="text-2xl">
-              {' '}
-              Issues Totales y Completados
-            </label>
-          </div>
-          <div className="pl-20 pt-12">{/* <Piechart /> */}</div>
-        </div>
+          ) : (
+            <p className="text-xs">
+              No hay datos para graficar con el epic elegido
+            </p>
+          )}
+        </ChartCards>
       </div>
     </div>
   );
