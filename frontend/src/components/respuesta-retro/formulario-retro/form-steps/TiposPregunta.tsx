@@ -155,40 +155,44 @@ const TiposPregunta: FC<TiposPreguntaProps> = ({
           case 4:
             return (
               <>
-                <Range
-                  {...fieldProps}
-                  defaultValue={0}
-                  min={0}
-                  max={5}
-                  onChange={(value: number) => {
-                    setRange(value);
-                    handleRangeOnchange(value);
-                  }}
-                  value={range}
-                />
-                <span>
-                  <span className="w-full flex justify-between mt-[-8px] text-xs text-slate-400 font-semibold mb-5">
-                    <p className="text-slate-300">0</p>
-                    {rangeNumbers.map((number) => {
-                      return (
-                        <p
-                          key={number}
-                          className={
-                            range === number
-                              ? 'text-jiraBlue text-sm'
-                              : ''
-                          }
-                        >
-                          {number}
-                        </p>
-                      );
-                    })}
+                <div className="lg:p-0 p-8">
+                  <Range
+                    {...fieldProps}
+                    defaultValue={0}
+                    min={0}
+                    max={5}
+                    onChange={(value: number) => {
+                      setRange(value);
+                      handleRangeOnchange(value);
+                    }}
+                    value={range}
+                  />
+
+                  <span>
+                    <span className="w-full flex justify-between mt-[-8px] text-xs text-slate-400 font-semibold mb-5">
+                      <p className="text-slate-300">0</p>
+                      {rangeNumbers.map((number) => {
+                        return (
+                          <p
+                            key={number}
+                            className={
+                              range === number
+                                ? 'text-jiraBlue text-sm'
+                                : ''
+                            }
+                          >
+                            {number}
+                          </p>
+                        );
+                      })}
+                    </span>
+
+                    <HelperMessage>
+                      Para no enviar una respuesta a esta pregunta,
+                      desliza hasta el número 0.
+                    </HelperMessage>
                   </span>
-                  <HelperMessage>
-                    Para no enviar una respuesta a esta pregunta,
-                    desliza hasta el número 0.
-                  </HelperMessage>
-                </span>
+                </div>
               </>
             );
           default:

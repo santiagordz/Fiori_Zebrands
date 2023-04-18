@@ -63,11 +63,11 @@ const ReponderRetroInfo: FC<ReponderRetroInfoProps> = ({
 
   return (
     <>
-      <div className="flex flex-col py-8  w-full rounded bg-white shadow-sm border-collapse justify-center items-center px-20 gap-10">
+      <div className="flex flex-col py-8  w-full rounded bg-white shadow-sm border-collapse justify-center items-center px-8 lg:px-20 gap-10">
         <h2 className="flex font-bold w-full text-[0.9rem] text-textNormal">
           Responder preguntas de retrospectiva
         </h2>
-        <div className="flex w-full bg-purple-100 py-10 px-8 h-fit gap-10 items-center justify-center rounded-sm">
+        <div className="lg:flex lg:flex-row flex flex-col w-full bg-purple-100 py-10 px-8 h-fit gap-10 items-center justify-center rounded-sm">
           <img src={Team} className="h-36" />
           <div className="flex gap-5 flex-col">
             <h3 className="font-bold w-full text-discovery">
@@ -85,7 +85,7 @@ const ReponderRetroInfo: FC<ReponderRetroInfoProps> = ({
             </p>
           </div>
         </div>
-        <div className="flex gap-14">
+        <div className="flex flex-col lg:flex-row gap-14">
           <Button
             appearance="link"
             onClick={() => navigate('/mis-retrospectivas')}
