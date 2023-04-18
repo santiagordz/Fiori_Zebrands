@@ -30,8 +30,8 @@ const Recordatorios: FC<RecordatoriosProps> = ({
 
   return (
     <Blanket isTinted={true}>
-      <div className="flex flex-col w-full h-full items-center justify-center">
-        <div className="flex flex-col bg-white rounded p-10 gap-8 h-fit">
+      <div className="flex w-screen h-screen items-center justify-center p-6">
+        <div className="flex flex-col bg-white rounded p-6 lg:p-10 gap-4 h-fit">
           <div className="flex justify-between">
             <h3 className="font-bold">
               Algunos recordatorios antes de comenzar
@@ -119,7 +119,7 @@ const Recordatorios: FC<RecordatoriosProps> = ({
               )}
             </div>
           </div>
-          <div className="flex justify-between">
+          <div className="flex flex-col lg:flex-row justify-between gap-6">
             <Link to="/mis-retrospectivas">
               <Button
                 appearance="subtle-link"

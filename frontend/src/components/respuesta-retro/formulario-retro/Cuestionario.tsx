@@ -142,8 +142,8 @@ const Cuestionario: FC<CuestionarioProps> = ({}) => {
             Volver al panel de retrospectivas
           </Button>
         </div>
-        <div className="w-full px-60 flex flex-col items-center justify-center gap-8">
-          <div className="w-5/12 flex items-center justify-center">
+        <div className="w-full px-8 lg:px-60 flex flex-col items-center justify-center gap-8">
+          <div className="lg:w-5/12 flex items-center justify-center">
             <Stepper
               totalSteps={questions.length}
               currentStep={formPage}
