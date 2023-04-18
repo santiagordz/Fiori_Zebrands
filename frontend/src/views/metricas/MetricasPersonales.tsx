@@ -12,18 +12,14 @@ const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/metricas`;
 const MetricasPersonales: FC = ({}) => {
   const [sprintsSeleccionadas, setSprintsSeleccionadas] =
     useState<any>([]);
+  const [sprintsValuesArray, setSprintsValuesArray] = useState([]);
 
   const handleSprintSeleccionados = (sprints: any[]) => {
     setSprintsSeleccionadas(sprints);
   };
 
-  const sprintsValuesArray = sprintsSeleccionadas.map((obj: any) => {
-    return obj.value;
-  });
-
   const { user } = useContext(userDataContext);
   const idjira = user?.id_jira;
-  const name = user?.nombre;
 
   const [data, setData] = useState<any[]>([]);
   const [data2, setData2] = useState<any[]>([]);
@@ -137,6 +133,12 @@ const MetricasPersonales: FC = ({}) => {
   };
 
   useEffect(() => {
+    setSprintsValuesArray(
+      sprintsSeleccionadas.map((obj: any) => {
+        return obj.value;
+      })
+    );
+
     getIssuesByUser();
     getStoryPointsByUser();
     getLastSprintsStorypoints();
@@ -161,8 +163,12 @@ const MetricasPersonales: FC = ({}) => {
 
       <div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-3 justify-center gap-7 w-full h-auto md:h-[70rem]">
         <div className="md:col-span-3 flex flex-col md:flex-row gap-7">
-          <ChartCards title="Storypoints en Done acumulados por sprint">
-            <SameDataComposedChart data={data5} barColor="#8bbbfd" />
+          <ChartCards title="Storypoint#cda3efs en Done acumulados por sprint">
+            <SameDataComposedChart
+              data={data5}
+              barColor="#8838ff"
+              lineColor="#388bff"
+            />
           </ChartCards>
           <ChartCards title="Storypoints en To Do acumulados por sprint">
             <SameDataComposedChart data={data6} />
@@ -174,7 +180,11 @@ const MetricasPersonales: FC = ({}) => {
             <SameDataComposedChart data={data4} />
           </ChartCards>
           <ChartCards title="Storypoints completados">
-            <SameDataComposedChart data={data3} barColor="#8bbbfd" />
+            <SameDataComposedChart
+              data={data3}
+              barColor="#8838ff"
+              lineColor="#388bff"
+            />
           </ChartCards>
         </div>
 

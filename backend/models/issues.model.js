@@ -8,10 +8,10 @@ const auth = {
 
 module.exports = class Issue {
   static fetchIssuesJira = async (start) => {
-    const maxResults = 100; // Número máximo de issues a recuperar por solicitud
-    let startAt = start; // Punto de inicio para recuperar issues en cada solicitud
-    let isLast = false; // Indicador para verificar si se han recuperado todos los issues
-    let issuesJira = []; // Arreglo para almacenar todos los issues recuperados
+    const maxResults = 100;
+    let startAt = start;
+    let isLast = false;
+    let issuesJira = [];
 
     while (!isLast) {
       const response = await axios.get(
@@ -58,21 +58,16 @@ module.exports = class Issue {
   static getLastUpdate = async () => {
     return db.execute(`
     SELECT updatedAt FROM last_fetch
-    `)
-  }
+    `);
+  };
 
   static fetchIssuesJiraUpdated = async (start, fecha) => {
-    const maxResults = 100; // Número máximo de issues a recuperar por solicitud
-    let startAt = start; // Punto de inicio para recuperar issues en cada solicitud
-    let isLast = false; // Indicador para verificar si se han recuperado todos los issues
-    let issuesJira = []; // Arreglo para almacenar todos los issues recuperados
-    // current date in year-motn-day format
+    const maxResults = 100;
+    let startAt = start;
+    let isLast = false;
+    let issuesJira = [];
     const date = new Date();
     const today = date.toISOString().slice(0, 10);
-
-    console.log(fecha, today)
-
-  
 
     while (!isLast) {
       const response = await axios.get(
@@ -113,6 +108,10 @@ module.exports = class Issue {
       })
       .filter((issue) => issue);
 
+    await db.execute(
+      `UPDATE last_fetch SET updatedAt = CURRENT_TIMESTAMP`
+    );
+
     return issues;
   };
 
@@ -143,10 +142,17 @@ module.exports = class Issue {
   };
 
   static updateIssues = async (status, id) => {
-      return db.execute(`UPDATE issues SET status = ? WHERE id = ?`, [status, id]);
-  }
+    return db.execute(`UPDATE issues SET status = ? WHERE id = ?`, [
+      status,
+      id,
+    ]);
+  };
 
   static getCountIssues = async () => {
     return db.execute(`SELECT COUNT(*) AS 'count' FROM issues`);
-    };
+  };
+
+  static getLastFetch = async () => {
+    return db.execute(`SELECT updatedAt FROM last_fetch`);
+  };
 };

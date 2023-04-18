@@ -115,7 +115,7 @@ const MetricasSprint: FC = ({}) => {
     getStoryPointsToDoLastSprints();
     getStoryPointsDoneLastSprintsProgressive();
     getStoryPointsToDoLastSprintsProgressive();
-  }, [sprintsSeleccionadas, sprintsValuesArray]);
+  }, [sprintsSeleccionadas]);
 
   return (
     <div className="flex flex-col gap-5">
@@ -140,7 +140,8 @@ const MetricasSprint: FC = ({}) => {
         <ChartCards title="Storypoints completados en los ultimos sprint">
           <SameDataComposedChart
             data={chart3Data}
-            barColor="#8bbbfd"
+            barColor="#8838ff"
+            lineColor="#388bff"
           />
         </ChartCards>
 
@@ -151,7 +152,8 @@ const MetricasSprint: FC = ({}) => {
         <ChartCards title="Storypoints en To Do acumulados por los ultimos sprints">
           <SameDataComposedChart
             data={chart6Data}
-            barColor="#8bbbfd"
+            barColor="#8838ff"
+            lineColor="#388bff"
           />
         </ChartCards>
 

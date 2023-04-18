@@ -51,6 +51,9 @@ const DropdownSprints = ({ onSprintsSeleccionadasChange }: Props) => {
     }
   };
 
+  const handleSprintsSeleccionadasChange = (sprints: any) => {
+    setSprintsSeleccionadas(sprints);
+  };
   useEffect(() => {
     getOptionsSprints();
   }, []);
@@ -58,10 +61,6 @@ const DropdownSprints = ({ onSprintsSeleccionadasChange }: Props) => {
   useEffect(() => {
     onSprintsSeleccionadasChange(sprintsSeleccionadas);
   }, [sprintsSeleccionadas]);
-
-  const handleSprintsSeleccionadasChange = (sprints: any) => {
-    setSprintsSeleccionadas(sprints);
-  };
 
   return (
     <div className="w-full">

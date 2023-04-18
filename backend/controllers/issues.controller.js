@@ -16,8 +16,8 @@ exports.getIssuesJira = async (req, res, next) => {
 
 exports.fetchIssuesJiraUpdated = async (req, res, next) => {
   let lastUpdate = await issuesModel.getLastUpdate();
-  lastUpdate = (lastUpdate[0][0].updatedAt)
-  lastUpdate = lastUpdate.toISOString().slice(0, 10)
+  lastUpdate = lastUpdate[0][0].updatedAt;
+  lastUpdate = lastUpdate.toISOString().slice(0, 10);
 
   try {
     res.json(await issuesModel.fetchIssuesJiraUpdated(0, lastUpdate));
@@ -40,14 +40,17 @@ exports.postIssuesJira = async (req, res, next) => {
   countIssuesDB = countIssuesDB[0][0].count;
 
   let lastUpdate = await issuesModel.getLastUpdate();
-  lastUpdate = (lastUpdate[0][0].updatedAt)
-  lastUpdate = lastUpdate.toISOString().slice(0, 10)
+  lastUpdate = lastUpdate[0][0].updatedAt;
+  lastUpdate = lastUpdate.toISOString().slice(0, 10);
 
   let sprintsDB = await sprints.getSprints();
   sprintsDB = sprintsDB.shift();
 
   const issues = await issuesModel.fetchIssuesJira(countIssuesDB);
-  const issuesUpdated = await issuesModel.fetchIssuesJiraUpdated(0, lastUpdate)
+  const issuesUpdated = await issuesModel.fetchIssuesJiraUpdated(
+    0,
+    lastUpdate
+  );
 
   try {
     issues.map(async (issue) => {
@@ -74,15 +77,25 @@ exports.postIssuesJira = async (req, res, next) => {
           );
         });
       }
-    })
+    });
     issuesUpdated.map(async (issue, id) => {
       await issuesModel.updateIssues(issue.status, issue.clave);
-    })
+    });
     res.send('ya');
   } catch (error) {
     console.error(error);
     res
       .status(500)
       .json({ message: 'Error al insertar los issues.' });
+  }
+};
+
+exports.getLastFetch = async (req, res, next) => {
+  try {
+    const [[lastFetch]] = await issuesModel.getLastFetch();
+    res.json(lastFetch.updatedAt);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al obtener la fecha.' });
   }
 };

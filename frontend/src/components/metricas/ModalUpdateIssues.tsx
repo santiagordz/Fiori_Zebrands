@@ -3,18 +3,26 @@ import Button from '@atlaskit/button';
 import CrossIcon from '@atlaskit/icon/glyph/cross';
 import InfoIcon from '@atlaskit/icon/glyph/info';
 import WarningIcon from '@atlaskit/icon/glyph/warning';
+import axios from 'axios';
 import { motion } from 'framer-motion';
-import { FC, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { FC, useContext, useEffect } from 'react';
+import { FlagContext } from '../../contexts';
+import ErrorIcon from '@atlaskit/icon/glyph/error';
+
+const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/issues`;
 
 interface ModalUpdateIssuesProps {
   setIsModalOpen: (isOpen: boolean) => void;
+  setModalLoading: (isOpen: boolean) => void;
+  getLastFetch: () => void;
 }
 
 const ModalUpdateIssue: FC<ModalUpdateIssuesProps> = ({
   setIsModalOpen,
+  setModalLoading,
+  getLastFetch,
 }) => {
-  const navigate = useNavigate();
+  const { addFlag } = useContext(FlagContext);
   useEffect(() => {
     document.body.classList.add('modal-open');
 
@@ -22,6 +30,46 @@ const ModalUpdateIssue: FC<ModalUpdateIssuesProps> = ({
       document.body.classList.remove('modal-open');
     };
   }, []);
+
+  const postIssues = async () => {
+    try {
+      axios.post(URI).then(() => {
+        setIsModalOpen(false);
+        addFlag(
+          `¡Excelente! Todos los datos de Jira se actualizaron correctamente.`,
+          InfoIcon,
+          'success'
+        );
+        getLastFetch();
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log(error);
+        addFlag(
+          '¡Ups! Ocurrió un error al actualizar los datos de Jira. Por favor, intenta nuevamente.',
+          ErrorIcon,
+          'error',
+          error.toString()
+        );
+      } else {
+        console.log(error);
+        addFlag(
+          '¡Ups! Ocurrió un error al actualizar los datos de Jira. Por favor, intenta nuevamente.',
+          ErrorIcon,
+          'error',
+          'Error desconocido'
+        );
+      }
+    } finally {
+      setModalLoading(false);
+    }
+  };
+
+  const handleclick = () => {
+    setIsModalOpen(false);
+    setModalLoading(true);
+    postIssues();
+  };
 
   return (
     <>
@@ -46,14 +94,14 @@ const ModalUpdateIssue: FC<ModalUpdateIssuesProps> = ({
                 size="xlarge"
               />
               <h3 className="font-bold text-modalSoft text-xl">
-                ¿Deseas sincronizar los datos provenientes de Jira?
+                ¿Deseas actualizar los datos provenientes de Jira?
               </h3>
             </div>
             <div className="flex gap-2 items-center justify-center pl-5">
               <WarningIcon label="warning" primaryColor="#FF0000" />
               <p className="text-xs text-textNormal">
                 Esto puede tardar algunos minutos, te pedimos que
-                tengas paciencia.
+                tengas paciencia.{' '}
               </p>
             </div>
             <div
@@ -68,7 +116,7 @@ const ModalUpdateIssue: FC<ModalUpdateIssuesProps> = ({
               </Button>
               <Button
                 appearance="primary"
-                onClick={() => navigate('/gestionar-retrospectivas')}
+                onClick={() => handleclick()}
               >
                 Continuar
               </Button>

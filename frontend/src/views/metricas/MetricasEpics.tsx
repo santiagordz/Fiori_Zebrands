@@ -91,6 +91,8 @@ const MetricasEpics: FC = ({}) => {
     getToDoEpicsDone();
   }, [epicsSeleccionadas]);
 
+  console.log(chart2Data);
+
   return (
     <div className="flex flex-col gap-5">
       <div className="gap-4 flex flex-col justify-left p-7 w-full rounded border border-gray-200 bg-white items-center">
@@ -111,13 +113,21 @@ const MetricasEpics: FC = ({}) => {
             <SameDataComposedChart data={chart5Data} />
           </ChartCards>
           <ChartCards title="Story points en To Do acumulados por epic">
-            <SameDataComposedChart data={chart6Data} />
+            <SameDataComposedChart
+              data={chart6Data}
+              barColor="#8838ff"
+              lineColor="#388bff"
+            />
           </ChartCards>
         </div>
 
         <div className="md:col-span-3 flex flex-col md:flex-row gap-7">
           <ChartCards title="Story points en Done por epic">
-            <SameDataComposedChart data={chart3Data} />
+            <SameDataComposedChart
+              data={chart3Data}
+              barColor="#8838ff"
+              lineColor="#388bff"
+            />
           </ChartCards>
 
           <ChartCards title="Story points en To Do por epic">
