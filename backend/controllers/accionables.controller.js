@@ -1,23 +1,31 @@
 const Accionables = require("../models/accionables.model");
 
-exports.createAccionables = (req, res) => {
-  const id_usuario = req.body.id_usuario;
-  const descripcion = req.body.descripcion;
-  const fecha = req.body.fecha;
-  const completada = req.body.completada;
-
-  Accionables.createAccionables(id_usuario, descripcion, fecha, completada)
+const getAccionablesByUserId = (req, res) => {
+  const id_usuario = req.params.id;
+  console.log("id_usuario en controller:", id_usuario); // Agrega esta línea
+  Accionables.getAccionablestaByUserId(id_usuario)
     .then(([rows, fieldData]) => {
       res.json(rows);
     })
     .catch((err) => console.log(err));
-
-  exports.getAccionableById = (req, res, next) => {
-    const id = req.params.id;
-    Accionables.getAccionableById(id)
-      .then(([rows, fieldData]) => {
-        res.json(rows);
-      })
-      .catch((err) => console.log(err));
-  };
 };
+
+const createAccionable = (req, res) => {
+  console.log("Recibiendo accionable:", req.body);
+  const { id_usuario, accionable, fecha } = req.body;
+
+  // Cambiar el formato de la fecha a 'YYYY-MM-DD'
+  const [dia, mes, anio] = fecha.split("/");
+  const fechaFormatoMySQL = `${anio}-${mes.padStart(2, "0")}-${dia.padStart(
+    2,
+    "0"
+  )}`;
+
+  Accionables.createAccionable(id_usuario, accionable, fechaFormatoMySQL)
+    .then(([rows, fieldData]) => {
+      res.json(rows);
+    })
+    .catch((err) => console.log(err));
+};
+
+module.exports = { getAccionablesByUserId, createAccionable };

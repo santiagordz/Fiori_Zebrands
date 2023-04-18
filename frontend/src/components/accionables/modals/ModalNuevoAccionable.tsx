@@ -10,6 +10,10 @@ import TextArea from "@atlaskit/textarea";
 
 const URI = "http://localhost:8000/accionables/";
 
+const currentUser = {
+  id: 24, // Reemplaza esto con el id del usuario actual
+};
+
 interface ModalNuevoAccionableProps {
   setIsNewAccionableOpen: (value: boolean) => void;
   agregarAccionable: (accionable: any) => void;
@@ -30,7 +34,30 @@ const ModalNuevoAccionable: FC<ModalNuevoAccionableProps> = ({
     fecha: new Date().toLocaleDateString(),
   });
 
+  const saveAccionable = async (accionable: any) => {
+    try {
+      await axios.post(URI, accionable);
+    } catch (error) {
+      console.error("Error al guardar el accionable:", error);
+    }
+  };
+
   const [excedeLimite, setExcedeLimite] = useState(false);
+
+  const fetchAccionables = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/accionables/${currentUser.id}`
+      );
+      setNewAccionable(response.data);
+    } catch (error) {
+      console.error("Error al obtener los accionables:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchAccionables();
+  }, []);
 
   const verificarLimite = (texto: string) => {
     if (texto.length > MAX_CARACTERES) {
@@ -113,12 +140,17 @@ const ModalNuevoAccionable: FC<ModalNuevoAccionableProps> = ({
             </Button>
             <Button
               appearance="primary"
-              onClick={() => {
+              onClick={async () => {
                 if (newAccionable.accionable.length <= MAX_CARACTERES) {
-                  agregarAccionable({
+                  // Cambia "descripcion" a "accionable" aquí
+                  const accionableToSend = {
                     ...newAccionable,
                     fecha: new Date().toLocaleDateString(),
-                  });
+                    id_usuario: currentUser.id, // Agrega el id_usuario aquí
+                  };
+                  agregarAccionable(accionableToSend);
+                  console.log("Enviando accionable:", accionableToSend);
+                  await saveAccionable(accionableToSend);
                   setIsNewAccionableOpen(false);
                 } else {
                   setExcedeLimite(true);

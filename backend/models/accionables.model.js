@@ -4,7 +4,7 @@ module.exports = class Accionable {
   constructor(newAccionable) {
     this.id = newAccionable.id || null;
     this.id_usuario = newAccionable.id_usuario || null;
-    this.descripcion = newAccionable.descripcion || null;
+    this.accionable = newAccionable.accionable || null; // Cambia 'descripcion' a 'accionable'
     this.fecha = newAccionable.fecha || null;
   }
 
@@ -12,30 +12,34 @@ module.exports = class Accionable {
     return db.execute("SELECT * FROM accionables");
   }
 
-  static createAccionable(id_usuario, descripcion, fecha, completada) {
+  static createAccionable(id_usuario, accionable, fecha) {
     return db.execute(
       `
-          INSERT INTO accionables (id_usuario, descripcion, fecha, completada)
-          VALUES (?, ?, ?, ?)
+          INSERT INTO accionables (id_usuario, accionable, fecha)
+          VALUES (?, ?, ?)
               `,
-      [id_usuario, descripcion, fecha, completada]
+      [id_usuario, accionable, fecha]
     );
   }
 
-  static getAccionableById(id) {
+  static getAccionablestaByUserId(id_usuario) {
+    console.log("id_usuario en model:", id_usuario);
     return db.execute(
       `
-        SELECT a.id, a.descripcion, a.fecha, AS accionable u.id
-         FROM  accionables a, usuarios u WHERE u.id= ? 
-        `,
-      [id]
+        SELECT * FROM accionables
+        WHERE id_usuario = ?
+      `,
+      [id_usuario]
     );
   }
 
-  static markAccionableAsCompletado(id_usuario) {
+  static deleteAccionable(id) {
     return db.execute(
-      "UPDATE accionables SET completada = 1 WHERE id_usuario = ?",
-      [id_usuario]
+      `
+        DELETE FROM accionables
+        WHERE id = ?
+          `,
+      [id]
     );
   }
 };

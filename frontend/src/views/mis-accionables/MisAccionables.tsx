@@ -1,7 +1,6 @@
 import Button from "@atlaskit/button";
 import AddIcon from "@atlaskit/icon/glyph/add";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import DesignTemplate from "../../components/design-template/DesignTemplate";
 import ModalNuevoAccionable from "../../components/accionables/modals/ModalNuevoAccionable";
 import BoxAccionable from "../../components/accionables/modals/accionable/BoxAccionable";
@@ -112,7 +111,6 @@ const MisAccionables = ({}) => {
             </div>
             {accionablesPrioridadBaja.map((accionable) => (
               <BoxAccionable
-                key={accionable.id}
                 accionable={accionable.accionable}
                 id={accionable.id}
                 fecha={accionable.fecha}
