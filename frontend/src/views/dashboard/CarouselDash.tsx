@@ -9,6 +9,8 @@ import Button from '@atlaskit/button';
 import ArrowRightIcon from '@atlaskit/icon/glyph/arrow-right';
 import { useNavigate, useParams } from 'react-router-dom';
 
+const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/metricas`;
+
 export const Panel = ({
   children,
   testId,
@@ -19,7 +21,6 @@ export const Panel = ({
 
 export default function TabsDefaultExample() {
   const navigate = useNavigate();
-  const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/sprintsdata`;
   const { user } = useContext(userDataContext);
   const idjira = user?.id_jira;
   const [data4, setData4] = useState<any[]>([]);
@@ -28,7 +29,7 @@ export default function TabsDefaultExample() {
   const getLastSprintsToDoStorypoints = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/sprintsdata/lastsprintstodostorypoints/${idjira}`
+        `${URI}/lastsprintstodostorypoints/${idjira}`
       );
       const data = response.data.issues[0];
       setData4(data);
@@ -86,7 +87,7 @@ export default function TabsDefaultExample() {
       </Tabs>
       <div className="w-full justify-end self-end">
         <Button
-        shouldFitContainer
+          shouldFitContainer
           className="flex justify-end self-end"
           appearance="subtle-link"
           iconAfter={
@@ -96,7 +97,9 @@ export default function TabsDefaultExample() {
             />
           }
           onClick={() => navigate(`/metricas`)}
-        > </Button>
+        >
+          {' '}
+        </Button>
       </div>
     </div>
   );

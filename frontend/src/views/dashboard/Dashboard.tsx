@@ -76,7 +76,7 @@ const Dashboard: FC<DashboardProps> = ({}) => {
                     primaryColor="#1D7AFC"
                   />
                 }
-                onClick={() => navigate(`/metricas`)}
+                onClick={() => navigate(`/mis-accionables`)}
               >
                 {' '}
               </Button>
@@ -113,7 +113,7 @@ const Dashboard: FC<DashboardProps> = ({}) => {
                     primaryColor="#1D7AFC"
                   />
                 }
-                onClick={() => navigate(`/metricas`)}
+                onClick={() => navigate(`/mis-retrospectivas`)}
               >
                 {' '}
               </Button>

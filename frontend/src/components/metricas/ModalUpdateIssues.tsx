@@ -78,7 +78,7 @@ const ModalUpdateIssue: FC<ModalUpdateIssuesProps> = ({
           animate={{ opacity: 1 }}
           className="flex flex-col w-full h-full items-center justify-center opacity-0"
         >
-          <div className="flex flex-col bg-white rounded p-10 gap-7 items-center justify-center drop-shadow-lg max-w-[42vw]">
+          <div className="flex flex-col bg-white rounded p-10 gap-7 items-center justify-center drop-shadow-lg max-w-[90%] lg:max-w-[42vw]">
             <div
               className="flex w-full absolute top-0 justify-end p-4"
               onClick={() => setIsModalOpen(false)}

@@ -49,12 +49,10 @@ const DesignTemplate: FC<DesignTemplateProps> = ({
         <div className="invisible lg:visible">
           <Sidebar />
         </div>
-        <div className="flex flex-row justify-between items-center px-10">
-          <div>
+        <div className="flex flex-row justify-between items-center lg:px-0 px-10">
             <p className="font-medium text-[1.09rem] h-full text-left text-paragraph">
               Hola, {name}
             </p>
-          </div>
           <div>
             <button
               onClick={handleMenu}

@@ -11,6 +11,9 @@ import ModalLoading from '../../components/metricas/ModalLoading';
 import ModalUpdateIssue from '../../components/metricas/ModalUpdateIssues';
 import EmojiFrequentIcon from '@atlaskit/icon/glyph/emoji/frequent';
 import { Tooltip } from 'react-tooltip';
+import { format, parseISO } from 'date-fns';
+import { utcToZonedTime } from 'date-fns-tz';
+
 
 const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/issues`;
 
@@ -30,24 +33,18 @@ const Metricas: FC = ({}) => {
   const getLastFetch = useCallback(async () => {
     try {
       const { data: fecha } = await axios.get(`${URI}/last-fetch`);
-      const fechaParsed = new Date(fecha);
-
-      const dia = fechaParsed
-        .getUTCDate()
-        .toString()
-        .padStart(2, '0');
-      const mes = (fechaParsed.getUTCMonth() + 1)
-        .toString()
-        .padStart(2, '0');
-      const anio = fechaParsed.getUTCFullYear().toString();
-      const hora = fechaParsed.getHours();
-      const minutos = fechaParsed.getMinutes();
-
-      setLastFetch(`${dia}/${mes}/${anio} ${hora}:${minutos}`);
+      const fechaParsed = parseISO(fecha);
+  
+      const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      const localDate = utcToZonedTime(fechaParsed, userTimeZone);
+  
+      const formattedDate = format(localDate, 'dd/MM/yyyy HH:mm');
+      setLastFetch(formattedDate);
     } catch (error) {
       console.error(error);
     }
   }, []);
+  
 
   useEffect(() => {
     getLastFetch();
@@ -71,7 +68,7 @@ const Metricas: FC = ({}) => {
         tab={<div className="mt-5"></div>}
         buttons={
           <>
-            <div className="flex flex-col justify-center gap-1">
+            <div className="flex flex-col justify-center gap-1 lg:p-0 p-10">
               <Button
                 onClick={() => setIsModalBackOpen(true)}
                 appearance="primary"
@@ -97,7 +94,7 @@ const Metricas: FC = ({}) => {
                   <Tooltip
                     id="anon-tooltip"
                     place="bottom"
-                    className="text-xs bg-deepBlue"
+                    className="text-xs bg-deepBlue z-20"
                   />
                 </a>
               ) : null}
