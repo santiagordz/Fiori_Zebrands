@@ -9,6 +9,11 @@ import { ChartCards } from '../../components';
 
 const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/metricas`;
 
+interface dataType {
+  status: string;
+  total_story_points: number | null;
+}
+
 const MetricasEpics: FC = ({}) => {
   const [epicsSeleccionadas, setEpicsSeleccionadas] = useState<any>({
     value: 'TPECG-3202',
@@ -26,6 +31,11 @@ const MetricasEpics: FC = ({}) => {
   const [chart6Data, setChart6Data] = useState<any[]>([]);
 
   const getData = async () => {
+    if (epicsSeleccionadas === null) {
+      setChartData([]);
+      setChart2Data([]);
+    }
+
     const response = await fetch(
       `${URI}/epic/${epicsSeleccionadas.value}`
     );
@@ -35,8 +45,24 @@ const MetricasEpics: FC = ({}) => {
     );
     const data2 = await response2.json();
 
-    setChartData(data.issues[0]);
-    setChart2Data(data2.issues[0]);
+    const updatedData = data.issues[0].map((item: dataType) => ({
+      ...item,
+      total_story_points:
+        item.total_story_points === null
+          ? 0
+          : item.total_story_points,
+    }));
+
+    const updatedData2 = data2.issues[0].map((item: dataType) => ({
+      ...item,
+      total_story_points:
+        item.total_story_points === null
+          ? 0
+          : item.total_story_points,
+    }));
+
+    setChartData(updatedData);
+    setChart2Data(updatedData2);
   };
 
   const getEpicsDoneGlobal = async () => {
@@ -90,8 +116,6 @@ const MetricasEpics: FC = ({}) => {
     getEpicsDone();
     getToDoEpicsDone();
   }, [epicsSeleccionadas]);
-
-  console.log(chart2Data);
 
   return (
     <div className="flex flex-col gap-5">

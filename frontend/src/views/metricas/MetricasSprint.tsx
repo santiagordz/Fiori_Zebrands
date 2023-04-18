@@ -12,8 +12,6 @@ const MetricasSprint: FC = ({}) => {
   const [sprintsSeleccionadas, setSprintsSeleccionadas] =
     useState<any>([]);
 
-  const [sprintsValuesArray, setSprintsValuesArray] = useState([]);
-
   const handleSprintSeleccionados = (sprints: any[]) => {
     setSprintsSeleccionadas(sprints);
   };
@@ -26,12 +24,16 @@ const MetricasSprint: FC = ({}) => {
   const [chart6Data, setChart6Data] = useState<any[]>([]);
 
   const getDataSprintsById = async () => {
-    if (sprintsValuesArray.length === 0) {
+    const sprintsIds = sprintsSeleccionadas.map((obj: any) => {
+      return obj.value;
+    });
+
+    if (sprintsIds.length === 0) {
       return setChartData([]);
     }
 
     try {
-      const urlPath = sprintsValuesArray.join(',');
+      const urlPath = sprintsIds.join(',');
       const response = await axios.get(`${URI}/sprints/${urlPath}`);
       const data = response.data.sprints[0];
       setChartData(data);
@@ -42,12 +44,16 @@ const MetricasSprint: FC = ({}) => {
   };
 
   const getDataStoryPointsById = async () => {
-    if (sprintsValuesArray.length === 0) {
+    const sprintsIds = sprintsSeleccionadas.map((obj: any) => {
+      return obj.value;
+    });
+
+    if (sprintsIds.length === 0) {
       return setChart2Data([]);
     }
 
     try {
-      const urlPath = sprintsValuesArray.join(',');
+      const urlPath = sprintsIds.join(',');
       const response = await axios.get(
         `${URI}/storypoints/${urlPath}`
       );
@@ -103,12 +109,6 @@ const MetricasSprint: FC = ({}) => {
   };
 
   useEffect(() => {
-    setSprintsValuesArray(
-      sprintsSeleccionadas.map((obj: any) => {
-        return obj.value;
-      })
-    );
-
     getDataSprintsById();
     getDataStoryPointsById();
     getStoryPointsDoneLastSprints();

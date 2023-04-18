@@ -1,20 +1,17 @@
-import React, { FC, useCallback, useState, useEffect } from 'react';
-import DesignTemplate from '../../components/design-template/DesignTemplate';
-import Tabs, { Tab, TabList, TabPanel } from '@atlaskit/tabs';
-import MetricasSprint from './MetricasSprint';
-import MetricasEpics from './MetricasEpics';
-import MetricasPersonales from './MetricasPersonales';
-import SameDataControlledChart from '../../components/charts/SameDataComposedChart';
 import Button from '@atlaskit/button';
-import { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer';
-import { BotonReporte, Reporte } from '../../components';
-import DownloadIcon from '@atlaskit/icon/glyph/download';
-import axios from 'axios';
+import EmojiFrequentIcon from '@atlaskit/icon/glyph/emoji/frequent';
 import RefreshIcon from '@atlaskit/icon/glyph/refresh';
+import Tabs, { Tab, TabList, TabPanel } from '@atlaskit/tabs';
+import axios from 'axios';
+import React, { FC, useCallback, useEffect, useState } from 'react';
+import { Tooltip } from 'react-tooltip';
+import { BotonReporte } from '../../components';
+import DesignTemplate from '../../components/design-template/DesignTemplate';
 import ModalLoading from '../../components/metricas/ModalLoading';
 import ModalUpdateIssue from '../../components/metricas/ModalUpdateIssues';
-import EmojiFrequentIcon from '@atlaskit/icon/glyph/emoji/frequent';
-import { Tooltip } from 'react-tooltip';
+import MetricasEpics from './MetricasEpics';
+import MetricasPersonales from './MetricasPersonales';
+import MetricasSprint from './MetricasSprint';
 
 const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/issues`;
 
@@ -44,8 +41,11 @@ const Metricas: FC = ({}) => {
         .toString()
         .padStart(2, '0');
       const anio = fechaParsed.getUTCFullYear().toString();
-      const hora = fechaParsed.getHours();
-      const minutos = fechaParsed.getMinutes();
+      const hora = fechaParsed.getHours().toString().padStart(2, '0'); // Agrega un cero inicial a la hora
+      const minutos = fechaParsed
+        .getMinutes()
+        .toString()
+        .padStart(2, '0'); // Agrega un cero inicial a los minutos
 
       setLastFetch(`${dia}/${mes}/${anio} ${hora}:${minutos}`);
     } catch (error) {
