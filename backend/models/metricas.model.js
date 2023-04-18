@@ -221,48 +221,61 @@ module.exports = class StatusIssue {
   static getPersonalStoryPointsProgressiveLastSprints(id) {
     return db.execute(
       `
-      SELECT s.nombre, 
-       SUM(i.story_points) OVER (ORDER BY s.fecha_inicio ASC, s.nombre ASC) AS total_story_points
-FROM issues i
-JOIN sprints_issues si ON i.clave = si.id_issue
-JOIN sprints s ON si.id_sprint = s.id_jira
-WHERE i.assignee_id = ?
-  AND i.status = "Done"
-  GROUP BY s.nombre
-ORDER BY s.fecha_inicio ASC
+      SELECT s.nombre,
+             (SELECT SUM(i2.story_points)
+              FROM issues i2
+              JOIN sprints_issues si2 ON i2.clave = si2.id_issue
+              JOIN sprints s2 ON si2.id_sprint = s2.id_jira
+              WHERE i2.assignee_id = ? AND i2.status = "Done"
+                AND s2.fecha_inicio <= s.fecha_inicio) AS total_story_points
+      FROM issues i
+      JOIN sprints_issues si ON i.clave = si.id_issue
+      JOIN sprints s ON si.id_sprint = s.id_jira
+      WHERE i.assignee_id = ? AND i.status = "Done"
+      GROUP BY s.id, s.nombre, s.fecha_inicio
+      ORDER BY s.fecha_inicio ASC, s.nombre ASC;
       `,
-      [id]
+      [id, id]
     );
   }
 
   static getPersonalToDoStoryPointsProgressiveLastSprints(id) {
     return db.execute(
       `
-      SELECT s.nombre, 
-       SUM(i.story_points) OVER (ORDER BY s.fecha_inicio ASC, s.nombre ASC) AS total_story_points
-FROM issues i
-JOIN sprints_issues si ON i.clave = si.id_issue
-JOIN sprints s ON si.id_sprint = s.id_jira
-WHERE i.assignee_id = ?
-  AND i.status = "To Do"
-  GROUP BY s.nombre
-ORDER BY s.fecha_inicio ASC
+      SELECT s.nombre,
+             (SELECT SUM(i2.story_points)
+              FROM issues i2
+              JOIN sprints_issues si2 ON i2.clave = si2.id_issue
+              JOIN sprints s2 ON si2.id_sprint = s2.id_jira
+              WHERE i2.assignee_id = ? AND i2.status = "To Do"
+                AND s2.fecha_inicio <= s.fecha_inicio) AS total_story_points
+      FROM issues i
+      JOIN sprints_issues si ON i.clave = si.id_issue
+      JOIN sprints s ON si.id_sprint = s.id_jira
+      WHERE i.assignee_id = ? AND i.status = "To Do"
+      GROUP BY s.id, s.nombre, s.fecha_inicio
+      ORDER BY s.fecha_inicio ASC, s.nombre ASC;
       `,
-      [id]
+      [id, id]
     );
   }
 
   static getDoneStoryPointsProgressiveLastSprints() {
     return db.execute(
       `
-      SELECT s.nombre, 
-       SUM(i.story_points) OVER (ORDER BY s.fecha_inicio ASC, s.nombre ASC) AS total_story_points
+      SELECT s.nombre,
+       (SELECT SUM(i2.story_points)
+        FROM issues i2
+        JOIN sprints_issues si2 ON i2.clave = si2.id_issue
+        JOIN sprints s2 ON si2.id_sprint = s2.id_jira
+        WHERE i2.status = "Done"
+          AND s2.fecha_inicio <= s.fecha_inicio) AS total_story_points
 FROM issues i
 JOIN sprints_issues si ON i.clave = si.id_issue
 JOIN sprints s ON si.id_sprint = s.id_jira
 WHERE i.status = "Done"
-  GROUP BY s.nombre
-ORDER BY s.fecha_inicio ASC
+GROUP BY s.id, s.nombre, s.fecha_inicio
+ORDER BY s.fecha_inicio ASC, s.nombre ASC;
       `
     );
   }
@@ -270,14 +283,20 @@ ORDER BY s.fecha_inicio ASC
   static getToDoStoryPointsProgressiveLastSprints() {
     return db.execute(
       `
-      SELECT s.nombre, 
-       SUM(i.story_points) OVER (ORDER BY s.fecha_inicio ASC, s.nombre ASC) AS total_story_points
+      SELECT s.nombre,
+       (SELECT SUM(i2.story_points)
+        FROM issues i2
+        JOIN sprints_issues si2 ON i2.clave = si2.id_issue
+        JOIN sprints s2 ON si2.id_sprint = s2.id_jira
+        WHERE i2.status = "To Do"
+          AND s2.fecha_inicio <= s.fecha_inicio) AS total_story_points
 FROM issues i
 JOIN sprints_issues si ON i.clave = si.id_issue
 JOIN sprints s ON si.id_sprint = s.id_jira
 WHERE i.status = "To Do"
-  GROUP BY s.nombre
-ORDER BY s.fecha_inicio ASC
+GROUP BY s.id, s.nombre, s.fecha_inicio
+ORDER BY s.fecha_inicio ASC, s.nombre ASC;
+
       `
     );
   }
@@ -285,13 +304,26 @@ ORDER BY s.fecha_inicio ASC
   static getDoneStoryPointsProgressiveLastEpics() {
     return db.execute(
       `
-      SELECT e.nombre, 
-      SUM(i.story_points) OVER (ORDER BY e.id ASC, e.nombre ASC) AS total_story_points
-FROM issues i
-JOIN epics e ON i.key_epic = e.id_jira
+      SELECT e.nombre,
+       (SELECT SUM(i2.story_points)
+        FROM issues i2
+        JOIN epics e2 ON i2.key_epic = e2.id_jira
+        WHERE i2.status = "Done"
+          AND e2.id <= e.id) AS total_story_points
+FROM (
+    SELECT DISTINCT e.*
+    FROM epics e
+    JOIN issues i ON i.key_epic = e.id_jira
+    WHERE i.status = "Done"
+    ORDER BY e.id DESC
+    LIMIT 5
+) AS e
+JOIN issues i ON i.key_epic = e.id_jira
 WHERE i.status = "Done"
-GROUP BY e.nombre
+GROUP BY e.id, e.nombre
 ORDER BY e.id ASC, e.nombre ASC;
+
+
       `
     );
   }
@@ -299,13 +331,25 @@ ORDER BY e.id ASC, e.nombre ASC;
   static getToDoStoryPointsProgressiveLastEpics() {
     return db.execute(
       `
-      SELECT e.nombre, 
-       SUM(i.story_points) OVER (ORDER BY e.id ASC, e.nombre ASC) AS total_story_points
-FROM issues i
-JOIN epics e ON i.key_epic = e.id_jira
+      SELECT e.nombre,
+       (SELECT SUM(i2.story_points)
+        FROM issues i2
+        JOIN epics e2 ON i2.key_epic = e2.id_jira
+        WHERE i2.status = "To Do"
+          AND e2.id <= e.id) AS total_story_points
+FROM (
+    SELECT DISTINCT e.*
+    FROM epics e
+    JOIN issues i ON i.key_epic = e.id_jira
+    WHERE i.status = "To Do"
+    ORDER BY e.id DESC
+    LIMIT 5
+) AS e
+JOIN issues i ON i.key_epic = e.id_jira
 WHERE i.status = "To Do"
-GROUP BY e.nombre
+GROUP BY e.id, e.nombre
 ORDER BY e.id ASC, e.nombre ASC;
+
       `
     );
   }
