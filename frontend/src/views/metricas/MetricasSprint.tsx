@@ -132,12 +132,12 @@ const MetricasSprint: FC = ({}) => {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-3 justify-center gap-7 w-full h-auto md:h-[70rem]">
         <div className="md:col-span-3">
-          <ChartCards title="Storypoints en Done acumulados en los ultimos sprints">
+          <ChartCards title="Story points en Done acumulados en los ultimos sprints">
             <SameDataComposedChart data={chart5Data} />
           </ChartCards>
         </div>
 
-        <ChartCards title="Storypoints completados en los ultimos sprint">
+        <ChartCards title="Story points completados en los ultimos sprint">
           <SameDataComposedChart
             data={chart3Data}
             barColor="#8838ff"
@@ -145,11 +145,11 @@ const MetricasSprint: FC = ({}) => {
           />
         </ChartCards>
 
-        <ChartCards title="Storypoints en To Do de los ultimos sprints">
+        <ChartCards title="Story points en To Do de los ultimos sprints">
           <SameDataComposedChart data={chart4Data} />
         </ChartCards>
 
-        <ChartCards title="Storypoints en To Do acumulados por los ultimos sprints">
+        <ChartCards title="Story points en To Do acumulados por los ultimos sprints">
           <SameDataComposedChart
             data={chart6Data}
             barColor="#8838ff"

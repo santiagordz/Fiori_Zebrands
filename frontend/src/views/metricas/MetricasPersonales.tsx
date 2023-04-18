@@ -163,23 +163,23 @@ const MetricasPersonales: FC = ({}) => {
 
       <div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-3 justify-center gap-7 w-full h-auto md:h-[70rem]">
         <div className="md:col-span-3 flex flex-col md:flex-row gap-7">
-          <ChartCards title="Storypoint#cda3efs en Done acumulados por sprint">
+          <ChartCards title="Story points en Done acumulados por sprint">
             <SameDataComposedChart
               data={data5}
               barColor="#8838ff"
               lineColor="#388bff"
             />
           </ChartCards>
-          <ChartCards title="Storypoints en To Do acumulados por sprint">
+          <ChartCards title="Story points en To Do acumulados por sprint">
             <SameDataComposedChart data={data6} />
           </ChartCards>
         </div>
 
         <div className="md:col-span-3 flex flex-col md:flex-row gap-7">
-          <ChartCards title="Storypoints pendientes">
+          <ChartCards title="Story points pendientes">
             <SameDataComposedChart data={data4} />
           </ChartCards>
-          <ChartCards title="Storypoints completados">
+          <ChartCards title="Story points completados">
             <SameDataComposedChart
               data={data3}
               barColor="#8838ff"
