@@ -60,8 +60,8 @@ export default function TabsDefaultExample() {
       <Tabs id="default">
         <div className="w-full h-auto">
           <TabList>
-            <Tab>Metricas Personales</Tab>
-            <Tab>Metricas Sprint Mas Reciente</Tab>
+            <Tab>Metricas personales</Tab>
+            <Tab>Metricas sprint mas reciente</Tab>
           </TabList>
         </div>
         <TabPanel>
