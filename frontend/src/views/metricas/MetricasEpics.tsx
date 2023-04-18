@@ -10,10 +10,8 @@ import { ChartCards } from '../../components';
 const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/metricas`;
 
 const MetricasEpics: FC = ({}) => {
-  const [epicsSeleccionadas, setEpicsSeleccionadas] = useState<any>({
-    value: 'TPECG-3202',
-    label: 'Implementar secciones de la aplicación',
-  });
+  const [epicsSeleccionadas, setEpicsSeleccionadas] =
+    useState<any>(null);
   const handleEpicsSeleccionados = (epics: string[]) => {
     setEpicsSeleccionadas(epics);
   };
