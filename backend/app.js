@@ -6,7 +6,23 @@ const cors = require('cors');
 const passport = require('passport');
 const authRoutes = require('./auth/index');
 const cookieSession = require('cookie-session');
+const path = require('path');
 const app = express();
+
+const _dirname = path.dirname('');
+const buildPath = path.join(_dirname, '../frontend/dist');
+
+app.use(express.static(buildPath));
+app.get('/', (req, res) => {
+  res.sendFile(
+    path.join(__dirname, '../frontend/dist/index.html'),
+    function (err) {
+      if (err) {
+        res.status(500).send(err);
+      }
+    }
+  );
+});
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
