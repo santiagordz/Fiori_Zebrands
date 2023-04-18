@@ -16,6 +16,7 @@ export { default as Respuestas } from './respuestas-resumen/Respuestas';
 
 // Reporte
 export { default as Reporte } from './reporte/Reporte';
+export { default as BotonReporte } from './reporte/BotonReporte';
 
 // Metricas
 export { default as ChartCards } from './chart-cards/ChartCards';

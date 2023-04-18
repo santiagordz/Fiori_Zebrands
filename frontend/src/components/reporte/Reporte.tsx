@@ -6,7 +6,12 @@ import {
   StyleSheet,
   Font,
 } from '@react-pdf/renderer';
-import { FC } from 'react';
+import { FC, useState, useEffect } from 'react';
+import RetrospectivaGeneral from '../respuesta-retro/reusable/RetrospectivaGeneral';
+import axios from 'axios';
+import type { Retrospectiva } from '../../views/mis-retrospectivas/MisRetrospectivas';
+
+const URI = import.meta.env.VITE_APP_BACKEND_URI;
 
 Font.register({
   family: 'Inter',
@@ -88,31 +93,39 @@ const styles = StyleSheet.create({
   },
 });
 
-interface Improvement {
-  title: string;
-  description: string;
-  assignedTo: string;
-}
-
-interface Metric {
-  name: string;
-  value: string;
-}
-
-interface ReporteData {
-  retrospectiveSummary: string;
-  metrics: Metric[];
-  improvements: Improvement[];
-}
-
 interface ReporteProps {
-  reporteData: ReporteData;
+  idRetrospectiva: number;
 }
 
-const Reporte: FC<ReporteProps> = ({ reporteData }) => {
-  let retrospectiveSummary;
-  let metrics;
-  let improvements;
+const Reporte: FC<ReporteProps> = ({ idRetrospectiva }) => {
+  const [retrospectiva, setRetrospectiva] = useState<Retrospectiva>({
+    id: 0,
+    completada: false,
+    num_respuestas: 0,
+    en_curso: false,
+    titulo: '',
+    descripcion: '',
+    fecha_inicio: '',
+    fecha_fin: '',
+    tags: [],
+  });
+  let metrics = [] as any;
+  let improvements = [] as any;
+
+  const getRetrospectiva = async () => {
+    try {
+      const response = await axios.get(
+        `${URI}/retrospectivas/details/${idRetrospectiva}`
+      );
+      setRetrospectiva(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getRetrospectiva();
+  }, []);
 
   return (
     <Document>
@@ -121,7 +134,7 @@ const Reporte: FC<ReporteProps> = ({ reporteData }) => {
           <Text style={styles.title}>Reporte de Retrospectiva</Text>
 
           <Text style={styles.subtitle}>Resumen</Text>
-          {retrospectiveSummary ? (
+          {idRetrospectiva ? (
             <>
               <Text style={styles.text}>
                 La siguiente retrospectiva se llevó a cabo con el
@@ -134,7 +147,7 @@ const Reporte: FC<ReporteProps> = ({ reporteData }) => {
                 incluyendo métricas clave del sprint y las mejoras
                 identificadas:
               </Text>
-              <Text style={styles.text}>{retrospectiveSummary}</Text>
+              <Text>{retrospectiva.titulo}</Text>
             </>
           ) : (
             <Text style={styles.text}>

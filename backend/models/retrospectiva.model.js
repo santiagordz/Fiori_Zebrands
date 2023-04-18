@@ -11,7 +11,9 @@ module.exports = class Retrospectiva {
   }
 
   static fetchAll() {
-    return db.execute('SELECT * FROM retrospectivas');
+    return db.execute(
+      'SELECT * FROM retrospectivas ORDER BY fecha_inicio DESC'
+    );
   }
 
   static fetchPanelRetros() {
@@ -33,6 +35,28 @@ module.exports = class Retrospectiva {
       [id_retrospectiva, id_usuario]
     );
   }
+
+  static fetchLast = async () => {
+    const [retrospectivas] = await db.execute(
+      `SELECT *
+      FROM retrospectivas
+      ORDER BY fecha_inicio DESC
+      LIMIT 1`
+    );
+
+    const [tags] = await db.execute(
+      `
+    SELECT E.id, E.etiqueta, E.id_color, C.color
+    FROM etiquetas AS E
+    INNER JOIN colores AS C ON E.id_color = C.id
+    INNER JOIN retrospectiva_etiquetas AS RE ON RE.id_etiqueta = E.id
+    WHERE RE.id_retrospectiva = ?;
+    `,
+      [retrospectivas[0].id]
+    );
+
+    return retrospectivas[0];
+  };
 
   static fetchRetrospectivasByUserId(userId) {
     return db.execute(

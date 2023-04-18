@@ -7,7 +7,7 @@ import MetricasPersonales from './MetricasPersonales';
 import SameDataControlledChart from '../../components/charts/SameDataComposedChart';
 import Button from '@atlaskit/button';
 import { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer';
-import { Reporte } from '../../components';
+import { BotonReporte, Reporte } from '../../components';
 import DownloadIcon from '@atlaskit/icon/glyph/download';
 import axios from 'axios';
 import RefreshIcon from '@atlaskit/icon/glyph/refresh';
@@ -75,21 +75,7 @@ const Metricas: FC = ({}) => {
         tab={<div className="mt-5"></div>}
         buttons={
           <>
-            <Button
-              appearance="link"
-              iconBefore={<DownloadIcon label="descargar reporte" />}
-            >
-              <PDFDownloadLink
-                document={<Reporte />}
-                fileName="reporte.pdf"
-              >
-                {({ blob, url, loading, error }) =>
-                  loading
-                    ? 'Cargando reporte...'
-                    : 'Descargar reporte'
-                }
-              </PDFDownloadLink>
-            </Button>
+            <BotonReporte />
             <div className="flex flex-col justify-center gap-1">
               <Button
                 onClick={() => setIsModalBackOpen(true)}
@@ -132,10 +118,6 @@ const Metricas: FC = ({}) => {
               <Tab>Epic</Tab>
             </TabList>
           </div>
-          {/* !! BORRAR */}
-          <PDFViewer height={1000} width={'100%'}>
-            <Reporte />
-          </PDFViewer>
           <TabPanel>
             <div className="w-full">
               <MetricasPersonales />
