@@ -82,13 +82,13 @@ const Dashboard: FC<DashboardProps> = ({}) => {
               </Button>
             </div>
           </div>
-          <div className="grid grid-rows-3 bg-[#ffffff] py-5 px-5 rounded-sm gap-5 shadow-sm h-[50%]">
+          <div className="flex flex-col bg-[#ffffff] py-5 px-5 rounded-sm gap-5 shadow-sm h-[50%]">
             <div>
               <h2 className="text-lg font-semibold">
                 Retrospectivas pendientes
               </h2>
             </div>
-            <div className="row-start-2 row-span-5 gap-5 w-full">
+            <div className="gap-2 w-full flex flex-col overflow-y-auto max-h-[100%]">
               {retroPendientes.map(
                 (retro) =>
                   Number(retroId) !== retro.id && (
