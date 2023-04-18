@@ -11,23 +11,19 @@ import CarouselDash from './CarouselDash';
 
 const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/retrospectivas`;
 
-
 interface DashboardProps {
   retroPendientes: Retrospectiva[];
   getRetrospectivas: () => void;
 }
 
-
-const Dashboard: FC<DashboardProps> = ({
-  
-}) => {
+const Dashboard: FC<DashboardProps> = ({}) => {
   const { user, setUser } = useContext(userDataContext);
   const navigate = useNavigate();
   const { retroId } = useParams();
   const [retroPendientes, setRetroPendientes] = useState<
     Array<Retrospectiva>
-    >([]);
-  
+  >([]);
+
   const getRetrospectivas = async () => {
     const response = await axios.get(`${URI}/panelRetrosByUser`, {
       params: { id_usuario: user?.id_usuario || -1 },
@@ -43,31 +39,30 @@ const Dashboard: FC<DashboardProps> = ({
     );
 
     setRetroPendientes(pendientes);
-
   };
-    useEffect(() => {
-      getRetrospectivas();
-    }, []);
+  useEffect(() => {
+    getRetrospectivas();
+  }, []);
 
   if (!user) {
     navigate('/login');
   }
   return (
     <DesignTemplate>
-      <div className="flex gap-5">
+      <div className="flex lg:flex-row flex-col gap-5">
         {/* Div de todo */}
-        <div className="flex bg-[#ffffff] py-5 px-5 rounded-sm shadow-sm w-6/12 flex-col">
+        <div className="flex bg-[#ffffff] py-5 px-5 rounded-sm shadow-sm w-full md:w-6/12 flex-col">
           {/* Div de metricas */}
           <h2 className="text-lg font-semibold">Métricas</h2>
           <CarouselDash />
         </div>
-        <div className="flex flex-col gap-5 w-6/12">
+        <div className="flex flex-col gap-5 w-full md:w-6/12">
           {/* Div de lo de la derecha */}
           <div className="flex bg-[#ffffff] py-5 px-5 rounded-sm shadow-sm h-[50%]">
             <h2 className="text-lg font-semibold w-full">
               Mis Accionables
             </h2>
-            <div className='flex justify-end self-end w-full'>
+            <div className="flex justify-end self-end w-full">
               <Button
                 className="z-0"
                 appearance="subtle-link"
@@ -81,11 +76,13 @@ const Dashboard: FC<DashboardProps> = ({
               ></Button>
             </div>
           </div>
-          <div className="flex flex-col bg-[#ffffff] py-5 px-5 rounded-sm gap-5 shadow-sm h-[50%]">
-            <h2 className="text-lg font-semibold">
-              Retrospectivas pendientes
-            </h2>
-            <div className="flex flex-col gap-5 w-full">
+          <div className="grid grid-rows-3 bg-[#ffffff] py-5 px-5 rounded-sm gap-5 shadow-sm h-[50%]">
+            <div>
+              <h2 className="text-lg font-semibold">
+                Retrospectivas pendientes
+              </h2>
+            </div>
+            <div className="row-start-2 row-span-5 gap-5 w-full">
               {retroPendientes.map(
                 (retro) =>
                   Number(retroId) !== retro.id && (
@@ -99,7 +96,7 @@ const Dashboard: FC<DashboardProps> = ({
                   )
               )}
             </div>
-            <div className='flex justify-end self-end'>
+            <div className="flex justify-end self-end">
               <Button
                 className="z-0"
                 appearance="subtle-link"

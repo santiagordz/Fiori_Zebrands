@@ -51,33 +51,35 @@ export default function TabsDefaultExample() {
   }, []);
 
   return (
-    <Tabs id="default">
-      <div className="w-full">
-        <TabList>
-          <Tab>Metricas Personales</Tab>
-          <Tab>Metricas Sprint Mas Reciente</Tab>
-        </TabList>
-      </div>
-      <TabPanel>
-        <div className="w-full">
-          <div className="grid grid-cols-1 justify-center w-full h-auto md:h-[28rem] p-5">
-            <h3 className="text-lg text-center underline-offset-1	underline">
-              Story Points en To Do
-            </h3>
-            <SameDataComposedChart data={data4} />
-          </div>
+    <div className='w-auto h-auto'>
+      <Tabs id="default">
+        <div className="w-full h-auto">
+          <TabList>
+            <Tab>Metricas Personales</Tab>
+            <Tab>Metricas Sprint Mas Reciente</Tab>
+          </TabList>
         </div>
-      </TabPanel>
-      <TabPanel>
-        <div className="w-full">
-          <div className="grid grid-cols-1 justify-center w-full h-auto md:h-[28rem] p-5">
-            <h3 className="text-lg text-center underline-offset-1	underline">
-              Storypoints completados en los ultimos sprint
-            </h3>
-            <SameDataComposedChart data={chart3Data} />
+        <TabPanel>
+          <div className="w-full">
+            <div className="flex flex-col justify-center w-full lg:h-[28rem] h-[18rem] lg:p-5 p-2">
+              <h3 className="lg:text-lg text-md text-center underline-offset-1	underline">
+                Story Points en To Do
+              </h3>
+              <SameDataComposedChart data={data4} />
+            </div>
           </div>
-        </div>
-      </TabPanel>
-    </Tabs>
+        </TabPanel>
+        <TabPanel>
+          <div className="w-full">
+            <div className="flex flex-col justify-center w-full lg:h-[28rem] h-[18rem] lg:p-5 p-2">
+              <h3 className="lg:text-lg text-md text-center underline-offset-1	underline">
+                Storypoints completados en los ultimos sprint
+              </h3>
+              <SameDataComposedChart data={chart3Data} />
+            </div>
+          </div>
+        </TabPanel>
+      </Tabs>
+    </div>
   );
 }
