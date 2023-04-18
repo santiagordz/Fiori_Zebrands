@@ -5,6 +5,9 @@ import axios from 'axios';
 import { ChartCards } from '../../components';
 import SameDataComposedChart from '../../components/charts/SameDataComposedChart';
 import { userDataContext } from '../../contexts';
+import Button from '@atlaskit/button';
+import ArrowRightIcon from '@atlaskit/icon/glyph/arrow-right';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export const Panel = ({
   children,
@@ -15,6 +18,7 @@ export const Panel = ({
 }) => <div data-testid={testId}>{children}</div>;
 
 export default function TabsDefaultExample() {
+  const navigate = useNavigate();
   const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/sprintsdata`;
   const { user } = useContext(userDataContext);
   const idjira = user?.id_jira;
@@ -51,7 +55,7 @@ export default function TabsDefaultExample() {
   }, []);
 
   return (
-    <div className='w-auto h-auto'>
+    <div className="w-auto h-auto">
       <Tabs id="default">
         <div className="w-full h-auto">
           <TabList>
@@ -80,6 +84,20 @@ export default function TabsDefaultExample() {
           </div>
         </TabPanel>
       </Tabs>
+      <div className="w-full justify-end self-end">
+        <Button
+        shouldFitContainer
+          className="flex justify-end self-end"
+          appearance="subtle-link"
+          iconAfter={
+            <ArrowRightIcon
+              label="volver a gestionar retrospectivas"
+              primaryColor="#1D7AFC"
+            />
+          }
+          onClick={() => navigate(`/metricas`)}
+        > </Button>
+      </div>
     </div>
   );
 }

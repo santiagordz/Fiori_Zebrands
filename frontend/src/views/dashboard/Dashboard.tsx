@@ -58,22 +58,28 @@ const Dashboard: FC<DashboardProps> = ({}) => {
         </div>
         <div className="flex flex-col gap-5 w-full md:w-6/12">
           {/* Div de lo de la derecha */}
-          <div className="flex bg-[#ffffff] py-5 px-5 rounded-sm shadow-sm h-[50%]">
+          <div className="grid grid-rows-3 bg-[#ffffff] py-5 px-5 rounded-sm gap-5 shadow-sm h-[50%]">
             <h2 className="text-lg font-semibold w-full">
               Mis Accionables
             </h2>
-            <div className="flex justify-end self-end w-full">
+            <div className="row-start-2 row-span-5 gap-5 w-full">
+              <div> </div>
+            </div>
+            <div className="w-full justify-end self-end">
               <Button
-                className="z-0"
+                shouldFitContainer
+                className="flex justify-end self-end"
                 appearance="subtle-link"
-                iconBefore={
+                iconAfter={
                   <ArrowRightIcon
                     label="volver a gestionar retrospectivas"
                     primaryColor="#1D7AFC"
                   />
                 }
-                onClick={() => navigate(`/mis-accionables`)}
-              ></Button>
+                onClick={() => navigate(`/metricas`)}
+              >
+                {' '}
+              </Button>
             </div>
           </div>
           <div className="grid grid-rows-3 bg-[#ffffff] py-5 px-5 rounded-sm gap-5 shadow-sm h-[50%]">
@@ -96,18 +102,21 @@ const Dashboard: FC<DashboardProps> = ({}) => {
                   )
               )}
             </div>
-            <div className="flex justify-end self-end">
+            <div className="w-full justify-end self-end">
               <Button
-                className="z-0"
+                shouldFitContainer
+                className="flex justify-end self-end"
                 appearance="subtle-link"
-                iconBefore={
+                iconAfter={
                   <ArrowRightIcon
                     label="volver a gestionar retrospectivas"
                     primaryColor="#1D7AFC"
                   />
                 }
-                onClick={() => navigate(`/mis-retrospectivas`)}
-              ></Button>
+                onClick={() => navigate(`/metricas`)}
+              >
+                {' '}
+              </Button>
             </div>
           </div>
         </div>
