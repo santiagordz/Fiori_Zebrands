@@ -12,6 +12,8 @@ import ModalUpdateIssue from '../../components/metricas/ModalUpdateIssues';
 import MetricasEpics from './MetricasEpics';
 import MetricasPersonales from './MetricasPersonales';
 import MetricasSprint from './MetricasSprint';
+import { format, parseISO } from 'date-fns';
+import { utcToZonedTime } from 'date-fns-tz';
 
 const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/issues`;
 
@@ -31,23 +33,14 @@ const Metricas: FC = ({}) => {
   const getLastFetch = useCallback(async () => {
     try {
       const { data: fecha } = await axios.get(`${URI}/last-fetch`);
-      const fechaParsed = new Date(fecha);
+      const fechaParsed = parseISO(fecha);
 
-      const dia = fechaParsed
-        .getUTCDate()
-        .toString()
-        .padStart(2, '0');
-      const mes = (fechaParsed.getUTCMonth() + 1)
-        .toString()
-        .padStart(2, '0');
-      const anio = fechaParsed.getUTCFullYear().toString();
-      const hora = fechaParsed.getHours().toString().padStart(2, '0'); // Agrega un cero inicial a la hora
-      const minutos = fechaParsed
-        .getMinutes()
-        .toString()
-        .padStart(2, '0'); // Agrega un cero inicial a los minutos
+      const userTimeZone =
+        Intl.DateTimeFormat().resolvedOptions().timeZone;
+      const localDate = utcToZonedTime(fechaParsed, userTimeZone);
 
-      setLastFetch(`${dia}/${mes}/${anio} ${hora}:${minutos}`);
+      const formattedDate = format(localDate, 'dd/MM/yyyy HH:mm');
+      setLastFetch(formattedDate);
     } catch (error) {
       console.error(error);
     }
@@ -102,7 +95,7 @@ const Metricas: FC = ({}) => {
                   <Tooltip
                     id="anon-tooltip"
                     place="bottom"
-                    className="text-xs bg-deepBlue"
+                    className="text-xs bg-deepBlue z-20"
                   />
                 </a>
               ) : null}

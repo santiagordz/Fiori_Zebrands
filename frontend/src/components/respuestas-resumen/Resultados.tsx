@@ -102,14 +102,14 @@ const Resultados: FC<ResultadosProps> = ({
           <div className="flex flex-col gap-3">
             {respuestas.map((respuesta) => (
               <div
-                className="flex flex-col gap-1 border-2 border-gray rounded-sm p-4"
+                className="flex flex-col gap-1 border-2 border-gray rounded-sm p-4 overflow-x-auto"
                 key={respuesta.id_usuario}
               >
                 <p className="text-gray-600 font-medium text-[0.9rem]">
                   {esAnonimo ? 'Usuario anónimo' : respuesta.nombre}
                 </p>
 
-                <p className="text-gray-700 text-[0.8rem]">
+                <p className="text-gray-700 text-[0.8rem] ">
                   {respuesta.respuesta}
                 </p>
               </div>

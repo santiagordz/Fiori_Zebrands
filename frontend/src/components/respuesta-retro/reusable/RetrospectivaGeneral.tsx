@@ -107,14 +107,14 @@ const RetrospectivaGeneral: FC<RetrospectivaGeneralProps> = ({
       onClick={handleOnClick}
     >
       <div
-        className={`flex flex-col py-3 px-5 w-full gap-1 rounded bg-white ${
+        className={`flex flex-col p-5 w-full gap-1 rounded bg-white ${
           !isInResponder
             ? 'hover:bg-[#fafbfc] border border-solid border-gray'
             : 'shadow-sm'
         }`}
       >
-        <div className="flex w-full justify-between">
-          <div className="gap-2 flex flex-row items-center">
+        <div className="flex w-full flex-col lg:flex-row lg:justify-between">
+          <div className="gap-3 flex flex-col  lg:flex-row">
             {!noIcon &&
               (completada ? (
                 <CheckIcon
@@ -137,12 +137,14 @@ const RetrospectivaGeneral: FC<RetrospectivaGeneralProps> = ({
                   primaryColor="#709ddb"
                 />
               ))}
-            <h3 className="font-bold text-sm">{titulo}</h3>
+            <h3 className="font-bold lg:text-sm text-justify">
+              {titulo}
+            </h3>
           </div>
           <div
             className={`${
               tags.length > 3 ? 'grid grid-cols-2' : 'flex flex-row'
-            } items-end text-right`}
+            } text-right`}
           >
             {tags &&
               tags.map(
@@ -170,16 +172,18 @@ const RetrospectivaGeneral: FC<RetrospectivaGeneralProps> = ({
         <div className="flex text-[0.8rem] mt-2">
           <p>{descripcion}</p>
         </div>
-        <div className="flex flex-row text-[0.7rem] justify-between mt-3">
+        <div className="flex flex-col gap-2 lg:flex-row text-[0.7rem] lg:justify-between mt-3">
           <p>Fecha de inicio: {fechaInicioFormat}</p>
           {fechaFinFormat && !enCurso && (
             <p>Fecha de fin: {fechaFinFormat}</p>
           )}
           {!isInResponder && (
-            <ChevronRightLargeIcon
-              label="flecha"
-              primaryColor="#1D7AFC "
-            />
+            <div className='lg:visible invisible'>
+              <ChevronRightLargeIcon
+                label="flecha"
+                primaryColor="#1D7AFC "
+              />
+            </div>
           )}
         </div>
       </div>
