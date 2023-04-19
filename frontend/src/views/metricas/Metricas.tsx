@@ -14,7 +14,6 @@ import { Tooltip } from 'react-tooltip';
 import { format, parseISO } from 'date-fns';
 import { utcToZonedTime } from 'date-fns-tz';
 
-
 const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/issues`;
 
 export const Panel = ({
@@ -34,17 +33,17 @@ const Metricas: FC = ({}) => {
     try {
       const { data: fecha } = await axios.get(`${URI}/last-fetch`);
       const fechaParsed = parseISO(fecha);
-  
-      const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+      const userTimeZone =
+        Intl.DateTimeFormat().resolvedOptions().timeZone;
       const localDate = utcToZonedTime(fechaParsed, userTimeZone);
-  
+
       const formattedDate = format(localDate, 'dd/MM/yyyy HH:mm');
       setLastFetch(formattedDate);
     } catch (error) {
       console.error(error);
     }
   }, []);
-  
 
   useEffect(() => {
     getLastFetch();
@@ -65,7 +64,6 @@ const Metricas: FC = ({}) => {
       )}
       {isModalLoading && <ModalLoading />}
       <DesignTemplate
-        tab={<div className="mt-5"></div>}
         buttons={
           <>
             <div className="flex flex-col justify-center gap-1 lg:p-0 p-10">
