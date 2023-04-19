@@ -4,14 +4,15 @@ import {
   Text,
   View,
   StyleSheet,
+  Image,
   Font,
 } from '@react-pdf/renderer';
-import { FC, useState, useEffect } from 'react';
-import RetrospectivaGeneral from '../respuesta-retro/reusable/RetrospectivaGeneral';
+import { FC, useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import type { Retrospectiva } from '../../views/mis-retrospectivas/MisRetrospectivas';
+import SameDataComposedChart from '../charts/SameDataComposedChart';
+import { toPng } from 'html-to-image';
 
-const URI = import.meta.env.VITE_APP_BACKEND_URI;
+const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/metricas`;
 
 Font.register({
   family: 'Inter',
@@ -37,179 +38,80 @@ Font.register({
 
 const styles = StyleSheet.create({
   body: {
-    flexDirection: 'row',
+    flexDirection: 'column',
+    gap: 17,
     paddingTop: 35,
     paddingBottom: 65,
     paddingHorizontal: 35,
   },
   section: {
-    margin: 10,
-    padding: 10,
-    flexGrow: 1,
+    flexDirection: 'column',
+    gap: 5,
   },
   text: {
-    fontSize: 12,
+    fontSize: 10,
     fontFamily: 'Inter',
+    lineHeight: 1.5,
+    color: '#172b4d',
   },
   title: {
-    fontSize: 24,
+    fontSize: 14,
     fontFamily: 'Inter',
     fontWeight: 800,
     color: '#0055CC',
-    marginBottom: 20,
   },
   subtitle: {
-    fontSize: 18,
+    fontSize: 12,
     fontFamily: 'Inter',
     fontWeight: 700,
     color: '#1A3B6A',
-    marginBottom: 10,
   },
-  metricsSection: {
-    marginBottom: 20,
-  },
-  metric: {
-    fontSize: 12,
-    fontFamily: 'Inter',
-    fontWeight: 500,
-    color: '#4B6A9B',
-  },
-  improvementSection: {
-    backgroundColor: '#F1F5F9',
-    borderRadius: 4,
-    padding: 10,
-  },
-  improvementTitle: {
-    fontSize: 16,
-    fontFamily: 'Inter',
-    fontWeight: 700,
-    color: '#1A3B6A',
-    marginBottom: 5,
-  },
-  improvementText: {
-    fontSize: 12,
-    fontFamily: 'Inter',
-    marginBottom: 5,
+  chart: {
+    width: '50%',
+    height: '70%',
   },
 });
 
 interface ReporteProps {
-  idRetrospectiva: number;
+  canvasURL: string;
 }
 
-const Reporte: FC<ReporteProps> = ({ idRetrospectiva }) => {
-  const [retrospectiva, setRetrospectiva] = useState<Retrospectiva>({
-    id: 0,
-    completada: false,
-    num_respuestas: 0,
-    en_curso: false,
-    titulo: '',
-    descripcion: '',
-    fecha_inicio: '',
-    fecha_fin: '',
-    tags: [],
-  });
-  let metrics = [] as any;
-  let improvements = [] as any;
-
-  const getRetrospectiva = async () => {
-    try {
-      const response = await axios.get(
-        `${URI}/retrospectivas/details/${idRetrospectiva}`
-      );
-      setRetrospectiva(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    getRetrospectiva();
-  }, []);
-
+const Reporte: FC<ReporteProps> = ({ canvasURL }) => {
   return (
-    <Document>
-      <Page size={'A4'} style={styles.body}>
-        <View>
-          <Text style={styles.title}>Reporte de Retrospectiva</Text>
-
-          <Text style={styles.subtitle}>Resumen</Text>
-          {idRetrospectiva ? (
-            <>
-              <Text style={styles.text}>
-                La siguiente retrospectiva se llevó a cabo con el
-                objetivo de evaluar el rendimiento del equipo y
-                analizar áreas de mejora. Se discutieron varios
-                aspectos clave, incluyendo la calidad del código, la
-                colaboración entre los miembros del equipo y la
-                eficiencia en la entrega de tareas. A continuación, se
-                presenta un resumen de la sesión de retrospectiva,
-                incluyendo métricas clave del sprint y las mejoras
-                identificadas:
-              </Text>
-              <Text>{retrospectiva.titulo}</Text>
-            </>
-          ) : (
+    <>
+      <Document>
+        <Page size={'A4'} style={styles.body}>
+          <View style={styles.section}>
+            <Text style={styles.title}>Reporte de métricas</Text>
             <Text style={styles.text}>
-              No se proporcionó un resumen de la retrospectiva.
+              Este informe te proporcionará una visión general de cómo
+              ha estado progresando nuestro equipo en términos de
+              rendimiento y eficacia en los últimos sprints. El
+              reporte tiene como objetivo ayudar a entender mejor cómo
+              hemos estado trabajando juntos para alcanzar nuestras
+              metas.
             </Text>
-          )}
-
-          <View style={styles.metricsSection}>
-            <Text style={styles.subtitle}>Métricas</Text>
-            {metrics && metrics.length > 0 ? (
-              <>
-                <Text style={styles.text}>
-                  Las siguientes métricas clave proporcionan
-                  información sobre el rendimiento del equipo durante
-                  el último sprint y ayudan a identificar áreas de
-                  mejora:
-                </Text>
-                {metrics.map((metric, index) => (
-                  <Text key={index} style={styles.metric}>
-                    {metric.name}: {metric.value}
-                  </Text>
-                ))}
-              </>
-            ) : (
-              <Text style={styles.text}>
-                No se proporcionaron métricas para el reporte.
-              </Text>
-            )}
           </View>
-
-          <Text style={styles.subtitle}>Mejoras</Text>
-          {improvements && improvements.length > 0 ? (
-            <>
-              <Text style={styles.text}>
-                Basándose en la discusión y el análisis de las
-                métricas, se han identificado las siguientes mejoras
-                para implementar en los próximos sprints. Estas
-                mejoras están diseñadas para aumentar la eficiencia
-                del equipo y mejorar la calidad del trabajo entregado:
-              </Text>
-              {improvements.map((improvement, index) => (
-                <View key={index} style={styles.improvementSection}>
-                  <Text style={styles.improvementTitle}>
-                    {improvement.title}
-                  </Text>
-                  <Text style={styles.improvementText}>
-                    {improvement.description}
-                  </Text>
-                  <Text style={styles.improvementText}>
-                    Asignado a: {improvement.assignedTo}
-                  </Text>
-                </View>
-              ))}
-            </>
-          ) : (
+          <View style={styles.section}>
+            <Text style={styles.subtitle}>Métricas</Text>
             <Text style={styles.text}>
-              No se proporcionaron mejoras para el reporte.
+              A continuación se muestran las métricas de los sprints y
+              epics del proyecto. Se presentarán gráficos con
+              información relevante sobre el progreso del equipo, el
+              rendimiento y la eficiencia en cada sprint.
             </Text>
-          )}
-        </View>
-      </Page>
-    </Document>
+            <View style={styles.section}>
+              <Text style={styles.subtitle}>
+                Story points acumulados por sprint
+              </Text>
+              <View>
+                <Image src={canvasURL} style={styles.chart} />
+              </View>
+            </View>
+          </View>
+        </Page>
+      </Document>
+    </>
   );
 };
 

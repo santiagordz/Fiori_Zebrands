@@ -50,9 +50,9 @@ const DesignTemplate: FC<DesignTemplateProps> = ({
           <Sidebar />
         </div>
         <div className="flex flex-row justify-between items-center lg:px-0 px-10">
-            <p className="font-medium text-[1.09rem] h-full text-left text-paragraph">
-              Hola, {name}
-            </p>
+          <p className="font-medium text-[1.09rem] h-full text-left text-paragraph">
+            Hola, {name}
+          </p>
           <div>
             <button
               onClick={handleMenu}
@@ -62,7 +62,7 @@ const DesignTemplate: FC<DesignTemplateProps> = ({
             </button>
           </div>
         </div>
-        <div className="lg:flex lg:flex-row justify-center lg:justify-between items-center w-full mt-3">
+        <div className="lg:flex lg:flex-row justify-center lg:justify-between lg:mt-0 items-center w-full mt-3">
           <div className="flex flex-row justify-center lg:justify-start items-center gap-2 lg:gap-4">
             <div className="bg-selectBold flex p-2 rounded-xl w-fit scale-[0.85]">
               <MainIcon
@@ -75,7 +75,9 @@ const DesignTemplate: FC<DesignTemplateProps> = ({
               {pathInfo[path].view}
             </h1>
           </div>
-          <div className="flex flex-col items-center lg:flex-row gap-8 py-2">{buttons}</div>
+          <div className="flex flex-col items-baseline lg:flex-row gap-8 py-2">
+            {buttons}
+          </div>
         </div>
         <div className="bg-background w-auto h-auto rounded-lg p-2 lg:p-7 text-paragraph m-2">
           {children}
