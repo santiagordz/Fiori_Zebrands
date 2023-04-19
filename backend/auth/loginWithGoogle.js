@@ -3,8 +3,8 @@ const passport = require('passport');
 const router = express.Router();
 const isAuth = require('../utils/is-auth');
 
-const successRedirect = 'http://localhost:8000/login/success';
-const errorRedirect = 'http://localhost:8000/login/error';
+const successRedirect = 'http://localhost:3000/login/success';
+const errorRedirect = 'http://localhost:3000/login/error';
 
 router.get(
   '/login/google',
@@ -40,15 +40,11 @@ router.get(
         if (err) {
           return next(err);
         }
-        // return res.redirect(successRedirect);
-        return res.send(`
-    <script>
-      window.opener.postMessage({ user: ${JSON.stringify(
-        user
-      )} }, '*');
-      window.close();
-    </script>
-  `);
+        return res.send(
+          `<script>
+            window.close();
+          </script>`
+        );
       });
     })(req, res, next);
   },
