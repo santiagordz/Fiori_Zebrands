@@ -12,17 +12,19 @@ import {
 
 interface UsersTableHeadProps {
   children: React.ReactNode;
+  align?: 'left' | 'right' | 'center';
 }
 
-interface TablaUsuariosProps {
-  selectedTags: EtiquetaType[];
-  selectedUsers: UsuarioType[];
-  setSelectedUsers: (selectedUsers: UsuarioType[]) => void;
-}
-
-const UsersTableHead: FC<UsersTableHeadProps> = ({ children }) => {
+const UsersTableHead: FC<UsersTableHeadProps> = ({
+  children,
+  align,
+}) => {
   return (
-    <p className="!normal-case text-left px-3 font-semibold text-[0.8rem] text-textNormal">
+    <p
+      className={`!normal-case text-${
+        align || 'left'
+      } px-3 font-semibold text-[0.8rem] text-textNormal`}
+    >
       {children}
     </p>
   );
@@ -32,7 +34,9 @@ const head = {
   cells: [
     {
       key: 'checkbox',
-      content: <UsersTableHead>Seleccionar</UsersTableHead>,
+      content: (
+        <UsersTableHead align="center">Seleccionar</UsersTableHead>
+      ),
       isSortable: false,
       width: 5,
     },
@@ -50,12 +54,20 @@ const head = {
     },
     {
       key: 'etiqueta',
-      content: <UsersTableHead>Etiqueta</UsersTableHead>,
+      content: (
+        <UsersTableHead align="center">Etiquetas</UsersTableHead>
+      ),
       isSortable: false,
       width: 10,
     },
   ],
 };
+
+interface TablaUsuariosProps {
+  selectedTags: EtiquetaType[];
+  selectedUsers: UsuarioType[];
+  setSelectedUsers: (selectedUsers: UsuarioType[]) => void;
+}
 
 const TablaUsuarios: FC<TablaUsuariosProps> = ({
   selectedTags,
@@ -122,22 +134,18 @@ const TablaUsuarios: FC<TablaUsuariosProps> = ({
           ),
         },
         {
-          key: `nombre-${usuario.id}`,
+          key: `nombre-${usuario.nombre}-${usuario.id}`,
           content: (
-            <span className="flex items-center gap-2 ml-5 w-full">
+            <span className="flex items-center gap-2 ml-3 w-full">
               <Avatar src={usuario.foto} size="small" />
-              <div className="w-full">
-                <p>{usuario.nombre || 'Nuevo usuario'} </p>
-              </div>
+              <p className="text-sm w-full">{usuario.nombre}</p>
             </span>
           ),
         },
         {
-          key: `correo-${usuario.id}`,
+          key: `correo-${usuario.correo}`,
           content: (
-            <p className="!normal-case text-left px-3 font-semibold text-[0.8rem] text-textNormal">
-              {usuario.correo}
-            </p>
+            <p className="text-sm w-full ml-3">{usuario.correo}</p>
           ),
         },
         {

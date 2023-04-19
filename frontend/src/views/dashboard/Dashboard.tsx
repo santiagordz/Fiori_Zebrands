@@ -8,6 +8,7 @@ import ArrowRightIcon from '@atlaskit/icon/glyph/arrow-right';
 import axios from 'axios';
 import Button from '@atlaskit/button';
 import CarouselDash from './CarouselDash';
+import { format, parseISO } from 'date-fns';
 
 const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/retrospectivas`;
 
@@ -17,12 +18,16 @@ interface DashboardProps {
 }
 
 const Dashboard: FC<DashboardProps> = ({}) => {
-  const { user, setUser } = useContext(userDataContext);
+  const { user } = useContext(userDataContext);
   const navigate = useNavigate();
   const { retroId } = useParams();
   const [retroPendientes, setRetroPendientes] = useState<
     Array<Retrospectiva>
   >([]);
+
+  const formatDate = (date: string) => {
+    return format(parseISO(date), 'dd/MM/yyyy');
+  };
 
   const getRetrospectivas = async () => {
     const response = await axios.get(`${URI}/panelRetrosByUser`, {
@@ -38,8 +43,17 @@ const Dashboard: FC<DashboardProps> = ({}) => {
       ) => !retro.completada && retro.asignada && retro.en_curso
     );
 
+    pendientes.sort(
+      (retroA: Retrospectiva, retroB: Retrospectiva) => {
+        const fechaInicioA = new Date(retroA.fecha_inicio);
+        const fechaInicioB = new Date(retroB.fecha_inicio);
+        return fechaInicioA.getTime() - fechaInicioB.getTime();
+      }
+    );
+
     setRetroPendientes(pendientes);
   };
+
   useEffect(() => {
     getRetrospectivas();
   }, []);
@@ -50,14 +64,11 @@ const Dashboard: FC<DashboardProps> = ({}) => {
   return (
     <DesignTemplate>
       <div className="flex lg:flex-row flex-col gap-5">
-        {/* Div de todo */}
         <div className="flex bg-[#ffffff] py-5 px-5 rounded-sm shadow-sm w-full md:w-6/12 flex-col">
-          {/* Div de metricas */}
           <h2 className="text-lg font-semibold">Métricas</h2>
           <CarouselDash />
         </div>
         <div className="flex flex-col gap-5 w-full md:w-6/12">
-          {/* Div de lo de la derecha */}
           <div className="grid grid-rows-3 bg-[#ffffff] py-5 px-5 rounded-sm gap-5 shadow-sm h-[50%]">
             <h2 className="text-lg font-semibold w-full">
               Mis Accionables
@@ -65,20 +76,19 @@ const Dashboard: FC<DashboardProps> = ({}) => {
             <div className="row-start-2 row-span-5 gap-5 w-full">
               <div> </div>
             </div>
-            <div className="w-full justify-end self-end">
+            <div className="w-full flex justify-end">
               <Button
-                shouldFitContainer
-                className="flex justify-end self-end"
-                appearance="subtle-link"
+                appearance="link"
+                className="scale-[0.9]"
                 iconAfter={
                   <ArrowRightIcon
-                    label="volver a gestionar retrospectivas"
+                    label="volver a mis accionables"
                     primaryColor="#1D7AFC"
                   />
                 }
                 onClick={() => navigate(`/mis-accionables`)}
               >
-                {' '}
+                Ir a mis accionables
               </Button>
             </div>
           </div>
@@ -88,34 +98,46 @@ const Dashboard: FC<DashboardProps> = ({}) => {
                 Retrospectivas pendientes
               </h2>
             </div>
-            <div className="gap-2 w-full flex flex-col overflow-y-auto max-h-[100%]">
+            <div className="gap-2 w-full flex flex-col overflow-y-auto h-[100%]">
               {retroPendientes.map(
-                (retro) =>
+                (retro, i) =>
+                  i < 2 &&
                   Number(retroId) !== retro.id && (
                     <BannerRetro
                       key={retro.id}
                       titulo={retro.titulo}
-                      fechaInicio={retro.fecha_inicio}
+                      fechaInicio={formatDate(retro.fecha_inicio)}
                       idRetrospectiva={retro.id}
                       tags={retro.tags}
                     />
                   )
               )}
+              {retroPendientes.length > 2 && (
+                <span className="text-xs text-gray-500">
+                  {retroPendientes.length - 2 === 1 ? (
+                    <p>Más 1 retrospectiva pendiente...</p>
+                  ) : (
+                    <p>
+                      Más {retroPendientes.length - 2} retrospectivas
+                      pendientes...
+                    </p>
+                  )}
+                </span>
+              )}
             </div>
-            <div className="w-full justify-end self-end">
+            <div className="w-full flex justify-end">
               <Button
-                shouldFitContainer
-                className="flex justify-end self-end"
-                appearance="subtle-link"
+                appearance="link"
+                className="scale-[0.9]"
                 iconAfter={
                   <ArrowRightIcon
-                    label="volver a gestionar retrospectivas"
+                    label="ir a mis retrospectivas"
                     primaryColor="#1D7AFC"
                   />
                 }
                 onClick={() => navigate(`/mis-retrospectivas`)}
               >
-                {' '}
+                Ir a mis retrospectivas
               </Button>
             </div>
           </div>

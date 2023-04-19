@@ -10,6 +10,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { questionsContext } from '../local-contexts';
 import BannerRetro from '../reusable/BannerRetro';
 import type { Retrospectiva } from '../../../views/mis-retrospectivas/MisRetrospectivas';
+import { format, parseISO } from 'date-fns';
 
 const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/retrospectivas`;
 
@@ -26,7 +27,11 @@ const Recordatorios: FC<RecordatoriosProps> = ({
   const navigate = useNavigate();
   const { retroId } = useParams();
 
-  const { questions, setQuestions } = useContext(questionsContext);
+  const { questions } = useContext(questionsContext);
+
+  const formatDate = (date: string) => {
+    return format(parseISO(date), 'dd/MM/yyyy');
+  };
 
   return (
     <Blanket isTinted={true}>
@@ -103,7 +108,9 @@ const Recordatorios: FC<RecordatoriosProps> = ({
                           <BannerRetro
                             key={retro.id}
                             titulo={retro.titulo}
-                            fechaInicio={retro.fecha_inicio}
+                            fechaInicio={formatDate(
+                              retro.fecha_inicio
+                            )}
                             idRetrospectiva={retro.id}
                             tags={retro.tags}
                           />

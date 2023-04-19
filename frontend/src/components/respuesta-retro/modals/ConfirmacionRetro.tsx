@@ -31,57 +31,55 @@ const ConfirmacionRetro: FC<ConfirmacionRetroProps> = ({
   }, []);
 
   return (
-    <div className="">
-      <Blanket isTinted={true}>
-        <div className="flex flex-col w-full h-full items-center justify-center px-6">
-          <div className="flex flex-col bg-white rounded px-8 lg:px-20 py-14">
-            <div className="flex justify-center items-center flex-col gap-5">
-              <div className="">
-                <JiraFailedBuildStatusIcon
-                  label="confirmacion"
-                  primaryColor="#1D7AFC"
-                  size="xlarge"
-                ></JiraFailedBuildStatusIcon>
-              </div>
+    <Blanket isTinted={true}>
+      <div className="flex flex-col w-full h-full items-center justify-center px-6">
+        <div className="flex flex-col bg-white rounded px-8 lg:px-20 py-14">
+          <div className="flex justify-center items-center flex-col gap-5">
+            <div className="">
+              <JiraFailedBuildStatusIcon
+                label="confirmacion"
+                primaryColor="#1D7AFC"
+                size="xlarge"
+              ></JiraFailedBuildStatusIcon>
+            </div>
 
-              <h2 className="font-bold text-lg">
-                ¿Deseas registrar tus respuestas?
-              </h2>
-              <div className="flex items-center gap-2">
-                <ErrorIcon label="error" primaryColor="#E34935" />
-                <p className="flex flex-row text-xs text-danger">
-                  No podrás editarlas después
-                </p>
-              </div>
-              <div className="flex flex-col lg:flex-row gap-10">
-                <Button
-                  appearance="subtle-link"
-                  className="!flex !items-center !p-2 !text-[0.9rem] gap-6"
-                  onClick={closeModal}
-                >
-                  Editar mis respuestas
-                </Button>
-                <LoadingButton
-                  className="!flex !items-center !p-2 !text-[0.9rem] gap-5"
-                  appearance="primary"
-                  type="submit"
-                  onClick={() => {
-                    onSubmit();
-                    closeModal();
-                    navigate(
-                      `/mis-retrospectivas/responder/${retroId}/respuestas/${id_sesionRespuesta}`
-                    );
-                  }}
-                  isLoading={submitting}
-                >
-                  Registrar respuestas
-                </LoadingButton>
-              </div>
+            <h2 className="font-bold text-lg">
+              ¿Deseas registrar tus respuestas?
+            </h2>
+            <div className="flex items-center gap-2">
+              <ErrorIcon label="error" primaryColor="#E34935" />
+              <p className="flex flex-row text-xs text-danger">
+                No podrás editarlas después
+              </p>
+            </div>
+            <div className="flex flex-col lg:flex-row gap-2 lg:gap-10">
+              <Button
+                appearance="subtle-link"
+                className="!flex !items-center !p-2 !text-[0.9rem] gap-6"
+                onClick={closeModal}
+              >
+                Editar mis respuestas
+              </Button>
+              <LoadingButton
+                className="!flex !items-center !p-2 !text-[0.9rem] gap-5"
+                appearance="primary"
+                type="submit"
+                onClick={() => {
+                  onSubmit();
+                  closeModal();
+                  navigate(
+                    `/mis-retrospectivas/responder/${retroId}/respuestas/${id_sesionRespuesta}`
+                  );
+                }}
+                isLoading={submitting}
+              >
+                Registrar respuestas
+              </LoadingButton>
             </div>
           </div>
         </div>
-      </Blanket>
-    </div>
+      </div>
+    </Blanket>
   );
 };
 

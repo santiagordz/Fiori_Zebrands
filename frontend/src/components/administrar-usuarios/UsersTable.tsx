@@ -26,34 +26,33 @@ const UsersTable: FC<UsersTableProps> = ({}) => {
       isHighlighted: false,
       cells: [
         {
-          key: `nombre-${usuario.id}`,
+          key: `nombre-${usuario.nombre}-${usuario.id}`,
           content: (
-            <span className="flex items-center gap-2 ml-5 w-full">
+            <span className="flex items-center gap-2 ml-3 w-full">
               <Avatar src={usuario.foto} size="small" />
-              <div className="w-full">
-                <p>
-                  {usuario.nombre ||
-                    'Nuevo usuario (sin registrar con Google)'}
-                  {user?.id_usuario === usuario.id ? '(Tú)' : ''}
-                </p>
-              </div>
+              <p className="w-full text-sm">
+                {usuario.nombre}
+                {user?.id_usuario === usuario.id ? ' (Tú)' : ''}
+              </p>
             </span>
           ),
         },
         {
           key: `correo-${usuario.correo}`,
-          content: <div className="text-left">{usuario.correo}</div>,
+          content: (
+            <p className="text-sm w-full ml-3">{usuario.correo}</p>
+          ),
         },
         {
           key: `rol-${usuario.rol}`,
           content: (
-            <div className="text-left">
+            <div className="text-center">
               <RolIcon rol={usuario.rol} />
             </div>
           ),
         },
         {
-          key: `tag-${i}`,
+          key: usuario.etiquetas[0]?.id + usuario.id,
           content: (
             <div className="flex justify-start">
               <EtiquetaIcon etiquetas={usuario.etiquetas} />
@@ -61,7 +60,7 @@ const UsersTable: FC<UsersTableProps> = ({}) => {
           ),
         },
         {
-          key: `rol-${usuario.id}`,
+          key: `responsable-${usuario.id}`,
           content: (
             <div className="flex justify-center">
               <ResponsableIcon

@@ -17,7 +17,7 @@ const EtiquetasTableHead: FC<EtiquetasTableHeadProps> = ({
   children,
 }) => {
   return (
-    <p className="!normal-case text-left px-3 font-semibold text-[0.8rem] text-textNormal">
+    <p className="!normal-case text-center px-3 font-semibold text-[0.8rem] text-textNormal">
       {children}
     </p>
   );
@@ -41,7 +41,9 @@ const EtiquetasTable: FC<EtiquetasTableProps> = ({}) => {
       },
       {
         key: 'color',
-        content: <EtiquetasTableHead>Color</EtiquetasTableHead>,
+        content: (
+          <EtiquetasTableHead>Código de color</EtiquetasTableHead>
+        ),
         isSortable: false,
       },
       {
@@ -63,7 +65,7 @@ const EtiquetasTable: FC<EtiquetasTableProps> = ({}) => {
       isHighlighted: false,
       cells: [
         {
-          key: `tag-${etiqueta.id}`,
+          key: `tag-${etiqueta.nombre}-${etiqueta.id}`,
           content: (
             <div id="tag" className="w-full flex justify-center">
               <Tag
@@ -76,7 +78,7 @@ const EtiquetasTable: FC<EtiquetasTableProps> = ({}) => {
           ),
         },
         {
-          key: `nombre-${etiqueta.id}`,
+          key: `nombre-${etiqueta.nombre}-${etiqueta.id}`,
           content: (
             <div className="text-sm w-full text-center">
               {etiqueta.nombre}
@@ -84,7 +86,7 @@ const EtiquetasTable: FC<EtiquetasTableProps> = ({}) => {
           ),
         },
         {
-          key: `color-${etiqueta.id}`,
+          key: `color-${etiqueta.id_color}-${etiqueta.id}`,
           content: (
             <div
               className={`text-sm w-full text-center bg-${etiqueta.color}`}

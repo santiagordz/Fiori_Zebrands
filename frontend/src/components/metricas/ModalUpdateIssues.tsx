@@ -41,6 +41,7 @@ const ModalUpdateIssue: FC<ModalUpdateIssuesProps> = ({
           'success'
         );
         getLastFetch();
+        setModalLoading(false);
       });
     } catch (error) {
       if (error instanceof Error) {
@@ -59,15 +60,14 @@ const ModalUpdateIssue: FC<ModalUpdateIssuesProps> = ({
           'error',
           'Error desconocido'
         );
+        setModalLoading(false);
       }
-    } finally {
-      setModalLoading(false);
     }
   };
 
-  const handleclick = () => {
-    setIsModalOpen(false);
+  const handleClick = () => {
     setModalLoading(true);
+    setIsModalOpen(false);
     postIssues();
   };
 
@@ -100,8 +100,8 @@ const ModalUpdateIssue: FC<ModalUpdateIssuesProps> = ({
             <div className="flex gap-2 items-center justify-center pl-5">
               <WarningIcon label="warning" primaryColor="#FF0000" />
               <p className="text-xs text-textNormal">
-                Esto puede tardar algunos minutos, te pedimos que
-                tengas paciencia.{' '}
+                Esto puede tomar un tiempo, te pedimos que tengas
+                paciencia.
               </p>
             </div>
             <div
@@ -114,10 +114,7 @@ const ModalUpdateIssue: FC<ModalUpdateIssuesProps> = ({
               >
                 Cancelar
               </Button>
-              <Button
-                appearance="primary"
-                onClick={() => handleclick()}
-              >
+              <Button appearance="primary" onClick={handleClick}>
                 Continuar
               </Button>
             </div>
