@@ -11,7 +11,9 @@ module.exports = class Retrospectiva {
   }
 
   static fetchAll() {
-    return db.execute('SELECT * FROM retrospectivas');
+    return db.execute(
+      'SELECT * FROM retrospectivas ORDER BY fecha_inicio DESC'
+    );
   }
 
   static fetchPanelRetros() {
@@ -19,7 +21,8 @@ module.exports = class Retrospectiva {
       `SELECT Retro.id, titulo, fecha_inicio, fecha_fin, descripcion, en_curso, COUNT(DISTINCT R.id_sesionRespuesta) AS num_respuestas
         FROM retrospectivas Retro
         LEFT JOIN respuestas R ON R.id_retrospectiva = Retro.id
-        GROUP BY Retro.id;`
+        GROUP BY Retro.id
+        ORDER BY fecha_inicio DESC`
     );
   }
 
@@ -41,7 +44,8 @@ module.exports = class Retrospectiva {
     FROM retrospectivas r
     LEFT JOIN usuarios_retrospectivas ur ON r.id = ur.id_retrospectiva AND ur.id_usuario = ?
     LEFT JOIN respuestas res ON r.id = res.id_retrospectiva
-    GROUP BY r.id, ur.id_usuario, ur.completada, asignada, r.en_curso;
+    GROUP BY r.id, ur.id_usuario, ur.completada, asignada, r.en_curso
+    ORDER BY r.fecha_inicio DESC
     `,
       [userId]
     );

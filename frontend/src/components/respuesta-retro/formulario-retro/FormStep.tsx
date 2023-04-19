@@ -106,6 +106,7 @@ const FormStep: FC<FormStepProps> = ({
   const nextButton = (
     <Button
       appearance="primary"
+      className="order-1 lg:order-2"
       isDisabled={isError}
       iconAfter={<ArrowRightIcon label="pregunta siguiente" />}
       label="Siguiente pregunta"
@@ -117,11 +118,11 @@ const FormStep: FC<FormStepProps> = ({
 
   return (
     <div
-      className={`min-w-full flex flex-col justify-center items-center gap-9 ${
+      className={`w-full flex flex-col justify-center items-center gap-9 ${
         numPregunta != formPage && 'hidden'
       }`}
     >
-      <div className="flex flex-col items-center justify-center gap-3 w-auto">
+      <div className="flex flex-col items-center justify-center gap-3 w-full">
         <div className="flex flex-col items-center justify-center gap-2">
           <p className="uppercase text-selectBold text-xs font-bold">
             Pregunta {numPregunta}/{totalPreguntas}
@@ -141,7 +142,7 @@ const FormStep: FC<FormStepProps> = ({
             handleRangeOnchange={handleRangeChange}
           />
         </div>
-        <div className="flex items-center !justify-end w-full">
+        <div className="flex items-center justify-end w-full">
           {question.id_tipo_pregunta === 1 ||
           question.id_tipo_pregunta === 2 ? (
             <>
@@ -166,9 +167,10 @@ const FormStep: FC<FormStepProps> = ({
       {numPregunta === 1 && totalPreguntas > 1 ? (
         nextButton
       ) : (
-        <div className="flex gap-0 lg:gap-40 lg:pb-2 pb-4">
+        <div className="flex flex-col lg:flex-row gap-5 lg:gap-40 lg:pb-2 pb-4 scale-90 lg:scale-100">
           <Button
             appearance="default"
+            className="order-2 lg:order-1"
             iconBefore={<ArrowLeftIcon label="pregunta anterior" />}
             label="Pregunta anterior"
             onClick={() => setFormPage((prev: number) => prev - 1)}
@@ -177,6 +179,7 @@ const FormStep: FC<FormStepProps> = ({
           </Button>
           {numPregunta === totalPreguntas ? (
             <Button
+              className="order-1 lg:order-2"
               appearance="primary"
               onClick={() => {
                 setId_sesionRespuesta(nanoid(13));

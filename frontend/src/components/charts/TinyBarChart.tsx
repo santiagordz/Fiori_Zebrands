@@ -12,14 +12,7 @@ import { FC } from 'react';
 function CustomTooltip({ payload, label, active }: any) {
   if (active) {
     return (
-      <div
-        className="custom-tooltip"
-        style={{
-          backgroundColor: 'white',
-          padding: '10px',
-          border: '1px solid #ccc',
-        }}
-      >
+      <div className="bg-white p-2 text-xs border-2 rounded">
         <p className="label">{`Opción: ${label.toUpperCase()}`}</p>
         <p className="total">{`Total: ${payload[0].value}%`}</p>
       </div>
@@ -33,9 +26,13 @@ interface TinyBarChartProps {
     status: string | number;
     total: number;
   }[];
+  hoverColor?: string;
 }
 
-const TinyBarChart: FC<TinyBarChartProps> = ({ data }) => {
+const TinyBarChart: FC<TinyBarChartProps> = ({
+  data,
+  hoverColor,
+}) => {
   return (
     <ResponsiveContainer width="90%" height="90%">
       <BarChart
@@ -44,10 +41,13 @@ const TinyBarChart: FC<TinyBarChartProps> = ({ data }) => {
         data={data}
         margin={{ top: 20 }}
       >
-        <Bar dataKey="total" fill="#0E9CFF" />
         <XAxis dataKey="status" />
         <YAxis domain={[0, 100]} />
-        <Tooltip content={<CustomTooltip />} />
+        <Tooltip
+          content={<CustomTooltip />}
+          cursor={{ fill: hoverColor || '#e7f0fe' }}
+        />
+        <Bar dataKey="total" fill="#0E9CFF" />
       </BarChart>
     </ResponsiveContainer>
   );

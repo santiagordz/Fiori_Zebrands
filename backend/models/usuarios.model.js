@@ -34,7 +34,8 @@ module.exports = class Usuarios {
     LEFT JOIN usuarios_etiquetas ue ON u.id = ue.id_usuario
     LEFT JOIN etiquetas e ON e.id = ue.id_etiqueta
     LEFT JOIN colores c ON e.id_color = c.id
-    GROUP BY u.id;
+    GROUP BY u.id
+    ORDER BY u.nombre ASC
   `);
 
     const usuarios = rows.map((row) => {

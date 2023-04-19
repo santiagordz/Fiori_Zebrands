@@ -58,47 +58,48 @@ export default function TabsDefaultExample() {
   return (
     <div className="w-auto h-auto">
       <Tabs id="default">
-        <div className="w-full h-auto">
+        <div className="w-full h-auto my-3">
           <TabList>
-            <Tab>Metricas personales</Tab>
-            <Tab>Metricas sprint mas reciente</Tab>
+            <Tab>
+              <p className="text-xs">Métricas personales</p>
+            </Tab>
+            <Tab>
+              <p className="text-xs">Métricas sprint más reciente</p>
+            </Tab>
           </TabList>
         </div>
         <TabPanel>
-          <div className="w-full">
-            <div className="flex flex-col justify-center w-full lg:h-[28rem] h-[18rem] lg:p-5 p-2">
-              <h3 className="lg:text-lg text-md text-center underline-offset-1	underline">
-                Story Points en To Do
-              </h3>
-              <SameDataComposedChart data={data4} />
-            </div>
+          <div className="flex flex-col justify-center w-full lg:h-[28rem] h-[18rem] lg:p-5 p-2">
+            <h3 className="lg:text-base text-md text-center font-medium">
+              Story points en To Do
+            </h3>
+            <SameDataComposedChart data={data4} />
           </div>
         </TabPanel>
         <TabPanel>
           <div className="w-full">
             <div className="flex flex-col justify-center w-full lg:h-[28rem] h-[18rem] lg:p-5 p-2">
-              <h3 className="lg:text-lg text-md text-center underline-offset-1	underline">
-                Storypoints completados en los ultimos sprint
+              <h3 className="lg:text-base text-md text-center font-medium">
+                Story points completados en los últimos sprints
               </h3>
               <SameDataComposedChart data={chart3Data} />
             </div>
           </div>
         </TabPanel>
       </Tabs>
-      <div className="w-full justify-end self-end">
+      <div className="w-full flex justify-end">
         <Button
-          shouldFitContainer
-          className="flex justify-end self-end"
-          appearance="subtle-link"
+          appearance="link"
+          className="scale-[0.9]"
           iconAfter={
             <ArrowRightIcon
-              label="volver a gestionar retrospectivas"
+              label="ir a métricas"
               primaryColor="#1D7AFC"
             />
           }
           onClick={() => navigate(`/metricas`)}
         >
-          {' '}
+          Ir a métricas
         </Button>
       </div>
     </div>

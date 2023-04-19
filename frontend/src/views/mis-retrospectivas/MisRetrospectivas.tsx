@@ -65,6 +65,15 @@ const MisRetrospectivas: FC<MisRetrospectivasProps> = ({}) => {
         }
       ) => !retro.completada && retro.asignada && retro.en_curso
     );
+
+    pendientes.sort(
+      (retroA: Retrospectiva, retroB: Retrospectiva) => {
+        const fechaInicioA = new Date(retroA.fecha_inicio);
+        const fechaInicioB = new Date(retroB.fecha_inicio);
+        return fechaInicioA.getTime() - fechaInicioB.getTime();
+      }
+    );
+
     const completadas = response.data.filter(
       (
         retro: Retrospectiva & {
