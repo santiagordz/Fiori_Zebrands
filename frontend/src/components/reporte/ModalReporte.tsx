@@ -27,7 +27,6 @@ interface ModalReporteProps {
 }
 
 const ModalReporte: FC<ModalReporteProps> = ({ setIsOpen }) => {
-  const [isReady, setIsReady] = useState(111);
   const chartDoneSRef = useRef<HTMLDivElement>(null);
   const chartToDoSRef = useRef<HTMLDivElement>(null);
   const chartDoneERef = useRef<HTMLDivElement>(null);
