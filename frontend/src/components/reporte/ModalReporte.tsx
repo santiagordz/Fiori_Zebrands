@@ -193,7 +193,7 @@ const ModalReporte: FC<ModalReporteProps> = ({ setIsOpen }) => {
           animate={{ opacity: 1 }}
           className="flex flex-col w-full h-full items-center justify-center opacity-0"
         >
-          <div className="flex flex-col bg-white rounded p-10 gap-7 items-center justify-center drop-shadow-lg w-[70vw] h-[85vh]">
+          <div className="flex flex-col bg-white rounded p-10 gap-4 lg:gap-7 items-center justify-center drop-shadow-lg h-[32vh] w-[90vw] lg:w-[70vw] lg:h-[85vh]">
             <div className="flex w-full justify-between items-center">
               <p className="text-textNormal font-semibold text-base">
                 Reporte
@@ -205,7 +205,7 @@ const ModalReporte: FC<ModalReporteProps> = ({ setIsOpen }) => {
                 <CrossIcon label="cerrar modal" size="small" />
               </div>
             </div>
-            <div className="w-full h-full overflow-hidden border-[0.7rem] border-slate-300 rounded ">
+            <div className="w-full h-0 lg:h-full overflow-hidden border-[0.7rem] border-slate-300 rounded lg:visible invisible">
               {canvasSprints.length > 0 && canvasEpics.length > 0 ? (
                 <PDFViewer width="100%" height="100%">
                   <Reporte
@@ -269,7 +269,7 @@ const ModalReporte: FC<ModalReporteProps> = ({ setIsOpen }) => {
             </div>
             <div
               className="flex items-center justify-center
-            w-full gap-10"
+            w-full gap-10 lg:flex-row flex-col"
             >
               <Button
                 appearance="default"

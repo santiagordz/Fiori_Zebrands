@@ -73,7 +73,7 @@ const DesignTemplate: FC<DesignTemplateProps> = ({
               {pathInfo[path].view}
             </h1>
           </div>
-          <div className="flex flex-col items-baseline lg:flex-row gap-8">
+          <div className="flex py-10 lg:py-0 flex-col items-center justify-center lg:items-baseline lg:flex-row gap-8">
             {buttons}
           </div>
         </div>
