@@ -136,7 +136,6 @@ const Reporte: FC<ReporteProps> = ({
     Intl.DateTimeFormat().resolvedOptions().timeZone;
   const localDate = utcToZonedTime(date, userTimeZone);
   const today = format(localDate, 'dd/MM/yyyy HH:mm');
-  console.log(canvasSprints, canvasEpics);
 
   useEffect(() => {
     if (canvasSprints.length > 0) {
