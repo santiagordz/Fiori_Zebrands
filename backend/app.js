@@ -1,5 +1,6 @@
 require('dotenv').config();
 require('./auth/passportGoogleSSO');
+const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -11,7 +12,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+// app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 app.use(express.json());
 
 app.use(
@@ -72,6 +73,13 @@ app.get('/logout', (req, res) => {
   req.logout();
   res.clearCookie('connect.sid');
   res.redirect('/');
+});
+
+app.use(express.static(path.join(__dirname, '../frontend/dist')));
+app.get('*', (req, res) => {
+  res.sendFile(
+    path.join(__dirname, '../frontend/dist', 'index.html')
+  );
 });
 
 app.listen(8000, () => {

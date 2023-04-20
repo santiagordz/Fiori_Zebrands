@@ -1,10 +1,10 @@
 import React, { FC, useEffect, useState } from 'react';
 import { SimpleTag as Tag } from '@atlaskit/tag';
 import TagGroup from '@atlaskit/tag-group';
-import type { Etiqueta } from '../UsersTable';
+// import type { Etiqueta } from '../UsersTable';
 
 interface EtiquetaIconProps {
-  etiquetas: Array<Etiqueta>;
+  etiquetas: Array<any>;
 }
 
 const EtiquetaIcon: FC<EtiquetaIconProps> = ({ etiquetas }) => {

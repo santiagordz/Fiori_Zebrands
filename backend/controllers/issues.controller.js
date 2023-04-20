@@ -5,6 +5,8 @@ const usuario_issues = require('../models/usuarios_issues.model');
 const sprint_issues = require('../models/sprint_issue.model');
 const sprints = require('../models/sprints.model');
 
+const URI = process.env.BACKEND_URI;
+
 exports.getIssuesJira = async (req, res, next) => {
   try {
     res.json(await issuesModel.fetchIssuesJira(0));
@@ -30,9 +32,9 @@ exports.fetchIssuesJiraUpdated = async (req, res, next) => {
 };
 
 exports.postIssuesJira = async (req, res, next) => {
-  axios.post('http://localhost:8000/usuarios_jira');
-  axios.post('http://localhost:8000/epics');
-  axios.post('http://localhost:8000/sprints');
+  axios.post(`${URI}/usuarios_jira`);
+  axios.post(`${URI}/epics`);
+  axios.post(`${URI}/sprints`);
 
   let issuesDB = await issuesModel.getIssues();
   let countIssuesDB = await issuesModel.countIssues();

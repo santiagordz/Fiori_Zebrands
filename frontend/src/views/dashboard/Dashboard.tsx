@@ -12,11 +12,11 @@ import CarouselDash from './CarouselDash';
 const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/retrospectivas`;
 
 interface DashboardProps {
-  retroPendientes: Retrospectiva[];
-  getRetrospectivas: () => void;
+  // retroPendientes: Retrospectiva[];
+  // getRetrospectivas: () => void;
 }
 
-const Dashboard: FC<DashboardProps> = ({}) => {
+const Dashboard: FC<DashboardProps> = () => {
   const { user, setUser } = useContext(userDataContext);
   const navigate = useNavigate();
   const { retroId } = useParams();
