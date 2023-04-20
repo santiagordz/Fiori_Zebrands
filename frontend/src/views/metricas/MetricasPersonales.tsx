@@ -68,7 +68,6 @@ const MetricasPersonales: FC = ({}) => {
           `${URI}/userstorypoints/${idjira}/${urlPath}`
         );
         const data = response.data.issues[0];
-        console.log(data);
         setData2(data);
         return data;
       } catch (error) {
