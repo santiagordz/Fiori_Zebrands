@@ -24,13 +24,7 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
-
-app.get('/', (req, res, next) => {
-  res.json({ message: 'Fiori' });
-});
-
 app.use(authRoutes);
-
 app.use((err, req, res, next) => {
   if (err.message === 'UserNotFound') {
     req.session.destroy();
@@ -65,21 +59,12 @@ app.use('/api/issues', issuesJiraRoutes);
 app.use('/api/sprints', sprintsJiraRoutes);
 app.use('/api/epics', epicJiraRoutes);
 app.use('/api/metricas', metricasRoutes);
-
 app.use('/api/issuesjira', issuesJiraRoutes);
 app.use('/api/preguntas', preguntaRoutes);
-
 app.get('/api/logout', (req, res) => {
   req.logout();
   res.clearCookie('connect.sid');
   res.redirect('/');
-});
-
-app.use(express.static(path.join(__dirname, '../frontend/dist')));
-app.get('*', (req, res) => {
-  res.sendFile(
-    path.join(__dirname, '../frontend/dist', 'index.html')
-  );
 });
 
 app.listen(8000, () => {

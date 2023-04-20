@@ -17,9 +17,7 @@ import CheckCircleIcon from '@atlaskit/icon/glyph/check-circle';
 import EditorErrorIcon from '@atlaskit/icon/glyph/editor/error';
 import { FlagContext } from '../../../contexts';
 
-const URI = `${
-  import.meta.env.VITE_APP_BACKEND_URI
-}/usuarios/createUser`;
+const URI = `/api/usuarios/createUser`;
 
 interface RegistrarUsuariosProps {
   show: boolean;
