@@ -67,6 +67,8 @@ app.get('/api/logout', (req, res) => {
   res.redirect('/');
 });
 
+app.use(cors({ origin: 'http://3.137.156.119', credentials: true }));
+
 app.listen(8000, () => {
   console.log('Server is running on port 8000');
 });
