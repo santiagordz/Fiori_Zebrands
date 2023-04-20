@@ -30,9 +30,12 @@ const MetricasPersonales: FC = ({}) => {
   const [data6, setData6] = useState<any[]>([]);
 
   const getIssuesByUser = async () => {
-    if (sprintsValuesArray.length != 0) {
+    const sprintsIds = sprintsSeleccionadas.map((obj: any) => {
+      return obj.value;
+    });
+    if (sprintsIds.length != 0) {
       try {
-        const urlPath = sprintsValuesArray.join(',');
+        const urlPath = sprintsIds.join(',');
         const response = await axios.get(
           `${URI}/user/${idjira}/${urlPath}`
         );
@@ -55,13 +58,17 @@ const MetricasPersonales: FC = ({}) => {
   };
 
   const getStoryPointsByUser = async () => {
-    if (sprintsValuesArray.length != 0) {
+    const sprintsIds = sprintsSeleccionadas.map((obj: any) => {
+      return obj.value;
+    });
+    if (sprintsIds.length != 0) {
       try {
-        const urlPath = sprintsValuesArray.join(',');
+        const urlPath = sprintsIds.join(',');
         const response = await axios.get(
           `${URI}/userstorypoints/${idjira}/${urlPath}`
         );
         const data = response.data.issues[0];
+        console.log(data);
         setData2(data);
         return data;
       } catch (error) {
