@@ -64,22 +64,20 @@ const Dashboard: FC<DashboardProps> = ({}) => {
   return (
     <DesignTemplate>
       <div className="flex lg:flex-row flex-col gap-5">
-        <div className="flex bg-[#ffffff] py-5 px-5 rounded-sm shadow-sm w-full md:w-6/12 flex-col">
-          <h2 className="text-lg font-semibold">Métricas</h2>
+        <div className="flex bg-[#ffffff] p-6 rounded-sm shadow-sm w-full md:w-6/12 flex-col">
+          <h2 className="font-semibold">Métricas</h2>
           <CarouselDash />
         </div>
         <div className="flex flex-col gap-5 w-full md:w-6/12">
-          <div className="grid grid-rows-3 bg-[#ffffff] py-5 px-5 rounded-sm gap-5 shadow-sm h-[50%]">
-            <h2 className="text-lg font-semibold w-full">
-              Mis Accionables
-            </h2>
-            <div className="row-start-2 row-span-5 gap-5 w-full">
+          <div className="grid grid-rows-3 bg-[#ffffff] p-6 rounded-sm gap-5 shadow-sm h-[50%]">
+            <h2 className="font-semibold w-full">Mis Accionables</h2>
+            <div className="row-start-2 row-span-5 gap-5 w-full px-2">
               <div> </div>
             </div>
-            <div className="w-full flex justify-end">
+            <div className="w-full flex justify-end text-right">
               <Button
                 appearance="link"
-                className="scale-[0.9]"
+                className="scale-90"
                 iconAfter={
                   <ArrowRightIcon
                     label="volver a mis accionables"
@@ -92,13 +90,13 @@ const Dashboard: FC<DashboardProps> = ({}) => {
               </Button>
             </div>
           </div>
-          <div className="flex flex-col bg-[#ffffff] py-5 px-5 rounded-sm gap-5 shadow-sm h-[50%]">
+          <div className="flex flex-col bg-[#ffffff] p-6 rounded-sm gap-5 shadow-sm h-[50%]">
             <div>
-              <h2 className="text-lg font-semibold">
+              <h2 className="font-semibold">
                 Retrospectivas pendientes
               </h2>
             </div>
-            <div className="gap-2 w-full flex flex-col overflow-y-auto h-[100%]">
+            <div className="gap-2 w-full flex flex-col overflow-y-auto h-[100%] px-2">
               {retroPendientes.map(
                 (retro, i) =>
                   i < 2 &&
@@ -128,7 +126,7 @@ const Dashboard: FC<DashboardProps> = ({}) => {
             <div className="w-full flex justify-end">
               <Button
                 appearance="link"
-                className="scale-[0.9]"
+                className="scale-90"
                 iconAfter={
                   <ArrowRightIcon
                     label="ir a mis retrospectivas"

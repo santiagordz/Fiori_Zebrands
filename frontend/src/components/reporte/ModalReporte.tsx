@@ -5,48 +5,186 @@ import { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer';
 import axios from 'axios';
 import { motion } from 'framer-motion';
 import html2canvas from 'html2canvas';
-import { FC, useEffect, useRef, useState, useCallback } from 'react';
+import {
+  FC,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  useMemo,
+} from 'react';
 import SameDataComposedChart from '../charts/SameDataComposedChart';
 import Reporte from './Reporte';
+import { format, utcToZonedTime } from 'date-fns-tz';
+import Spinner from '../design-template/spinner/Spinner';
 
 const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/metricas`;
+
+export interface chartArrayType {
+  name: string;
+  url: string;
+  type: number;
+  data: { nombre: string; total_story_points: number }[];
+}
+
+type DataPropertyType = chartArrayType['data'][0];
 
 interface ModalReporteProps {
   setIsOpen: (isOpen: boolean) => void;
 }
 
 const ModalReporte: FC<ModalReporteProps> = ({ setIsOpen }) => {
-  const [isReady, setIsReady] = useState(11111111);
-  const chartRef = useRef<HTMLDivElement>(null!);
-  const [canvas, setCanvas] = useState<string>('');
-  const [dataDoneAcumS, setDataDoneAcumS] = useState<any[]>([]);
+  const [isReady, setIsReady] = useState(111);
+  const chartDoneSRef = useRef<HTMLDivElement>(null);
+  const chartToDoSRef = useRef<HTMLDivElement>(null);
+  const chartDoneERef = useRef<HTMLDivElement>(null);
+  const chartToDoERef = useRef<HTMLDivElement>(null);
+  const [charts, setCharts] = useState<chartArrayType[]>([]);
+
+  const [dataDoneAcumS, setDataDoneAcumS] = useState<
+    DataPropertyType[]
+  >([]);
+  const [dataToDoAcumS, setDataToDoAcumS] = useState<
+    DataPropertyType[]
+  >([]);
+
+  const [dataDoneAcumE, setDataDoneAcumE] = useState<
+    DataPropertyType[]
+  >([]);
+  const [dataToDoAcumE, setDataToDoAcumE] = useState<
+    DataPropertyType[]
+  >([]);
+
+  const date = new Date();
+  const userTimeZone =
+    Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const localDate = utcToZonedTime(date, userTimeZone);
+  const today = format(localDate, 'dd/MM/yyyy');
+
+  const getCanvasURL = useCallback(
+    async (node: HTMLElement | null): Promise<string | undefined> => {
+      if (!node) return;
+      const canvasTemp = await html2canvas(node);
+      const newChartImageUrl = canvasTemp.toDataURL(
+        'image/jpeg',
+        1.0
+      );
+      return newChartImageUrl;
+    },
+    []
+  );
+
+  const createChartArrayItem = async (
+    data: DataPropertyType[],
+    name: string,
+    type: number,
+    ref: React.RefObject<HTMLDivElement>
+  ): Promise<chartArrayType | null> => {
+    if (data.length > 0) {
+      const url = await getCanvasURL(ref.current);
+      if (url) {
+        return { name, url, type, data };
+      }
+    }
+    return null;
+  };
 
   const getStoryPointsDoneLastSprintsProgressive = async () => {
     try {
       const response = await axios.get(`${URI}/SUMdoneglobal`);
-      const data = response.data.sprints[0];
+      const data = response.data.sprints[0].reverse();
       setDataDoneAcumS(data);
-      return data;
     } catch (error) {
       console.error(error);
     }
   };
 
-  const handleCanvas = useCallback(async () => {
-    const canvasTemp = await html2canvas(chartRef.current);
-    const newChartImageUrl = canvasTemp.toDataURL('image/jpeg', 1.0);
-    setCanvas(newChartImageUrl);
-  }, []);
+  const getStoryPointsToDoLastSprintsProgressive = async () => {
+    try {
+      const response = await axios.get(`${URI}/SUMtodoglobal`);
+      const data = response.data.sprints[0].reverse();
+      setDataToDoAcumS(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getEpicsDone = async () => {
+    try {
+      const response = await axios.get(`${URI}/epicsSUMdoneglobal`);
+      const data = response.data.sprints[0];
+      setDataDoneAcumE(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getToDoEpicsDone = async () => {
+    try {
+      const response = await axios.get(`${URI}/epicsSUMtodoglobal`);
+      const data = response.data.sprints[0];
+      setDataToDoAcumE(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     getStoryPointsDoneLastSprintsProgressive();
+    getStoryPointsToDoLastSprintsProgressive();
+    getEpicsDone();
+    getToDoEpicsDone();
   }, []);
 
   useEffect(() => {
-    if (dataDoneAcumS.length > 0) {
-      handleCanvas();
-    }
-  }, [dataDoneAcumS]);
+    const fetchCharts = async () => {
+      const chartDoneSPromise = createChartArrayItem(
+        dataDoneAcumS,
+        'Story points en Done acumulados en los últimos 5 sprints',
+        1,
+        chartDoneSRef
+      );
+
+      const chartToDoSPromise = createChartArrayItem(
+        dataToDoAcumS,
+        'Story points en To Do acumulados en los últimos 5 sprints',
+        1,
+        chartToDoSRef
+      );
+
+      const chartDoneEPromise = createChartArrayItem(
+        dataDoneAcumE,
+        'Story points en Done acumulados en los últimos 5 epics',
+        2,
+        chartDoneERef
+      );
+
+      const chartToDoEPromise = createChartArrayItem(
+        dataToDoAcumE,
+        'Story points en To Do acumulados en los últimos 5 epics',
+        2,
+        chartToDoERef
+      );
+
+      const fetchedCharts = await Promise.all([
+        chartDoneSPromise,
+        chartToDoSPromise,
+        chartDoneEPromise,
+        chartToDoEPromise,
+      ]);
+
+      setCharts(
+        fetchedCharts.filter(
+          (chart) => chart !== null
+        ) as chartArrayType[]
+      );
+    };
+
+    fetchCharts();
+  }, [dataDoneAcumS, dataToDoAcumS, dataDoneAcumE, dataToDoAcumE]);
+
+  const canvasSprints = charts.filter((chart) => chart.type === 1);
+  const canvasEpics = charts.filter((chart) => chart.type === 2);
 
   useEffect(() => {
     document.body.classList.add('modal-open');
@@ -75,15 +213,70 @@ const ModalReporte: FC<ModalReporteProps> = ({ setIsOpen }) => {
                 <CrossIcon label="cerrar modal" size="small" />
               </div>
             </div>
-            <div className="w-[98%] h-5/6 overflow-y-auto border-[1rem] border-slate-300 rounded py-5 px-4 ">
-              {/* !BORRAR! */}
-              <PDFViewer width="100%" height="100%">
-                <Reporte canvasURL={canvas} />
-              </PDFViewer>
+            <div className="w-full h-full overflow-hidden border-[0.7rem] border-slate-300 rounded ">
+              {canvasSprints.length > 0 && canvasEpics.length > 0 ? (
+                <PDFViewer
+                  width="100%"
+                  height="100%"
+                  showToolbar={false}
+                >
+                  <Reporte
+                    canvasSprints={canvasSprints}
+                    canvasEpics={canvasEpics}
+                  />
+                </PDFViewer>
+              ) : (
+                <Spinner
+                  message="Cargando previsualización del reporte..."
+                  height="70%"
+                />
+              )}
+              <div
+                className="w-[40rem] h-[27rem]"
+                ref={chartDoneSRef}
+              >
+                <SameDataComposedChart
+                  showHeights
+                  data={dataDoneAcumS}
+                  animation={false}
+                />
+              </div>
 
-              {/* AGREGAR LABEL EN EJE X */}
-              <div className="w-[25rem] h-[20rem]" ref={chartRef}>
-                <SameDataComposedChart data={dataDoneAcumS} />
+              <div
+                className="w-[40rem] h-[27rem]"
+                ref={chartToDoSRef}
+              >
+                <SameDataComposedChart
+                  showHeights
+                  animation={false}
+                  data={dataToDoAcumS}
+                  barColor="#8838ff"
+                  lineColor="#388bff"
+                />
+              </div>
+
+              <div
+                className="w-[40rem] h-[27rem]"
+                ref={chartDoneERef}
+              >
+                <SameDataComposedChart
+                  showHeights
+                  data={dataDoneAcumE}
+                  animation={false}
+                />
+              </div>
+
+              <div
+                className="w-[40rem] h-[27rem]"
+                ref={chartToDoERef}
+              >
+                <SameDataComposedChart
+                  showHeights
+                  data={dataToDoAcumE}
+                  animation={false}
+                  barColor="#8838ff"
+                  lineColor="#388bff"
+                />
               </div>
             </div>
             <div
@@ -96,18 +289,29 @@ const ModalReporte: FC<ModalReporteProps> = ({ setIsOpen }) => {
               >
                 Cancelar
               </Button>
-              <Button appearance="primary">
-                <PDFDownloadLink
-                  document={<Reporte canvasURL={canvas} />}
-                  fileName="reporte.pdf"
-                >
-                  {({ blob, url, loading, error }) =>
-                    loading
-                      ? 'Cargando documento...'
-                      : 'Descargar reporte'
-                  }
-                </PDFDownloadLink>
-              </Button>
+              {canvasSprints.length > 0 && canvasEpics.length > 0 ? (
+                <Button appearance="primary">
+                  <PDFDownloadLink
+                    document={
+                      <Reporte
+                        canvasSprints={canvasSprints}
+                        canvasEpics={canvasEpics}
+                      />
+                    }
+                    fileName={`RetroZeb_${today}.pdf`}
+                  >
+                    {({ blob, url, loading, error }) =>
+                      loading
+                        ? 'Cargando el reporte...'
+                        : 'Descargar reporte'
+                    }
+                  </PDFDownloadLink>
+                </Button>
+              ) : (
+                <Button appearance="primary" isDisabled>
+                  Cargando el reporte...
+                </Button>
+              )}
             </div>
           </div>
         </motion.div>

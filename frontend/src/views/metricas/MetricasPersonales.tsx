@@ -147,47 +147,15 @@ const MetricasPersonales: FC = ({}) => {
     getPersonalStorypointsProgressive2();
   }, [sprintsSeleccionadas]);
 
-  return (
-    <div className="flex flex-col gap-5">
-      <div className="gap-4 flex flex-col justify-left p-7 w-full rounded border border-gray-200 bg-white items-center">
-        <h2 className="flex-nowrap w-full font-medium text-sm text-information">
-          Mis métricas
-        </h2>
-        <div className="flex flex-col items-baseline gap-1 w-full">
-          <p className="font-semibold text-xs text-label">Sprints</p>
-          <DropdownSprints
-            onSprintsSeleccionadasChange={handleSprintSeleccionados}
-          />
-        </div>
-      </div>
+  const shouldMoveToTop =
+    (data3 && data3.length === 0) ||
+    (data4 && data4.length === 0) ||
+    (data5 && data5.length === 0) ||
+    (data6 && data6.length === 0);
 
-      <div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-3 justify-center gap-7 w-full h-auto md:h-[70rem]">
-        <div className="md:col-span-3 flex flex-col md:flex-row gap-7">
-          <ChartCards title="Story points en Done acumulados por sprint">
-            <SameDataComposedChart
-              data={data5}
-              barColor="#8838ff"
-              lineColor="#388bff"
-            />
-          </ChartCards>
-          <ChartCards title="Story points en To Do acumulados por sprint">
-            <SameDataComposedChart data={data6} />
-          </ChartCards>
-        </div>
-
-        <div className="md:col-span-3 flex flex-col md:flex-row gap-7">
-          <ChartCards title="Story points pendientes">
-            <SameDataComposedChart data={data4} />
-          </ChartCards>
-          <ChartCards title="Story points completados">
-            <SameDataComposedChart
-              data={data3}
-              barColor="#8838ff"
-              lineColor="#388bff"
-            />
-          </ChartCards>
-        </div>
-
+  const renderCharts = () => {
+    return (
+      <>
         <div className="md:col-span-2">
           <ChartCards title="Story points">
             {data2 && data2.length > 0 ? (
@@ -208,6 +176,83 @@ const MetricasPersonales: FC = ({}) => {
             </p>
           )}
         </ChartCards>
+      </>
+    );
+  };
+
+  return (
+    <div className="flex flex-col gap-5">
+      <div className="gap-4 flex flex-col justify-left p-7 w-full rounded border border-gray-200 bg-white items-center">
+        <h2 className="flex-nowrap w-full font-medium text-sm text-information">
+          Mis métricas
+        </h2>
+        <div className="flex flex-col items-baseline gap-1 w-full">
+          <p className="font-semibold text-xs text-label">Sprints</p>
+          <DropdownSprints
+            onSprintsSeleccionadasChange={handleSprintSeleccionados}
+          />
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-3 justify-center gap-7 w-full h-auto md:h-[70rem]">
+        {shouldMoveToTop && renderCharts()}
+        <div className="md:col-span-3 flex flex-col md:flex-row gap-7">
+          <ChartCards title="Story points en Done acumulados por sprint">
+            {data5 && data5.length > 0 ? (
+              <SameDataComposedChart
+                data={data5}
+                barColor="#8838ff"
+                lineColor="#388bff"
+              />
+            ) : (
+              <p className="text-xs">
+                Parece que no tienes issues enlazados a un sprint, aun
+                y así puedes ver tus story points e issues en general
+                para conocer tu progreso.
+              </p>
+            )}
+          </ChartCards>
+          <ChartCards title="Story points en To Do acumulados por sprint">
+            {data6 && data6.length > 0 ? (
+              <SameDataComposedChart data={data6} />
+            ) : (
+              <p className="text-xs">
+                Parece que no tienes issues enlazados a un sprint, aun
+                y así puedes ver tus story points e issues en general
+                para conocer tu progreso.
+              </p>
+            )}
+          </ChartCards>
+        </div>
+        <div className="md:col-span-3 flex flex-col md:flex-row gap-7">
+          <ChartCards title="Story points pendientes">
+            {data4 && data4.length > 0 ? (
+              <SameDataComposedChart data={data4} />
+            ) : (
+              <p className="text-xs">
+                Parece que no tienes issues enlazados a un sprint, aun
+                y así puedes ver tus story points e issues en general
+                para conocer tu progreso.
+              </p>
+            )}
+          </ChartCards>
+          <ChartCards title="Story points completados">
+            {data3 && data3.length > 0 ? (
+              <SameDataComposedChart
+                data={data3}
+                barColor="#8838ff"
+                lineColor="#388bff"
+              />
+            ) : (
+              <p className="text-xs">
+                Parece que no tienes issues enlazados a un sprint, aun
+                y así puedes ver tus story points e issues en general
+                para conocer tu progreso.
+              </p>
+            )}
+          </ChartCards>
+        </div>
+        {!shouldMoveToTop && renderCharts()}
       </div>
     </div>
   );

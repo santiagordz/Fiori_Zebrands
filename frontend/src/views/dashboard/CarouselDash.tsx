@@ -8,6 +8,7 @@ import { userDataContext } from '../../contexts';
 import Button from '@atlaskit/button';
 import ArrowRightIcon from '@atlaskit/icon/glyph/arrow-right';
 import { useNavigate, useParams } from 'react-router-dom';
+import { PieChart } from '../../components/charts';
 
 const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/metricas`;
 
@@ -25,6 +26,9 @@ export default function TabsDefaultExample() {
   const idjira = user?.id_jira;
   const [data4, setData4] = useState<any[]>([]);
   const [chart3Data, setChart3Data] = useState<any[]>([]);
+  const [personalBackupData, setPersonalBackupData] = useState<any[]>(
+    []
+  );
 
   const getLastSprintsToDoStorypoints = async () => {
     try {
@@ -34,6 +38,16 @@ export default function TabsDefaultExample() {
       const data = response.data.issues[0];
       setData4(data);
       return data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getIssuesByUser = async () => {
+    try {
+      const response = await axios.get(`${URI}/user/${idjira}`);
+      const data = response.data.issues[0];
+      setPersonalBackupData(data);
     } catch (error) {
       console.error(error);
     }
@@ -53,6 +67,7 @@ export default function TabsDefaultExample() {
   useEffect(() => {
     getLastSprintsToDoStorypoints();
     getStoryPointsDoneLastSprints();
+    getIssuesByUser();
   }, []);
 
   return (
@@ -70,10 +85,21 @@ export default function TabsDefaultExample() {
         </div>
         <TabPanel>
           <div className="flex flex-col justify-center w-full lg:h-[28rem] h-[18rem] lg:p-5 p-2">
-            <h3 className="lg:text-base text-md text-center font-medium">
-              Story points en To Do
-            </h3>
-            <SameDataComposedChart data={data4} />
+            {data4 && data4.length > 0 ? (
+              <>
+                <h3 className="lg:text-base text-md text-center font-medium">
+                  Story points en To Do
+                </h3>
+                <SameDataComposedChart data={data4} />)
+              </>
+            ) : (
+              <>
+                <h3 className="lg:text-base text-md text-center font-medium">
+                  Issues totales y completados
+                </h3>
+                <PieChart data={personalBackupData} />
+              </>
+            )}
           </div>
         </TabPanel>
         <TabPanel>
@@ -90,7 +116,7 @@ export default function TabsDefaultExample() {
       <div className="w-full flex justify-end">
         <Button
           appearance="link"
-          className="scale-[0.9]"
+          className="scale-90"
           iconAfter={
             <ArrowRightIcon
               label="ir a métricas"

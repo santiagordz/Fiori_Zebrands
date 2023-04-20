@@ -2,6 +2,7 @@ import {
   Bar,
   CartesianGrid,
   ComposedChart,
+  LabelList,
   Legend,
   Line,
   ResponsiveContainer,
@@ -17,6 +18,8 @@ interface SameDataComposedChartProps {
   }[];
   barColor?: string;
   lineColor?: string;
+  animation?: boolean;
+  showHeights?: boolean;
 }
 
 function CustomTooltip({ payload, label, active }: any) {
@@ -31,10 +34,16 @@ function CustomTooltip({ payload, label, active }: any) {
   return null;
 }
 
+function truncateLabel(str: string, max: number = 20): string {
+  return str.length > max ? `${str.slice(7, max - 3)}...` : str;
+}
+
 export default function SameDataComposedChart({
   data,
-  barColor,
-  lineColor,
+  barColor = '#388bff',
+  lineColor = '#5E4DB2',
+  animation = true,
+  showHeights = false,
 }: SameDataComposedChartProps) {
   const maxY = Math.max(
     ...data.map((item) => item.total_story_points)
@@ -57,16 +66,26 @@ export default function SameDataComposedChart({
         <Tooltip content={<CustomTooltip />} />
         <Legend />
         <Bar
+          isAnimationActive={animation}
           dataKey="total_story_points"
-          name="Story Points"
+          name="Story points"
           barSize={20}
-          fill={barColor || '#388bff'}
-        />
+          fill={barColor}
+        >
+          {showHeights && (
+            <LabelList
+              dataKey="total_story_points"
+              position="top"
+              className="text-base"
+            />
+          )}
+        </Bar>
         <Line
+          isAnimationActive={animation}
           type="monotone"
           name={'Total'}
           dataKey="total_story_points"
-          stroke={lineColor || '#5E4DB2'}
+          stroke={lineColor}
         />
       </ComposedChart>
     </ResponsiveContainer>

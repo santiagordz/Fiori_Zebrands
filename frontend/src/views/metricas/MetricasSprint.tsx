@@ -89,7 +89,7 @@ const MetricasSprint: FC = ({}) => {
   const getStoryPointsDoneLastSprintsProgressive = async () => {
     try {
       const response = await axios.get(`${URI}/SUMdoneglobal`);
-      const data = response.data.sprints[0];
+      const data = response.data.sprints[0].reverse();
       setChart5Data(data);
       return data;
     } catch (error) {
@@ -100,7 +100,7 @@ const MetricasSprint: FC = ({}) => {
   const getStoryPointsToDoLastSprintsProgressive = async () => {
     try {
       const response = await axios.get(`${URI}/SUMtodoglobal`);
-      const data = response.data.sprints[0];
+      const data = response.data.sprints[0].reverse();
       setChart6Data(data);
       return data;
     } catch (error) {
@@ -132,12 +132,12 @@ const MetricasSprint: FC = ({}) => {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-3 justify-center gap-7 w-full h-auto md:h-[70rem]">
         <div className="md:col-span-3">
-          <ChartCards title="Story points en Done acumulados en los ultimos sprints">
+          <ChartCards title="Story points en Done acumulados en los últimos 5 sprints">
             <SameDataComposedChart data={chart5Data} />
           </ChartCards>
         </div>
 
-        <ChartCards title="Story points completados en los ultimos sprint">
+        <ChartCards title="Story points completados en los últimos sprints">
           <SameDataComposedChart
             data={chart3Data}
             barColor="#8838ff"
@@ -145,11 +145,11 @@ const MetricasSprint: FC = ({}) => {
           />
         </ChartCards>
 
-        <ChartCards title="Story points en To Do de los ultimos sprints">
+        <ChartCards title="Story points en To Do de los últimos sprints">
           <SameDataComposedChart data={chart4Data} />
         </ChartCards>
 
-        <ChartCards title="Story points en To Do acumulados por los ultimos sprints">
+        <ChartCards title="Story points en To Do acumulados en los últimos 5 sprints">
           <SameDataComposedChart
             data={chart6Data}
             barColor="#8838ff"
@@ -163,7 +163,8 @@ const MetricasSprint: FC = ({}) => {
               <StackedBarChart data={chart2Data} />
             ) : (
               <p className="text-xs">
-                No hay datos para graficar con el sprint elegido
+                No hay datos para graficar con el o los sprints
+                elegidos
               </p>
             )}
           </ChartCards>
@@ -173,7 +174,8 @@ const MetricasSprint: FC = ({}) => {
               <Piechart data={chartData} />
             ) : (
               <p className="text-xs">
-                No hay datos para graficar con el sprint elegido
+                No hay datos para graficar con el o los sprints
+                elegidos
               </p>
             )}
           </ChartCards>

@@ -59,8 +59,6 @@ passport.use(
 );
 
 passport.serializeUser((user, cb) => {
-  // console.log(`\n--------> Serialize User:`, user);
-
   if (user) cb(null, user.correo);
 });
 

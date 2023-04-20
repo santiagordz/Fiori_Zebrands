@@ -270,12 +270,13 @@ module.exports = class StatusIssue {
         JOIN sprints s2 ON si2.id_sprint = s2.id_jira
         WHERE i2.status = "Done"
           AND s2.fecha_inicio <= s.fecha_inicio) AS total_story_points
-FROM issues i
-JOIN sprints_issues si ON i.clave = si.id_issue
-JOIN sprints s ON si.id_sprint = s.id_jira
-WHERE i.status = "Done"
-GROUP BY s.id, s.nombre, s.fecha_inicio
-ORDER BY s.fecha_inicio ASC, s.nombre ASC;
+      FROM issues i
+      JOIN sprints_issues si ON i.clave = si.id_issue
+      JOIN sprints s ON si.id_sprint = s.id_jira
+      WHERE i.status = "Done"
+      GROUP BY s.id, s.nombre, s.fecha_inicio
+      ORDER BY s.fecha_inicio DESC, s.nombre DESC
+      LIMIT 5;
       `
     );
   }
@@ -290,13 +291,13 @@ ORDER BY s.fecha_inicio ASC, s.nombre ASC;
         JOIN sprints s2 ON si2.id_sprint = s2.id_jira
         WHERE i2.status = "To Do"
           AND s2.fecha_inicio <= s.fecha_inicio) AS total_story_points
-FROM issues i
-JOIN sprints_issues si ON i.clave = si.id_issue
-JOIN sprints s ON si.id_sprint = s.id_jira
-WHERE i.status = "To Do"
-GROUP BY s.id, s.nombre, s.fecha_inicio
-ORDER BY s.fecha_inicio ASC, s.nombre ASC;
-
+        FROM issues i
+        JOIN sprints_issues si ON i.clave = si.id_issue
+        JOIN sprints s ON si.id_sprint = s.id_jira
+        WHERE i.status = "To Do"
+        GROUP BY s.id, s.nombre, s.fecha_inicio
+        ORDER BY s.fecha_inicio DESC, s.nombre DESC
+        LIMIT 5;
       `
     );
   }
