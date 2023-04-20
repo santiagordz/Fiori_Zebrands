@@ -3,8 +3,7 @@ const GoogleStrategy = require('passport-google-oauth2').Strategy;
 
 const Usuario = require('../models/usuarios.model');
 
-const GOOGLE_CALLBACK_URI =
-  'http://localhost:8000/auth/google/callback';
+const GOOGLE_CALLBACK_URI = 'http://3.15.137.45/auth/google/callback';
 
 passport.use(
   new GoogleStrategy(
