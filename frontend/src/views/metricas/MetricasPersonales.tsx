@@ -207,9 +207,7 @@ const MetricasPersonales: FC = ({}) => {
               />
             ) : (
               <p className="text-xs">
-                Parece que no tienes issues enlazados a un sprint, aun
-                y así puedes ver tus story points e issues en general
-                para conocer tu progreso.
+                Parece que no tienes issues asignados a sprints.
               </p>
             )}
           </ChartCards>
@@ -218,9 +216,7 @@ const MetricasPersonales: FC = ({}) => {
               <ComposedChart data={data6} />
             ) : (
               <p className="text-xs">
-                Parece que no tienes issues enlazados a un sprint, aun
-                y así puedes ver tus story points e issues en general
-                para conocer tu progreso.
+                Parece que no tienes issues asignados a sprints.
               </p>
             )}
           </ChartCards>
@@ -231,9 +227,7 @@ const MetricasPersonales: FC = ({}) => {
               <ComposedChart data={data4} />
             ) : (
               <p className="text-xs">
-                Parece que no tienes issues enlazados a un sprint, aun
-                y así puedes ver tus story points e issues en general
-                para conocer tu progreso.
+                Parece que no tienes issues asignados a sprints.
               </p>
             )}
           </ChartCards>
@@ -246,9 +240,7 @@ const MetricasPersonales: FC = ({}) => {
               />
             ) : (
               <p className="text-xs">
-                Parece que no tienes issues enlazados a un sprint, aun
-                y así puedes ver tus story points e issues en general
-                para conocer tu progreso.
+                Parece que no tienes issues asignados a sprints.
               </p>
             )}
           </ChartCards>
