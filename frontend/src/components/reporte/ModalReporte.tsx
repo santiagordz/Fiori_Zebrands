@@ -3,20 +3,13 @@ import Button from '@atlaskit/button';
 import CrossIcon from '@atlaskit/icon/glyph/cross';
 import { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer';
 import axios from 'axios';
+import { format, utcToZonedTime } from 'date-fns-tz';
 import { motion } from 'framer-motion';
 import html2canvas from 'html2canvas';
-import {
-  FC,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-  useMemo,
-} from 'react';
-import SameDataComposedChart from '../charts/SameDataComposedChart';
+import { FC, useCallback, useEffect, useRef, useState } from 'react';
+import { ComposedChart } from '../charts';
+import { Spinner } from '../index';
 import Reporte from './Reporte';
-import { format, utcToZonedTime } from 'date-fns-tz';
-import Spinner from '../design-template/spinner/Spinner';
 
 const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/metricas`;
 
@@ -215,11 +208,7 @@ const ModalReporte: FC<ModalReporteProps> = ({ setIsOpen }) => {
             </div>
             <div className="w-full h-full overflow-hidden border-[0.7rem] border-slate-300 rounded ">
               {canvasSprints.length > 0 && canvasEpics.length > 0 ? (
-                <PDFViewer
-                  width="100%"
-                  height="100%"
-                  showToolbar={false}
-                >
+                <PDFViewer width="100%" height="100%">
                   <Reporte
                     canvasSprints={canvasSprints}
                     canvasEpics={canvasEpics}
@@ -235,7 +224,7 @@ const ModalReporte: FC<ModalReporteProps> = ({ setIsOpen }) => {
                 className="w-[40rem] h-[27rem]"
                 ref={chartDoneSRef}
               >
-                <SameDataComposedChart
+                <ComposedChart
                   showHeights
                   data={dataDoneAcumS}
                   animation={false}
@@ -246,7 +235,7 @@ const ModalReporte: FC<ModalReporteProps> = ({ setIsOpen }) => {
                 className="w-[40rem] h-[27rem]"
                 ref={chartToDoSRef}
               >
-                <SameDataComposedChart
+                <ComposedChart
                   showHeights
                   animation={false}
                   data={dataToDoAcumS}
@@ -259,7 +248,7 @@ const ModalReporte: FC<ModalReporteProps> = ({ setIsOpen }) => {
                 className="w-[40rem] h-[27rem]"
                 ref={chartDoneERef}
               >
-                <SameDataComposedChart
+                <ComposedChart
                   showHeights
                   data={dataDoneAcumE}
                   animation={false}
@@ -270,7 +259,7 @@ const ModalReporte: FC<ModalReporteProps> = ({ setIsOpen }) => {
                 className="w-[40rem] h-[27rem]"
                 ref={chartToDoERef}
               >
-                <SameDataComposedChart
+                <ComposedChart
                   showHeights
                   data={dataToDoAcumE}
                   animation={false}

@@ -1,10 +1,11 @@
-import React, { FC, useEffect, useState } from 'react';
 import axios from 'axios';
-import Piechart from '../../components/charts/Piechart';
-import DropdownSprints from '../../components/charts/DropdownSprints';
-import StackedBarChart from '../../components/charts/StackedBarchart';
-import SameDataComposedChart from '../../components/charts/SameDataComposedChart';
-import { ChartCards } from '../../components';
+import { FC, useEffect, useState } from 'react';
+import { ChartCards, DropdownSprints } from '../../components';
+import {
+  ComposedChart,
+  StackedBarChart,
+  PieChart,
+} from '../../components/charts';
 
 const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/metricas`;
 
@@ -133,12 +134,12 @@ const MetricasSprint: FC = ({}) => {
       <div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-3 justify-center gap-7 w-full h-auto md:h-[70rem]">
         <div className="md:col-span-3">
           <ChartCards title="Story points en Done acumulados en los últimos 5 sprints">
-            <SameDataComposedChart data={chart5Data} />
+            <ComposedChart data={chart5Data} />
           </ChartCards>
         </div>
 
         <ChartCards title="Story points completados en los últimos sprints">
-          <SameDataComposedChart
+          <ComposedChart
             data={chart3Data}
             barColor="#8838ff"
             lineColor="#388bff"
@@ -146,11 +147,11 @@ const MetricasSprint: FC = ({}) => {
         </ChartCards>
 
         <ChartCards title="Story points en To Do de los últimos sprints">
-          <SameDataComposedChart data={chart4Data} />
+          <ComposedChart data={chart4Data} />
         </ChartCards>
 
         <ChartCards title="Story points en To Do acumulados en los últimos 5 sprints">
-          <SameDataComposedChart
+          <ComposedChart
             data={chart6Data}
             barColor="#8838ff"
             lineColor="#388bff"
@@ -171,7 +172,7 @@ const MetricasSprint: FC = ({}) => {
 
           <ChartCards title="Issues totales y completado">
             {chartData && chartData.length > 0 ? (
-              <Piechart data={chartData} />
+              <PieChart data={chartData} />
             ) : (
               <p className="text-xs">
                 No hay datos para graficar con el o los sprints

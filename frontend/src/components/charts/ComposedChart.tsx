@@ -34,10 +34,6 @@ function CustomTooltip({ payload, label, active }: any) {
   return null;
 }
 
-function truncateLabel(str: string, max: number = 20): string {
-  return str.length > max ? `${str.slice(7, max - 3)}...` : str;
-}
-
 export default function SameDataComposedChart({
   data,
   barColor = '#388bff',

@@ -1,24 +1,13 @@
-import { ReactNode } from 'react';
-import Tabs, { Tab, TabList, TabPanel } from '@atlaskit/tabs';
-import { useEffect, useState, useContext } from 'react';
-import axios from 'axios';
-import { ChartCards } from '../../components';
-import SameDataComposedChart from '../../components/charts/SameDataComposedChart';
-import { userDataContext } from '../../contexts';
 import Button from '@atlaskit/button';
 import ArrowRightIcon from '@atlaskit/icon/glyph/arrow-right';
-import { useNavigate, useParams } from 'react-router-dom';
-import { PieChart } from '../../components/charts';
+import Tabs, { Tab, TabList, TabPanel } from '@atlaskit/tabs';
+import axios from 'axios';
+import { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ComposedChart, PieChart } from '../../components/charts';
+import { userDataContext } from '../../contexts';
 
 const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/metricas`;
-
-export const Panel = ({
-  children,
-  testId,
-}: {
-  children: ReactNode;
-  testId?: string;
-}) => <div data-testid={testId}>{children}</div>;
 
 export default function TabsDefaultExample() {
   const navigate = useNavigate();
@@ -90,7 +79,7 @@ export default function TabsDefaultExample() {
                 <h3 className="lg:text-base text-md text-center font-medium">
                   Story points en To Do
                 </h3>
-                <SameDataComposedChart data={data4} />)
+                <ComposedChart data={data4} />
               </>
             ) : (
               <>
@@ -108,7 +97,7 @@ export default function TabsDefaultExample() {
               <h3 className="lg:text-base text-md text-center font-medium">
                 Story points completados en los últimos sprints
               </h3>
-              <SameDataComposedChart data={chart3Data} />
+              <ComposedChart data={chart3Data} />
             </div>
           </div>
         </TabPanel>

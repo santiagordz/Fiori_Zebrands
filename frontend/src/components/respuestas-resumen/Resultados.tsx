@@ -1,8 +1,8 @@
-import React, { FC, useMemo, useState, useEffect } from 'react';
-import { PieChart, BarChart } from '../charts';
-import type { OpcionesType } from './Respuestas';
 import { ReactComponent as IncognitoSVG } from '@/assets/icons/incognito.svg';
+import { FC, useEffect, useMemo, useState } from 'react';
 import { Tooltip } from 'react-tooltip';
+import { BarChart, PieChart } from '../charts';
+import type { OpcionesType } from './Respuestas';
 interface ResultadosProps {
   id_tipo_pregunta: number;
   pregunta: string;

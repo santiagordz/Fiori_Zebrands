@@ -1,11 +1,12 @@
 import axios from 'axios';
 import { FC, useContext, useEffect, useState } from 'react';
-import DropdownSprints from '../../components/charts/DropdownSprints';
-import Piechart from '../../components/charts/Piechart';
-import SameDataComposedChart from '../../components/charts/SameDataComposedChart';
-import StackedBarChart from '../../components/charts/StackedBarchart';
+import { ChartCards, DropdownSprints } from '../../components';
+import {
+  ComposedChart,
+  PieChart,
+  StackedBarChart,
+} from '../../components/charts';
 import { userDataContext } from '../../contexts';
-import { ChartCards } from '../../components';
 
 const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/metricas`;
 
@@ -169,7 +170,7 @@ const MetricasPersonales: FC = ({}) => {
         </div>
         <ChartCards title="Issues totales y completados">
           {data && data.length > 0 ? (
-            <Piechart data={data} />
+            <PieChart data={data} />
           ) : (
             <p className="text-xs">
               No hay datos para graficar con el sprint elegido
@@ -199,7 +200,7 @@ const MetricasPersonales: FC = ({}) => {
         <div className="md:col-span-3 flex flex-col md:flex-row gap-7">
           <ChartCards title="Story points en Done acumulados por sprint">
             {data5 && data5.length > 0 ? (
-              <SameDataComposedChart
+              <ComposedChart
                 data={data5}
                 barColor="#8838ff"
                 lineColor="#388bff"
@@ -214,7 +215,7 @@ const MetricasPersonales: FC = ({}) => {
           </ChartCards>
           <ChartCards title="Story points en To Do acumulados por sprint">
             {data6 && data6.length > 0 ? (
-              <SameDataComposedChart data={data6} />
+              <ComposedChart data={data6} />
             ) : (
               <p className="text-xs">
                 Parece que no tienes issues enlazados a un sprint, aun
@@ -227,7 +228,7 @@ const MetricasPersonales: FC = ({}) => {
         <div className="md:col-span-3 flex flex-col md:flex-row gap-7">
           <ChartCards title="Story points pendientes">
             {data4 && data4.length > 0 ? (
-              <SameDataComposedChart data={data4} />
+              <ComposedChart data={data4} />
             ) : (
               <p className="text-xs">
                 Parece que no tienes issues enlazados a un sprint, aun
@@ -238,7 +239,7 @@ const MetricasPersonales: FC = ({}) => {
           </ChartCards>
           <ChartCards title="Story points completados">
             {data3 && data3.length > 0 ? (
-              <SameDataComposedChart
+              <ComposedChart
                 data={data3}
                 barColor="#8838ff"
                 lineColor="#388bff"

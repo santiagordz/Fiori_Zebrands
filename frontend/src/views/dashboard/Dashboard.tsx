@@ -9,6 +9,7 @@ import axios from 'axios';
 import Button from '@atlaskit/button';
 import CarouselDash from './CarouselDash';
 import { format, parseISO } from 'date-fns';
+import { BotonReporte } from '../../components';
 
 const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/retrospectivas`;
 
@@ -62,7 +63,7 @@ const Dashboard: FC<DashboardProps> = ({}) => {
     navigate('/login');
   }
   return (
-    <DesignTemplate>
+    <DesignTemplate buttons={<BotonReporte />}>
       <div className="flex lg:flex-row flex-col gap-5">
         <div className="flex bg-[#ffffff] p-6 rounded-sm shadow-sm w-full md:w-6/12 flex-col">
           <h2 className="font-semibold">Métricas</h2>

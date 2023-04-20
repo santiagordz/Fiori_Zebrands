@@ -3,17 +3,19 @@ import EmojiFrequentIcon from '@atlaskit/icon/glyph/emoji/frequent';
 import RefreshIcon from '@atlaskit/icon/glyph/refresh';
 import Tabs, { Tab, TabList, TabPanel } from '@atlaskit/tabs';
 import axios from 'axios';
-import React, { FC, useCallback, useEffect, useState } from 'react';
+import { format, parseISO } from 'date-fns';
+import { utcToZonedTime } from 'date-fns-tz';
+import { FC, useCallback, useEffect, useState } from 'react';
 import { Tooltip } from 'react-tooltip';
-import { BotonReporte } from '../../components';
-import DesignTemplate from '../../components/design-template/DesignTemplate';
-import ModalLoading from '../../components/metricas/ModalLoading';
-import ModalUpdateIssue from '../../components/metricas/ModalUpdateIssues';
+import {
+  BotonReporte,
+  DesignTemplate,
+  ModalLoading,
+  ModalUpdateIssues,
+} from '../../components';
 import MetricasEpics from './MetricasEpics';
 import MetricasPersonales from './MetricasPersonales';
 import MetricasSprint from './MetricasSprint';
-import { format, parseISO } from 'date-fns';
-import { utcToZonedTime } from 'date-fns-tz';
 
 const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/issues`;
 
@@ -49,7 +51,7 @@ const Metricas: FC = ({}) => {
   return (
     <>
       {isModalBackOpen && (
-        <ModalUpdateIssue
+        <ModalUpdateIssues
           getLastFetch={getLastFetch}
           setIsModalOpen={setIsModalBackOpen}
           setModalLoading={setIsModalLoading}

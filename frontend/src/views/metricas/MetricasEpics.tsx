@@ -1,11 +1,8 @@
-import React, { FC, useEffect, useState } from 'react';
-import DropdownSprints from '../../components/charts/DropdownSprints';
-import SameDataComposedChart from '../../components/charts/SameDataComposedChart';
-import Piechart from '../../components/charts/Piechart';
-import StackedBarChart from '../../components/charts/StackedBarchart';
-import DropdownEpics from '../../components/charts/DropdownEpics';
 import axios from 'axios';
-import { ChartCards } from '../../components';
+import { FC, useEffect, useState } from 'react';
+import { ChartCards, DropdownEpics } from '../../components';
+import { ComposedChart, PieChart } from '../../components/charts/';
+import StackedBarChart from '../../components/charts/StackedBarchart';
 
 const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/metricas`;
 
@@ -132,10 +129,10 @@ const MetricasEpics: FC = ({}) => {
       <div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-3 justify-center gap-7 w-full h-auto md:h-[70rem]">
         <div className="md:col-span-3 flex flex-col md:flex-row gap-7">
           <ChartCards title="Story points en Done acumulados por epic">
-            <SameDataComposedChart data={chart5Data} />
+            <ComposedChart data={chart5Data} />
           </ChartCards>
           <ChartCards title="Story points en To Do acumulados por epic">
-            <SameDataComposedChart
+            <ComposedChart
               data={chart6Data}
               barColor="#8838ff"
               lineColor="#388bff"
@@ -145,7 +142,7 @@ const MetricasEpics: FC = ({}) => {
 
         <div className="md:col-span-3 flex flex-col md:flex-row gap-7">
           <ChartCards title="Story points en Done por epic">
-            <SameDataComposedChart
+            <ComposedChart
               data={chart3Data}
               barColor="#8838ff"
               lineColor="#388bff"
@@ -153,7 +150,7 @@ const MetricasEpics: FC = ({}) => {
           </ChartCards>
 
           <ChartCards title="Story points en To Do por epic">
-            <SameDataComposedChart data={chart4Data} />
+            <ComposedChart data={chart4Data} />
           </ChartCards>
         </div>
 
@@ -171,7 +168,7 @@ const MetricasEpics: FC = ({}) => {
 
         <ChartCards title="Comparación de sprints">
           {chartData && chartData.length > 0 ? (
-            <Piechart data={chartData} />
+            <PieChart data={chartData} />
           ) : (
             <p className="text-xs">
               No hay datos para graficar con el o los epic elegidos
