@@ -86,7 +86,7 @@ export default function TabsDefaultExample() {
       </Tabs>
       <div className="w-full justify-end self-end">
         <Button
-        shouldFitContainer
+          shouldFitContainer
           className="flex justify-end self-end"
           appearance="subtle-link"
           iconAfter={
@@ -96,7 +96,9 @@ export default function TabsDefaultExample() {
             />
           }
           onClick={() => navigate(`/metricas`)}
-        > </Button>
+        >
+          {' '}
+        </Button>
       </div>
     </div>
   );
