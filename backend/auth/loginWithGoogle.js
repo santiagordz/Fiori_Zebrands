@@ -3,11 +3,11 @@ const passport = require('passport');
 const router = express.Router();
 const isAuth = require('../utils/is-auth');
 
-const successRedirect = `/api/login/success`;
-const errorRedirect = `/api/login/error`;
+const successRedirect = `/login/success`;
+const errorRedirect = `/login/error`;
 
 router.get(
-  '/api/login/google',
+  '/login/google',
   passport.authenticate('google', { scope: ['email', 'profile'] })
 );
 

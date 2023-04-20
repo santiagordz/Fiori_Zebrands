@@ -8,7 +8,7 @@ import { userDataContext } from '../../contexts';
 import axios from 'axios';
 interface LoginProps {}
 
-const URI = `/api/login/google`;
+const URI = `/login/google`;
 const URI_JIRA = `/api/issues`;
 
 const SECRET_KEY_1 =

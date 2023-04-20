@@ -67,6 +67,13 @@ app.get('/api/logout', (req, res) => {
   res.redirect('/');
 });
 
+app.use(express.static(path.join(__dirname, '../frontend/dist')));
+app.get('*', (req, res) => {
+  res.sendFile(
+    path.join(__dirname, '../frontend/dist', 'index.html')
+  );
+});
+
 app.listen(8000, () => {
   console.log('Server is running on port 8000');
 });
