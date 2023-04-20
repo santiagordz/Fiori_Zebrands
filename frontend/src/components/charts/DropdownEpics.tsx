@@ -2,7 +2,7 @@ import React, { FC, useState, useEffect } from 'react';
 import Select, { StylesConfig } from 'react-select';
 import axios from 'axios';
 
-const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/epics/issues`;
+const URI = `/api/epics/issues`;
 
 interface Epics {
   key: number;

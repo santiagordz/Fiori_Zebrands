@@ -19,7 +19,7 @@ export const Panel = ({
 
 export default function TabsDefaultExample() {
   const navigate = useNavigate();
-  const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/sprintsdata`;
+  const URI = `/api/sprintsdata`;
   const { user } = useContext(userDataContext);
   const idjira = user?.id_jira;
   const [data4, setData4] = useState<any[]>([]);

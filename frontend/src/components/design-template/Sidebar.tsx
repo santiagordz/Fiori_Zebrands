@@ -10,7 +10,7 @@ import { userDataContext } from '../../contexts';
 import { categories } from '../../utils/templateData';
 import ConfirmLink from './ConfirmLink';
 
-const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/logout`;
+const URI = `/api/logout`;
 
 const buttonActiveStyles =
   'bg-[#E9F2FF] px-[2vmin] py-[0.8vmin] flex justify-start w-full items-center rounded-md gap-5';

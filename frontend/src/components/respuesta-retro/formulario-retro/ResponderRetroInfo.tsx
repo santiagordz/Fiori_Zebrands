@@ -12,7 +12,7 @@ import { questionsContext } from '../local-contexts';
 import { Recordatorios } from '../modals';
 import type { Retrospectiva } from '../../../views/mis-retrospectivas/MisRetrospectivas';
 
-const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/retrospectivas`;
+const URI = `/api/retrospectivas`;
 
 interface ReponderRetroInfoProps {
   retroPendientes: Retrospectiva[];

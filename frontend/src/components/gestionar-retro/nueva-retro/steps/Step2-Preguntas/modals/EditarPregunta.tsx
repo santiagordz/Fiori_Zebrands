@@ -16,7 +16,7 @@ import {
 } from '../../../local-contexts';
 import { tipos } from '../tiposPregunta';
 
-const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/preguntas`;
+const URI = `/api/preguntas`;
 
 const labelStyle =
   "after:content-['*'] after:text-[#ae2a19] text-xs font-semibold text-label";

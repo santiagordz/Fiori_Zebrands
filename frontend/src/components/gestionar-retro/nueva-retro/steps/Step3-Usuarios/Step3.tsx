@@ -24,9 +24,7 @@ const Step3: FC<Step3Props> = ({ stepNumber, setStepNumber }) => {
   const [etiquetas, setEtiquetas] = useState([]);
 
   const getEtiquetas = async () => {
-    const res = await axios.get(
-      `${import.meta.env.VITE_APP_BACKEND_URI}/etiquetas`
-    );
+    const res = await axios.get(`/api/etiquetas`);
     const etiquetas = res.data.map((etiqueta: any) => ({
       id: etiqueta.id,
       nombre: etiqueta.nombre,

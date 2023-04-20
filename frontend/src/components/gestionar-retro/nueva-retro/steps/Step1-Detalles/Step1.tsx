@@ -7,7 +7,7 @@ import Select from 'react-select';
 import { newRetroContext } from '../../local-contexts';
 import axios from 'axios';
 
-const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/sprints`;
+const URI = `/api/sprints`;
 
 interface Sprint {
   nombre: string;

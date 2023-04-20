@@ -8,7 +8,7 @@ import ArrowLeftIcon from '@atlaskit/icon/glyph/arrow-left';
 import Button from '@atlaskit/button';
 import { useNavigate } from 'react-router-dom';
 
-const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/retrospectivas`;
+const URI = `/api/retrospectivas`;
 
 export interface OpcionesType {
   id: number;

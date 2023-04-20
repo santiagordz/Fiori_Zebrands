@@ -14,7 +14,7 @@ import {
 import { BackMyRetros, ConfirmacionRetro } from '../modals';
 import FormStep from './FormStep';
 
-const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/respuesta/new`;
+const URI = `/api/respuesta/new`;
 const URI_COMPLETE = `${
   import.meta.env.VITE_APP_BACKEND_URI
 }/respuesta/update`;

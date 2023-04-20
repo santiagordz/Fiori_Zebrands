@@ -6,7 +6,7 @@ import StackedBarChart from '../../components/charts/StackedBarchart';
 import SameDataComposedChart from '../../components/charts/SameDataComposedChart';
 import { ChartCards } from '../../components';
 
-const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/metricas`;
+const URI = `/api/metricas`;
 
 const MetricasSprint: FC = ({}) => {
   const [sprintsSeleccionadas, setSprintsSeleccionadas] =

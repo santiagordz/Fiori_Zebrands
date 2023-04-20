@@ -12,7 +12,7 @@ import ModalUpdateIssue from '../../components/metricas/ModalUpdateIssues';
 import EmojiFrequentIcon from '@atlaskit/icon/glyph/emoji/frequent';
 import { Tooltip } from 'react-tooltip';
 
-const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/issues`;
+const URI = `/api/issues`;
 
 export const Panel = ({
   children,

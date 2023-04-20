@@ -8,7 +8,7 @@ import React, {
 import axios from 'axios';
 import type { TagColor } from '@atlaskit/tag';
 
-const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/etiquetas`;
+const URI = `/api/etiquetas`;
 
 export interface Etiqueta {
   id: number;

@@ -16,7 +16,7 @@ import {
 } from '../../../local-contexts';
 import { tiposPregunta } from '../Pregunta';
 
-const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/preguntas`;
+const URI = `/api/preguntas`;
 
 interface EliminarPreguntaProps {
   id_pregunta: number;

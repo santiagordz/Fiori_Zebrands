@@ -7,7 +7,7 @@ import StackedBarChart from '../../components/charts/StackedBarchart';
 import { userDataContext } from '../../contexts';
 import { ChartCards } from '../../components';
 
-const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/metricas`;
+const URI = `/api/metricas`;
 
 const MetricasPersonales: FC = ({}) => {
   const [sprintsSeleccionadas, setSprintsSeleccionadas] =

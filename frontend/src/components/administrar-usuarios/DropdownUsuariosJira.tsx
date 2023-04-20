@@ -1,7 +1,7 @@
 import React, { FC, useState, useEffect } from 'react';
 import axios from 'axios';
 
-const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/usuarios_jira`;
+const URI = `/api/usuarios_jira`;
 
 interface UsuarioJira {
   id_jira: string;

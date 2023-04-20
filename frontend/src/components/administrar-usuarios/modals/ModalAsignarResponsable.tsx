@@ -6,9 +6,7 @@ import { getUsersContext } from '../local-contexts';
 import { FlagContext } from '../../../contexts';
 import EditorErrorIcon from '@atlaskit/icon/glyph/editor/error';
 
-const URI = `${
-  import.meta.env.VITE_APP_BACKEND_URI
-}/usuarios/updateUserRole/`;
+const URI = `/api/usuarios/updateUserRole/`;
 
 interface Usuariotype {
   id: number;

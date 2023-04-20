@@ -8,7 +8,7 @@ import { FlagContext } from '../../../contexts';
 import DropdownColores from '../DropdownColores';
 import { getEtiquetasContext } from '../local-contexts';
 
-const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/etiquetas/`;
+const URI = `/api/etiquetas/`;
 
 interface RegistrarEtiquetaProps {
   show: boolean;

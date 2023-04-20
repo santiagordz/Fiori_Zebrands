@@ -16,7 +16,7 @@ import {
 } from '../../../local-contexts';
 import { tipos } from '../tiposPregunta';
 
-const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/preguntas`;
+const URI = `/api/preguntas`;
 
 interface NuevaPreguntaProps {
   setIsNewQuestionOpen: (value: boolean) => void;

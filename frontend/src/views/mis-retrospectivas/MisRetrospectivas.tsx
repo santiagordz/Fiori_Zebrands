@@ -10,7 +10,7 @@ import {
 } from '../../components';
 import { userDataContext } from '../../contexts';
 
-const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/retrospectivas`;
+const URI = `/api/retrospectivas`;
 
 export interface Retrospectiva {
   id: number;

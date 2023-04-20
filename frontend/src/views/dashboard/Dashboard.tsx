@@ -9,7 +9,7 @@ import axios from 'axios';
 import Button from '@atlaskit/button';
 import CarouselDash from './CarouselDash';
 
-const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/retrospectivas`;
+const URI = `/api/retrospectivas`;
 
 interface DashboardProps {
   // retroPendientes: Retrospectiva[];

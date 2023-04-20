@@ -7,7 +7,7 @@ import DropdownEpics from '../../components/charts/DropdownEpics';
 import axios from 'axios';
 import { ChartCards } from '../../components';
 
-const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/metricas`;
+const URI = `/api/metricas`;
 
 const MetricasEpics: FC = ({}) => {
   const [epicsSeleccionadas, setEpicsSeleccionadas] = useState<any>({

@@ -10,7 +10,7 @@ import { motion } from 'framer-motion';
 import { FC, useContext, useEffect } from 'react';
 import { FlagContext } from '../../../contexts';
 
-const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/retrospectivas`;
+const URI = `/api/retrospectivas`;
 
 interface EndRetroProps {
   setIsEndModalOpen: (isOpen: boolean) => void;

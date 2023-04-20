@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Select from 'react-select';
 
-const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/sprints`;
+const URI = `/api/sprints`;
 
 interface Sprint {
   id_jira: number;

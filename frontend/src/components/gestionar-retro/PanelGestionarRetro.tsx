@@ -4,7 +4,7 @@ import type { Retrospectiva } from '../../views/mis-retrospectivas/MisRetrospect
 import Spinner from '../design-template/spinner/Spinner';
 import RetrospectivaThumb from './reusable/RetrospectivaThumb';
 
-const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/retrospectivas`;
+const URI = `/api/retrospectivas`;
 
 interface PanelGestionarRetroProps {}
 
