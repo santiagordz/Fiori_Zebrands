@@ -28,9 +28,7 @@ export default function TabsDefaultExample() {
   const getLastSprintsToDoStorypoints = async () => {
     try {
       const response = await axios.get(
-        `${
-          import.meta.env.VITE_APP_BACKEND_URI
-        }/sprintsdata/lastsprintstodostorypoints/${idjira}`
+        `/api/sprintsdata/lastsprintstodostorypoints/${idjira}`
       );
       const data = response.data.issues[0];
       setData4(data);
