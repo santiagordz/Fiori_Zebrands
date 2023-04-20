@@ -10,7 +10,7 @@ import {
 import { FC } from 'react';
 
 function CustomTooltip({ payload, label, active }: any) {
-  if (active && payload.length > 0 && label) {
+  if (payload && payload.length > 0 && label !== undefined) {
     return (
       <div className="bg-white p-2 text-xs border-2 rounded">
         <p className="label">{`Opción: ${label.toUpperCase()}`}</p>
