@@ -29,6 +29,7 @@ const MetricasEpics: FC = ({}) => {
     if (epicsSeleccionadas === null) {
       setChartData([]);
       setChart2Data([]);
+      return;
     }
 
     const response = await fetch(
