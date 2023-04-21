@@ -28,7 +28,6 @@
     "@atlaskit/textfield": "^5.3.6",
     "@atlaskit/theme": "^12.4.0",
     "@atlaskit/toggle": "^12.5.8",
-    "@atlaskit/tokens": "^1.2.15",
     "@coreui/react": "^4.7.0",
     "@emailjs/browser": "^3.11.0",
     "@react-pdf/renderer": "^3.1.9",

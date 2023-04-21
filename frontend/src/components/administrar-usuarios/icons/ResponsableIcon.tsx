@@ -1,6 +1,4 @@
 import AppAccessIcon from '@atlaskit/icon/glyph/app-access';
-import { B200, B300, N200, N500, Y300 } from '@atlaskit/theme/colors';
-import { token } from '@atlaskit/tokens';
 import React, { FC, useEffect, useState } from 'react';
 import { Tooltip } from 'react-tooltip';
 import { ModalAsignarResponsable } from '../modals';
@@ -39,18 +37,18 @@ const ResponsableIcon: FC<ResponsableIconProps> = ({ usuario }) => {
     setColorHover(true);
   };
 
-  const iconColor = () => {
+  const iconColor = (): string => {
     if (rolActual === 3) {
       if (clicked) {
-        return color ? N500 : B300;
+        return color ? '#42526e' : '#0065ff';
       } else {
-        return colorHover ? N500 : N200;
+        return colorHover ? '#42526e' : '#6b778c';
       }
     } else {
       if (clicked) {
-        return color ? B300 : B300;
+        return '#0065ff';
       } else {
-        return colorHover ? B300 : B200;
+        return colorHover ? '#0065ff' : '#2684ff';
       }
     }
   };
@@ -67,7 +65,7 @@ const ResponsableIcon: FC<ResponsableIconProps> = ({ usuario }) => {
           <button disabled className="cursor-not-allowed">
             <AppAccessIcon
               label="responsable"
-              primaryColor={token('color.icon.brand', Y300)}
+              primaryColor="#ffab00"
             />
           </button>
         </a>
@@ -84,7 +82,7 @@ const ResponsableIcon: FC<ResponsableIconProps> = ({ usuario }) => {
         >
           <AppAccessIcon
             label="responsable"
-            primaryColor={token('color.icon.brand', iconColor())}
+            primaryColor={iconColor()}
           />
         </button>
         <ModalAsignarResponsable
@@ -105,7 +103,7 @@ const ResponsableIcon: FC<ResponsableIconProps> = ({ usuario }) => {
         >
           <AppAccessIcon
             label="responsable"
-            primaryColor={token('color.icon.brand', iconColor())}
+            primaryColor={iconColor()}
           />
         </button>
         <ModalAsignarResponsable

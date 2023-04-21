@@ -1,8 +1,5 @@
-import React, { FC, useState } from 'react';
-import axios from 'axios';
-import { token } from '@atlaskit/tokens';
-import { N500, Y300 } from '@atlaskit/theme/colors';
 import EditFilledIcon from '@atlaskit/icon/glyph/edit-filled';
+import React, { FC, useState } from 'react';
 import ModalEditarUsuarios from '../modals/ModalEditarUsuarios';
 
 const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/usuarios/`;
@@ -36,10 +33,7 @@ const EditarIcon: FC<EditarIconProps> = ({ id }) => {
       >
         <EditFilledIcon
           label="Edit Icon"
-          primaryColor={token(
-            'color.icon.brand',
-            color ? N500 : Y300
-          )}
+          primaryColor={color ? '#42526e' : '#ffab00'}
         />
       </button>
       <ModalEditarUsuarios
