@@ -11,16 +11,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-const corsOptions = {
-  origin:
-    process.env.NODE_ENV === 'production'
-      ? 'https://3.129.92.250.com'
-      : 'http://localhost:3000',
-  credentials: true,
-};
-
-app.use(cors(corsOptions));
-
+app.use(cors({ origin: process.env.FRONTED_URI, credentials: true }));
 app.use(express.json());
 
 app.use(
