@@ -13,12 +13,7 @@ import { BotonReporte } from '../../components';
 
 const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/retrospectivas`;
 
-interface DashboardProps {
-  retroPendientes: Retrospectiva[];
-  getRetrospectivas: () => void;
-}
-
-const Dashboard: FC<DashboardProps> = ({}) => {
+const Dashboard: FC = ({}) => {
   const { user } = useContext(userDataContext);
   const navigate = useNavigate();
   const { retroId } = useParams();
