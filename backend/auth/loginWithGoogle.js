@@ -3,8 +3,10 @@ const passport = require('passport');
 const router = express.Router();
 const isAuth = require('../utils/is-auth');
 
-const successRedirect = 'http://localhost:3000/login/success';
-const errorRedirect = 'http://localhost:3000/login/error';
+const successRedirect =
+  'https://64421eb7861fcf0008e65400--resplendent-malasada-159c7c.netlify.app/login/success';
+const errorRedirect =
+  'https://64421eb7861fcf0008e65400--resplendent-malasada-159c7c.netlify.app/login/error';
 
 router.get(
   '/login/google',
