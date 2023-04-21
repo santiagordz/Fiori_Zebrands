@@ -11,7 +11,14 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use(cors());
+const corsOptions = {
+  origin:
+    'https://6442249c84026b138769dd1b--resplendent-malasada-159c7c.netlify.app/',
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
+
 app.use(express.json());
 
 app.use(
