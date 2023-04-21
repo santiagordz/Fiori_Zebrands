@@ -11,7 +11,9 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use(cors({ origin: process.env.FRONTED_URI, credentials: true }));
+app.use(
+  cors({ origin: 'http://padawan-2.laing.mx', credentials: true })
+);
 app.use(express.json());
 
 app.use(
