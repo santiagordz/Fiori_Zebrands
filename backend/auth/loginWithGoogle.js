@@ -19,7 +19,9 @@ router.get(
     passport.authenticate('google', (err, user, info) => {
       if (err) {
         req.session.error = 'Failed to authenticate with Google';
-        return res.redirect(errorRedirect);
+        return res.redirect(
+          'https://64421eb7861fcf0008e65400--resplendent-malasada-159c7c.netlify.app/login/error'
+        );
       }
       if (!user) {
         if (info.message === 'User not registered') {
@@ -42,7 +44,9 @@ router.get(
         if (err) {
           return next(err);
         }
-        return res.redirect(successRedirect);
+        return res.redirect(
+          'https://64421eb7861fcf0008e65400--resplendent-malasada-159c7c.netlify.app/login/success'
+        );
       });
     })(req, res, next);
   },
