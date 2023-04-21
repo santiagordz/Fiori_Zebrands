@@ -17,6 +17,7 @@ const SECRET_KEY_2 =
   import.meta.env.VITE_APP_COOKIE_KEY_2 || 'secret2';
 
 const Login: FC<LoginProps> = ({}) => {
+  console.log(import.meta.env.VITE_APP_BACKEND_URI);
   const navigate = useNavigate();
   const { user, getUser, setSessionExpired } =
     useContext(userDataContext);
