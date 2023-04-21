@@ -4,3 +4,17 @@ instance_class: F1
 
 env_variables:
   PORT: 8080
+  GOOGLE_CLIENT_ID: '548335767629-s26a5u2tdq7ntp729f751vbi06pcas3h.apps.googleusercontent.com'
+  GOOGLE_CLIENT_SECRET: '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'
+  COOKIE_KEY_1: 'c76134edac99cbd81760480110fab01eaceea7c5acc04d89fda4abdc45669074'
+  COOKIE_KEY_2: '72420dbae117e552589649c4a88d5703004f94d92f4624378a640a0b7e3bb78a'
+
+  JIRA_USERNAME_ZEB: 'bernardo.laing@zeb.mx'
+  JIRA_PASSWORD_ZEB: 'ATATT3xFfGF0ajNtk3c4WEi8lLhzWwOASnvewwD4I8zCx4FIP_PS3E3Hqchs3vK5-ZpVm9dj_DfDfJ6AWfIuBgcOV5ns6qv51NMBGvhZLdGR-3diR3Uf9RGQ1IgckQCbTFWkIZfCEPOBRA6WMTFa3eW7UR7rcKdZuJpkEjMxkafuU8fsh7IE8Gw=E463E487'
+
+  DB_HOST: 'retrozeb.c60vpj8okttb.us-east-2.rds.amazonaws.com'
+  DB_USER: 'admin'
+  DB_PASSWORD: 'pa3uL02qqgfsNlx5toCx'
+  DB_NAME: 'fiori'
+  DB_PORT: '8898'
+  URI_BACK: 'https://20230420t224707-dot-retrozeb-384403.wl.r.appspot.com'
