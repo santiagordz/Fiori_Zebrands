@@ -3,8 +3,7 @@ const GoogleStrategy = require('passport-google-oauth2').Strategy;
 
 const Usuario = require('../models/usuarios.model');
 
-const backendUrl =
-  process.env.VITE_APP_BACKEND_URI || 'http://localhost:8000';
+const backendUrl = process.env.URI_BACK || 'http://localhost:8000';
 
 const GOOGLE_CALLBACK_URI = `${backendUrl}/auth/google/callback`;
 
