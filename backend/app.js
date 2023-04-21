@@ -12,8 +12,19 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use(
-  cors({ origin: 'http://padawan-2.laing.mx', credentials: true })
+  cors({
+    origin: 'http://padawan-2.laing.mx',
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: [
+      'Content-Type',
+      'Authorization',
+      'X-Requested-With',
+      'Accept',
+    ],
+  })
 );
+
 app.use(express.json());
 
 app.use(
