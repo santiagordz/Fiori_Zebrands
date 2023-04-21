@@ -3,8 +3,8 @@ const passport = require('passport');
 const router = express.Router();
 const isAuth = require('../utils/is-auth');
 
-const successRedirect = `${process.env.FRONTED_URI}/login/success`;
-const errorRedirect = `${process.env.FRONTED_URI}/login/error`;
+const successRedirect = 'http://padawan-2.laing.mx/login/success';
+const errorRedirect = 'http://padawan-2.laing.mx/login/error';
 
 router.get(
   '/login/google',
