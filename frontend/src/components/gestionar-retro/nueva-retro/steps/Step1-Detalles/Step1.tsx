@@ -2,21 +2,16 @@ import Button from '@atlaskit/button';
 import { ErrorMessage, HelperMessage } from '@atlaskit/form';
 import ArrowRightIcon from '@atlaskit/icon/glyph/arrow-right';
 import TextArea from '@atlaskit/textarea';
-import React, { FC, useContext, useState } from 'react';
+import axios from 'axios';
+import React, { FC, useContext, useState, useEffect } from 'react';
 import Select from 'react-select';
 import { newRetroContext } from '../../local-contexts';
-import axios from 'axios';
 
 const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/sprints`;
 
 interface Sprint {
   nombre: string;
 }
-
-const response = await axios.get(URI);
-const options = response.data.map((sprint: Sprint) => ({
-  label: sprint.nombre,
-}));
 
 const maxCaracteres = 250;
 
@@ -27,11 +22,20 @@ interface Step1Props {
 
 const Step1: FC<Step1Props> = ({ setStepNumber, stepNumber }) => {
   const { newRetro, setNewRetro } = useContext(newRetroContext);
+  const [options, setOptions] = useState<Sprint[]>([]);
   const [descripcion, setDescripcion] = useState<string>('');
   const [isDateSelected, setIsDateSelected] =
     useState<boolean>(false);
   const [showMaxDescriptionWarning, setShowMaxDescriptionWarning] =
     useState<boolean>(false);
+
+  const getSprints = async () => {
+    const response = await axios.get(URI);
+    const options = response.data.map((sprint: Sprint) => ({
+      label: sprint.nombre,
+    }));
+    setOptions(options);
+  };
 
   const handleDescripcionChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
@@ -67,6 +71,10 @@ const Step1: FC<Step1Props> = ({ setStepNumber, stepNumber }) => {
       color: '#979caa',
     }),
   };
+
+  useEffect(() => {
+    getSprints();
+  }, []);
 
   return (
     <>
