@@ -14,8 +14,8 @@ import { BotonReporte } from '../../components';
 const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/retrospectivas`;
 
 interface DashboardProps {
-  retroPendientes: Retrospectiva[];
-  getRetrospectivas: () => void;
+  // retroPendientes: Retrospectiva[];
+  // getRetrospectivas: () => void;
 }
 
 const Dashboard: FC<DashboardProps> = ({}) => {
