@@ -4,7 +4,6 @@ const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const Usuario = require('../models/usuarios.model');
 
 const backendUrl =
-  process.env.URI_BACK ||
   'https://20230420t224707-dot-retrozeb-384403.wl.r.appspot.com';
 
 const GOOGLE_CALLBACK_URI = `${backendUrl}/auth/google/callback`;
