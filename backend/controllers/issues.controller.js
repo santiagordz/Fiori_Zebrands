@@ -30,9 +30,11 @@ exports.fetchIssuesJiraUpdated = async (req, res, next) => {
 };
 
 exports.postIssuesJira = async (req, res, next) => {
-  axios.post('http://localhost:8000/usuarios_jira');
-  axios.post('http://localhost:8000/epics');
-  axios.post('http://localhost:8000/sprints');
+  axios.post(
+    'https://retrozeb-384403.wl.r.appspot.com/usuarios_jira'
+  );
+  axios.post('https://retrozeb-384403.wl.r.appspot.com/epics');
+  axios.post('https://retrozeb-384403.wl.r.appspot.com/sprints');
 
   let issuesDB = await issuesModel.getIssues();
   let countIssuesDB = await issuesModel.countIssues();

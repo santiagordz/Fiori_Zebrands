@@ -7,7 +7,7 @@ import Select from 'react-select';
 import { newRetroContext } from '../../local-contexts';
 import axios from 'axios';
 
-const URI = "http://localhost:8000/sprints"
+const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/sprints`;
 
 interface Sprint {
   nombre: string;
@@ -15,7 +15,8 @@ interface Sprint {
 
 const response = await axios.get(URI);
 const options = response.data.map((sprint: Sprint) => ({
-  label: sprint.nombre}))
+  label: sprint.nombre,
+}));
 
 const maxCaracteres = 250;
 
@@ -88,7 +89,7 @@ const Step1: FC<Step1Props> = ({ setStepNumber, stepNumber }) => {
             <Select
               styles={selectStyles}
               className="text-xs"
-              options= {options}
+              options={options}
               onChange={handleTituloChange}
               placeholder="Selecciona un sprint"
             />
