@@ -56,7 +56,7 @@ function App() {
               }
             />
             {renderConditionalRoutes()}
-            <Route path="/*" element={<NotFound404 />} />
+            <Route path="/*" element={<Main />} />
             <Route path="/404" element={<NotFound404 />} />
             <Route path="/401" element={<Unauthorized401 />} />
           </Routes>

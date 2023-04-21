@@ -31,10 +31,14 @@ exports.fetchIssuesJiraUpdated = async (req, res, next) => {
 
 exports.postIssuesJira = async (req, res, next) => {
   axios.post(
-    'https://retrozeb-384403.wl.r.appspot.com/usuarios_jira'
+    'https://20230420t224707-dot-retrozeb-384403.wl.r.appspot.com/usuarios_jira'
   );
-  axios.post('https://retrozeb-384403.wl.r.appspot.com/epics');
-  axios.post('https://retrozeb-384403.wl.r.appspot.com/sprints');
+  axios.post(
+    'https://20230420t224707-dot-retrozeb-384403.wl.r.appspot.com/epics'
+  );
+  axios.post(
+    'https://20230420t224707-dot-retrozeb-384403.wl.r.appspot.com/sprints'
+  );
 
   let issuesDB = await issuesModel.getIssues();
   let countIssuesDB = await issuesModel.countIssues();
