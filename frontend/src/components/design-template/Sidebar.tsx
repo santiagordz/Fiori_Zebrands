@@ -69,11 +69,6 @@ const Sidebar = ({}) => {
     collapsed: { opacity: 0, display: 'none' },
   };
 
-  const logoVariants = {
-    hovered: { width: '30%' },
-    collapsed: { width: '70%' },
-  };
-
   return (
     <>
       <motion.div
@@ -164,11 +159,10 @@ const Sidebar = ({}) => {
           </button>
         </div>
 
-        <motion.img
+        <img
           src={zebrandsLogo}
           alt="zebrands"
-          variants={logoVariants}
-          className="mt-8 opacity-60"
+          className="w-16 mt-8 opacity-60"
         />
       </motion.div>
     </>

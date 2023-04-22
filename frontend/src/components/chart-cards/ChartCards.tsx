@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, memo } from 'react';
 
 interface ChartCardsProps {
   children: React.ReactNode;
@@ -28,4 +28,4 @@ const ChartCards: FC<ChartCardsProps> = ({
   );
 };
 
-export default ChartCards;
+export default memo(ChartCards);

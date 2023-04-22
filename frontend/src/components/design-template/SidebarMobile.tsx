@@ -3,7 +3,7 @@ import SignOutIcon from '@atlaskit/icon/glyph/sign-out';
 import axios from 'axios';
 import { motion } from 'framer-motion';
 import Cookies from 'js-cookie';
-import { useContext } from 'react';
+import { useContext, memo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import zebrandsLogo from '../../assets/zebrandsLogo.svg';
 import { userDataContext } from '../../contexts';
@@ -23,10 +23,13 @@ const textActiveStyles = `${textStyle} text-selectBold`;
 
 interface SidebarProps {
   isSidebarOpen: boolean;
-  handleMenu : () => void;
+  handleMenu: () => void;
 }
 
-const Sidebar : React.FC<SidebarProps> = ({isSidebarOpen, handleMenu}) => {
+const Sidebar: React.FC<SidebarProps> = ({
+  isSidebarOpen,
+  handleMenu,
+}) => {
   const { user, setUser } = useContext(userDataContext);
   const navigate = useNavigate();
   const idRol = user?.id_rol || -1;
@@ -75,11 +78,6 @@ const Sidebar : React.FC<SidebarProps> = ({isSidebarOpen, handleMenu}) => {
     mobileOff: { opacity: 0, display: 'none' },
   };
 
-  const logoVariants = {
-    mobile: { width: '40%' },
-    mobileOff: { width: '70%' },
-  };
-
   return (
     <>
       <motion.div
@@ -94,7 +92,7 @@ const Sidebar : React.FC<SidebarProps> = ({isSidebarOpen, handleMenu}) => {
           <button onClick={handleMenu}>
             <CrossIcon label="close" size="medium" />
           </button>
-          <div className="flex items-center justify-center gap-3 border-gray-100 border-solid border-2 bg-white rounded-full  w-full">
+          <div className="flex items-center py-1 px-6 justify-center gap-3 border-gray-100 border-solid border-2 bg-white rounded-full  w-full">
             <Avatar
               src={(user?.foto as string) || undefined}
               appearance="circle"
@@ -170,11 +168,10 @@ const Sidebar : React.FC<SidebarProps> = ({isSidebarOpen, handleMenu}) => {
           </div>
         </div>
 
-        <motion.img
+        <img
           src={zebrandsLogo}
           alt="zebrands"
-          variants={logoVariants}
-          className="mt-8 opacity-60"
+          className="w-24 mt-8 opacity-60"
         />
       </motion.div>
     </>

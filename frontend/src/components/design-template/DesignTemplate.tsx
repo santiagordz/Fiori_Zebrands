@@ -1,5 +1,11 @@
 import type { GlyphProps } from '@atlaskit/icon/types';
-import React, { FC, useContext, useEffect, useState } from 'react';
+import React, {
+  FC,
+  useContext,
+  useEffect,
+  useState,
+  memo,
+} from 'react';
 import { useLocation } from 'react-router-dom';
 import { userDataContext } from '../../contexts';
 import Sidebar from './Sidebar';
@@ -85,4 +91,4 @@ const DesignTemplate: FC<DesignTemplateProps> = ({
   );
 };
 
-export default DesignTemplate;
+export default memo(DesignTemplate);

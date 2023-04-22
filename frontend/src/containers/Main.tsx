@@ -31,10 +31,17 @@ const Main = () => {
   const adminAllowed = idRol === 1 || false;
   const responsableAllowed = idRol === 2 || false;
 
+  if (!user && !sessionExpired && !hasAttemptedFetch) {
+    return <Navigate to={'/login'} replace />;
+  }
+
   if (!hasAttemptedFetch && !sessionExpired) {
     return (
       <div className="w-screen h-screen">
-        <Spinner message="Cargando, por favor espera un momento mientras preparamos todo para ti..." />
+        <Spinner
+          message="Cargando, por favor espera un momento mientras preparamos todo para ti..."
+          height="70%"
+        />
       </div>
     );
   }

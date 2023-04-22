@@ -7,28 +7,16 @@ import {
   Text,
   View,
 } from '@react-pdf/renderer';
-import { FC, useState, useEffect } from 'react';
+import { FC, useState, useEffect, memo } from 'react';
 import { format, utcToZonedTime } from 'date-fns-tz';
 import type { chartArrayType } from './ModalReporte';
+import Inter from '@/assets/fonts/Inter.ttf';
 
 Font.register({
   family: 'Inter',
   fonts: [
     {
-      src: 'http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfMZhrib2Bg-4.ttf',
-      fontWeight: 400,
-    },
-    {
-      src: 'http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuI6fMZhrib2Bg-4.ttf',
-      fontWeight: 500,
-    },
-    {
-      src: 'http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuGKYMZhrib2Bg-4.ttf',
-      fontWeight: 700,
-    },
-    {
-      src: 'http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuFuYMZhrib2Bg-4.ttf',
-      fontWeight: 800,
+      src: Inter,
     },
   ],
 });
@@ -343,4 +331,4 @@ const Reporte: FC<ReporteProps> = ({
   );
 };
 
-export default Reporte;
+export default memo(Reporte);
