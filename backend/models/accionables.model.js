@@ -22,11 +22,11 @@ module.exports = class Accionable {
     );
   }
 
-  static getAccionablestaByUserId(id_usuario) {
+  static getAccionablesByUserId(id_usuario) {
     console.log("id_usuario en model:", id_usuario);
     return db.execute(
       `
-        SELECT * FROM accionables
+        SELECT fecha, accionable FROM accionables
         WHERE id_usuario = ?
       `,
       [id_usuario]

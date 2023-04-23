@@ -8,13 +8,13 @@ const getAccionablesByUserId = (req, res) => {
       res.json(rows);
     })
     .catch((err) => console.log(err));
+  console.log(rows);
 };
 
 const createAccionable = (req, res) => {
   console.log("Recibiendo accionable:", req.body);
   const { id_usuario, accionable, fecha } = req.body;
 
-  // Cambiar el formato de la fecha a 'YYYY-MM-DD'
   const [dia, mes, anio] = fecha.split("/");
   const fechaFormatoMySQL = `${anio}-${mes.padStart(2, "0")}-${dia.padStart(
     2,
