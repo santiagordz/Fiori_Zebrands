@@ -22,6 +22,8 @@ const MetricasPersonales: FC = ({}) => {
   const { user } = useContext(userDataContext);
   const idjira = user?.id_jira;
 
+  const nombre = user?.nombre.split(' ')[0];
+
   const [data, setData] = useState<any[]>([]);
   const [data2, setData2] = useState<any[]>([]);
   const [data3, setData3] = useState<any[]>([]);
@@ -195,9 +197,18 @@ const MetricasPersonales: FC = ({}) => {
         </h2>
         <div className="flex flex-col items-baseline gap-1 w-full">
           <p className="font-semibold text-xs text-label">Sprints</p>
-          <DropdownSprints
-            onSprintsSeleccionadasChange={handleSprintSeleccionados}
-          />
+          {data5 && data5.length > 0 ? (
+            <DropdownSprints
+              onSprintsSeleccionadasChange={handleSprintSeleccionados}
+            />
+          ) : (
+            <p className="text-xs">
+              {nombre}, parece que no tienes issues asignados a
+              sprints, aún así puedes ver el estado de los story
+              points de tus issues, solo no podrás filtrarlos por
+              sprint.
+            </p>
+          )}
         </div>
       </div>
 
@@ -213,8 +224,8 @@ const MetricasPersonales: FC = ({}) => {
               />
             ) : (
               <p className="text-xs">
-                {user?.nombre}, parece que no tienes issues asignados
-                a sprints, aún así puedes ver el estado de los story
+                {nombre}, parece que no tienes issues asignados a
+                sprints, aún así puedes ver el estado de los story
                 points de tus issues.
               </p>
             )}
@@ -224,8 +235,8 @@ const MetricasPersonales: FC = ({}) => {
               <ComposedChart data={data6} />
             ) : (
               <p className="text-xs">
-                {user?.nombre}, parece que no tienes issues asignados
-                a sprints, aún así puedes ver el estado de los story
+                {nombre}, parece que no tienes issues asignados a
+                sprints, aún así puedes ver el estado de los story
                 points de tus issues.
               </p>
             )}
@@ -237,8 +248,8 @@ const MetricasPersonales: FC = ({}) => {
               <ComposedChart data={data4} />
             ) : (
               <p className="text-xs">
-                {user?.nombre}, parece que no tienes issues asignados
-                a sprints, aún así puedes ver el estado de los story
+                {nombre}, parece que no tienes issues asignados a
+                sprints, aún así puedes ver el estado de los story
                 points de tus issues.
               </p>
             )}
@@ -252,8 +263,8 @@ const MetricasPersonales: FC = ({}) => {
               />
             ) : (
               <p className="text-xs">
-                {user?.nombre}, parece que no tienes issues asignados
-                a sprints, aún así puedes ver el estado de los story
+                {nombre}, parece que no tienes issues asignados a
+                sprints, aún así puedes ver el estado de los story
                 points de tus issues.
               </p>
             )}
