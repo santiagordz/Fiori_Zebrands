@@ -30,9 +30,9 @@ exports.fetchIssuesJiraUpdated = async (req, res, next) => {
 };
 
 exports.postIssuesJira = async (req, res, next) => {
-  axios.post('http://localhost:8000/usuarios_jira');
-  axios.post('http://localhost:8000/epics');
-  axios.post('http://localhost:8000/sprints');
+  axios.post(`${process.env.BACKEND_URI}/usuarios_jira`);
+  axios.post(`${process.env.BACKEND_URI}/epics`);
+  axios.post(`${process.env.BACKEND_URI}/sprints`);
 
   let issuesDB = await issuesModel.getIssues();
   let countIssuesDB = await issuesModel.countIssues();

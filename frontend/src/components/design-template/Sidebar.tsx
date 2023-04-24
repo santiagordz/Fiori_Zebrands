@@ -3,7 +3,7 @@ import SignOutIcon from '@atlaskit/icon/glyph/sign-out';
 import axios from 'axios';
 import { motion } from 'framer-motion';
 import Cookies from 'js-cookie';
-import { useContext } from 'react';
+import { useContext, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import zebrandsLogo from '../../assets/zebrandsLogo.svg';
 import { userDataContext } from '../../contexts';
@@ -29,6 +29,11 @@ const Sidebar = ({}) => {
   const pColor = '#44546F';
   const sColor = '#0C66E4';
   const iconSize = 'medium';
+
+  const getUserPhoto = useMemo(() => {
+    return user?.foto || undefined;
+  }, [user]);
+
   const onProtectedRoute = (path: string) => {
     const protectedRoutes = [
       '/mis-retrospectivas/responder/:id/preguntas/',
@@ -82,7 +87,7 @@ const Sidebar = ({}) => {
         <div className="flex flex-col justify-between h-full">
           <div className="flex items-center justify-center gap-3 border-gray-100 border-solid border-2 bg-white rounded-full py-[0.2vmin] w-full">
             <Avatar
-              src={(user?.foto as string) || undefined}
+              src={getUserPhoto}
               appearance="circle"
               name={name}
             />
