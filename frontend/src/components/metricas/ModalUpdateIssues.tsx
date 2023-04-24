@@ -33,7 +33,7 @@ const ModalUpdateIssue: FC<ModalUpdateIssuesProps> = ({
 
   const postIssues = async () => {
     try {
-      axios.post(URI).then(() => {
+      axios.post(`${URI}/post`).then(() => {
         setIsModalOpen(false);
         addFlag(
           `¡Excelente! Todos los datos de Jira se actualizaron correctamente.`,
