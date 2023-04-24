@@ -6,6 +6,7 @@ import { FC, useEffect, useState, useContext } from 'react';
 import './css/etiquetasTable.css';
 import { BorrarEtiquetaIcon, EditarEtiquetaIcon } from './icons';
 import { getEtiquetasContext } from './local-contexts';
+import Spinner from '../design-template/spinner/Spinner';
 
 interface EtiquetasTableProps {}
 
@@ -110,7 +111,9 @@ const EtiquetasTable: FC<EtiquetasTableProps> = ({}) => {
   return (
     <div className="bg-white rounded-sm w-full px-12 py-6">
       <DynamicTable
-        emptyView={<div>No hay etiquetas para mostrar</div>}
+        emptyView={
+          <Spinner message="Cargando etiquetas..." gap={6}></Spinner>
+        }
         head={tableHead}
         rows={tableRows}
       />
