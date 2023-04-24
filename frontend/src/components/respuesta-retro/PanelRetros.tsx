@@ -28,7 +28,12 @@ const PanelRetros: FC<PanelRetrosProps> = ({
 }) => {
   useEffect(() => {
     getRetrospectivas();
-  }, []);
+  }, [
+    retroPendientes,
+    retrosCompletadas,
+    otrasRetros,
+    retrosFinalizadas,
+  ]);
 
   if (!tryFetch)
     return <Spinner message="Cargando retrospectivas..." gap={6} />;
