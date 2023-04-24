@@ -37,7 +37,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get('/api/', (req, res, next) => {
+app.get('/api', (req, res, next) => {
   res.json({ message: 'Fiori' });
 });
 
@@ -46,7 +46,7 @@ app.use(authRoutes);
 app.use((err, req, res, next) => {
   if (err.message === 'UserNotFound') {
     req.session.destroy();
-    res.redirect('/api/');
+    res.redirect('/api');
   } else {
     next(err);
   }
@@ -86,7 +86,7 @@ app.use('/api/preguntas', preguntaRoutes);
 app.get('/api/logout', (req, res) => {
   req.logout();
   res.clearCookie('connect.sid');
-  res.redirect('/api/');
+  res.redirect('/api');
 });
 
 app.listen(8000, () => {
