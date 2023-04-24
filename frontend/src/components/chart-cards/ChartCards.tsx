@@ -16,7 +16,7 @@ const ChartCards: FC<ChartCardsProps> = ({
   return (
     <div
       className={`flex flex-col gap-6 p-7 w-full ${
-        height || 'h-full'
+        height || 'lg:h-full h-[25rem]'
       } ${bgColor || 'bg-white'} rounded border border-gray-200`}
     >
       {title && (

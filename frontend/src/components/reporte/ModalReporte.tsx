@@ -205,7 +205,7 @@ const ModalReporte: FC<ModalReporteProps> = ({ setIsOpen }) => {
                 <CrossIcon label="cerrar modal" size="small" />
               </div>
             </div>
-            <div className="w-full h-0 lg:h-full overflow-hidden border-[0.7rem] border-slate-300 rounded lg:visible invisible">
+            <div className="w-full h-0 lg:h-full overflow-hidden lg:border-[0.7rem] border-0 border-slate-300 rounded">
               {canvasSprints.length > 0 && canvasEpics.length > 0 ? (
                 <PDFViewer width="100%" height="100%">
                   <Reporte

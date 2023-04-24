@@ -18,7 +18,7 @@ const ModalLoading: FC = ({}) => {
           animate={{ opacity: 1 }}
           className="flex flex-col w-full h-full items-center justify-center opacity-0"
         >
-          <div className="flex flex-col bg-white rounded p-10 items-center justify-center drop-shadow-lg w-[30vw] h-[30vh]">
+          <div className="flex flex-col bg-white rounded p-10 items-center justify-center drop-shadow-lg w-[90vw] lg:w-[30vw] h-[30vh]">
             <Spinner
               height="80%"
               message="Actualizando los datos de Jira, espera por favor..."

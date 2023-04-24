@@ -88,7 +88,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         variants={sidebarVariants}
         className={`overflow-hidden whitespace-nowrap flex flex-col bg-white h-[100vh] items-center drop-shadow py-16 fixed left-0 top-0 z-50`}
       >
-        <div className="flex flex-col gap-12  h-full">
+        <div className="flex flex-col gap-y-12 w-[75%] h-full">
           <button onClick={handleMenu}>
             <CrossIcon label="close" size="medium" />
           </button>
@@ -109,7 +109,7 @@ const Sidebar: React.FC<SidebarProps> = ({
             </motion.p>
           </div>
 
-          <div className="flex flex-col justify-center items-center gap-24 w-full pt-10">
+          <div className="flex flex-col justify-center items-center gap-20 w-full pt-auto">
             {categories.slice(0, 3).map((category, i) => {
               const Icon = category.icon;
               const isActive = location.pathname.includes(
@@ -151,28 +151,26 @@ const Sidebar: React.FC<SidebarProps> = ({
                 </ConfirmLink>
               ) : null;
             })}
-            <button
-              className={`justify-center`}
-              onClick={handleLogout}
-            >
-              <SignOutIcon
-                label="cerrar sesión"
-                primaryColor={pColor}
-                size={'medium'}
-              />
-              <motion.p
-                className="link font-medium text-[0.85rem]"
-                variants={linksVariants}
-              ></motion.p>
-            </button>
           </div>
         </div>
-
-        <img
-          src={zebrandsLogo}
-          alt="zebrands"
-          className="w-24 mt-8 opacity-60"
-        />
+        <div className='py-12 grid grid-cols-1 gap-6'>
+          <button className={`justify-center`} onClick={handleLogout}>
+            <SignOutIcon
+              label="cerrar sesión"
+              primaryColor={pColor}
+              size={'medium'}
+            />
+            <motion.p
+              className="link font-medium text-[0.85rem]"
+              variants={linksVariants}
+            ></motion.p>
+          </button>
+          <img
+            src={zebrandsLogo}
+            alt="zebrands"
+            className="w-24 mt-8 opacity-60"
+          />
+        </div>
       </motion.div>
     </>
   );
