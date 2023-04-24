@@ -7,6 +7,7 @@ import Resultados from './Resultados';
 import ArrowLeftIcon from '@atlaskit/icon/glyph/arrow-left';
 import Button from '@atlaskit/button';
 import { useNavigate } from 'react-router-dom';
+import Spinner from '../design-template/spinner/Spinner';
 
 const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/retrospectivas`;
 
@@ -39,7 +40,7 @@ interface DetailedRetrospectiva extends Retrospectiva {
 const Respuestas: FC = ({}) => {
   const { retroId } = useParams();
   const navigate = useNavigate();
-
+  const [tryFetch, setTryFetch] = useState(false);
   const [infoRetro, setInfoRetro] = useState<DetailedRetrospectiva>(
     null!
   );
@@ -48,6 +49,7 @@ const Respuestas: FC = ({}) => {
     try {
       const res = await axios.get(`${URI}/details/${retroId}`);
       setInfoRetro(res.data);
+      setTryFetch(true);
     } catch (error) {
       console.log(error);
     }
@@ -56,6 +58,9 @@ const Respuestas: FC = ({}) => {
   useEffect(() => {
     getInfo();
   }, []);
+
+  if (!tryFetch)
+    return <Spinner message="Cargando respuestas..." gap={6} />;
 
   return (
     <div className="flex gap-5 flex-col p-2">

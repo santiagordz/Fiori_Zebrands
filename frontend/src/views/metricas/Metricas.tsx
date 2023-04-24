@@ -12,6 +12,7 @@ import {
   DesignTemplate,
   ModalLoading,
   ModalUpdateIssues,
+  Spinner,
 } from '../../components';
 import MetricasEpics from './MetricasEpics';
 import MetricasPersonales from './MetricasPersonales';
@@ -22,6 +23,7 @@ const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/issues`;
 const Metricas: FC = ({}) => {
   const [isModalBackOpen, setIsModalBackOpen] = useState(false);
   const [isModalLoading, setIsModalLoading] = useState(false);
+  const [tryFetch, setTryFetch] = useState(false);
   const [lastFetch, setLastFetch] = useState<string>('');
 
   const getLastFetch = useCallback(async () => {
@@ -35,6 +37,7 @@ const Metricas: FC = ({}) => {
 
       const formattedDate = format(localDate, 'dd/MM/yyyy HH:mm');
       setLastFetch(formattedDate);
+      setTryFetch(true);
     } catch (error) {
       console.error(error);
     }
@@ -47,6 +50,17 @@ const Metricas: FC = ({}) => {
       setLastFetch('');
     };
   }, []);
+
+  if (!tryFetch)
+    return (
+      <div className="absolute top-0 left-0 w-full h-full">
+        <Spinner
+          height="100%"
+          message="Cargando respuestas..."
+          gap={6}
+        />
+      </div>
+    );
 
   return (
     <>
