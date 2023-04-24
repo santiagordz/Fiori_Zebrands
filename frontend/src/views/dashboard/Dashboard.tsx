@@ -118,6 +118,14 @@ const Dashboard: FC = ({}) => {
                   )}
                 </span>
               )}
+              {
+                // Si no hay ninguna pendiente
+                retroPendientes.length === 0 && (
+                  <span className="text-xs text-gray-500">
+                    No tienes ninguna retrospectiva pendiente
+                  </span>
+                )
+              }
             </div>
             <div className="w-full flex justify-end">
               <Button
