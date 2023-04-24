@@ -37,7 +37,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get('/api', (req, res, next) => {
+app.get('/', (req, res, next) => {
   res.json({ message: 'Fiori' });
 });
 
@@ -46,7 +46,7 @@ app.use(authRoutes);
 app.use((err, req, res, next) => {
   if (err.message === 'UserNotFound') {
     req.session.destroy();
-    res.redirect('/api');
+    res.redirect('/');
   } else {
     next(err);
   }
@@ -65,7 +65,9 @@ const sprintsJiraRoutes = require('./routes/sprints.routes');
 const epicJiraRoutes = require('./routes/epicsJira.routes');
 const metricasRoutes = require('./routes/metricas.routes');
 
-app.use('/api/usuarios', usuariosRoutes);
+//Rutas para Deploy en AWS
+
+/* app.use('/api/usuarios', usuariosRoutes);
 app.use('/api/usuarios_jira', usuariosJiraRoutes);
 app.use('/api/roles', rolesRoutes);
 app.use('/api/etiquetas', etiquetasRoutes);
@@ -85,6 +87,28 @@ app.get('/api/logout', (req, res) => {
   req.logout();
   res.clearCookie('connect.sid');
   res.redirect('/api');
+}); */
+
+app.use('/usuarios', usuariosRoutes);
+app.use('/usuarios_jira', usuariosJiraRoutes);
+app.use('/roles', rolesRoutes);
+app.use('/etiquetas', etiquetasRoutes);
+app.use('/colores', coloresRoutes);
+app.use('/user', usuariosRoutes);
+app.use('/retrospectivas', retrospectivaRoutes);
+app.use('/respuesta', respuestaRoutes);
+app.use('/issues', issuesJiraRoutes);
+app.use('/sprints', sprintsJiraRoutes);
+app.use('/epics', epicJiraRoutes);
+app.use('/metricas', metricasRoutes);
+
+app.use('/issuesjira', issuesJiraRoutes);
+app.use('/preguntas', preguntaRoutes);
+
+app.get('/logout', (req, res) => {
+  req.logout();
+  res.clearCookie('connect.sid');
+  res.redirect('/');
 });
 
 app.listen(8000, () => {
