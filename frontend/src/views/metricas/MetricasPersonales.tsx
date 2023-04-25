@@ -171,7 +171,8 @@ const MetricasPersonales: FC = ({}) => {
               <StackedBarChart data={data2} />
             ) : (
               <p className="text-xs">
-                No hay datos para graficar con el sprint elegido
+                No hay datos para graficar con los filtros de sprint
+                elegidos
               </p>
             )}
           </ChartCards>
@@ -181,7 +182,8 @@ const MetricasPersonales: FC = ({}) => {
             <PieChart data={data} />
           ) : (
             <p className="text-xs">
-              No hay datos para graficar con el sprint elegido
+              No hay datos para graficar con los filtros de sprint
+              elegidos
             </p>
           )}
         </ChartCards>

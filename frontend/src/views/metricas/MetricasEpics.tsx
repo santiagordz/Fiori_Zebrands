@@ -161,7 +161,7 @@ const MetricasEpics: FC = ({}) => {
               <StackedBarChart data={chart2Data} />
             ) : (
               <p className="text-xs">
-                No hay datos para graficar con el o los epics elegido
+                No hay datos para graficar con el epic elegido
               </p>
             )}
           </ChartCards>
@@ -172,7 +172,7 @@ const MetricasEpics: FC = ({}) => {
             <PieChart data={chartData} />
           ) : (
             <p className="text-xs">
-              No hay datos para graficar con el o los epic elegidos
+              No hay datos para graficar con el epic elegido
             </p>
           )}
         </ChartCards>

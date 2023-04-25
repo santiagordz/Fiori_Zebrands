@@ -7,7 +7,9 @@ import zebrandsLogo from '@/assets/zebrandsLogo.svg';
 import { userDataContext } from '../../contexts';
 
 const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/login/google`;
-const URI_JIRA = `${import.meta.env.VITE_APP_BACKEND_URI}/issues`;
+const URI_JIRA = `${
+  import.meta.env.VITE_APP_BACKEND_URI
+}/issues/post`;
 
 const Login: FC = () => {
   const navigate = useNavigate();
@@ -72,10 +74,8 @@ const Login: FC = () => {
   }, [user]);
 
   return (
-    <div
-      className="grid items-center w-screen h-screen overflow-hidden md:grid-cols-3"
-    >
-      <div className='md:col-span-1'>
+    <div className="grid items-center w-screen h-screen overflow-hidden md:grid-cols-3">
+      <div className="md:col-span-1">
         <div className="flex items-center absolute top-5 left-9 w-3/12">
           <img
             src={zebrandsLogo}

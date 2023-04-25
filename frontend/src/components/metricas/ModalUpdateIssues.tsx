@@ -9,7 +9,7 @@ import { FC, useContext, useEffect } from 'react';
 import { FlagContext } from '../../contexts';
 import ErrorIcon from '@atlaskit/icon/glyph/error';
 
-const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/issues`;
+const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/issues/post`;
 
 interface ModalUpdateIssuesProps {
   setIsModalOpen: (isOpen: boolean) => void;
