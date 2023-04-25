@@ -1,22 +1,38 @@
 import Button from "@atlaskit/button";
 import AddIcon from "@atlaskit/icon/glyph/add";
-import { useState } from "react";
+import { FC, useCallback, useState } from "react";
 import DesignTemplate from "../../components/design-template/DesignTemplate";
 import ModalNuevoAccionable from "../../components/accionables/modals/ModalNuevoAccionable";
 import BoxAccionable from "../../components/accionables/modals/accionable/BoxAccionable";
 import ErrorIcon from "@atlaskit/icon/glyph/error";
 import WarningIcon from "@atlaskit/icon/glyph/warning";
 import CheckCircleIcon from "@atlaskit/icon/glyph/check-circle";
+import axios from "axios";
+import { useEffect } from "react";
 
 interface MisAccionablesProps {
   setIsNewAccionableOpen: (value: boolean) => void;
   agregarAccionable: (accionable: any) => void;
 }
 
-const MisAccionables = ({}) => {
+const MisAccionables: FC<MisAccionablesProps> = ({}) => {
   const [isNewAccionableOpen, setIsNewAccionableOpen] =
     useState<boolean>(false);
   const [accionables, setAccionables] = useState<any[]>([]);
+  const [accionablesPersonales, setAccionablesPersonales] = useState<any[]>([]);
+
+  const getAccionables = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8000/accionables/24`);
+      setAccionablesPersonales(response.data);
+    } catch (error) {
+      console.error("Error al obtener los accionables:", error);
+    }
+  };
+
+  useEffect(() => {
+    getAccionables();
+  }, []);
 
   const agregarAccionable = (accionable: any) => {
     const hoy = new Date();
@@ -109,7 +125,7 @@ const MisAccionables = ({}) => {
                 Prioridad Baja
               </p>
             </div>
-            {accionablesPrioridadBaja.map((accionable) => (
+            {accionablesPersonales.map((accionable) => (
               <BoxAccionable
                 accionable={accionable.accionable}
                 id={accionable.id}
@@ -122,6 +138,7 @@ const MisAccionables = ({}) => {
 
       {isNewAccionableOpen && (
         <ModalNuevoAccionable
+          getAccionables={getAccionables}
           setIsNewAccionableOpen={setIsNewAccionableOpen}
           agregarAccionable={agregarAccionable}
         />

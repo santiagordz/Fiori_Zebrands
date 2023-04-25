@@ -53,7 +53,6 @@ module.exports = class Accionable {
   };
 
   static getAccionablesByUserId(id_usuario) {
-    console.log('id_usuario en model:', id_usuario);
     return db.execute(
       `
         SELECT fecha, accionable FROM accionables
