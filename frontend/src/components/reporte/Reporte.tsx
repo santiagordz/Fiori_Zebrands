@@ -10,13 +10,29 @@ import {
 import { FC, useState, useEffect, memo } from 'react';
 import { format, utcToZonedTime } from 'date-fns-tz';
 import type { chartArrayType } from './ModalReporte';
-import Inter from '@/assets/fonts/Inter.ttf';
+import InterRegular from '@/assets/fonts/Inter-Regular.ttf';
+import InterMedium from '@/assets/fonts/Inter-Medium.ttf';
+import InterSemiBold from '@/assets/fonts/Inter-SemiBold.ttf';
+import InterBold from '@/assets/fonts/Inter-Bold.ttf';
 
 Font.register({
   family: 'Inter',
   fonts: [
     {
-      src: Inter,
+      src: InterRegular,
+      fontWeight: 400,
+    },
+    {
+      src: InterMedium,
+      fontWeight: 500,
+    },
+    {
+      src: InterSemiBold,
+      fontWeight: 700,
+    },
+    {
+      src: InterBold,
+      fontWeight: 800,
     },
   ],
 });
@@ -228,7 +244,7 @@ const Reporte: FC<ReporteProps> = ({
           </Text>
           <View style={styles.chartsWrapper}>
             {canvasSprints.map((chart, index) => (
-              <View style={styles.chartView}>
+              <View style={styles.chartView} key={index}>
                 <Text style={styles.chartTitle}>{chart.name}</Text>
                 <Image
                   key={index}
@@ -285,7 +301,7 @@ const Reporte: FC<ReporteProps> = ({
           </Text>
           <View style={styles.chartsWrapper}>
             {canvasEpics.map((chart, index) => (
-              <View style={styles.chartView}>
+              <View style={styles.chartView} key={index}>
                 <Text style={styles.chartTitle}>{chart.name}</Text>
                 <Image
                   key={index}

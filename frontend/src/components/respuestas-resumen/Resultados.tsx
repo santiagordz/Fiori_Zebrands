@@ -81,19 +81,19 @@ const Resultados: FC<ResultadosProps> = ({
     if (id_tipo_pregunta === 4) {
       setData(handleDataType4);
     }
-  }, [respuestas]);
+  }, [id_tipo_pregunta]);
 
   const Case = useMemo(() => {
     switch (id_tipo_pregunta) {
       case 3:
         return (
-          <div className="flex w-full h-[20rem] justify-center items-center">
+          <div className="flex w-[20rem] lg:w-[23rem] h-[20rem] justify-center items-center">
             <PieChart data={data} />
           </div>
         );
       case 4:
         return (
-          <div className="flex w-full h-[20rem] justify-center items-center">
+          <div className="flex w-[20rem] lg:w-[31rem] h-[20rem] justify-center items-center">
             <BarChart data={data} />
           </div>
         );

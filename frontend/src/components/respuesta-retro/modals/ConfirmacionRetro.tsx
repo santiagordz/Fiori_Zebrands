@@ -46,9 +46,9 @@ const ConfirmacionRetro: FC<ConfirmacionRetroProps> = ({
             <h2 className="font-bold text-lg">
               ¡Muy bien! Has terminado de responder la retrospectiva
             </h2>
-            <p>
+            <p className="text-xs">
               Solamente recuerda que una vez que hayas registrado tus
-              respuestas,
+              respuestas,{' '}
               <span className="underline">
                 no podrás editarlas después.
               </span>

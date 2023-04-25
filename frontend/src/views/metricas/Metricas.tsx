@@ -56,7 +56,7 @@ const Metricas: FC = ({}) => {
       <div className="absolute top-0 left-0 w-full h-full">
         <Spinner
           height="100%"
-          message="Cargando respuestas..."
+          message="Cargando métricas..."
           gap={6}
         />
       </div>
