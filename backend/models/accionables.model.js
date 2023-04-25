@@ -1,4 +1,9 @@
-const db = require("../database/db");
+const db = require('../database/db');
+const axios = require('axios');
+const auth = {
+  username: process.env.JIRA_USERNAME_FIORI,
+  password: process.env.JIRA_PASSWORD_FIORI,
+};
 
 module.exports = class Accionable {
   constructor(newAccionable) {
@@ -9,7 +14,7 @@ module.exports = class Accionable {
   }
 
   static fetchAll() {
-    return db.execute("SELECT * FROM accionables");
+    return db.execute('SELECT * FROM accionables');
   }
 
   static createAccionable(id_usuario, accionable, fecha) {
@@ -22,8 +27,33 @@ module.exports = class Accionable {
     );
   }
 
+  static postAccionable = async (id_usuario, descripcion) => {
+    const bodyData = {
+      fields: {
+        project: {
+          key: 'FIORI',
+        },
+        summary: `${descripcion}`,
+        issuetype: {
+          name: 'Story',
+        },
+        customfield_10016: 100,
+        customfield_10036: '2022-04-25',
+        assignee: `${id_usuario}`,
+      },
+    };
+
+    axios.post(
+      'https://fioritec.atlassian.net/rest/api/3/issue/',
+      bodyData,
+      {
+        auth: auth,
+      }
+    );
+  };
+
   static getAccionablesByUserId(id_usuario) {
-    console.log("id_usuario en model:", id_usuario);
+    console.log('id_usuario en model:', id_usuario);
     return db.execute(
       `
         SELECT fecha, accionable FROM accionables
