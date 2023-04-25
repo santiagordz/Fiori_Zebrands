@@ -7,6 +7,8 @@ import Button from "@atlaskit/button";
 import { motion } from "framer-motion";
 import CrossIcon from "@atlaskit/icon/glyph/cross";
 import TextArea from "@atlaskit/textarea";
+import { DatePicker } from "@atlaskit/datetime-picker";
+import Form, { Field, FormFooter, HelperMessage } from "@atlaskit/form";
 
 const URI = "http://localhost:8000/accionables/";
 
@@ -15,6 +17,7 @@ const currentUser = {
 };
 
 interface ModalNuevoAccionableProps {
+  getAccionables: () => void;
   setIsNewAccionableOpen: (value: boolean) => void;
   agregarAccionable: (accionable: any) => void;
 }
@@ -22,6 +25,7 @@ interface ModalNuevoAccionableProps {
 const MAX_CARACTERES = 200;
 
 const ModalNuevoAccionable: FC<ModalNuevoAccionableProps> = ({
+  getAccionables,
   setIsNewAccionableOpen,
   agregarAccionable,
 }) => {
@@ -43,21 +47,6 @@ const ModalNuevoAccionable: FC<ModalNuevoAccionableProps> = ({
   };
 
   const [excedeLimite, setExcedeLimite] = useState(false);
-
-  const fetchAccionables = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:8000/accionables/${currentUser.id}`
-      );
-      setNewAccionable(response.data);
-    } catch (error) {
-      console.error("Error al obtener los accionables:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchAccionables();
-  }, []);
 
   const verificarLimite = (texto: string) => {
     if (texto.length > MAX_CARACTERES) {
@@ -101,7 +90,9 @@ const ModalNuevoAccionable: FC<ModalNuevoAccionableProps> = ({
           <div className="w-full flex flex-col gap-6 h-fit max-h-[55vh] px-3 overflow-y-auto pb-2">
             <div className="flex flex-col gap-2">
               <p className="font-semibold text-xs">Accionable:</p>
-              <p className="text-xs text-[#626F86] mt-1">yay yay yupi</p>
+              <p className="text-xs text-[#626F86] mt-1">
+                Los accionables que agrergues aquí también de mostrarán en Jira.
+              </p>
 
               <TextArea
                 value={newAccionable.accionable}
@@ -117,6 +108,35 @@ const ModalNuevoAccionable: FC<ModalNuevoAccionableProps> = ({
                 autoComplete="off"
                 placeholder="Ingresa tu nuevo accionable"
               />
+
+              <Form
+                onSubmit={(formState: unknown) =>
+                  console.log("form submitted", formState)
+                }
+              >
+                {({ formProps }) => (
+                  <form {...formProps}>
+                    <Field
+                      name="datetime-picker"
+                      label="Start date"
+                      isRequired={false}
+                      defaultValue=""
+                    >
+                      {({ fieldProps }) => (
+                        <>
+                          <DatePicker
+                            {...fieldProps}
+                            selectProps={{ inputId: fieldProps.id }}
+                          />
+                          <HelperMessage>
+                            Help or instruction text goes here
+                          </HelperMessage>
+                        </>
+                      )}
+                    </Field>
+                  </form>
+                )}
+              </Form>
 
               <div className="w-full flex flex-col justify-end items-end">
                 {excedeLimite && (
@@ -142,16 +162,16 @@ const ModalNuevoAccionable: FC<ModalNuevoAccionableProps> = ({
               appearance="primary"
               onClick={async () => {
                 if (newAccionable.accionable.length <= MAX_CARACTERES) {
-                  // Cambia "descripcion" a "accionable" aquí
                   const accionableToSend = {
                     ...newAccionable,
                     fecha: new Date().toLocaleDateString(),
-                    id_usuario: currentUser.id, // Agrega el id_usuario aquí
+                    id_usuario: currentUser.id,
                   };
                   agregarAccionable(accionableToSend);
                   console.log("Enviando accionable:", accionableToSend);
                   await saveAccionable(accionableToSend);
                   setIsNewAccionableOpen(false);
+                  getAccionables();
                 } else {
                   setExcedeLimite(true);
                 }

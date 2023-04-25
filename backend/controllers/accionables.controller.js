@@ -1,14 +1,15 @@
 const Accionables = require("../models/accionables.model");
 
-const getAccionablesByUserId = (req, res) => {
+const getAccionablesByUserId = async (req, res) => {
   const id_usuario = req.params.id;
-  console.log("id_usuario en controller:", id_usuario); // Agrega esta línea
-  Accionables.getAccionablestaByUserId(id_usuario)
-    .then(([rows, fieldData]) => {
-      res.json(rows);
-    })
-    .catch((err) => console.log(err));
-  console.log(rows);
+  console.log(id_usuario);
+
+  try {
+    const [accionables] = await Accionables.getAccionablesByUserId(id_usuario);
+    res.json(accionables);
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 const createAccionable = (req, res) => {
