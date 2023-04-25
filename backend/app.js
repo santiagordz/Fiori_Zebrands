@@ -79,8 +79,6 @@ app.use('/api/issues', issuesJiraRoutes);
 app.use('/api/sprints', sprintsJiraRoutes);
 app.use('/api/epics', epicJiraRoutes);
 app.use('/api/metricas', metricasRoutes);
-
-app.use('/api/issuesjira', issuesJiraRoutes);
 app.use('/api/preguntas', preguntaRoutes);
 
 app.get('/api/logout', (req, res) => {
