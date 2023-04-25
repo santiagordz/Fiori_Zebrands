@@ -72,7 +72,7 @@ const ModalReporte: FC<ModalReporteProps> = ({ setIsOpen }) => {
     type: number,
     ref: React.RefObject<HTMLDivElement>
   ): Promise<chartArrayType | null> => {
-    if (data.length > 0) {
+    if (data && data.length > 0) {
       const url = await getCanvasURL(ref.current);
       if (url) {
         return { name, url, type, data };
@@ -85,7 +85,9 @@ const ModalReporte: FC<ModalReporteProps> = ({ setIsOpen }) => {
     try {
       const response = await axios.get(`${URI}/SUMdoneglobal`);
       const data = response.data.sprints[0].reverse();
-      setDataDoneAcumS(data);
+      if (data) {
+        setDataDoneAcumS(data);
+      }
     } catch (error) {
       console.error(error);
     }

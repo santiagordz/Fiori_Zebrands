@@ -156,7 +156,7 @@ const Reporte: FC<ReporteProps> = ({
   const lastSprint = sprintDoneData[sprintDoneData.length - 1];
 
   const calculateRateOfChange = (data: DataPropertyType[]) => {
-    if (data.length < 2) return 0;
+    if (data && data.length < 2) return 0;
     const lastItem = data[data.length - 1];
     const secondLastItem = data[data.length - 2];
     return (
@@ -166,7 +166,7 @@ const Reporte: FC<ReporteProps> = ({
   };
 
   const calculateAverage = (data: DataPropertyType[]) => {
-    if (data.length === 0) return 0;
+    if (data && data.length === 0) return 0;
     const total = data.reduce(
       (sum, item) => sum + Number(item.total_story_points),
       0
@@ -175,7 +175,7 @@ const Reporte: FC<ReporteProps> = ({
   };
 
   const calculatePercentageChange = (data: DataPropertyType[]) => {
-    if (data.length < 2) return 0;
+    if (data && data.length < 2) return 0;
     const lastItem = data[data.length - 1];
     const secondLastItem = data[data.length - 2];
     const change =
