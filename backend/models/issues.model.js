@@ -73,7 +73,9 @@ module.exports = class Issue {
       const response = await axios.get(
         `https://zebrands.atlassian.net/rest/api/2/search?jql=project=TPECG AND issuetype in (Bug, Story, Task) AND updated >= ${fecha} AND updated <= ${today} ORDER BY created ASC &startAt=${startAt}&maxResults=${maxResults}`,
         {
-          auth: auth,
+          headers: {
+            Authorization: `Bearer ${process.env.JIRA_PASSWORD_ZEB}`,
+          },
         }
       );
 
