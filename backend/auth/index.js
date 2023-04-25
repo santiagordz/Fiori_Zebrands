@@ -3,6 +3,6 @@ const router = express.Router();
 
 const loginWithGoogleApi = require('./loginWithGoogle');
 
-router.use('/api', loginWithGoogleApi);
+router.use('/', loginWithGoogleApi);
 
 module.exports = router;
