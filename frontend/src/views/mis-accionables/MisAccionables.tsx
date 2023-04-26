@@ -1,20 +1,21 @@
-import { FC, useState, useEffect, useContext } from 'react';
-import { userDataContext } from '../../contexts/';
-import axios from 'axios';
-
-import DesignTemplate from '../../components/design-template/DesignTemplate';
-import ModalNuevoAccionable from '../../components/accionables/modals/ModalNuevoAccionable2';
-import BoxAccionable from '../../components/accionables/BoxAccionable';
-
 import Button from '@atlaskit/button';
 import AddIcon from '@atlaskit/icon/glyph/add';
+import CheckCircleIcon from '@atlaskit/icon/glyph/check-circle';
 import ErrorIcon from '@atlaskit/icon/glyph/error';
 import WarningIcon from '@atlaskit/icon/glyph/warning';
-import CheckCircleIcon from '@atlaskit/icon/glyph/check-circle';
+import axios from 'axios';
+import { FC, useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import {
+  DesignTemplate,
+  ModalNuevoAccionable,
+  BoxAccionable,
+} from '../../components';
+import { userDataContext } from '../../contexts/';
 
 import Team from '../../assets/icons/medal.svg';
 
-const URI = 'http://localhost:8000/accionables';
+const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/accionables`;
 
 interface MisAccionablesProps {
   setIsNewAccionableOpen: (value: boolean) => void;
@@ -110,10 +111,10 @@ const MisAccionables: FC<MisAccionablesProps> = ({}) => {
         buttons={
           <Button
             appearance="primary"
-            iconBefore={<AddIcon label="agregar accionable" />}
+            iconBefore={<AddIcon label="nuevo accionable" />}
             onClick={() => setIsNewAccionableOpen(true)}
           >
-            Agregar accionable
+            Nuevo accionable
           </Button>
         }
       >
@@ -129,14 +130,20 @@ const MisAccionables: FC<MisAccionablesProps> = ({}) => {
                 Prioridad Alta
               </p>
             </div>
-            {prioridadAlta.map((accionable: Accionable) => (
-              <BoxAccionable
-                key={accionable.id}
-                accionable={accionable.descripcion}
-                id={accionable.id}
-                fecha={accionable.fecha_esperada}
-              />
-            ))}
+            {prioridadAlta.length > 0 ? (
+              prioridadAlta.map((accionable: Accionable) => (
+                <BoxAccionable
+                  key={accionable.id}
+                  accionable={accionable.descripcion}
+                  id={accionable.id}
+                  fecha={accionable.fecha_esperada}
+                />
+              ))
+            ) : (
+              <p className="text-xs">
+                No tienes accionables en prioridad alta.
+              </p>
+            )}
           </div>
 
           <div className="flex flex-col gap-5 bg-[#ffffff] py-5 px-5 rounded-sm shadow-sm overflow-y-auto max-h-[40rem]">
@@ -150,14 +157,20 @@ const MisAccionables: FC<MisAccionablesProps> = ({}) => {
                 Prioridad Media
               </p>
             </div>
-            {prioridadMedia.map((accionable: Accionable) => (
-              <BoxAccionable
-                key={accionable.id}
-                accionable={accionable.descripcion}
-                id={accionable.id}
-                fecha={accionable.fecha_esperada}
-              />
-            ))}
+            {prioridadMedia.length > 0 ? (
+              prioridadMedia.map((accionable: Accionable) => (
+                <BoxAccionable
+                  key={accionable.id}
+                  accionable={accionable.descripcion}
+                  id={accionable.id}
+                  fecha={accionable.fecha_esperada}
+                />
+              ))
+            ) : (
+              <p className="text-xs">
+                No tienes accionables en prioridad media.
+              </p>
+            )}
           </div>
 
           <div className="flex flex-col gap-5 bg-[#ffffff] py-5 px-5 rounded-sm shadow-sm overflow-y-auto max-h-[40rem]">
@@ -171,45 +184,54 @@ const MisAccionables: FC<MisAccionablesProps> = ({}) => {
                 Prioridad Baja
               </p>
             </div>
-            {prioridadBaja.map((accionable: Accionable) => (
-              <BoxAccionable
-                key={accionable.id}
-                accionable={accionable.descripcion}
-                id={accionable.id}
-                fecha={accionable.fecha_esperada}
-              />
-            ))}
+            {prioridadBaja.length > 0 ? (
+              prioridadBaja.map((accionable: Accionable) => (
+                <BoxAccionable
+                  key={accionable.id}
+                  accionable={accionable.descripcion}
+                  id={accionable.id}
+                  fecha={accionable.fecha_esperada}
+                />
+              ))
+            ) : (
+              <p className="text-xs">
+                No tienes accionables en prioridad baja.
+              </p>
+            )}
           </div>
         </div>
-        <div className="w-full bg-white px-24 pt-10">
-          <div className="bg-purpleLight flex px-8 gap-20">
-            <div className="ml-10 w-1/6 p-5">
-              <img src={Team} />
-            </div>
-            <div className="flex flex-col items-center justify-center">
-              <p className="font-bold w-full text-discovery text-center text-lg">
+        <div className="w-full bg-white p-6">
+          <div className="lg:flex lg:flex-row flex flex-col w-full bg-purple-100 py-10 px-8 gap-10 items-center justify-center rounded-sm">
+            <img src={Team} className="h-36" />
+            <div className="flex gap-5 flex-col">
+              <h3 className="font-bold w-full text-discovery">
                 Recuerda que los pequeños actos que se ejecutan, son
                 mejores que todos aquellos grandes que se planean
-              </p>
-              <p className="text-center">
+              </h3>
+              <p className="text-sm">
                 Debes completar los accionables que te habías
                 propuesto, de esta forma podrás ver tu progreso y el
                 de tu equipo desde otra perspectiva.
               </p>
+              <p className="text-sm">
+                Si lo deseas, puedes revisar directamente tu progreso
+                en Jira haciendo{' '}
+                <Link
+                  className="text-blue-500 hover:text-blue-800"
+                  to="https://zebrands.atlassian.net"
+                  target="_blank"
+                >
+                  click aquí.
+                </Link>
+              </p>
             </div>
-          </div>
-          <div className="flex items-center justify-center mt-10 pb-10">
-            <a href="https://zebrands.atlassian.net" target="_blank">
-              <button className="bg-jiraBlue px-3 py-1 rounded-sm text-white hover:bg-blue-500">
-                Ir a JIRA
-              </button>
-            </a>
           </div>
         </div>
       </DesignTemplate>
 
       {isNewAccionableOpen && (
         <ModalNuevoAccionable
+          getAccionables={getAccionables}
           setIsModalOpen={setIsNewAccionableOpen}
         />
       )}

@@ -1,200 +1,214 @@
-import React, { FC, useState, useEffect, useContext } from 'react';
-import { ErrorMessage } from '@atlaskit/form';
-import axios from 'axios';
-import { customAlphabet } from 'nanoid';
 import Blanket from '@atlaskit/blanket';
 import Button from '@atlaskit/button';
-import { motion } from 'framer-motion';
+import CheckCircleIcon from '@atlaskit/icon/glyph/check-circle';
 import CrossIcon from '@atlaskit/icon/glyph/cross';
+import EditorErrorIcon from '@atlaskit/icon/glyph/editor/error';
 import TextArea from '@atlaskit/textarea';
-import { DatePicker } from '@atlaskit/datetime-picker';
-import Form, {
-  Field,
-  FormFooter,
-  HelperMessage,
-} from '@atlaskit/form';
+import { HelperMessage, ErrorMessage } from '@atlaskit/form';
+import axios from 'axios';
+import { motion } from 'framer-motion';
+import { FC, useContext, useState } from 'react';
+import { FlagContext, userDataContext } from '../../../contexts';
 
-const URI = 'http://localhost:8000/accionables/';
+const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/accionables`;
 
-const currentUser = {
-  id: 24, // Reemplaza esto con el id del usuario actual
-};
-
-interface ModalNuevoAccionableProps {
+interface ModalNuevoAccionable {
   getAccionables: () => void;
-  setIsNewAccionableOpen: (value: boolean) => void;
-  agregarAccionable: (accionable: any) => void;
+  setIsModalOpen: (value: boolean) => void;
 }
 
+interface Accionable {
+  accionable: string;
+  fecha: string;
+}
+
+const labelStyle =
+  "after:content-['*'] after:text-[#ae2a19] text-xs font-semibold text-label";
 const MAX_CARACTERES = 200;
 
-const ModalNuevoAccionable: FC<ModalNuevoAccionableProps> = ({
+const ModalNuevoAccionable: FC<ModalNuevoAccionable> = ({
   getAccionables,
-  setIsNewAccionableOpen,
-  agregarAccionable,
+  setIsModalOpen,
 }) => {
-  //cambiar estoooo!!!!!
-  const nanoid = customAlphabet('1234567890', 5);
-
-  const [newAccionable, setNewAccionable] = useState<any>({
-    id: 0,
+  const { user } = useContext(userDataContext);
+  const { addFlag } = useContext(FlagContext);
+  const [accionable, setAccionable] = useState<Accionable>({
     accionable: '',
-    fecha: new Date().toLocaleDateString(),
+    fecha: '',
   });
+  const [validPattern, setValidPattern] = useState<boolean>(false);
+  const [showMaxDescriptionWarning, setShowMaxDescriptionWarning] =
+    useState<boolean>(false);
+  const [isFechaFilled, setIsFechaFilled] = useState<boolean>(false);
 
-  const saveAccionable = async (accionable: any) => {
-    try {
-      await axios.post(URI, accionable);
-    } catch (error) {
-      console.error('Error al guardar el accionable:', error);
-    }
+  const handleChangeAccionable = (e: any) => {
+    verificarLimite(e.target.value);
+    setAccionable({ ...accionable, accionable: e.target.value });
   };
 
-  const [excedeLimite, setExcedeLimite] = useState(false);
-
-  const verificarLimite = (texto: string) => {
-    if (texto.length > MAX_CARACTERES) {
-      setExcedeLimite(true);
+  const handleChangeFecha = (e: any) => {
+    if (e.target.value === '') {
+      setIsFechaFilled(false);
     } else {
-      setExcedeLimite(false);
+      setIsFechaFilled(true);
+      setAccionable({ ...accionable, fecha: e.target.value });
+    }
+  };
+  const verificarLimite = (texto: string) => {
+    const alfanumerico = /^[a-zA-Z0-9\s]*$/;
+    if (!alfanumerico.test(texto)) {
+      setValidPattern(false);
+    }
+    if (texto.length > MAX_CARACTERES) {
+      setShowMaxDescriptionWarning(true);
+    }
+    if (texto.length === 0) {
+      setShowMaxDescriptionWarning(false);
+      setValidPattern(false);
+    }
+
+    if (
+      texto.length <= MAX_CARACTERES &&
+      alfanumerico.test(texto) &&
+      texto.length > 0
+    ) {
+      setShowMaxDescriptionWarning(false);
+      setValidPattern(true);
     }
   };
 
-  useEffect(() => {
-    setNewAccionable({
-      ...newAccionable,
-      id: Number(nanoid()),
-    });
-    document.body.classList.add('modal-open');
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    let key_jira;
+    try {
+      try {
+        const body = {
+          id_usuario: user?.id_usuario,
+          descripcion: accionable.accionable,
+        };
+        const responseJira = await axios.post(
+          `${URI}/post/${body.id_usuario}/${body.descripcion}`
+        );
+        key_jira = responseJira.data.key;
+      } catch {
+        console.error('Error al guardar el accionable en Jira');
+      }
+      try {
+        const body = {
+          id_usuario: user?.id_usuario,
+          descripcion: accionable.accionable,
+          fecha_estimada: accionable.fecha,
+          key_jira: key_jira,
+        };
+        axios.post(URI, body);
+        getAccionables();
+      } catch {
+        console.error('Error al guardar el accionable en la DB');
+      }
 
-    return () => {
-      document.body.classList.remove('modal-open');
-    };
-  }, []);
+      setIsModalOpen(false);
+
+      addFlag(
+        'Accionable agregado correctamente en el backlog de Jira',
+        CheckCircleIcon,
+        'success'
+      );
+    } catch (err) {
+      addFlag(
+        'Hubo un problema al agregar el accionable. Por favor, intenta nuevamente.',
+        EditorErrorIcon,
+        'error'
+      );
+    }
+  };
 
   return (
-    <Blanket isTinted>
-      <motion.div
-        animate={{ opacity: 1 }}
-        className="flex flex-col w-full h-full items-center justify-center opacity-0"
-      >
-        <div className="flex flex-col bg-white rounded p-10 gap-8 items-center justify-center drop-shadow-lg min-w-[40vw] max-w-[55vw]">
-          <div className="flex w-full justify-between items-center">
-            <p className="text-textNormal font-semibold text-base">
-              Nuevo accionable
-            </p>
-            <div
-              className="flex items-center justify-center cursor-pointer p-1"
-              onClick={() => setIsNewAccionableOpen(false)}
-            >
-              <CrossIcon label="cerrar modal" size="small" />
-            </div>
-          </div>
-
-          <div className="w-full flex flex-col gap-6 h-fit max-h-[55vh] px-3 overflow-y-auto pb-2">
-            <div className="flex flex-col gap-2">
-              <p className="font-semibold text-xs">Accionable:</p>
-              <p className="text-xs text-[#626F86] mt-1">
-                Los accionables que agrergues aquí también de
-                mostrarán en Jira.
-              </p>
-
-              <TextArea
-                value={newAccionable.accionable}
-                onChange={(e) => {
-                  setNewAccionable({
-                    ...newAccionable,
-                    accionable: e.target.value,
-                  });
-                  verificarLimite(e.target.value);
-                }}
-                name="accionable"
-                className="text-sm w-full border-2 rounded-sm p-2 focus:border-blue-500 hover:bg-gray-100 placeholder:text-xs h-10"
-                autoComplete="off"
-                placeholder="Ingresa tu nuevo accionable"
-              />
-
-              <Form
-                onSubmit={(formState: unknown) =>
-                  console.log('form submitted', formState)
-                }
+    <>
+      <Blanket isTinted={true}>
+        <motion.div
+          animate={{ opacity: 1 }}
+          className="flex flex-col w-full h-full items-center justify-center opacity-0"
+        >
+          <div className="flex flex-col bg-white rounded p-10 gap-8 items-center justify-center drop-shadow-lg min-w-[40vw] max-w-[55vw]">
+            <div className="flex w-full justify-between items-center">
+              <h2 className="text-textNormal font-semibold text-base">
+                Registrar nuevo accionable
+              </h2>
+              <div
+                className="flex items-center justify-center cursor-pointer p-1"
+                onClick={() => setIsModalOpen(false)}
               >
-                {({ formProps }) => (
-                  <form {...formProps}>
-                    <Field
-                      name="datetime-picker"
-                      label="Start date"
-                      isRequired={false}
-                      defaultValue=""
+                <CrossIcon label="cerrar modal" size="small" />
+              </div>
+            </div>
+            <div className="w-full flex flex-col gap-6 h-fit max-h-[55vh] overflow-y-auto pb-2">
+              <div className="flex flex-col gap-2">
+                <p className={labelStyle}>Accionable</p>
+                <p className="text-xs text-[#626F86]">
+                  Los accionables que registres aquí también se
+                  mostrarán en Jira. Solo se permiten caracteres
+                  alfanuméricos.
+                </p>
+                <form onSubmit={handleSubmit} id="formAccionable">
+                  <TextArea
+                    maxHeight="1rem"
+                    name="accionable"
+                    value={accionable.accionable}
+                    onChange={handleChangeAccionable}
+                    className="text-sm w-full border-2 rounded-sm p-2  hover:bg-gray-100 placeholder:text-xs h-10"
+                    autoComplete="off"
+                    placeholder="Ingresa tu nuevo accionable"
+                    isRequired
+                  />
+                  <div className="w-full flex flex-col justify-end items-end">
+                    <HelperMessage>
+                      Caracteres: {accionable.accionable.length} / 200
+                    </HelperMessage>
+                    {showMaxDescriptionWarning && (
+                      <ErrorMessage>
+                        Tu respuesta excede el número de caracteres
+                        permitidos
+                      </ErrorMessage>
+                    )}
+                  </div>
+                  <p className={`${labelStyle} mt-7`}>
+                    Fecha límite de cumplimiento
+                  </p>
+                  <input
+                    required
+                    type="date"
+                    className="w-1/2 bg-slate-50 border mt-1 rounded-sm p-2 text-xs text-gray-500 focus:outline-blue-500 hover:bg-gray-100 placeholder:text-xs h-10"
+                    onChange={handleChangeFecha}
+                  />
+                  <div className="flex flex-col gap-2 w-full items-center justify-center mt-4">
+                    {!validPattern && (
+                      <p className="text-xs text-information font-medium">
+                        Escribe un accionable válido para continuar.
+                      </p>
+                    )}
+                    {!isFechaFilled && (
+                      <p className="text-xs text-information font-medium">
+                        Elige una fecha de cumplimiento para
+                        continuar.
+                      </p>
+                    )}
+                    <Button
+                      type="submit"
+                      appearance="primary"
+                      isDisabled={
+                        !validPattern || showMaxDescriptionWarning
+                      }
                     >
-                      {({ fieldProps }) => (
-                        <>
-                          <DatePicker
-                            {...fieldProps}
-                            selectProps={{ inputId: fieldProps.id }}
-                          />
-                          <HelperMessage>
-                            Help or instruction text goes here
-                          </HelperMessage>
-                        </>
-                      )}
-                    </Field>
-                  </form>
-                )}
-              </Form>
-
-              <div className="w-full flex flex-col justify-end items-end">
-                {excedeLimite && (
-                  <ErrorMessage>
-                    Tu respuesta excede el número de caracteres
-                    permitidos
-                  </ErrorMessage>
-                )}
+                      Agregar Accionable
+                    </Button>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
-
-          <div
-            className="flex items-center justify-end
-            w-full gap-5 mt-2"
-          >
-            <Button
-              appearance="subtle"
-              onClick={() => setIsNewAccionableOpen(false)}
-            >
-              Cancelar
-            </Button>
-            <Button
-              appearance="primary"
-              onClick={async () => {
-                if (
-                  newAccionable.accionable.length <= MAX_CARACTERES
-                ) {
-                  const accionableToSend = {
-                    ...newAccionable,
-                    fecha: new Date().toLocaleDateString(),
-                    id_usuario: currentUser.id,
-                  };
-                  agregarAccionable(accionableToSend);
-                  console.log(
-                    'Enviando accionable:',
-                    accionableToSend
-                  );
-                  await saveAccionable(accionableToSend);
-                  setIsNewAccionableOpen(false);
-                  getAccionables();
-                } else {
-                  setExcedeLimite(true);
-                }
-              }}
-              isDisabled={!newAccionable.accionable.trim()}
-            >
-              Agregar accionable
-            </Button>
-          </div>
-        </div>
-      </motion.div>
-    </Blanket>
+        </motion.div>
+      </Blanket>
+    </>
   );
 };
 
