@@ -2,7 +2,6 @@ const Accionables = require('../models/accionables.model');
 
 const getAccionablesByUserId = async (req, res) => {
   const id_usuario = req.params.id;
-  console.log(id_usuario);
 
   try {
     const [accionables] = await Accionables.getAccionablesByUserId(
@@ -30,6 +29,12 @@ const createAccionable = (req, res) => {
     .catch((err) => console.log(err));
 };
 
+const getAccionableInfo = async (req, res) => {
+  const id = req.params.id;
+  const response = await Accionables.getAccionableInfo(id);
+  res.json(response[0]);
+};
+
 const postAccionable = async (req, res) => {
   try {
     const { id_usuario, descripcion } = req.params;
@@ -44,4 +49,5 @@ module.exports = {
   getAccionablesByUserId,
   createAccionable,
   postAccionable,
+  getAccionableInfo,
 };

@@ -1,5 +1,6 @@
-import { SimpleTag as Tag } from "@atlaskit/tag";
-import React, { FC } from "react";
+import { SimpleTag as Tag } from '@atlaskit/tag';
+import React, { FC } from 'react';
+import CheckAccionableIcon from './CheckAccionableIcon';
 
 interface BoxAccionableProps {
   accionable: string;
@@ -7,16 +8,27 @@ interface BoxAccionableProps {
   fecha: string;
 }
 
-const BoxAccionable: FC<BoxAccionableProps> = ({ accionable, id, fecha }) => {
+const BoxAccionable: FC<BoxAccionableProps> = ({
+  accionable,
+  id,
+  fecha,
+}) => {
   return (
-    <div className="w-full flex justify-between items-center bg-[#E9F2FF] py-2 px-4 rounded">
-      <div className="flex items-center gap-2">
+    <div className="w-full flex justify-between items-center bg-[#E9F2FF] py-2 pr-2 rounded">
+      <div className="flex items-center justify-between w-full">
         <div id="tag" className="scale-[0.9] text-right">
-          <Tag text={fecha} appearance="rounded" color="purpleLight" />
+          <Tag
+            text={fecha}
+            appearance="rounded"
+            color="purpleLight"
+          />
         </div>
-        <p className="text-textNormal text-[0.8rem] font-semibold flex-1">
+        <div className="text-sm font-semibold flex items-start w-full px-1">
           {accionable}
-        </p>
+        </div>
+        <div className="flex items-center justify-center">
+          <CheckAccionableIcon id_accionable={id} />
+        </div>
       </div>
     </div>
   );
