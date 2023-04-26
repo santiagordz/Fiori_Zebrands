@@ -13,7 +13,7 @@ import {
 } from '../../components';
 import { userDataContext } from '../../contexts/';
 
-import Team from '../../assets/icons/medal.svg';
+import Team from '../../assets/medal.png';
 
 const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/accionables`;
 
@@ -47,6 +47,7 @@ const MisAccionables: FC<MisAccionablesProps> = ({}) => {
     try {
       const response = await axios.get(`${URI}/${user?.id_usuario}`);
       setAccionables(response.data);
+      console.log(response.data);
     } catch (error) {
       console.error('Error al obtener los accionables:', error);
     }
@@ -70,7 +71,6 @@ const MisAccionables: FC<MisAccionablesProps> = ({}) => {
       );
 
       const fechaReact = accionable.fecha_esperada.split('T')[0];
-      console.log(fechaReact);
 
       if (diferenciaDias > 30) {
         prioridadBaja.push({

@@ -50,9 +50,21 @@ const postAccionable = async (req, res) => {
   }
 };
 
+const solveAccionable = async (req, res) => {
+  try {
+    const { key_jira, id } = req.params;
+    Accionables.solveAccionable(key_jira);
+    Accionables.deleteAccionable(id);
+    res.end();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 module.exports = {
   getAccionablesByUserId,
   createAccionable,
   postAccionable,
   getAccionableInfo,
+  solveAccionable,
 };

@@ -10,4 +10,8 @@ router.post(
   '/post/:id_usuario/:descripcion',
   accionablesController.postAccionable
 );
+router.post(
+  '/solve/:key_jira/:id',
+  accionablesController.solveAccionable
+);
 module.exports = router;

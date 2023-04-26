@@ -205,6 +205,65 @@ const ModalNuevoAccionable: FC<ModalNuevoAccionable> = ({
                 </form>
               </div>
             </div>
+            {/* BODY */}
+            <div className="w-full flex flex-col gap-6 h-fit max-h-[55vh] overflow-y-auto pb-2">
+              <div className="flex flex-col gap-2">
+                <p className="font-semibold text-xs">Accionable:</p>
+                <p className="text-xs text-[#626F86] mt-1">
+                  Los accionables que agrergues aquí también de
+                  mostrarán en Jira.
+                </p>
+                <form onSubmit={handleSubmit} id="formAccionable">
+                  <TextArea
+                    name="accionable"
+                    value={accionable.accionable}
+                    onChange={handleChangeAccionable}
+                    className="text-sm w-full border-2 rounded-sm p-2  hover:bg-gray-100 placeholder:text-xs h-10"
+                    autoComplete="off"
+                    placeholder="Ingresa tu nuevo accionable*"
+                    isRequired
+                  />
+                  <p className="text-xs text-[#626F86] mt-5">
+                    Fecha Estimada de Cierre:
+                  </p>
+                  <input
+                    required
+                    type="date"
+                    className="w-1/2 bg-slate-50 border mt-1 rounded-sm p-2 text-xs text-gray-500 focus:outline-blue-500 hover:bg-gray-100 placeholder:text-xs h-10"
+                    onChange={handleChangeFecha}
+                  />
+                </form>
+              </div>
+            </div>
+            {/* FOOTER */}
+            {/* INVALIDO */}
+            {!validPattern && (
+              <div>
+                <button
+                  type="submit"
+                  form="formAccionable"
+                  className="text-sm"
+                >
+                  <Button appearance="primary" isDisabled>
+                    Agregar Accionable
+                  </Button>
+                </button>
+              </div>
+            )}
+            {/* NORMAL */}
+            {validPattern && (
+              <div>
+                <button
+                  type="submit"
+                  form="formAccionable"
+                  className="text-sm"
+                >
+                  <Button appearance="primary">
+                    Agregar Accionable
+                  </Button>
+                </button>
+              </div>
+            )}
           </div>
         </motion.div>
       </Blanket>

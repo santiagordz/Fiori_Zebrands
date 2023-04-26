@@ -81,4 +81,19 @@ module.exports = class Accionable {
       [id]
     );
   }
+
+  static solveAccionable = async (id) => {
+    const bodyData = {
+      transition: {
+        id: '31',
+      },
+    };
+    await axios.post(
+      `https://fioritec.atlassian.net/rest/api/3/issue/${id}/transitions`,
+      bodyData,
+      {
+        auth: auth,
+      }
+    );
+  };
 };
