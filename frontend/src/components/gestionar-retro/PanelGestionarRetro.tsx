@@ -62,7 +62,7 @@ const PanelGestionarRetro: FC<PanelGestionarRetroProps> = ({}) => {
   }, []);
 
   if (!tryFetch)
-    return <Spinner message="Cargando retrospectivas..." />;
+    return <Spinner message="Cargando retrospectivas..." gap={6} />;
 
   return (
     <div className="grid grid-cols-2 gap-5">
@@ -86,7 +86,7 @@ const PanelGestionarRetro: FC<PanelGestionarRetroProps> = ({}) => {
             );
           })
         ) : (
-          <p>No hay retrospectivas en curso</p>
+          <p className="text-xs">No hay retrospectivas en curso</p>
         )}
       </div>
       <div className={divCardsStyle}>
@@ -111,7 +111,7 @@ const PanelGestionarRetro: FC<PanelGestionarRetroProps> = ({}) => {
             );
           })
         ) : (
-          <p>No hay retrospectivas finalizadas</p>
+          <p className="text-xs">No hay retrospectivas finalizadas</p>
         )}
       </div>
     </div>

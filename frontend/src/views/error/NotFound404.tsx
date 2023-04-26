@@ -13,8 +13,8 @@ const NotFound404: FC<NotFound404Props> = ({}) => {
   const navigate = useNavigate();
   const { user } = useContext(userDataContext);
   return (
-    <div className="flex flex-col items-center gap-7 w-auto h-screen mx-[9vw] ml-[9vw]">
-      <div className="flex items-center justify-center w-full h-screen gap-8">
+    <div className="flex items-center gap-7 w-auto h-screen mx-[9vw] ml-[9vw]">
+      <div className="flex flex-col lg:flex-row items-center justify-center w-full h-screen gap-8">
         <div className="w-full">
           <Lottie
             animationData={Astronaut}
@@ -40,7 +40,7 @@ const NotFound404: FC<NotFound404Props> = ({}) => {
             <Button
               onClick={() => {
                 if (user) {
-                  navigate('/dashboard');
+                  navigate(-1);
                 } else {
                   navigate('/login');
                 }

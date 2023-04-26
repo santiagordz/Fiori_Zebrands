@@ -1,26 +1,20 @@
-import { motion } from 'framer-motion';
-import { FC, useContext, useEffect, useState, memo } from 'react';
-import { useNavigate } from 'react-router-dom';
-import GoogleLogo from '../../assets/Google__G__Logo.svg';
-import Geometry from '../../assets/geometry.png';
-import zebrandsLogo from '../../assets/zebrandsLogo.svg';
-import { userDataContext } from '../../contexts';
 import axios from 'axios';
-interface LoginProps {}
+import { FC, memo, useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import GoogleLogo from '@/assets/Google__G__Logo.svg';
+import Geometry from '@/assets/geometry.webp';
+import zebrandsLogo from '@/assets/zebrandsLogo.svg';
+import { userDataContext } from '../../contexts';
 
 const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/login/google`;
-const URI_JIRA = `${import.meta.env.VITE_APP_BACKEND_URI}/issues`;
+const URI_JIRA = `${
+  import.meta.env.VITE_APP_BACKEND_URI
+}/issues/post`;
 
-const SECRET_KEY_1 =
-  import.meta.env.VITE_APP_COOKIE_KEY_1 || 'secret1';
-const SECRET_KEY_2 =
-  import.meta.env.VITE_APP_COOKIE_KEY_2 || 'secret2';
-
-const Login: FC<LoginProps> = ({}) => {
+const Login: FC = () => {
   const navigate = useNavigate();
   const { user, getUser, setSessionExpired } =
     useContext(userDataContext);
-  const [error, setError] = useState(false);
 
   const postIssues = async () => {
     try {
@@ -59,9 +53,6 @@ const Login: FC<LoginProps> = ({}) => {
       if (event.data.error === 'User not registered') {
         navigate('/usuario-no-registrado');
       }
-      if (event.data.error) {
-        setError(true);
-      }
     };
 
     window.addEventListener('message', handleAuthMessage);
@@ -83,63 +74,59 @@ const Login: FC<LoginProps> = ({}) => {
   }, [user]);
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5, delay: 0.2 }}
-      className="grid items-center w-screen h-screen overflow-hidden"
-      style={{ gridTemplateColumns: '1fr 2fr' }}
-    >
-      <div className="flex items-center absolute top-5 left-9 w-3/12">
-        <img
-          src={zebrandsLogo}
-          alt="Zebrands"
-          className="w-3/12 py-1"
-        />
-        <div className="w-1/12 h-1 rounded-full bg-discovery text-white pointer-events-none">
-          .
-        </div>
-        <p className="text-base font-semibold pl-2 w-full text-textNormal">
-          RetroZeb
-        </p>
-      </div>
-      <div className="w-full flex flex-col gap-9 items-center justify-center px-16 relative">
-        <div className="flex flex-col gap-3">
-          <h1 className="text-5xl font-medium w-full text-selectBold">
-            Te damos la bienvenida
-          </h1>
-          <p className="text-paragraph">
-            Inicia sesión con tu cuenta registrada @zeb.mx de Google
-            para continuar.
+    <div className="grid items-center w-screen h-screen overflow-hidden md:grid-cols-3">
+      <div className="md:col-span-1">
+        <div className="flex items-center absolute top-5 left-9 w-3/12">
+          <img
+            src={zebrandsLogo}
+            alt="Zebrands"
+            className="w-24 py-1"
+          />
+          <div className="w-8 h-1 rounded-full bg-discovery text-white pointer-events-none">
+            .
+          </div>
+          <p className="text-base font-semibold pl-2 w-full text-textNormal">
+            RetroZeb
           </p>
         </div>
-        <div className="w-full">
-          <button
-            onClick={redirectToGoogleSSO}
-            className="flex items-center justify-evenly rounded-full w-full  border border-solid border-slate-300 text-sm py-2 px-3 text-slate-900 hover:bg-[#f8faff] hover:border-[#d2e3fc]"
-          >
-            <div className="w-fit">
-              <img
-                src={GoogleLogo}
-                alt="Google"
-                className="w-[1.15rem]"
-              />
-            </div>
-            <div className="w-full flex items-center justify-center">
-              Continuar con Google
-            </div>
-          </button>
+        <div className="w-full flex flex-col md:gap-9 items-center justify-center px-16 relative">
+          <div className="flex flex-col gap-6 md:gap-3">
+            <h1 className="text-5xl font-medium w-full text-selectBold">
+              Te damos la bienvenida
+            </h1>
+            <p className="text-paragraph text-left md:text-left">
+              Inicia sesión con tu cuenta registrada en RetroZeb de
+              Google para continuar.
+            </p>
+          </div>
+          <div className="w-full pt-10 md:pt-0">
+            <button
+              onClick={redirectToGoogleSSO}
+              className="flex items-center justify-evenly rounded-full w-full  border border-solid border-slate-300 text-sm py-2 px-3 text-slate-900 hover:bg-[#f8faff] hover:border-[#d2e3fc]"
+            >
+              <div className="w-fit">
+                <img
+                  src={GoogleLogo}
+                  alt="Google"
+                  className="w-[1.15rem]"
+                />
+              </div>
+              <div className="w-full flex items-center justify-center">
+                Continuar con Google
+              </div>
+            </button>
+          </div>
         </div>
       </div>
 
-      <div className="h-full overflow-hidden pointer-events-none">
+      <div className="hidden md:block md:col-span-2 h-full overflow-hidden pointer-events-none">
         <img
           src={Geometry}
           alt="Geometry"
-          className="w-full h-full scale-[1.6] relative object-cover object-center"
+          className="w-full h-full relative object-cover object-center"
         />
       </div>
-    </motion.div>
+    </div>
   );
 };
 

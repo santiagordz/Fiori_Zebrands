@@ -24,7 +24,7 @@ const ResponsableIcon: FC<ResponsableIconProps> = ({ usuario }) => {
 
   useEffect(() => {
     setRolActual(usuario.rol);
-  }, []);
+  }, [usuario]);
 
   const handleMouseOverResponsable = (
     e: React.MouseEvent<HTMLButtonElement>

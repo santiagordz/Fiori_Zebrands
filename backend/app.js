@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 
 app.use(
   cors({
-    origin: 'http://padawan-2.laing.mx',
+    origin: process.env.FRONTEND_URI,
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: [
@@ -37,7 +37,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get('/', (req, res, next) => {
+app.get('/api', (req, res, next) => {
   res.json({ message: 'Fiori' });
 });
 
@@ -46,7 +46,7 @@ app.use(authRoutes);
 app.use((err, req, res, next) => {
   if (err.message === 'UserNotFound') {
     req.session.destroy();
-    res.redirect('/');
+    res.redirect('/api');
   } else {
     next(err);
   }
@@ -65,26 +65,26 @@ const sprintsJiraRoutes = require('./routes/sprints.routes');
 const epicJiraRoutes = require('./routes/epicsJira.routes');
 const metricasRoutes = require('./routes/metricas.routes');
 
-app.use('/usuarios', usuariosRoutes);
-app.use('/usuarios_jira', usuariosJiraRoutes);
-app.use('/roles', rolesRoutes);
-app.use('/etiquetas', etiquetasRoutes);
-app.use('/colores', coloresRoutes);
-app.use('/user', usuariosRoutes);
-app.use('/retrospectivas', retrospectivaRoutes);
-app.use('/respuesta', respuestaRoutes);
-app.use('/issues', issuesJiraRoutes);
-app.use('/sprints', sprintsJiraRoutes);
-app.use('/epics', epicJiraRoutes);
-app.use('/metricas', metricasRoutes);
+//Rutas para Deploy en AWS
 
-app.use('/issuesjira', issuesJiraRoutes);
-app.use('/preguntas', preguntaRoutes);
+app.use('/api/usuarios', usuariosRoutes);
+app.use('/api/usuarios_jira', usuariosJiraRoutes);
+app.use('/api/roles', rolesRoutes);
+app.use('/api/etiquetas', etiquetasRoutes);
+app.use('/api/colores', coloresRoutes);
+app.use('/api/user', usuariosRoutes);
+app.use('/api/retrospectivas', retrospectivaRoutes);
+app.use('/api/respuesta', respuestaRoutes);
+app.use('/api/issues', issuesJiraRoutes);
+app.use('/api/sprints', sprintsJiraRoutes);
+app.use('/api/epics', epicJiraRoutes);
+app.use('/api/metricas', metricasRoutes);
+app.use('/api/preguntas', preguntaRoutes);
 
-app.get('/logout', (req, res) => {
+app.get('/api/logout', (req, res) => {
   req.logout();
   res.clearCookie('connect.sid');
-  res.redirect('/');
+  res.redirect('/api');
 });
 
 app.listen(8000, () => {

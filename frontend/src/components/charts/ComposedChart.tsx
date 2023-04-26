@@ -16,17 +16,20 @@ interface SameDataComposedChartProps {
     nombre: string;
     total_story_points: number;
   }[];
+  isSprint?: boolean;
   barColor?: string;
   lineColor?: string;
   animation?: boolean;
   showHeights?: boolean;
 }
 
-function CustomTooltip({ payload, label, active }: any) {
+function CustomTooltip({ payload, label, active, isSprint }: any) {
   if (payload && payload.length > 0 && label !== undefined) {
     return (
       <div className="bg-white p-2 text-xs border-2 rounded">
-        <p>Sprint: {label}</p>
+        <p>
+          {isSprint ? 'Sprint' : 'Epic'}: {label}
+        </p>
         <p>Story Points: {payload[0].value} </p>
       </div>
     );
@@ -40,6 +43,7 @@ export default function SameDataComposedChart({
   lineColor = '#5E4DB2',
   animation = true,
   showHeights = false,
+  isSprint = true,
 }: SameDataComposedChartProps) {
   const maxY = Math.max(
     ...data.map((item) => item.total_story_points)
@@ -59,7 +63,7 @@ export default function SameDataComposedChart({
         <CartesianGrid stroke="#f5f5f5" />
         <XAxis dataKey="nombre" tick={false} />
         <YAxis domain={[0, maxY + 3]} />
-        <Tooltip content={<CustomTooltip />} />
+        <Tooltip content={<CustomTooltip isSprint={isSprint} />} />
         <Legend />
         <Bar
           isAnimationActive={animation}

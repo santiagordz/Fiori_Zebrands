@@ -12,7 +12,7 @@ import DropdownUsuariosJira from '../DropdownUsuariosJira';
 import CrossIcon from '@atlaskit/icon/glyph/cross';
 import SectionMessage from '@atlaskit/section-message';
 import { userDataContext } from '../../../contexts';
-import { type Etiqueta, getUsersContext } from '../local-contexts';
+import { type Etiqueta } from '../local-contexts';
 import CheckCircleIcon from '@atlaskit/icon/glyph/check-circle';
 import EditorErrorIcon from '@atlaskit/icon/glyph/editor/error';
 import { FlagContext } from '../../../contexts';
@@ -31,7 +31,6 @@ const ModalEditarUsuarios: FC<ModalEditarUsuariosProps> = ({
   info,
 }) => {
   const { addFlag } = useContext(FlagContext);
-  const { getUsers } = useContext(getUsersContext);
   const { user } = useContext(userDataContext);
   const [nombre, setNombre] = useState('');
   const [correo, setCorreo] = useState('');
@@ -61,7 +60,6 @@ const ModalEditarUsuarios: FC<ModalEditarUsuariosProps> = ({
         id_jira: usuarioJira,
       });
       res.then(() => {
-        getUsers();
         addFlag(
           '¡Bien! Los datos del usuario se han actualizado exitosamente.',
           CheckCircleIcon,

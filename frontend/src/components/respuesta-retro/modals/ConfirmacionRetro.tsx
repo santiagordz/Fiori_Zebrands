@@ -2,6 +2,7 @@ import Blanket from '@atlaskit/blanket';
 import Button, { LoadingButton } from '@atlaskit/button';
 import ErrorIcon from '@atlaskit/icon/glyph/error';
 import JiraFailedBuildStatusIcon from '@atlaskit/icon/glyph/jira/failed-build-status';
+import EditorDoneIcon from '@atlaskit/icon/glyph/editor/done';
 import { FC, useCallback, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -36,22 +37,23 @@ const ConfirmacionRetro: FC<ConfirmacionRetroProps> = ({
         <div className="flex flex-col bg-white rounded px-8 lg:px-20 py-14">
           <div className="flex justify-center items-center flex-col gap-5">
             <div className="">
-              <JiraFailedBuildStatusIcon
+              <EditorDoneIcon
                 label="confirmacion"
-                primaryColor="#1D7AFC"
+                primaryColor="#22A06B"
                 size="xlarge"
-              ></JiraFailedBuildStatusIcon>
+              ></EditorDoneIcon>
             </div>
-
             <h2 className="font-bold text-lg">
-              ¿Deseas registrar tus respuestas?
+              ¡Muy bien! Has terminado de responder la retrospectiva
             </h2>
-            <div className="flex items-center gap-2">
-              <ErrorIcon label="error" primaryColor="#E34935" />
-              <p className="flex flex-row text-xs text-danger">
-                No podrás editarlas después
-              </p>
-            </div>
+            <p className="text-xs">
+              Solamente recuerda que una vez que hayas registrado tus
+              respuestas,{' '}
+              <span className="underline">
+                no podrás editarlas después.
+              </span>
+            </p>
+            <div className="flex items-center gap-2"></div>
             <div className="flex flex-col lg:flex-row gap-2 lg:gap-10">
               <Button
                 appearance="subtle-link"

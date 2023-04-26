@@ -111,7 +111,6 @@ const Recordatorios: FC<RecordatoriosProps> = ({
                             fechaInicio={formatDate(
                               retro.fecha_inicio
                             )}
-                            idRetrospectiva={retro.id}
                             tags={retro.tags}
                           />
                         )

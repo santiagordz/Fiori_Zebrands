@@ -7,27 +7,36 @@ import {
   Text,
   View,
 } from '@react-pdf/renderer';
-import { FC, useState, useEffect } from 'react';
+import { FC, useState, useEffect, memo } from 'react';
 import { format, utcToZonedTime } from 'date-fns-tz';
 import type { chartArrayType } from './ModalReporte';
+import InterRegular from '@/assets/fonts/Inter-Regular.ttf';
+import InterMedium from '@/assets/fonts/Inter-Medium.ttf';
+import InterSemiBold from '@/assets/fonts/Inter-SemiBold.ttf';
+import InterBold from '@/assets/fonts/Inter-Bold.ttf';
+import {
+  calculateAverage,
+  calculatePercentageChange,
+  calculateRateOfChange,
+} from './calculations';
 
 Font.register({
   family: 'Inter',
   fonts: [
     {
-      src: 'http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfMZhrib2Bg-4.ttf',
+      src: InterRegular,
       fontWeight: 400,
     },
     {
-      src: 'http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuI6fMZhrib2Bg-4.ttf',
+      src: InterMedium,
       fontWeight: 500,
     },
     {
-      src: 'http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuGKYMZhrib2Bg-4.ttf',
+      src: InterSemiBold,
       fontWeight: 700,
     },
     {
-      src: 'http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuFuYMZhrib2Bg-4.ttf',
+      src: InterBold,
       fontWeight: 800,
     },
   ],
@@ -89,15 +98,15 @@ const styles = StyleSheet.create({
   },
   chart: {
     marginTop: 10,
-    width: '96%',
-    height: '90%',
+    width: '50%',
+    height: '100%',
   },
   chartsWrapper: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'space-between',
-    height: 180,
+    height: 400,
     marginTop: 10,
-    gap: 10,
+    gap: 18,
   },
   number: {
     fontSize: 10,
@@ -111,7 +120,7 @@ interface ReporteProps {
   canvasEpics: chartArrayType[];
 }
 
-type DataPropertyType = chartArrayType['data'][0];
+export type DataPropertyType = chartArrayType['data'][0];
 
 const Reporte: FC<ReporteProps> = ({
   canvasSprints,
@@ -151,58 +160,44 @@ const Reporte: FC<ReporteProps> = ({
 
   const lastSprint = sprintDoneData[sprintDoneData.length - 1];
 
-  const calculateRateOfChange = (data: DataPropertyType[]) => {
-    if (data.length < 2) return 0;
-    const lastItem = data[data.length - 1];
-    const secondLastItem = data[data.length - 2];
-    return (
-      Number(lastItem.total_story_points) -
-      Number(secondLastItem.total_story_points)
-    );
-  };
+  const sprintDoneRateOfChange = sprintDoneData
+    ? calculateRateOfChange(sprintDoneData)
+    : 0;
+  const sprintToDoRateOfChange = sprintToDoData
+    ? calculateRateOfChange(sprintToDoData)
+    : 0;
+  const epicDoneRateOfChange = epicDoneData
+    ? calculateRateOfChange(epicDoneData)
+    : 0;
+  const epicToDoRateOfChange = epicToDoData
+    ? calculateRateOfChange(epicToDoData)
+    : 0;
 
-  const calculateAverage = (data: DataPropertyType[]) => {
-    if (data.length === 0) return 0;
-    const total = data.reduce(
-      (sum, item) => sum + Number(item.total_story_points),
-      0
-    );
-    return (total / data.length).toFixed(2);
-  };
+  const sprintDoneAverage = sprintDoneData
+    ? calculateAverage(sprintDoneData)
+    : 0;
+  const sprintToDoAverage = sprintToDoData
+    ? calculateAverage(sprintToDoData)
+    : 0;
+  const epicDoneAverage = epicDoneData
+    ? calculateAverage(epicDoneData)
+    : 0;
+  const epicToDoAverage = epicToDoData
+    ? calculateAverage(epicToDoData)
+    : 0;
 
-  const calculatePercentageChange = (data: DataPropertyType[]) => {
-    if (data.length < 2) return 0;
-    const lastItem = data[data.length - 1];
-    const secondLastItem = data[data.length - 2];
-    const change =
-      Number(lastItem.total_story_points) -
-      Number(secondLastItem.total_story_points);
-    return (
-      (change / secondLastItem.total_story_points) *
-      100
-    ).toFixed(2);
-  };
-
-  const sprintDoneRateOfChange =
-    calculateRateOfChange(sprintDoneData);
-  const sprintToDoRateOfChange =
-    calculateRateOfChange(sprintToDoData);
-  const epicDoneRateOfChange = calculateRateOfChange(epicDoneData);
-  const epicToDoRateOfChange = calculateRateOfChange(epicToDoData);
-
-  const sprintDoneAverage = calculateAverage(sprintDoneData);
-  const sprintToDoAverage = calculateAverage(sprintToDoData);
-  const epicDoneAverage = calculateAverage(epicDoneData);
-  const epicToDoAverage = calculateAverage(epicToDoData);
-
-  const sprintDonePercentageChange =
-    calculatePercentageChange(sprintDoneData);
-  const sprintToDoPercentageChange =
-    calculatePercentageChange(sprintToDoData);
-  const epicDonePercentageChange =
-    calculatePercentageChange(epicDoneData);
-  const epicToDoPercentageChange =
-    calculatePercentageChange(epicToDoData);
+  const sprintDonePercentageChange = sprintDoneData
+    ? calculatePercentageChange(sprintDoneData)
+    : 0;
+  const sprintToDoPercentageChange = sprintToDoData
+    ? calculatePercentageChange(sprintToDoData)
+    : 0;
+  const epicDonePercentageChange = epicDoneData
+    ? calculatePercentageChange(epicDoneData)
+    : 0;
+  const epicToDoPercentageChange = epicToDoData
+    ? calculatePercentageChange(epicToDoData)
+    : 0;
   return (
     <Document>
       <Page size={'A4'} style={styles.body}>
@@ -237,10 +232,13 @@ const Reporte: FC<ReporteProps> = ({
           <Text style={styles.h3}>Métricas por sprint</Text>
           <Text style={styles.text}>
             En esta sección se presentan las métricas para los sprint.
+            Cada barra de las gráficas representa a un sprint, y se
+            ordenan de la fecha de inicio más antigua (extremo
+            izquierdo) a la más reciente (extremo derecho).
           </Text>
           <View style={styles.chartsWrapper}>
             {canvasSprints.map((chart, index) => (
-              <View style={styles.chartView}>
+              <View style={styles.chartView} key={index}>
                 <Text style={styles.chartTitle}>{chart.name}</Text>
                 <Image
                   key={index}
@@ -294,10 +292,40 @@ const Reporte: FC<ReporteProps> = ({
           <Text style={styles.h3}>Métricas por epic</Text>
           <Text style={styles.text}>
             En esta sección se presentan las métricas para los epic.
+            Cada barra de las gráficas representa a un epic, y se
+            ordenan de la fecha de inicio más antigua (extremo
+            izquierdo) a la más reciente (extremo derecho). Los epics
+            (por orden de aparición) son los siguientes:{' '}
+            {epicDoneData.map((epic, index) => {
+              return (
+                <Text
+                  key={index}
+                  style={{
+                    ...styles.text,
+                    fontWeight: 500,
+                    color: '#8938ff',
+                  }}
+                >
+                  {index === epicDoneData.length - 1 && (
+                    <Text style={{ ...styles.text, fontWeight: 400 }}>
+                      {' '}
+                      y{' '}
+                    </Text>
+                  )}
+                  {epic.nombre}
+                  {index < epicDoneData.length - 2 && (
+                    <Text style={{ ...styles.text, fontWeight: 400 }}>
+                      ,{' '}
+                    </Text>
+                  )}
+                </Text>
+              );
+            })}
+            .
           </Text>
           <View style={styles.chartsWrapper}>
             {canvasEpics.map((chart, index) => (
-              <View style={styles.chartView}>
+              <View style={styles.chartView} key={index}>
                 <Text style={styles.chartTitle}>{chart.name}</Text>
                 <Image
                   key={index}
@@ -343,4 +371,4 @@ const Reporte: FC<ReporteProps> = ({
   );
 };
 
-export default Reporte;
+export default memo(Reporte);

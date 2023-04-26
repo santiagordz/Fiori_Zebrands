@@ -7,7 +7,7 @@ import {
   useNavigate,
   useParams,
 } from 'react-router-dom';
-import Team from '../../../assets/team.png';
+import Team from '../../../assets/team.webp';
 import { questionsContext } from '../local-contexts';
 import { Recordatorios } from '../modals';
 import type { Retrospectiva } from '../../../views/mis-retrospectivas/MisRetrospectivas';

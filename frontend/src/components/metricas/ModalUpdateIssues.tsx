@@ -1,15 +1,14 @@
 import Blanket from '@atlaskit/blanket';
 import Button from '@atlaskit/button';
 import CrossIcon from '@atlaskit/icon/glyph/cross';
+import ErrorIcon from '@atlaskit/icon/glyph/error';
 import InfoIcon from '@atlaskit/icon/glyph/info';
-import WarningIcon from '@atlaskit/icon/glyph/warning';
 import axios from 'axios';
 import { motion } from 'framer-motion';
 import { FC, useContext, useEffect } from 'react';
 import { FlagContext } from '../../contexts';
-import ErrorIcon from '@atlaskit/icon/glyph/error';
 
-const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/issues`;
+const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/issues/post`;
 
 interface ModalUpdateIssuesProps {
   setIsModalOpen: (isOpen: boolean) => void;
@@ -98,7 +97,6 @@ const ModalUpdateIssue: FC<ModalUpdateIssuesProps> = ({
               </h3>
             </div>
             <div className="flex gap-2 items-center justify-center pl-5">
-              <WarningIcon label="warning" primaryColor="#FF0000" />
               <p className="text-xs text-textNormal">
                 Esto puede tomar un tiempo, te pedimos que tengas
                 paciencia.
