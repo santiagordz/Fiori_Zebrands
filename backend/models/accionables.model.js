@@ -26,6 +26,7 @@ module.exports = class Accionable {
   }
 
   static postAccionable = async (id_usuario, descripcion) => {
+    console.log(id_usuario);
     const bodyData = {
       fields: {
         project: {

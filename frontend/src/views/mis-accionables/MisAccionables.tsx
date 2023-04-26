@@ -3,7 +3,7 @@ import { userDataContext } from '../../contexts/';
 import axios from 'axios';
 
 import DesignTemplate from '../../components/design-template/DesignTemplate';
-import ModalNuevoAccionable from '../../components/accionables/modals/ModalNuevoAccionable2';
+import ModalNuevoAccionable from '../../components/accionables/modals/ModalNuevoAccionable';
 import BoxAccionable from '../../components/accionables/BoxAccionable';
 
 import Button from '@atlaskit/button';
@@ -12,7 +12,7 @@ import ErrorIcon from '@atlaskit/icon/glyph/error';
 import WarningIcon from '@atlaskit/icon/glyph/warning';
 import CheckCircleIcon from '@atlaskit/icon/glyph/check-circle';
 
-import Team from '../../assets/icons/medal.svg';
+import Team from '../../assets/medal.png';
 
 const URI = 'http://localhost:8000/accionables';
 
@@ -46,6 +46,7 @@ const MisAccionables: FC<MisAccionablesProps> = ({}) => {
     try {
       const response = await axios.get(`${URI}/${user?.id_usuario}`);
       setAccionables(response.data);
+      console.log(response.data);
     } catch (error) {
       console.error('Error al obtener los accionables:', error);
     }
@@ -69,7 +70,6 @@ const MisAccionables: FC<MisAccionablesProps> = ({}) => {
       );
 
       const fechaReact = accionable.fecha_esperada.split('T')[0];
-      console.log(fechaReact);
 
       if (diferenciaDias > 30) {
         prioridadBaja.push({
