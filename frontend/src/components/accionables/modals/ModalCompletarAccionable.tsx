@@ -3,11 +3,13 @@ import { FlagContext } from '../../../contexts';
 import Blanket from '@atlaskit/blanket';
 import { motion } from 'framer-motion';
 import CrossIcon from '@atlaskit/icon/glyph/cross';
+import CheckCircleIcon from '@atlaskit/icon/glyph/check-circle';
+
 import Button from '@atlaskit/button';
 import { SimpleTag as Tag } from '@atlaskit/tag';
 import axios from 'axios';
 
-const URI = 'http://localhost:8000/accionables/info';
+const URI = 'http://localhost:8000/accionables';
 
 interface ModalCompletarAccionableProps {
   setIsModalOpen: (value: boolean) => void;
@@ -18,6 +20,7 @@ interface Accionable {
   id: number;
   id_usuario: number;
   descripcion: string;
+  key_jira: string;
   fecha_esperada: string;
   createdAt: string;
 }
@@ -30,16 +33,23 @@ const ModalCompletarAccionable: FC<ModalCompletarAccionableProps> = ({
     id: 0,
     id_usuario: 0,
     descripcion: '',
+    key_jira: '',
     fecha_esperada: '',
     createdAt: '',
   });
   const getInfoAccionable = async () => {
-    const response = await axios.get(`${URI}/${id_accionable}`);
+    const response = await axios.get(`${URI}/info/${id_accionable}`);
     setAccionable(response.data[0]);
   };
 
+  const { addFlag } = useContext(FlagContext);
   const handleComplete = async () => {
     try {
+      setIsModalOpen(false);
+      axios.post(
+        `${URI}/solve/${accionable.key_jira}/${accionable.id}`
+      );
+      addFlag('Accionable completado', CheckCircleIcon, 'success');
     } catch (error) {
       console.error('Error al completar el accionable:', error);
     }
