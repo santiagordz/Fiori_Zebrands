@@ -123,7 +123,7 @@ const Login: FC = () => {
         <img
           src={Geometry}
           alt="Geometry"
-          className="w-full h-full scale-[1.7] relative object-cover object-center"
+          className="w-full h-full relative object-cover object-center"
         />
       </div>
     </div>
