@@ -105,7 +105,7 @@ const UsersTable: FC<UsersTableProps> = ({}) => {
         head={TableHead}
         rows={tableRows}
         emptyView={
-          <Spinner message="Cargando usuaios..." gap={6}></Spinner>
+          <Spinner message="Cargando usuarios..." gap={6}></Spinner>
         }
         rowsPerPage={20}
       />
