@@ -93,6 +93,31 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@atlaskit/calendar@npm:^13.0.0":
+  version: 13.0.14
+  resolution: "@atlaskit/calendar@npm:13.0.14"
+  dependencies:
+    "@atlaskit/analytics-next": ^9.0.0
+    "@atlaskit/button": ^16.6.0
+    "@atlaskit/ds-explorations": ^2.0.0
+    "@atlaskit/ds-lib": ^2.1.0
+    "@atlaskit/heading": ^1.2.0
+    "@atlaskit/icon": ^21.11.0
+    "@atlaskit/locale": ^2.3.0
+    "@atlaskit/primitives": ^0.8.0
+    "@atlaskit/theme": ^12.4.0
+    "@atlaskit/tokens": ^1.2.0
+    "@atlaskit/visually-hidden": ^1.1.0
+    "@babel/runtime": ^7.0.0
+    "@emotion/react": ^11.7.1
+    date-fns: ^2.17.0
+    react-uid: ^2.2.0
+  peerDependencies:
+    react: ^16.8.0
+  checksum: c2961ea73c47c6d6b068de85da7ea40e6a8acdf58113d4c56e45862f2d7192cbc32d533b1b5a3c29a48aaa8fd19aacfad3f8741dce4461c3c5844a77bc4c2a17
+  languageName: node
+  linkType: hard
+
 "@atlaskit/checkbox@npm:^12.4.6":
   version: 12.4.6
   resolution: "@atlaskit/checkbox@npm:12.4.6"
@@ -119,6 +144,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@atlaskit/datetime-picker@npm:^12.3.12":
+  version: 12.3.12
+  resolution: "@atlaskit/datetime-picker@npm:12.3.12"
+  dependencies:
+    "@atlaskit/analytics-next": ^9.0.0
+    "@atlaskit/calendar": ^13.0.0
+    "@atlaskit/ds-lib": ^2.1.0
+    "@atlaskit/icon": ^21.11.0
+    "@atlaskit/locale": ^2.1.0
+    "@atlaskit/popper": ^5.4.0
+    "@atlaskit/select": ^16.1.0
+    "@atlaskit/theme": ^12.4.0
+    "@atlaskit/tokens": ^1.2.0
+    "@babel/runtime": ^7.0.0
+    "@emotion/react": ^11.7.1
+    date-fns: ^2.17.0
+    lodash: ^4.17.21
+    react-scrolllock: ^5.0.1
+  peerDependencies:
+    react: ^16.8.0
+  checksum: e69430a1e28373652dadd748950663d5c7c508053f2c0ce2fad8b0596f2276907123b125aecbc4053ba74faacbc06237a72d3f1f6b8f274731c8c0027aca73a9
+  languageName: node
+  linkType: hard
+
 "@atlaskit/ds-explorations@npm:^2.0.0":
   version: 2.0.10
   resolution: "@atlaskit/ds-explorations@npm:2.0.10"
@@ -142,6 +191,18 @@ __metadata:
   peerDependencies:
     react: ^16.8.0
   checksum: 6f359e269714a37a351b51fedd73e64edb3b4e4f5970172d0faf849620c74b23a36de04d10b454371d03087a734a9644bc5c3f0224685c41ec97d57cd5209d12
+  languageName: node
+  linkType: hard
+
+"@atlaskit/ds-lib@npm:^2.1.2":
+  version: 2.1.3
+  resolution: "@atlaskit/ds-lib@npm:2.1.3"
+  dependencies:
+    "@babel/runtime": ^7.0.0
+    bind-event-listener: ^2.1.1
+  peerDependencies:
+    react: ^16.8.0
+  checksum: 2ac41805cca08c51cfd16a4c3f2031fab5a20381ad87d441cc2dc03e6aea0ba51feb1a85bb8de950ad358a82de02383a49b58ba9449075e999d7181583f111f0
   languageName: node
   linkType: hard
 
@@ -265,6 +326,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@atlaskit/in-product-testing@npm:^0.1.5":
+  version: 0.1.5
+  resolution: "@atlaskit/in-product-testing@npm:0.1.5"
+  dependencies:
+    "@babel/runtime": ^7.0.0
+  checksum: c7950937874fc216940ce3a587a7ac523fa25b5d5bec10a74b4753523ecac7e39e1af22e7bfce20f4ba7e41c5d3c0d658ab57811564cfa3110240701647de8f6
+  languageName: node
+  linkType: hard
+
 "@atlaskit/interaction-context@npm:^2.0.0":
   version: 2.0.0
   resolution: "@atlaskit/interaction-context@npm:2.0.0"
@@ -273,6 +343,18 @@ __metadata:
   peerDependencies:
     react: ^16.8.0
   checksum: 9ff2fa072a29d4d96667868e28e3013dc6ce3b46d554e802ad89a1b0f87c957ee547c79345286ec65f242580424d32556fb729aa24da98a0705868aac9205033
+  languageName: node
+  linkType: hard
+
+"@atlaskit/locale@npm:^2.1.0, @atlaskit/locale@npm:^2.3.0":
+  version: 2.3.6
+  resolution: "@atlaskit/locale@npm:2.3.6"
+  dependencies:
+    "@atlaskit/select": ^16.0.0
+    "@babel/runtime": ^7.0.0
+  peerDependencies:
+    react: ^16.8.0
+  checksum: 6f6a806f4d7a908531b82472dbd9585255e51b82866bce1b95014725e2bb168d4187f6fece3a8015e9e489cd3494100ff673f960a4c9dae58694f9400caa012c
   languageName: node
   linkType: hard
 
@@ -333,6 +415,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@atlaskit/popper@npm:^5.4.0":
+  version: 5.4.11
+  resolution: "@atlaskit/popper@npm:5.4.11"
+  dependencies:
+    "@atlaskit/in-product-testing": ^0.1.5
+    "@babel/runtime": ^7.0.0
+    "@popperjs/core": ^2.9.1
+    react-popper: ^2.2.3
+  peerDependencies:
+    react: ^16.8.0
+  checksum: e41f495582f477420b5f2ac3b340cc5fe41426aee6180173ac01e7032a98b4f947a88faf10a21120b9a9cbdb737f89e35da11f4622bbfc46ca7b3bf7464421d8
+  languageName: node
+  linkType: hard
+
 "@atlaskit/portal@npm:^4.0.0":
   version: 4.2.12
   resolution: "@atlaskit/portal@npm:4.2.12"
@@ -357,6 +453,21 @@ __metadata:
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
   checksum: 04bf703f7677891801351d4d90037417d3465ff323959ff7ff7e2b59489a854c7eb7ddfe610e712e4a4965334c3d19887a81ac86377eec9db33a8965fd83ed58
+  languageName: node
+  linkType: hard
+
+"@atlaskit/primitives@npm:^0.8.0":
+  version: 0.8.3
+  resolution: "@atlaskit/primitives@npm:0.8.3"
+  dependencies:
+    "@atlaskit/ds-lib": ^2.1.2
+    "@atlaskit/tokens": ^1.2.0
+    "@babel/runtime": ^7.0.0
+    "@emotion/react": ^11.7.1
+    "@emotion/serialize": ^1.1.0
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: 11c0d88edb3234e3793c182ca702d7b596ef349113e3071d1551760c86cc7c37f422a21527252f43e9dd4462547eb5865d7ef452d0065bc1d976159fa5e8b1e2
   languageName: node
   linkType: hard
 
@@ -391,6 +502,35 @@ __metadata:
   peerDependencies:
     react: ^16.8.0
   checksum: c3ee77cddb8b2e08528c65182e54b66181327ccd667b76b0510fb1947651c412e0385859688e5da423d99c0dd862756766dbb9a7a5b583529320a88b90f93d80
+  languageName: node
+  linkType: hard
+
+"@atlaskit/select@npm:^16.0.0, @atlaskit/select@npm:^16.1.0":
+  version: 16.1.8
+  resolution: "@atlaskit/select@npm:16.1.8"
+  dependencies:
+    "@atlaskit/analytics-next": ^9.0.0
+    "@atlaskit/icon": ^21.11.0
+    "@atlaskit/spinner": ^15.4.0
+    "@atlaskit/theme": ^12.3.0
+    "@atlaskit/tokens": ^1.2.0
+    "@atlaskit/visually-hidden": ^1.1.0
+    "@babel/runtime": ^7.0.0
+    "@emotion/react": ^11.7.1
+    "@popperjs/core": ^2.9.1
+    bind-event-listener: ^2.1.1
+    memoize-one: ^6.0.0
+    react-fast-compare: ^3.2.0
+    react-focus-lock: ^2.5.2
+    react-node-resolver: ^1.0.1
+    react-popper: ^2.2.3
+    react-select: ^5.4.0
+    react-uid: ^2.2.0
+    shallow-equal: ^1.0.0
+  peerDependencies:
+    react: ^16.8.0
+    react-dom: ^16.8.0
+  checksum: 42994f92a285ef01c8981c49a0853e260cd83bb797431cedae4c7b8b19cd3898f7651f9ca7933904ce1d1c20cc6216d4a542176279bfe1061671daf245d4ff27
   languageName: node
   linkType: hard
 
@@ -497,6 +637,20 @@ __metadata:
   peerDependencies:
     react: ^16.8.0
   checksum: 35670de334ea8d401555b59500f2b0b8d4f163ea67c034ca4719f197408e303c2440afd91194cdbb98d7f7f1a5b39e02701a010d1cbf8644387671a4a8272814
+  languageName: node
+  linkType: hard
+
+"@atlaskit/theme@npm:^12.4.0":
+  version: 12.4.1
+  resolution: "@atlaskit/theme@npm:12.4.1"
+  dependencies:
+    "@atlaskit/codemod-utils": ^4.1.0
+    "@atlaskit/ds-lib": ^2.1.0
+    "@atlaskit/tokens": ^1.2.0
+    "@babel/runtime": ^7.0.0
+  peerDependencies:
+    react: ^16.8.0
+  checksum: 30acb5733143f73aa4c70aca37f75f5280d68ad313789a8142babf3f0296bc1e64e486d856bf6b98e679bff38652fd766cd4ba7896812997727bee69aa6c1641
   languageName: node
   linkType: hard
 
@@ -780,7 +934,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.10.0, @babel/runtime@npm:^7.12.0, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.15.4, @babel/runtime@npm:^7.17.2, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.21.0, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.6.3, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
+"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.10.0, @babel/runtime@npm:^7.12.0, @babel/runtime@npm:^7.12.13, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.15.4, @babel/runtime@npm:^7.17.2, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.21.0, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.6.3, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
   version: 7.21.0
   resolution: "@babel/runtime@npm:7.21.0"
   dependencies:
@@ -1265,7 +1419,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@popperjs/core@npm:^2.11.6":
+"@popperjs/core@npm:^2.11.6, @popperjs/core@npm:^2.9.1":
   version: 2.11.7
   resolution: "@popperjs/core@npm:2.11.7"
   checksum: 5b6553747899683452a1d28898c1b39173a4efd780e74360bfcda8eb42f1c5e819602769c81a10920fc68c881d07fb40429604517d499567eac079cfa6470f19
@@ -2248,6 +2402,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"date-fns@npm:^2.17.0, date-fns@npm:^2.29.3":
+  version: 2.29.3
+  resolution: "date-fns@npm:2.29.3"
+  checksum: e01cf5b62af04e05dfff921bb9c9933310ed0e1ae9a81eb8653452e64dc841acf7f6e01e1a5ae5644d0337e9a7f936175fd2cb6819dc122fdd9c5e86c56be484
+  languageName: node
+  linkType: hard
+
 "debug@npm:4, debug@npm:^4.1.0, debug@npm:^4.3.3":
   version: 4.3.4
   resolution: "debug@npm:4.3.4"
@@ -2292,6 +2453,13 @@ __metadata:
   version: 2.0.3
   resolution: "dequal@npm:2.0.3"
   checksum: 8679b850e1a3d0ebbc46ee780d5df7b478c23f335887464023a631d1b9af051ad4a6595a44220f9ff8ff95a8ddccf019b5ad778a976fd7bbf77383d36f412f90
+  languageName: node
+  linkType: hard
+
+"detect-node-es@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "detect-node-es@npm:1.1.0"
+  checksum: e46307d7264644975b71c104b9f028ed1d3d34b83a15b8a22373640ce5ea630e5640b1078b8ea15f202b54641da71e4aa7597093bd4b91f113db520a26a37449
   languageName: node
   linkType: hard
 
@@ -2493,6 +2661,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"exenv@npm:^1.2.2":
+  version: 1.2.2
+  resolution: "exenv@npm:1.2.2"
+  checksum: a894f3b60ab8419e0b6eec99c690a009c8276b4c90655ccaf7d28faba2de3a6b93b3d92210f9dc5efd36058d44f04098f6bbccef99859151104bfd49939904dc
+  languageName: node
+  linkType: hard
+
 "fast-equals@npm:^4.0.3":
   version: 4.0.3
   resolution: "fast-equals@npm:4.0.3"
@@ -2553,6 +2728,15 @@ __metadata:
   version: 1.1.0
   resolution: "find-root@npm:1.1.0"
   checksum: b2a59fe4b6c932eef36c45a048ae8f93c85640212ebe8363164814990ee20f154197505965f3f4f102efc33bfb1cbc26fd17c4a2fc739ebc51b886b137cbefaf
+  languageName: node
+  linkType: hard
+
+"focus-lock@npm:^0.11.6":
+  version: 0.11.6
+  resolution: "focus-lock@npm:0.11.6"
+  dependencies:
+    tslib: ^2.0.3
+  checksum: 6a407c4c45f05f8258f92565541fc5f8043f576643a7603eb999e1a790173e08712056766ed034ccd31c6d6deed259dea558002712fa5ef2432fc6930b9c7a05
   languageName: node
   linkType: hard
 
@@ -3686,6 +3870,27 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-clientside-effect@npm:^1.2.6":
+  version: 1.2.6
+  resolution: "react-clientside-effect@npm:1.2.6"
+  dependencies:
+    "@babel/runtime": ^7.12.13
+  peerDependencies:
+    react: ^15.3.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+  checksum: 7db6110027a51458b1a46109d2b63dd822825f483c71afef7c0c0a671f3b1aa155049dbd8651c9d536ffac83601f8823b7c3f8916b4f4ee5c3cb7647a85cce4e
+  languageName: node
+  linkType: hard
+
+"react-day-picker@npm:^8.7.1":
+  version: 8.7.1
+  resolution: "react-day-picker@npm:8.7.1"
+  peerDependencies:
+    date-fns: ^2.28.0
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: ae5fa4d5815ec107f624731ef842c1cba388d8890e17884d16196eeb605d5c8d084370382765c55ba9f2adb523bbdfa66a4ae4287722cbc560951fbcbd9285b5
+  languageName: node
+  linkType: hard
+
 "react-dom@npm:^18.2.0":
   version: 18.2.0
   resolution: "react-dom@npm:18.2.0"
@@ -3695,6 +3900,33 @@ __metadata:
   peerDependencies:
     react: ^18.2.0
   checksum: 7d323310bea3a91be2965f9468d552f201b1c27891e45ddc2d6b8f717680c95a75ae0bc1e3f5cf41472446a2589a75aed4483aee8169287909fcd59ad149e8cc
+  languageName: node
+  linkType: hard
+
+"react-fast-compare@npm:^3.0.1, react-fast-compare@npm:^3.2.0":
+  version: 3.2.1
+  resolution: "react-fast-compare@npm:3.2.1"
+  checksum: 209b4dc3a9cc79c074a26ec020459efd8be279accaca612db2edb8ada2a28849ea51cf3d246fc0fafb344949b93a63a43798b6c1787559b0a128571883fe6859
+  languageName: node
+  linkType: hard
+
+"react-focus-lock@npm:^2.5.2":
+  version: 2.9.4
+  resolution: "react-focus-lock@npm:2.9.4"
+  dependencies:
+    "@babel/runtime": ^7.0.0
+    focus-lock: ^0.11.6
+    prop-types: ^15.6.2
+    react-clientside-effect: ^1.2.6
+    use-callback-ref: ^1.3.0
+    use-sidecar: ^1.1.2
+  peerDependencies:
+    "@types/react": ^16.8.0 || ^17.0.0 || ^18.0.0
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+  checksum: f4c696bdbde5008560388622b994c00502d1faeeabff32b02964770c8c020208872f5f6b914b249a8bf3e97cc12e58bb0d227cd33460093654156b7b7f4c8d76
   languageName: node
   linkType: hard
 
@@ -3737,6 +3969,27 @@ __metadata:
     react: ^16.0.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.0.0 || ^17.0.0 || ^18.0.0
   checksum: 429ee74233b2a225164bd77cce94459c20443411248e00604a21752fabf31a36749cc4d52c2a2cf194b98b37c543e0cbb9b76a0e49188acd1f17087035544ca6
+  languageName: node
+  linkType: hard
+
+"react-node-resolver@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "react-node-resolver@npm:1.0.1"
+  checksum: a09a787610ff59b2c6a8d61ae71da83eeb5fc42ca2ecbfdebcefb36926fca14c26321225e1395acb003f777c95af0562a75bc36ea1f50366a19a7c674c26c280
+  languageName: node
+  linkType: hard
+
+"react-popper@npm:^2.2.3":
+  version: 2.3.0
+  resolution: "react-popper@npm:2.3.0"
+  dependencies:
+    react-fast-compare: ^3.0.1
+    warning: ^4.0.2
+  peerDependencies:
+    "@popperjs/core": ^2.0.0
+    react: ^16.8.0 || ^17 || ^18
+    react-dom: ^16.8.0 || ^17 || ^18
+  checksum: 837111c98738011c69b3069a464ea5bdcbf487105b6148e8faf90cb7337e134edb1b98b8824322941c378756cca30a15c18c25f558e53b85ed5762fa0dc8e6b2
   languageName: node
   linkType: hard
 
@@ -3804,7 +4057,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-select@npm:^5.7.0":
+"react-scrolllock@npm:^5.0.1":
+  version: 5.0.1
+  resolution: "react-scrolllock@npm:5.0.1"
+  dependencies:
+    exenv: ^1.2.2
+  peerDependencies:
+    react: ^16.3.0
+  checksum: 61833bdb1f48cf7dbf54e7483f1e7b4b18617b2c356d1388f60d5c32b5befeea407601f8e4980ba43f910d6b08dc89b8f2e67cfee4c7a99d03073e72b43dec92
+  languageName: node
+  linkType: hard
+
+"react-select@npm:^5.4.0, react-select@npm:^5.7.0":
   version: 5.7.2
   resolution: "react-select@npm:5.7.2"
   dependencies:
@@ -4031,6 +4295,7 @@ __metadata:
     "@atlaskit/blanket": ^12.3.7
     "@atlaskit/button": ^16.5.6
     "@atlaskit/checkbox": ^12.4.6
+    "@atlaskit/datetime-picker": ^12.3.12
     "@atlaskit/dynamic-table": ^14.8.12
     "@atlaskit/empty-state": ^7.4.9
     "@atlaskit/flag": ^15.0.8
@@ -4056,6 +4321,7 @@ __metadata:
     autoprefixer: ^10.4.14
     axios: ^1.3.4
     crypto-js: ^4.1.1
+    date-fns: ^2.29.3
     framer-motion: ^10.5.0
     js-cookie: ^3.0.1
     lottie-react: ^2.4.0
@@ -4063,6 +4329,7 @@ __metadata:
     postcss: ^8.4.21
     react: ^18.2.0
     react-bootstrap: ^2.7.2
+    react-day-picker: ^8.7.1
     react-dom: ^18.2.0
     react-loader-spinner: ^5.3.4
     react-router-dom: ^6.9.0
@@ -4171,6 +4438,13 @@ __metadata:
   version: 2.0.0
   resolution: "set-blocking@npm:2.0.0"
   checksum: 6e65a05f7cf7ebdf8b7c75b101e18c0b7e3dff4940d480efed8aad3a36a4005140b660fa1d804cb8bce911cac290441dc728084a30504d3516ac2ff7ad607b02
+  languageName: node
+  linkType: hard
+
+"shallow-equal@npm:^1.0.0":
+  version: 1.2.1
+  resolution: "shallow-equal@npm:1.2.1"
+  checksum: 4f1645cc516e7754c4438db687e1da439a5f29a7dba2ba90c5f88e5708aeb17bc4355ba45cad805b0e95dc898e37d8bf6d77d854919c7512f89939986cff8cd1
   languageName: node
   linkType: hard
 
@@ -4444,7 +4718,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.0.0, tslib@npm:^2.4.0":
+"tslib@npm:^2.0.0, tslib@npm:^2.0.3, tslib@npm:^2.4.0":
   version: 2.5.0
   resolution: "tslib@npm:2.5.0"
   checksum: ae3ed5f9ce29932d049908ebfdf21b3a003a85653a9a140d614da6b767a93ef94f460e52c3d787f0e4f383546981713f165037dc2274df212ea9f8a4541004e1
@@ -4528,6 +4802,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"use-callback-ref@npm:^1.3.0":
+  version: 1.3.0
+  resolution: "use-callback-ref@npm:1.3.0"
+  dependencies:
+    tslib: ^2.0.0
+  peerDependencies:
+    "@types/react": ^16.8.0 || ^17.0.0 || ^18.0.0
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+  checksum: 7913df383a5a6fcb399212eedefaac2e0c6f843555202d4e3010bac3848afe38ecaa3d0d6500ad1d936fbeffd637e6c517e68edb024af5e6beca7f27f3ce7b21
+  languageName: node
+  linkType: hard
+
 "use-isomorphic-layout-effect@npm:^1.1.2":
   version: 1.1.2
   resolution: "use-isomorphic-layout-effect@npm:1.1.2"
@@ -4546,6 +4835,22 @@ __metadata:
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
   checksum: 8f08eba26d69406b61bb4b8dacdd5a92bd6aef5b53d346dfe87954f7330ee10ecabc937cc7854635155d46053828e85c10b5a5aff7a04720e6a97b9f42999bac
+  languageName: node
+  linkType: hard
+
+"use-sidecar@npm:^1.1.2":
+  version: 1.1.2
+  resolution: "use-sidecar@npm:1.1.2"
+  dependencies:
+    detect-node-es: ^1.1.0
+    tslib: ^2.0.0
+  peerDependencies:
+    "@types/react": ^16.9.0 || ^17.0.0 || ^18.0.0
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+  checksum: 925d1922f9853e516eaad526b6fed1be38008073067274f0ecc3f56b17bb8ab63480140dd7c271f94150027c996cea4efe83d3e3525e8f3eda22055f6a39220b
   languageName: node
   linkType: hard
 
@@ -4628,7 +4933,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"warning@npm:^4.0.0, warning@npm:^4.0.3":
+"warning@npm:^4.0.0, warning@npm:^4.0.2, warning@npm:^4.0.3":
   version: 4.0.3
   resolution: "warning@npm:4.0.3"
   dependencies:

@@ -1,14 +1,15 @@
-import Button from "@atlaskit/button";
-import AddIcon from "@atlaskit/icon/glyph/add";
-import { FC, useCallback, useState } from "react";
-import DesignTemplate from "../../components/design-template/DesignTemplate";
-import ModalNuevoAccionable from "../../components/accionables/modals/ModalNuevoAccionable";
-import BoxAccionable from "../../components/accionables/modals/accionable/BoxAccionable";
-import ErrorIcon from "@atlaskit/icon/glyph/error";
-import WarningIcon from "@atlaskit/icon/glyph/warning";
-import CheckCircleIcon from "@atlaskit/icon/glyph/check-circle";
-import axios from "axios";
-import { useEffect } from "react";
+import Button from '@atlaskit/button';
+import AddIcon from '@atlaskit/icon/glyph/add';
+import { FC, useCallback, useState } from 'react';
+import DesignTemplate from '../../components/design-template/DesignTemplate';
+// import ModalNuevoAccionable from '../../components/accionables/modals/ModalNuevoAccionable2';
+import ModalNuevoAccionable from '../../components/accionables/modals/ModalNuevoAccionable2';
+import BoxAccionable from '../../components/accionables/BoxAccionable';
+import ErrorIcon from '@atlaskit/icon/glyph/error';
+import WarningIcon from '@atlaskit/icon/glyph/warning';
+import CheckCircleIcon from '@atlaskit/icon/glyph/check-circle';
+import axios from 'axios';
+import { useEffect } from 'react';
 
 interface MisAccionablesProps {
   setIsNewAccionableOpen: (value: boolean) => void;
@@ -19,14 +20,18 @@ const MisAccionables: FC<MisAccionablesProps> = ({}) => {
   const [isNewAccionableOpen, setIsNewAccionableOpen] =
     useState<boolean>(false);
   const [accionables, setAccionables] = useState<any[]>([]);
-  const [accionablesPersonales, setAccionablesPersonales] = useState<any[]>([]);
+  const [accionablesPersonales, setAccionablesPersonales] = useState<
+    any[]
+  >([]);
 
   const getAccionables = async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/accionables/24`);
-      setAccionablesPersonales(response.data);
+      // const response = await axios.get(
+      //   `http://localhost:8000/accionables/24`
+      // );
+      // setAccionablesPersonales(response.data);
     } catch (error) {
-      console.error("Error al obtener los accionables:", error);
+      console.error('Error al obtener los accionables:', error);
     }
   };
 
@@ -40,26 +45,30 @@ const MisAccionables: FC<MisAccionablesProps> = ({}) => {
     const diasTranscurridos = Math.floor(
       (hoy.getTime() - fechaAccionable.getTime()) / (1000 * 3600 * 24)
     );
-    let prioridad = "baja";
+    let prioridad = 'baja';
     if (diasTranscurridos >= 14 && diasTranscurridos < 21) {
-      prioridad = "media";
+      prioridad = 'media';
     } else if (diasTranscurridos >= 21) {
-      prioridad = "alta";
+      prioridad = 'alta';
     }
     setAccionables((prevAccionables) => [
       ...prevAccionables,
-      { ...accionable, fecha: new Date().toLocaleDateString(), prioridad },
+      {
+        ...accionable,
+        fecha: new Date().toLocaleDateString(),
+        prioridad,
+      },
     ]);
   };
 
   const accionablesPrioridadBaja = accionables.filter(
-    (accionable) => accionable.prioridad === "baja"
+    (accionable) => accionable.prioridad === 'baja'
   );
   const accionablesPrioridadMedia = accionables.filter(
-    (accionable) => accionable.prioridad === "media"
+    (accionable) => accionable.prioridad === 'media'
   );
   const accionablesPrioridadAlta = accionables.filter(
-    (accionable) => accionable.prioridad === "alta"
+    (accionable) => accionable.prioridad === 'alta'
   );
 
   return (
@@ -78,7 +87,11 @@ const MisAccionables: FC<MisAccionablesProps> = ({}) => {
         <div className="grid grid-cols-3 gap-5 pb-5">
           <div className="flex flex-col gap-5 bg-[#ffffff] py-5 px-5 rounded-sm shadow-sm overflow-y-auto max-h-[40rem] min-w-[28rem]">
             <div className="flex items-center">
-              <ErrorIcon label="error" size="medium" primaryColor="#DE350B" />
+              <ErrorIcon
+                label="error"
+                size="medium"
+                primaryColor="#DE350B"
+              />
               <p className="font-semibold flex flex-row text-s text-danger ml-2">
                 Prioridad Alta
               </p>
@@ -138,9 +151,9 @@ const MisAccionables: FC<MisAccionablesProps> = ({}) => {
 
       {isNewAccionableOpen && (
         <ModalNuevoAccionable
-          getAccionables={getAccionables}
-          setIsNewAccionableOpen={setIsNewAccionableOpen}
-          agregarAccionable={agregarAccionable}
+          // getAccionables={getAccionables}
+          setIsModalOpen={setIsNewAccionableOpen}
+          // agregarAccionable={agregarAccionable}
         />
       )}
     </>

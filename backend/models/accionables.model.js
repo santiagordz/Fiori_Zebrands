@@ -19,10 +19,8 @@ module.exports = class Accionable {
 
   static createAccionable(id_usuario, accionable, fecha) {
     return db.execute(
-      `
-          INSERT INTO accionables (id_usuario, accionable, fecha)
-          VALUES (?, ?, ?)
-              `,
+      `INSERT INTO accionables (id_usuario, descripcion, fecha_esperada)
+       VALUES (?, ?, ?)`,
       [id_usuario, accionable, fecha]
     );
   }
@@ -35,10 +33,10 @@ module.exports = class Accionable {
         },
         summary: `${descripcion}`,
         issuetype: {
-          name: 'Story',
+          name: 'Bug',
         },
         customfield_10016: 100,
-        customfield_10036: '2022-04-25',
+        // customfield_10036: '2022-04-25',
         assignee: `${id_usuario}`,
       },
     };

@@ -15,18 +15,13 @@ const getAccionablesByUserId = async (req, res) => {
 };
 
 const createAccionable = (req, res) => {
-  console.log('Recibiendo accionable:', req.body);
-  const { id_usuario, accionable, fecha } = req.body;
-
-  const [dia, mes, anio] = fecha.split('/');
-  const fechaFormatoMySQL = `${anio}-${mes.padStart(
-    2,
-    '0'
-  )}-${dia.padStart(2, '0')}`;
+  const { id_usuario, descripcion, fecha_estimada } = req.body;
+  const [anio, mes, dia] = fecha_estimada.split('-');
+  const fechaFormatoMySQL = `${anio}-${mes}-${dia} 00:00:00`;
 
   Accionables.createAccionable(
     id_usuario,
-    accionable,
+    descripcion,
     fechaFormatoMySQL
   )
     .then(([rows, fieldData]) => {

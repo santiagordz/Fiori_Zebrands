@@ -1,16 +1,20 @@
-import React, { FC, useState, useEffect } from "react";
-import { ErrorMessage } from "@atlaskit/form";
-import axios from "axios";
-import { customAlphabet } from "nanoid";
-import Blanket from "@atlaskit/blanket";
-import Button from "@atlaskit/button";
-import { motion } from "framer-motion";
-import CrossIcon from "@atlaskit/icon/glyph/cross";
-import TextArea from "@atlaskit/textarea";
-import { DatePicker } from "@atlaskit/datetime-picker";
-import Form, { Field, FormFooter, HelperMessage } from "@atlaskit/form";
+import React, { FC, useState, useEffect, useContext } from 'react';
+import { ErrorMessage } from '@atlaskit/form';
+import axios from 'axios';
+import { customAlphabet } from 'nanoid';
+import Blanket from '@atlaskit/blanket';
+import Button from '@atlaskit/button';
+import { motion } from 'framer-motion';
+import CrossIcon from '@atlaskit/icon/glyph/cross';
+import TextArea from '@atlaskit/textarea';
+import { DatePicker } from '@atlaskit/datetime-picker';
+import Form, {
+  Field,
+  FormFooter,
+  HelperMessage,
+} from '@atlaskit/form';
 
-const URI = "http://localhost:8000/accionables/";
+const URI = 'http://localhost:8000/accionables/';
 
 const currentUser = {
   id: 24, // Reemplaza esto con el id del usuario actual
@@ -30,11 +34,11 @@ const ModalNuevoAccionable: FC<ModalNuevoAccionableProps> = ({
   agregarAccionable,
 }) => {
   //cambiar estoooo!!!!!
-  const nanoid = customAlphabet("1234567890", 5);
+  const nanoid = customAlphabet('1234567890', 5);
 
   const [newAccionable, setNewAccionable] = useState<any>({
     id: 0,
-    accionable: "",
+    accionable: '',
     fecha: new Date().toLocaleDateString(),
   });
 
@@ -42,7 +46,7 @@ const ModalNuevoAccionable: FC<ModalNuevoAccionableProps> = ({
     try {
       await axios.post(URI, accionable);
     } catch (error) {
-      console.error("Error al guardar el accionable:", error);
+      console.error('Error al guardar el accionable:', error);
     }
   };
 
@@ -61,10 +65,10 @@ const ModalNuevoAccionable: FC<ModalNuevoAccionableProps> = ({
       ...newAccionable,
       id: Number(nanoid()),
     });
-    document.body.classList.add("modal-open");
+    document.body.classList.add('modal-open');
 
     return () => {
-      document.body.classList.remove("modal-open");
+      document.body.classList.remove('modal-open');
     };
   }, []);
 
@@ -91,7 +95,8 @@ const ModalNuevoAccionable: FC<ModalNuevoAccionableProps> = ({
             <div className="flex flex-col gap-2">
               <p className="font-semibold text-xs">Accionable:</p>
               <p className="text-xs text-[#626F86] mt-1">
-                Los accionables que agrergues aquí también de mostrarán en Jira.
+                Los accionables que agrergues aquí también de
+                mostrarán en Jira.
               </p>
 
               <TextArea
@@ -111,7 +116,7 @@ const ModalNuevoAccionable: FC<ModalNuevoAccionableProps> = ({
 
               <Form
                 onSubmit={(formState: unknown) =>
-                  console.log("form submitted", formState)
+                  console.log('form submitted', formState)
                 }
               >
                 {({ formProps }) => (
@@ -141,7 +146,8 @@ const ModalNuevoAccionable: FC<ModalNuevoAccionableProps> = ({
               <div className="w-full flex flex-col justify-end items-end">
                 {excedeLimite && (
                   <ErrorMessage>
-                    Tu respuesta excede el número de caracteres permitidos
+                    Tu respuesta excede el número de caracteres
+                    permitidos
                   </ErrorMessage>
                 )}
               </div>
@@ -161,14 +167,19 @@ const ModalNuevoAccionable: FC<ModalNuevoAccionableProps> = ({
             <Button
               appearance="primary"
               onClick={async () => {
-                if (newAccionable.accionable.length <= MAX_CARACTERES) {
+                if (
+                  newAccionable.accionable.length <= MAX_CARACTERES
+                ) {
                   const accionableToSend = {
                     ...newAccionable,
                     fecha: new Date().toLocaleDateString(),
                     id_usuario: currentUser.id,
                   };
                   agregarAccionable(accionableToSend);
-                  console.log("Enviando accionable:", accionableToSend);
+                  console.log(
+                    'Enviando accionable:',
+                    accionableToSend
+                  );
                   await saveAccionable(accionableToSend);
                   setIsNewAccionableOpen(false);
                   getAccionables();
