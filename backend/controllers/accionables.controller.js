@@ -2,7 +2,6 @@ const Accionables = require('../models/accionables.model');
 
 const getAccionablesByUserId = async (req, res) => {
   const id_usuario = req.params.id;
-  console.log(id_usuario);
 
   try {
     const [accionables] = await Accionables.getAccionablesByUserId(
@@ -15,19 +14,16 @@ const getAccionablesByUserId = async (req, res) => {
 };
 
 const createAccionable = (req, res) => {
-  console.log('Recibiendo accionable:', req.body);
-  const { id_usuario, accionable, fecha } = req.body;
-
-  const [dia, mes, anio] = fecha.split('/');
-  const fechaFormatoMySQL = `${anio}-${mes.padStart(
-    2,
-    '0'
-  )}-${dia.padStart(2, '0')}`;
+  const { id_usuario, descripcion, fecha_estimada, key_jira } =
+    req.body;
+  const [anio, mes, dia] = fecha_estimada.split('-');
+  const fechaFormatoMySQL = `${anio}-${mes}-${dia} 00:00:00`;
 
   Accionables.createAccionable(
     id_usuario,
-    accionable,
-    fechaFormatoMySQL
+    descripcion,
+    fechaFormatoMySQL,
+    key_jira
   )
     .then(([rows, fieldData]) => {
       res.json(rows);
@@ -35,11 +31,20 @@ const createAccionable = (req, res) => {
     .catch((err) => console.log(err));
 };
 
+const getAccionableInfo = async (req, res) => {
+  const id = req.params.id;
+  const response = await Accionables.getAccionableInfo(id);
+  res.json(response[0]);
+};
+
 const postAccionable = async (req, res) => {
   try {
     const { id_usuario, descripcion } = req.params;
-    await Accionables.postAccionable(id_usuario, descripcion);
-    res.json({ message: 'Accionable creado' });
+    const respuesta = await Accionables.postAccionable(
+      id_usuario,
+      descripcion
+    );
+    res.send(respuesta);
   } catch (err) {
     console.log(err);
   }
@@ -49,4 +54,5 @@ module.exports = {
   getAccionablesByUserId,
   createAccionable,
   postAccionable,
+  getAccionableInfo,
 };
