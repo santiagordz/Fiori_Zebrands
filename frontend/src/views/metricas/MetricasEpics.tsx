@@ -130,13 +130,14 @@ const MetricasEpics: FC = ({}) => {
       <div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-3 justify-center gap-7 w-full h-auto md:h-[70rem]">
         <div className="md:col-span-3 flex flex-col md:flex-row gap-7">
           <ChartCards title="Story points en Done acumulados por epic">
-            <ComposedChart data={chart5Data} />
+            <ComposedChart data={chart5Data} isSprint={false} />
           </ChartCards>
           <ChartCards title="Story points en To Do acumulados por epic">
             <ComposedChart
               data={chart6Data}
               barColor="#8838ff"
               lineColor="#388bff"
+              isSprint={false}
             />
           </ChartCards>
         </div>
@@ -147,11 +148,12 @@ const MetricasEpics: FC = ({}) => {
               data={chart3Data}
               barColor="#8838ff"
               lineColor="#388bff"
+              isSprint={false}
             />
           </ChartCards>
 
           <ChartCards title="Story points en To Do por epic">
-            <ComposedChart data={chart4Data} />
+            <ComposedChart data={chart4Data} isSprint={false} />
           </ChartCards>
         </div>
 

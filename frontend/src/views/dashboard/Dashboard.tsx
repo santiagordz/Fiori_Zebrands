@@ -114,7 +114,6 @@ const Dashboard: FC = ({}) => {
                       key={retro.id}
                       titulo={retro.titulo}
                       fechaInicio={formatDate(retro.fecha_inicio)}
-                      idRetrospectiva={retro.id}
                       tags={retro.tags}
                     />
                   )

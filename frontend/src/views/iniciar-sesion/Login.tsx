@@ -2,7 +2,7 @@ import axios from 'axios';
 import { FC, memo, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import GoogleLogo from '@/assets/Google__G__Logo.svg';
-import Geometry from '@/assets/geometry.png';
+import Geometry from '@/assets/geometry.webp';
 import zebrandsLogo from '@/assets/zebrandsLogo.svg';
 import { userDataContext } from '../../contexts';
 
@@ -99,7 +99,7 @@ const Login: FC = () => {
               Google para continuar.
             </p>
           </div>
-          <div className="w-full pt-10">
+          <div className="w-full pt-10 md:pt-0">
             <button
               onClick={redirectToGoogleSSO}
               className="flex items-center justify-evenly rounded-full w-full  border border-solid border-slate-300 text-sm py-2 px-3 text-slate-900 hover:bg-[#f8faff] hover:border-[#d2e3fc]"

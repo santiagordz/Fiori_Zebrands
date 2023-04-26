@@ -19,7 +19,7 @@ const Unauthorized401: FC<Unauthorized401Props> = ({}) => {
     <div className="flex flex-col items-center justify-center text-center gap-7 w-auto h-screen mx-[9vw] ml-[9vw]">
       <Sidebar />
       <div className="flex flex-col items-center justify-center w-full h-screen gap-8">
-        <div className="absolute text-[20rem] font-bold text-information top-0">
+        <div className="absolute text-[13rem] md:text-[20rem] font-bold text-information top-32 md:top-0">
           401
         </div>
         <div className="w-8/12 relative">
@@ -44,12 +44,12 @@ const Unauthorized401: FC<Unauthorized401Props> = ({}) => {
           <div>
             <Button
               onClick={() => {
-                navigate('/dashboard');
+                navigate(-1);
               }}
               appearance="primary"
               iconBefore={
                 <ArrowLeftIcon
-                  label="volver a zona segura"
+                  label="volver a pagina anterior"
                   primaryColor="white"
                 />
               }

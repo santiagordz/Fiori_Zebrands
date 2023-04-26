@@ -126,7 +126,7 @@ const Resultados: FC<ResultadosProps> = ({
   };
 
   return (
-    <div className="flex flex-col py-8 px-10 w-full h-full max-h-[50rem] overflow-y-auto gap-5 rounded bg-white shadow-sm">
+    <div className="flex flex-col py-8 px-10 w-full h-full md:max-h-[50rem] overflow-y-auto gap-5 rounded bg-white shadow-sm">
       <div className="flex flex-col gap-2">
         <div className="flex w-full justify-between items-center">
           <h2 className="text-sm text-textNormal font-semibold">

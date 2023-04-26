@@ -5,7 +5,6 @@ import { FC } from 'react';
 interface BannerRetroProps {
   titulo: string;
   fechaInicio: string;
-  idRetrospectiva: number;
   tags: {
     id: number;
     etiqueta: string;
@@ -16,7 +15,6 @@ interface BannerRetroProps {
 
 const BannerRetro: FC<BannerRetroProps> = ({
   titulo,
-  idRetrospectiva,
   fechaInicio,
   tags,
 }) => {

@@ -29,16 +29,10 @@ const DesignTemplate: FC<DesignTemplateProps> = ({
   const name = user?.nombre.split(' ')[0] || 'Usuario';
   const MainIcon: React.ComponentType<GlyphProps> =
     pathInfo[path].icon;
-  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
   const handleMenu = () => {
     setMobileMenu(!mobileMenu);
   };
-
-  useEffect(() => {
-    const width = window.innerWidth;
-    setScreenWidth(width);
-  }, [window.innerWidth]);
 
   return (
     <>

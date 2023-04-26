@@ -6,7 +6,7 @@ import axios from 'axios';
 import { format, utcToZonedTime } from 'date-fns-tz';
 import { motion } from 'framer-motion';
 import html2canvas from 'html2canvas';
-import { FC, useCallback, useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { ComposedChart } from '../charts';
 import { Spinner } from '../index';
 import Reporte from './Reporte';
@@ -53,18 +53,14 @@ const ModalReporte: FC<ModalReporteProps> = ({ setIsOpen }) => {
   const localDate = utcToZonedTime(date, userTimeZone);
   const today = format(localDate, 'dd/MM/yyyy');
 
-  const getCanvasURL = useCallback(
-    async (node: HTMLElement | null): Promise<string | undefined> => {
-      if (!node) return;
-      const canvasTemp = await html2canvas(node);
-      const newChartImageUrl = canvasTemp.toDataURL(
-        'image/jpeg',
-        1.0
-      );
-      return newChartImageUrl;
-    },
-    []
-  );
+  const getCanvasURL = async (
+    node: HTMLElement | null
+  ): Promise<string | undefined> => {
+    if (!node) return;
+    const canvasTemp = await html2canvas(node);
+    const newChartImageUrl = canvasTemp.toDataURL('image/jpeg', 1.0);
+    return newChartImageUrl;
+  };
 
   const createChartArrayItem = async (
     data: DataPropertyType[],
@@ -81,53 +77,33 @@ const ModalReporte: FC<ModalReporteProps> = ({ setIsOpen }) => {
     return null;
   };
 
-  const getStoryPointsDoneLastSprintsProgressive = async () => {
+  const getAllData = async () => {
     try {
-      const response = await axios.get(`${URI}/SUMdoneglobal`);
-      const data = response.data.sprints[0].reverse();
-      if (data) {
-        setDataDoneAcumS(data);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const getStoryPointsToDoLastSprintsProgressive = async () => {
-    try {
-      const response = await axios.get(`${URI}/SUMtodoglobal`);
-      const data = response.data.sprints[0].reverse();
-      setDataToDoAcumS(data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const getEpicsDone = async () => {
-    try {
-      const response = await axios.get(`${URI}/epicsSUMdoneglobal`);
-      const data = response.data.sprints[0];
-      setDataDoneAcumE(data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const getToDoEpicsDone = async () => {
-    try {
-      const response = await axios.get(`${URI}/epicsSUMtodoglobal`);
-      const data = response.data.sprints[0];
-      setDataToDoAcumE(data);
+      const { data: dataDoneAcumS } = await axios.get(
+        `${URI}/SUMdoneglobal`
+      );
+      const { data: dataToDoAcumS } = await axios.get(
+        `${URI}/SUMtodoglobal`
+      );
+      const { data: dataDoneAcumE } = await axios.get(
+        `${URI}/epicsSUMdoneglobal`
+      );
+      const { data: dataToDoAcumE } = await axios.get(
+        `${URI}/epicsSUMtodoglobal`
+      );
+      if (dataDoneAcumS)
+        setDataDoneAcumS(dataDoneAcumS.sprints[0].reverse());
+      if (dataToDoAcumS)
+        setDataToDoAcumS(dataToDoAcumS.sprints[0].reverse());
+      if (dataDoneAcumE) setDataDoneAcumE(dataDoneAcumE.sprints[0]);
+      if (dataToDoAcumE) setDataToDoAcumE(dataToDoAcumE.sprints[0]);
     } catch (error) {
       console.error(error);
     }
   };
 
   useEffect(() => {
-    getStoryPointsDoneLastSprintsProgressive();
-    getStoryPointsToDoLastSprintsProgressive();
-    getEpicsDone();
-    getToDoEpicsDone();
+    getAllData();
   }, []);
 
   useEffect(() => {
