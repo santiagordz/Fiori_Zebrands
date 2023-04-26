@@ -49,7 +49,7 @@ class Sprint {
     boardId
   ) => {
     return db.execute(
-      `INSERT IGNORE INTO SPRINTS (id_jira, nombre, fecha_inicio, fecha_fin, state, boardId) VALUES (?, ?, ?, ?, ?, ?)`,
+      `INSERT IGNORE INTO sprints (id_jira, nombre, fecha_inicio, fecha_fin, state, boardId) VALUES (?, ?, ?, ?, ?, ?)`,
       [id, nombre, fecha_inicio, fecha_fin, state, boardId]
     );
   };
@@ -61,12 +61,12 @@ class Sprint {
   };
 
   static deleteSprints = async (id) => {
-    return db.execute(`DELETE FROM SPRINTS WHERE id_jira = ?`, [id]);
+    return db.execute(`DELETE FROM sprints WHERE id_jira = ?`, [id]);
   };
 
   static updateSprint = async (id, state) => {
     return db.execute(
-      `UPDATE SPRINTS SET state = ? WHERE id_jira = ?`,
+      `UPDATE sprints SET state = ? WHERE id_jira = ?`,
       [id, state]
     );
   };
