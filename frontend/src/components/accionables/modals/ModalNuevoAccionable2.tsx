@@ -61,33 +61,35 @@ const ModalNuevoAccionable: FC<ModalNuevoAccionable> = ({
   };
 
   // FORM
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
+    var key_jira;
     try {
       setIsModalOpen(false);
+      // POST A JIRA
+      try {
+        const body = {
+          id_usuario: user?.id_usuario,
+          descripcion: accionable.accionable,
+        };
+        const responseJira = await axios.post(
+          `${URI}/post/${body.id_usuario}/${body.descripcion}`
+        );
+        key_jira = responseJira.data.key;
+      } catch {
+        console.error('Error al guardar el accionable en JIRA');
+      }
       //POST A DB
       try {
         const body = {
           id_usuario: user?.id_usuario,
           descripcion: accionable.accionable,
           fecha_estimada: accionable.fecha,
+          key_jira: key_jira,
         };
-        console.log(body);
         axios.post(URI, body);
       } catch {
         console.error('Error al guardar el accionable en la DB');
-      }
-
-      try {
-        const body = {
-          id_usuario: user?.id_usuario,
-          descripcion: accionable.accionable,
-        };
-        axios.post(
-          `${URI}/post/${body.id_usuario}/${body.descripcion}`
-        );
-      } catch {
-        console.error('Error al guardar el accionable en JIRA');
       }
 
       addFlag(

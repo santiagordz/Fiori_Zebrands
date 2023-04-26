@@ -14,14 +14,16 @@ const getAccionablesByUserId = async (req, res) => {
 };
 
 const createAccionable = (req, res) => {
-  const { id_usuario, descripcion, fecha_estimada } = req.body;
+  const { id_usuario, descripcion, fecha_estimada, key_jira } =
+    req.body;
   const [anio, mes, dia] = fecha_estimada.split('-');
   const fechaFormatoMySQL = `${anio}-${mes}-${dia} 00:00:00`;
 
   Accionables.createAccionable(
     id_usuario,
     descripcion,
-    fechaFormatoMySQL
+    fechaFormatoMySQL,
+    key_jira
   )
     .then(([rows, fieldData]) => {
       res.json(rows);
@@ -38,8 +40,11 @@ const getAccionableInfo = async (req, res) => {
 const postAccionable = async (req, res) => {
   try {
     const { id_usuario, descripcion } = req.params;
-    await Accionables.postAccionable(id_usuario, descripcion);
-    res.json({ message: 'Accionable creado' });
+    const respuesta = await Accionables.postAccionable(
+      id_usuario,
+      descripcion
+    );
+    res.send(respuesta);
   } catch (err) {
     console.log(err);
   }

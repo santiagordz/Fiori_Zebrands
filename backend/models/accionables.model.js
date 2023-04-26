@@ -17,11 +17,11 @@ module.exports = class Accionable {
     return db.execute('SELECT * FROM accionables');
   }
 
-  static createAccionable(id_usuario, accionable, fecha) {
+  static createAccionable(id_usuario, accionable, fecha, key_jira) {
     return db.execute(
-      `INSERT INTO accionables (id_usuario, descripcion, fecha_esperada)
-       VALUES (?, ?, ?)`,
-      [id_usuario, accionable, fecha]
+      `INSERT INTO accionables (id_usuario, descripcion, fecha_esperada, key_jira)
+       VALUES (?, ?, ?, ?)`,
+      [id_usuario, accionable, fecha, key_jira]
     );
   }
 
@@ -41,13 +41,15 @@ module.exports = class Accionable {
       },
     };
 
-    axios.post(
+    const response = await axios.post(
       'https://fioritec.atlassian.net/rest/api/3/issue/',
       bodyData,
       {
         auth: auth,
       }
     );
+
+    return response.data;
   };
 
   static getAccionablesByUserId(id_usuario) {
