@@ -1,6 +1,5 @@
-import React, { FC, useState } from 'react';
-import { N500, B200 } from '@atlaskit/theme/colors';
 import EditorPanelIcon from '@atlaskit/icon/glyph/editor/panel';
+import React, { FC, useState } from 'react';
 import ModalCompletarAccionable from './modals/ModalCompletarAccionable';
 
 interface CheckAccionableIconProps {
@@ -10,27 +9,21 @@ interface CheckAccionableIconProps {
 const CheckAccionableIcon: FC<CheckAccionableIconProps> = ({
   id_accionable,
 }) => {
-  const [color, setColor] = useState(N500);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleMouseOver = (
-    e: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    setColor(B200);
-  };
-  const handleMouseOut = (e: React.MouseEvent<HTMLButtonElement>) => {
-    setColor(N500);
-  };
+  const [isHovered, setIsHovered] = useState<boolean>(false);
 
   return (
     <>
       <button
-        onMouseOver={handleMouseOver}
-        onMouseOut={handleMouseOut}
+        onMouseOver={() => setIsHovered(true)}
+        onMouseOut={() => setIsHovered(false)}
         onClick={() => setIsModalOpen(true)}
-        className="flex items-center "
+        className={`flex items-center ${
+          isHovered ? 'underline' : ''
+        }`}
       >
-        <EditorPanelIcon label="" primaryColor={color} size="large" />
+        <EditorPanelIcon label="detalles" primaryColor={'#2684ff'} />
+        <p className={`text-xs text-[#2684ff]`}>Ver detalles</p>
       </button>
       {isModalOpen && (
         <ModalCompletarAccionable

@@ -1,5 +1,5 @@
 import Blanket from '@atlaskit/blanket';
-import Button from '@atlaskit/button';
+import Button, { LoadingButton } from '@atlaskit/button';
 import CheckCircleIcon from '@atlaskit/icon/glyph/check-circle';
 import CrossIcon from '@atlaskit/icon/glyph/cross';
 import EditorErrorIcon from '@atlaskit/icon/glyph/editor/error';
@@ -24,47 +24,49 @@ interface Accionable {
 
 const labelStyle =
   "after:content-['*'] after:text-[#ae2a19] text-xs font-semibold text-label";
-const MAX_CARACTERES = 200;
+const MAX_CARACTERES = 70;
+const TODAY = new Date().toISOString().substr(0, 10);
 
 const ModalNuevoAccionable: FC<ModalNuevoAccionable> = ({
   getAccionables,
   setIsModalOpen,
 }) => {
+  const [isPosting, setIsPosting] = useState<boolean>(false);
   const { user } = useContext(userDataContext);
   const { addFlag } = useContext(FlagContext);
   const [accionable, setAccionable] = useState<Accionable>({
     accionable: '',
     fecha: '',
   });
-  const [validPattern, setValidPattern] = useState<boolean>(false);
+  const [validPattern, setValidPattern] = useState<boolean>(true);
   const [showMaxDescriptionWarning, setShowMaxDescriptionWarning] =
     useState<boolean>(false);
-  const [isFechaFilled, setIsFechaFilled] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(false);
 
   const handleChangeAccionable = (e: any) => {
-    verificarLimite(e.target.value);
+    verificarInput(e.target.value);
     setAccionable({ ...accionable, accionable: e.target.value });
   };
 
   const handleChangeFecha = (e: any) => {
-    if (e.target.value === '') {
-      setIsFechaFilled(false);
-    } else {
-      setIsFechaFilled(true);
-      setAccionable({ ...accionable, fecha: e.target.value });
-    }
+    setAccionable({ ...accionable, fecha: e.target.value });
   };
-  const verificarLimite = (texto: string) => {
-    const alfanumerico = /^[a-zA-Z0-9\s]*$/;
-    if (!alfanumerico.test(texto)) {
-      setValidPattern(false);
-    }
-    if (texto.length > MAX_CARACTERES) {
-      setShowMaxDescriptionWarning(true);
-    }
+  const verificarInput = (texto: string) => {
+    const alfanumerico = /^[a-zA-Z0-9ñÑ\s]*$/;
     if (texto.length === 0) {
       setShowMaxDescriptionWarning(false);
+      setValidPattern(true);
+      return;
+    }
+    if (!alfanumerico.test(texto)) {
+      setIsError(true);
       setValidPattern(false);
+      return;
+    }
+    if (texto.length > MAX_CARACTERES) {
+      setIsError(true);
+      setShowMaxDescriptionWarning(true);
+      return;
     }
 
     if (
@@ -72,15 +74,20 @@ const ModalNuevoAccionable: FC<ModalNuevoAccionable> = ({
       alfanumerico.test(texto) &&
       texto.length > 0
     ) {
+      setIsError(false);
       setShowMaxDescriptionWarning(false);
       setValidPattern(true);
+      return;
     }
   };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    let key_jira;
-    try {
+    if (isError) {
+      return;
+    } else {
+      setIsPosting(true);
+      let key_jira;
       try {
         const body = {
           id_usuario: user?.id_usuario,
@@ -90,184 +97,142 @@ const ModalNuevoAccionable: FC<ModalNuevoAccionable> = ({
           `${URI}/post/${body.id_usuario}/${body.descripcion}`
         );
         key_jira = responseJira.data.key;
-      } catch {
-        console.error('Error al guardar el accionable en Jira');
-      }
-      try {
-        const body = {
+        const bodyDB = {
           id_usuario: user?.id_usuario,
           descripcion: accionable.accionable,
           fecha_estimada: accionable.fecha,
           key_jira: key_jira,
         };
-        axios.post(URI, body);
+        await axios.post(URI, bodyDB);
+
         getAccionables();
-      } catch {
-        console.error('Error al guardar el accionable en la DB');
+        setIsModalOpen(false);
+        addFlag(
+          'Accionable agregado correctamente al Backlog de Jira',
+          CheckCircleIcon,
+          'success'
+        );
+      } catch (error) {
+        if (error instanceof Error) {
+          addFlag(
+            'Hubo un problema al agregar el accionable. Por favor, intenta nuevamente.',
+            EditorErrorIcon,
+            'error',
+            error.toString()
+          );
+        } else {
+          addFlag(
+            'Hubo un problema al agregar el accionable. Por favor, intenta nuevamente.',
+            EditorErrorIcon,
+            'error',
+            'Error desconocido'
+          );
+        }
+      } finally {
+        setIsPosting(false);
       }
-
-      setIsModalOpen(false);
-
-      addFlag(
-        'Accionable agregado correctamente en el backlog de Jira',
-        CheckCircleIcon,
-        'success'
-      );
-    } catch (err) {
-      addFlag(
-        'Hubo un problema al agregar el accionable. Por favor, intenta nuevamente.',
-        EditorErrorIcon,
-        'error'
-      );
     }
   };
 
   return (
-    <>
-      <Blanket isTinted={true}>
-        <motion.div
-          animate={{ opacity: 1 }}
-          className="flex flex-col w-full h-full items-center justify-center opacity-0"
-        >
-          <div className="flex flex-col bg-white rounded p-10 gap-8 items-center justify-center drop-shadow-lg min-w-[40vw] max-w-[55vw]">
-            <div className="flex w-full justify-between items-center">
-              <h2 className="text-textNormal font-semibold text-base">
-                Registrar nuevo accionable
-              </h2>
-              <div
-                className="flex items-center justify-center cursor-pointer p-1"
-                onClick={() => setIsModalOpen(false)}
-              >
-                <CrossIcon label="cerrar modal" size="small" />
-              </div>
+    <Blanket isTinted={true}>
+      <motion.div
+        animate={{ opacity: 1 }}
+        className="flex flex-col w-full h-full items-center justify-center opacity-0"
+      >
+        <div className="flex flex-col bg-white rounded p-10 gap-8 items-center justify-center drop-shadow-lg min-w-[40vw] max-w-[55vw]">
+          <div className="flex w-full justify-between items-center">
+            <h2 className="text-textNormal font-semibold text-base">
+              Registrar nuevo accionable
+            </h2>
+            <div
+              className="flex items-center justify-center cursor-pointer p-1"
+              onClick={() => setIsModalOpen(false)}
+            >
+              <CrossIcon label="cerrar modal" size="small" />
             </div>
-            <div className="w-full flex flex-col gap-6 h-fit max-h-[55vh] overflow-y-auto pb-2">
-              <div className="flex flex-col gap-2">
-                <p className={labelStyle}>Accionable</p>
-                <p className="text-xs text-[#626F86]">
-                  Los accionables que registres aquí también se
-                  mostrarán en Jira. Solo se permiten caracteres
-                  alfanuméricos.
-                </p>
-                <form onSubmit={handleSubmit} id="formAccionable">
-                  <TextArea
-                    maxHeight="1rem"
-                    name="accionable"
-                    value={accionable.accionable}
-                    onChange={handleChangeAccionable}
-                    className="text-sm w-full border-2 rounded-sm p-2  hover:bg-gray-100 placeholder:text-xs h-10"
-                    autoComplete="off"
-                    placeholder="Ingresa tu nuevo accionable"
-                    isRequired
-                  />
-                  <div className="w-full flex flex-col justify-end items-end">
-                    <HelperMessage>
-                      Caracteres: {accionable.accionable.length} / 200
-                    </HelperMessage>
-                    {showMaxDescriptionWarning && (
-                      <ErrorMessage>
-                        Tu respuesta excede el número de caracteres
-                        permitidos
-                      </ErrorMessage>
-                    )}
-                  </div>
-                  <p className={`${labelStyle} mt-7`}>
+          </div>
+          <div className="w-full flex flex-col gap-6 h-fit max-h-[55vh] overflow-y-auto pb-2">
+            <div className="flex flex-col gap-2">
+              <p className={labelStyle}>Accionable</p>
+              <p className="text-xs text-[#626F86]">
+                Ingresa una breve descripción de tu accionable.
+                Recuerda que este accionable también se mostrará en el
+                Backlog de Jira.
+              </p>
+              <form onSubmit={handleSubmit} id="formAccionable">
+                <TextArea
+                  maxHeight="1rem"
+                  name="accionable"
+                  value={accionable.accionable}
+                  onChange={handleChangeAccionable}
+                  className={`text-sm w-full border-2  rounded-sm p-2 hover:bg-gray-100 placeholder:text-xs h-10 ${
+                    showMaxDescriptionWarning || !validPattern
+                      ? 'focus:!border-red-500 !border-red-500'
+                      : 'focus:!border-blue-500'
+                  }`}
+                  autoComplete="off"
+                  placeholder="Ingresa tu nuevo accionable"
+                  isRequired
+                />
+                <div className="w-full flex flex-col justify-end items-end">
+                  <HelperMessage>
+                    Caracteres: {accionable.accionable.length} /{' '}
+                    {MAX_CARACTERES}
+                  </HelperMessage>
+                  {showMaxDescriptionWarning && (
+                    <ErrorMessage>
+                      Tu respuesta excede el número de caracteres
+                      permitidos
+                    </ErrorMessage>
+                  )}
+                  {!validPattern && (
+                    <ErrorMessage>
+                      Solo se permiten caracteres alfanuméricos en
+                      este campo
+                    </ErrorMessage>
+                  )}
+                </div>
+                <div className="flex flex-col gap-2 mt-6">
+                  <p className={labelStyle}>
                     Fecha límite de cumplimiento
                   </p>
-                  <input
-                    required
-                    type="date"
-                    className="w-1/2 bg-slate-50 border mt-1 rounded-sm p-2 text-xs text-gray-500 focus:outline-blue-500 hover:bg-gray-100 placeholder:text-xs h-10"
-                    onChange={handleChangeFecha}
-                  />
-                  <div className="flex flex-col gap-2 w-full items-center justify-center mt-4">
-                    {!validPattern && (
-                      <p className="text-xs text-information font-medium">
-                        Escribe un accionable válido para continuar.
-                      </p>
-                    )}
-                    {!isFechaFilled && (
-                      <p className="text-xs text-information font-medium">
-                        Elige una fecha de cumplimiento para
-                        continuar.
-                      </p>
-                    )}
-                    <Button
-                      type="submit"
-                      appearance="primary"
-                      isDisabled={
-                        !validPattern || showMaxDescriptionWarning
-                      }
-                    >
-                      Agregar Accionable
-                    </Button>
-                  </div>
-                </form>
-              </div>
-            </div>
-            {/* BODY */}
-            <div className="w-full flex flex-col gap-6 h-fit max-h-[55vh] overflow-y-auto pb-2">
-              <div className="flex flex-col gap-2">
-                <p className="font-semibold text-xs">Accionable:</p>
-                <p className="text-xs text-[#626F86] mt-1">
-                  Los accionables que agrergues aquí también de
-                  mostrarán en Jira.
-                </p>
-                <form onSubmit={handleSubmit} id="formAccionable">
-                  <TextArea
-                    name="accionable"
-                    value={accionable.accionable}
-                    onChange={handleChangeAccionable}
-                    className="text-sm w-full border-2 rounded-sm p-2  hover:bg-gray-100 placeholder:text-xs h-10"
-                    autoComplete="off"
-                    placeholder="Ingresa tu nuevo accionable*"
-                    isRequired
-                  />
-                  <p className="text-xs text-[#626F86] mt-5">
-                    Fecha Estimada de Cierre:
+                  <p className="text-xs text-[#626F86]">
+                    Selecciona una fecha realista y alcanzable para
+                    completar tu nuevo accionable.
                   </p>
                   <input
                     required
+                    min={TODAY}
                     type="date"
-                    className="w-1/2 bg-slate-50 border mt-1 rounded-sm p-2 text-xs text-gray-500 focus:outline-blue-500 hover:bg-gray-100 placeholder:text-xs h-10"
+                    className="w-1/2 bg-slate-50 border mt-1 rounded-sm p-2 text-xs text-gray-500 focus:outline-blue-500 hover:bg-gray-100 placeholder:text-xs h-8"
                     onChange={handleChangeFecha}
                   />
-                </form>
-              </div>
+                </div>
+                <div
+                  className="flex items-center justify-end
+            w-full gap-5 mt-9"
+                >
+                  <Button
+                    appearance="subtle"
+                    onClick={() => setIsModalOpen(false)}
+                  >
+                    Cancelar
+                  </Button>
+                  <LoadingButton
+                    type="submit"
+                    appearance="primary"
+                    isLoading={isPosting}
+                  >
+                    Registrar accionable
+                  </LoadingButton>
+                </div>
+              </form>
             </div>
-            {/* FOOTER */}
-            {/* INVALIDO */}
-            {!validPattern && (
-              <div>
-                <button
-                  type="submit"
-                  form="formAccionable"
-                  className="text-sm"
-                >
-                  <Button appearance="primary" isDisabled>
-                    Agregar Accionable
-                  </Button>
-                </button>
-              </div>
-            )}
-            {/* NORMAL */}
-            {validPattern && (
-              <div>
-                <button
-                  type="submit"
-                  form="formAccionable"
-                  className="text-sm"
-                >
-                  <Button appearance="primary">
-                    Agregar Accionable
-                  </Button>
-                </button>
-              </div>
-            )}
           </div>
-        </motion.div>
-      </Blanket>
-    </>
+        </div>
+      </motion.div>
+    </Blanket>
   );
 };
 

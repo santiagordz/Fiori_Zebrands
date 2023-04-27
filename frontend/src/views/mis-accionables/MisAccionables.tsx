@@ -7,12 +7,11 @@ import axios from 'axios';
 import { FC, useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
+  BoxAccionable,
   DesignTemplate,
   ModalNuevoAccionable,
-  BoxAccionable,
 } from '../../components';
 import { userDataContext } from '../../contexts/';
-
 import Team from '../../assets/medal.png';
 
 const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/accionables`;
@@ -22,16 +21,20 @@ interface MisAccionablesProps {
   agregarAccionable: (accionable: any) => void;
 }
 
-interface Accionable {
+export interface Accionable {
   id: number;
   descripcion: string;
   fecha_esperada: string;
+  key_jira: string;
+  createdAt: string;
 }
 
 const MisAccionables: FC<MisAccionablesProps> = ({}) => {
+  const [toggleUpdate, setToggleUpdate] = useState<boolean>(false);
   const { user } = useContext(userDataContext);
   const [isNewAccionableOpen, setIsNewAccionableOpen] =
     useState<boolean>(false);
+
   const [accionables, setAccionables] = useState<Accionable[]>([]);
   const [prioridadBaja, setPrioridadBaja] = useState<Accionable[]>(
     []
@@ -47,9 +50,8 @@ const MisAccionables: FC<MisAccionablesProps> = ({}) => {
     try {
       const response = await axios.get(`${URI}/${user?.id_usuario}`);
       setAccionables(response.data);
-      console.log(response.data);
     } catch (error) {
-      console.error('Error al obtener los accionables:', error);
+      console.error('Error al obtener los accionables', error);
     }
   };
 
@@ -70,23 +72,12 @@ const MisAccionables: FC<MisAccionablesProps> = ({}) => {
         diferenciaTiempo / (1000 * 60 * 60 * 24)
       );
 
-      const fechaReact = accionable.fecha_esperada.split('T')[0];
-
       if (diferenciaDias > 30) {
-        prioridadBaja.push({
-          ...accionable,
-          fecha_esperada: fechaReact,
-        });
+        prioridadBaja.push(accionable);
       } else if (diferenciaDias <= 30 && diferenciaDias > 7) {
-        prioridadMedia.push({
-          ...accionable,
-          fecha_esperada: fechaReact,
-        });
+        prioridadMedia.push(accionable);
       } else if (diferenciaDias <= 7) {
-        prioridadAlta.push({
-          ...accionable,
-          fecha_esperada: fechaReact,
-        });
+        prioridadAlta.push(accionable);
       }
     });
 
@@ -97,7 +88,7 @@ const MisAccionables: FC<MisAccionablesProps> = ({}) => {
 
   useEffect(() => {
     getAccionables();
-  }, [isNewAccionableOpen]);
+  }, []);
 
   useEffect(() => {
     if (accionables.length > 0) {
@@ -118,112 +109,117 @@ const MisAccionables: FC<MisAccionablesProps> = ({}) => {
           </Button>
         }
       >
-        <div className="grid grid-cols-3 gap-5 pb-5 w-full">
-          <div className="flex flex-col gap-5 bg-[#ffffff] py-5 px-5 rounded-sm shadow-sm overflow-y-auto max-h-[40rem]">
-            <div className="flex items-center w-full">
-              <ErrorIcon
-                label="error"
-                size="medium"
-                primaryColor="#DE350B"
-              />
-              <p className="font-semibold flex flex-row text-s text-danger ml-2">
-                Prioridad Alta
-              </p>
+        <div className="flex flex-col gap-3">
+          <div className="w-full bg-[#ffffff] p-4 rounded-sm shadow-sm">
+            <div className="lg:flex lg:flex-row flex flex-col w-full bg-purple-100 py-7 gap-10 items-center justify-center rounded-sm">
+              <img src={Team} className="h-24" />
+              <div className="flex gap-5 flex-col">
+                <div>
+                  <h3 className="font-bold w-full text-discovery">
+                    Recuerda que los pequeños actos que se ejecutan,
+                    son mejores que todos aquellos grandes que se
+                    planean.
+                  </h3>
+                  <p className="text-xs mt-1">
+                    Debes completar los accionables que te habías
+                    propuesto, de esta forma podrás ver tu progreso y
+                    el de tu equipo desde otra perspectiva.
+                  </p>
+                </div>
+                <p className="text-xs">
+                  Si lo deseas, puedes revisar directamente tu
+                  progreso en Jira haciendo{' '}
+                  <Link
+                    className="text-blue-500 hover:text-blue-800"
+                    to="https://zebrands.atlassian.net"
+                    target="_blank"
+                  >
+                    click aquí.
+                  </Link>
+                </p>
+              </div>
             </div>
-            {prioridadAlta.length > 0 ? (
-              prioridadAlta.map((accionable: Accionable) => (
-                <BoxAccionable
-                  key={accionable.id}
-                  accionable={accionable.descripcion}
-                  id={accionable.id}
-                  fecha={accionable.fecha_esperada}
-                />
-              ))
-            ) : (
-              <p className="text-xs">
-                No tienes accionables en prioridad alta.
-              </p>
-            )}
           </div>
 
-          <div className="flex flex-col gap-5 bg-[#ffffff] py-5 px-5 rounded-sm shadow-sm overflow-y-auto max-h-[40rem]">
-            <div className="flex items-center">
-              <WarningIcon
-                size="medium"
-                label="Prioridad media"
-                primaryColor="#CD742D"
-              />
-              <p className="font-semibold flex flex-row text-s text-mediumDanger ml-2">
-                Prioridad Media
-              </p>
-            </div>
-            {prioridadMedia.length > 0 ? (
-              prioridadMedia.map((accionable: Accionable) => (
-                <BoxAccionable
-                  key={accionable.id}
-                  accionable={accionable.descripcion}
-                  id={accionable.id}
-                  fecha={accionable.fecha_esperada}
+          <div className="grid grid-cols-3 gap-3 pb-3 w-full">
+            <div className="flex flex-col gap-5 bg-[#ffffff] p-5 rounded-sm shadow-sm overflow-y-auto h-auto">
+              <div className="flex items-center w-full">
+                <ErrorIcon
+                  label="error"
+                  size="medium"
+                  primaryColor="#DE350B"
                 />
-              ))
-            ) : (
-              <p className="text-xs">
-                No tienes accionables en prioridad media.
-              </p>
-            )}
-          </div>
+                <p className="font-semibold flex flex-row text-sm text-danger ml-2">
+                  Prioridad Alta
+                </p>
+              </div>
+              {prioridadAlta.length > 0 ? (
+                prioridadAlta.map((accionable: Accionable) => (
+                  <>
+                    <BoxAccionable
+                      key={accionable.id}
+                      accionable={accionable}
+                      getAccionables={getAccionables}
+                    />
+                  </>
+                ))
+              ) : (
+                <p className="text-xs">
+                  No tienes accionables en prioridad alta.
+                </p>
+              )}
+            </div>
 
-          <div className="flex flex-col gap-5 bg-[#ffffff] py-5 px-5 rounded-sm shadow-sm overflow-y-auto max-h-[40rem]">
-            <div className="flex items-center">
-              <CheckCircleIcon
-                size="medium"
-                label="Prioridad media"
-                primaryColor="#4E9E70"
-              />
-              <p className="font-semibold flex flex-row text-s text-green ml-2">
-                Prioridad Baja
-              </p>
-            </div>
-            {prioridadBaja.length > 0 ? (
-              prioridadBaja.map((accionable: Accionable) => (
-                <BoxAccionable
-                  key={accionable.id}
-                  accionable={accionable.descripcion}
-                  id={accionable.id}
-                  fecha={accionable.fecha_esperada}
+            <div className="flex flex-col gap-5 bg-[#ffffff] py-5 px-5 rounded-sm shadow-sm overflow-y-auto max-h-[40rem]">
+              <div className="flex items-center">
+                <WarningIcon
+                  size="medium"
+                  label="Prioridad media"
+                  primaryColor="#CD742D"
                 />
-              ))
-            ) : (
-              <p className="text-xs">
-                No tienes accionables en prioridad baja.
-              </p>
-            )}
-          </div>
-        </div>
-        <div className="w-full bg-white p-6">
-          <div className="lg:flex lg:flex-row flex flex-col w-full bg-purple-100 py-10 px-8 gap-10 items-center justify-center rounded-sm">
-            <img src={Team} className="h-36" />
-            <div className="flex gap-5 flex-col">
-              <h3 className="font-bold w-full text-discovery">
-                Recuerda que los pequeños actos que se ejecutan, son
-                mejores que todos aquellos grandes que se planean
-              </h3>
-              <p className="text-sm">
-                Debes completar los accionables que te habías
-                propuesto, de esta forma podrás ver tu progreso y el
-                de tu equipo desde otra perspectiva.
-              </p>
-              <p className="text-sm">
-                Si lo deseas, puedes revisar directamente tu progreso
-                en Jira haciendo{' '}
-                <Link
-                  className="text-blue-500 hover:text-blue-800"
-                  to="https://zebrands.atlassian.net"
-                  target="_blank"
-                >
-                  click aquí.
-                </Link>
-              </p>
+                <p className="font-semibold flex flex-row text-sm text-mediumDanger ml-2">
+                  Prioridad Media
+                </p>
+              </div>
+              {prioridadMedia.length > 0 ? (
+                prioridadMedia.map((accionable: Accionable) => (
+                  <BoxAccionable
+                    key={accionable.id}
+                    accionable={accionable}
+                    getAccionables={getAccionables}
+                  />
+                ))
+              ) : (
+                <p className="text-xs">
+                  No tienes accionables en prioridad media.
+                </p>
+              )}
+            </div>
+
+            <div className="flex flex-col gap-5 bg-[#ffffff] py-5 px-5 rounded-sm shadow-sm overflow-y-auto max-h-[40rem]">
+              <div className="flex items-center">
+                <CheckCircleIcon
+                  size="medium"
+                  label="Prioridad media"
+                  primaryColor="#4E9E70"
+                />
+                <p className="font-semibold flex flex-row text-sm text-green ml-2">
+                  Prioridad Baja
+                </p>
+              </div>
+              {prioridadBaja.length > 0 ? (
+                prioridadBaja.map((accionable: Accionable) => (
+                  <BoxAccionable
+                    key={accionable.id}
+                    accionable={accionable}
+                    getAccionables={getAccionables}
+                  />
+                ))
+              ) : (
+                <p className="text-xs">
+                  No tienes accionables en prioridad baja.
+                </p>
+              )}
             </div>
           </div>
         </div>

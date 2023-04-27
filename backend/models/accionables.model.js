@@ -55,7 +55,7 @@ module.exports = class Accionable {
   static getAccionablesByUserId(id_usuario) {
     return db.execute(
       `
-        SELECT id, descripcion, fecha_esperada FROM accionables
+        SELECT id, descripcion, fecha_esperada, key_jira, createdAt FROM accionables
         WHERE id_usuario = ?
       `,
       [id_usuario]
