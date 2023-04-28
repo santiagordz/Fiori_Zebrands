@@ -60,7 +60,6 @@ module.exports = class StatusIssue {
       SELECT i.status, COUNT(*) AS total
       FROM issues i, sprints s, sprints_issues si
       WHERE i.clave = si.id_issue 
-      AND i.status IN ("Done", "To Do", "En Curso")
       AND si.id_sprint = s.id_jira
       AND i.assignee_id = ?
       AND s.id_jira IN (${placeholders})
