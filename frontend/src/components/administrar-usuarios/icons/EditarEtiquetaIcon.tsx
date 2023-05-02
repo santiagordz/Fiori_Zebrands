@@ -1,9 +1,7 @@
 import EditFilledIcon from '@atlaskit/icon/glyph/edit-filled';
-import { N500, Y300 } from '@atlaskit/theme/colors';
-import { token } from '@atlaskit/tokens';
 import React, { FC, useState } from 'react';
-import ModalEditarEtiqueta from '../modals/ModalEditarEtiqueta';
 import type { Etiqueta } from '../local-contexts';
+import ModalEditarEtiqueta from '../modals/ModalEditarEtiqueta';
 
 interface EdtarEtiquetaIconProps {
   etiqueta: Etiqueta;
@@ -36,10 +34,7 @@ const EditarEtiquetaIcon: FC<EdtarEtiquetaIconProps> = ({
       >
         <EditFilledIcon
           label="Edit Icon"
-          primaryColor={token(
-            'color.icon.brand',
-            color ? N500 : Y300
-          )}
+          primaryColor={color ? '#42526e' : '#ffab00'}
         />
       </button>
       <ModalEditarEtiqueta

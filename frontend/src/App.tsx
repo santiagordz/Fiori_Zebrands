@@ -22,8 +22,7 @@ import {
 } from './views';
 
 function App() {
-  const { user, sessionExpired, setSessionExpired } =
-    useContext(userDataContext);
+  const { user } = useContext(userDataContext);
 
   const renderConditionalRoutes = () => {
     if (!user) {

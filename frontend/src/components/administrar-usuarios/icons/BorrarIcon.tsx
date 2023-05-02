@@ -1,5 +1,4 @@
 import TrashIcon from '@atlaskit/icon/glyph/trash';
-import { N500, R400 } from '@atlaskit/theme/colors';
 import React, { FC, useContext, useEffect, useState } from 'react';
 import { Tooltip } from 'react-tooltip';
 import { userDataContext } from '../../../contexts';
@@ -15,7 +14,7 @@ const BorrarIcon: FC<BorrarIconProps> = ({
   nombreUsuario,
 }) => {
   const { user } = useContext(userDataContext);
-  const [color, setColor] = useState(N500);
+  const [color, setColor] = useState('#42526e');
   const [isOpen, setIsOpen] = useState(false);
   const [isActualUser, setIsActualUser] = useState(false);
 
@@ -26,12 +25,12 @@ const BorrarIcon: FC<BorrarIconProps> = ({
   const handleMouseOverBorrar = (
     e: React.MouseEvent<HTMLButtonElement>
   ) => {
-    setColor(R400);
+    setColor('#de350b');
   };
   const handleMouseOutBorrar = (
     e: React.MouseEvent<HTMLButtonElement>
   ) => {
-    setColor(N500);
+    setColor('#42526e');
   };
 
   return (

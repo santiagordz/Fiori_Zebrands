@@ -41,6 +41,7 @@ const Resultados: FC<ResultadosProps> = ({
   };
 
   const [esAnonimo, setEsAnonimo] = useState<boolean>(false);
+  const [isAnonReady, setIsAnonReady] = useState(false);
   const handleAnonimo = () => {
     const valueRespuestas = respuestas.filter(
       (respuesta) => !!respuesta.anonimo === true
@@ -48,6 +49,7 @@ const Resultados: FC<ResultadosProps> = ({
     if (valueRespuestas > 0) {
       setEsAnonimo(true);
     }
+    setIsAnonReady(true);
   };
 
   useEffect(() => {
@@ -81,9 +83,9 @@ const Resultados: FC<ResultadosProps> = ({
     if (id_tipo_pregunta === 4) {
       setData(handleDataType4);
     }
-  }, [respuestas]);
+  }, [id_tipo_pregunta]);
 
-  const Case = useMemo(() => {
+  const Case = () => {
     switch (id_tipo_pregunta) {
       case 3:
         return (
@@ -106,7 +108,11 @@ const Resultados: FC<ResultadosProps> = ({
                 key={respuesta.id_usuario}
               >
                 <p className="text-gray-600 font-medium text-[0.9rem]">
-                  {esAnonimo ? 'Usuario anónimo' : respuesta.nombre}
+                  {!isAnonReady
+                    ? 'Usuario'
+                    : esAnonimo
+                    ? 'Usuario anónimo'
+                    : respuesta.nombre}
                 </p>
 
                 <p className="text-gray-700 text-[0.8rem] ">
@@ -117,10 +123,10 @@ const Resultados: FC<ResultadosProps> = ({
           </div>
         );
     }
-  }, [id_tipo_pregunta, pregunta, respuestas]);
+  };
 
   return (
-    <div className="flex flex-col py-8 px-10 w-full h-full max-h-[50rem] overflow-y-auto gap-5 rounded bg-white shadow-sm">
+    <div className="flex flex-col py-8 px-10 w-full h-full md:max-h-[50rem] overflow-y-auto gap-5 rounded bg-white shadow-sm">
       <div className="flex flex-col gap-2">
         <div className="flex w-full justify-between items-center">
           <h2 className="text-sm text-textNormal font-semibold">
@@ -144,7 +150,7 @@ const Resultados: FC<ResultadosProps> = ({
         <p className="text-xs">Respuestas: {respuestas.length}</p>
       </div>
       {respuestas.length > 0 ? (
-        Case
+        <Case />
       ) : (
         <p className="text-xs">
           No hay respuestas registradas para esta pregunta.

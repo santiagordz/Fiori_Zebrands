@@ -1,6 +1,6 @@
-import React, { FC, useState, useEffect } from 'react';
-import Select, { StylesConfig } from 'react-select';
 import axios from 'axios';
+import { useEffect, useState } from 'react';
+import Select from 'react-select';
 
 const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/epics/issues`;
 
@@ -63,7 +63,7 @@ const DropdownEpics = ({ onEpicsSeleccionadasChange }: Props) => {
     <div className="w-full">
       <Select
         isClearable
-        placeholder="Selecciona uno o varios epics"
+        placeholder="Selecciona un epic"
         className="text-xs"
         options={epicsOptions}
         value={epicsSeleccionadas}

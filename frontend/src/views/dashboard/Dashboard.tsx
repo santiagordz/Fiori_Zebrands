@@ -9,18 +9,14 @@ import axios from 'axios';
 import Button from '@atlaskit/button';
 import CarouselDash from './CarouselDash';
 import { format, parseISO } from 'date-fns';
-import { BotonReporte } from '../../components';
+import { BotonReporte, Spinner } from '../../components';
 
 const URI = `${import.meta.env.VITE_APP_BACKEND_URI}/retrospectivas`;
 
-interface DashboardProps {
-  retroPendientes: Retrospectiva[];
-  getRetrospectivas: () => void;
-}
-
-const Dashboard: FC<DashboardProps> = ({}) => {
+const Dashboard: FC = ({}) => {
   const { user } = useContext(userDataContext);
   const navigate = useNavigate();
+  const [tryFetch, setTryFetch] = useState(false);
   const { retroId } = useParams();
   const [retroPendientes, setRetroPendientes] = useState<
     Array<Retrospectiva>
@@ -51,7 +47,7 @@ const Dashboard: FC<DashboardProps> = ({}) => {
         return fechaInicioA.getTime() - fechaInicioB.getTime();
       }
     );
-
+    setTryFetch(true);
     setRetroPendientes(pendientes);
   };
 
@@ -62,6 +58,18 @@ const Dashboard: FC<DashboardProps> = ({}) => {
   if (!user) {
     navigate('/login');
   }
+
+  if (!tryFetch)
+    return (
+      <div className="absolute top-0 left-0 w-full h-full">
+        <Spinner
+          height="100%"
+          message="Cargando tu dashboard..."
+          gap={6}
+        />
+      </div>
+    );
+
   return (
     <DesignTemplate buttons={<BotonReporte />}>
       <div className="flex lg:flex-row flex-col gap-5">
@@ -106,7 +114,6 @@ const Dashboard: FC<DashboardProps> = ({}) => {
                       key={retro.id}
                       titulo={retro.titulo}
                       fechaInicio={formatDate(retro.fecha_inicio)}
-                      idRetrospectiva={retro.id}
                       tags={retro.tags}
                     />
                   )
@@ -123,6 +130,14 @@ const Dashboard: FC<DashboardProps> = ({}) => {
                   )}
                 </span>
               )}
+              {
+                // Si no hay ninguna pendiente
+                retroPendientes.length === 0 && (
+                  <span className="text-xs text-gray-500">
+                    No tienes ninguna retrospectiva pendiente
+                  </span>
+                )
+              }
             </div>
             <div className="w-full flex justify-end">
               <Button

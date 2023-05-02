@@ -1,5 +1,11 @@
 import type { GlyphProps } from '@atlaskit/icon/types';
-import React, { FC, useContext, useEffect, useState } from 'react';
+import React, {
+  FC,
+  useContext,
+  useEffect,
+  useState,
+  memo,
+} from 'react';
 import { useLocation } from 'react-router-dom';
 import { userDataContext } from '../../contexts';
 import Sidebar from './Sidebar';
@@ -23,16 +29,10 @@ const DesignTemplate: FC<DesignTemplateProps> = ({
   const name = user?.nombre.split(' ')[0] || 'Usuario';
   const MainIcon: React.ComponentType<GlyphProps> =
     pathInfo[path].icon;
-  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
   const handleMenu = () => {
     setMobileMenu(!mobileMenu);
   };
-
-  useEffect(() => {
-    const width = window.innerWidth;
-    setScreenWidth(width);
-  }, [window.innerWidth]);
 
   return (
     <>
@@ -85,4 +85,4 @@ const DesignTemplate: FC<DesignTemplateProps> = ({
   );
 };
 
-export default DesignTemplate;
+export default memo(DesignTemplate);

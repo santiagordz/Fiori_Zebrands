@@ -107,7 +107,7 @@ const Flag: FC<FlagProps> = ({
       initial={'hidden'}
       animate={isVisible ? 'visible' : 'hidden'}
       className={`w-fit px-5 py-4 mb-6 rounded-lg shadow-lg relative
-        border overflow-hidden
+        border overflow-hidden pointer-events-auto
         ${appearanceClasses[appearance]}
         text-white
       `}
@@ -187,7 +187,7 @@ const FlagContainer: FC = () => {
 
   return (
     <div
-      className={`fixed top-10 w-full pl-[4vw] flex items-center justify-center z-[1000000000000000000000] pb-4 pr-16 flex-col-reverse max-h-[${maxHeight}vh]`}
+      className={`fixed top-10 w-full pl-[4vw] flex items-center justify-center z-[1000000000000000000000] pb-4 pr-16 flex-col-reverse max-h-[${maxHeight}vh] pointer-events-none`}
     >
       {visibleFlags.map((flag) => (
         <Flag

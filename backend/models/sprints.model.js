@@ -55,7 +55,9 @@ class Sprint {
   };
 
   static getSprints = async () => {
-    return db.execute(`SELECT * FROM sprints`);
+    return db.execute(
+      `SELECT * FROM sprints ORDER BY fecha_inicio DESC;`
+    );
   };
 
   static deleteSprints = async (id) => {

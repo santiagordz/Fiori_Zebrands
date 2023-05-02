@@ -196,6 +196,9 @@ const ModalRegistrarUsuarios: FC<RegistrarUsuariosProps> = ({
                         onChange={(e) =>
                           setDominioCorreo(e.target.value)
                         }
+                        //the next regex validates that the input is a valid domain starting with @ and following letters, numbers, dashes or dots
+                        pattern="^@([a-zA-Z0-9-]+\.)*[a-zA-Z0-9-]+$"
+                        title="Ingresa un dominio válido"
                         type="text"
                         name="dominioCorreo"
                         id="input-dominio-correo"

@@ -8,10 +8,10 @@ const auth = {
 
 module.exports = class Epic {
   static fetchEpicsJira = async () => {
-    const maxResults = 100; // Número máximo de issues a recuperar por solicitud
-    let startAt = 3080; // Punto de inicio para recuperar issues en cada solicitud
-    let isLast = false; // Indicador para verificar si se han recuperado todos los issues
-    let epicsJira = []; // Arreglo para almacenar todos los issues recuperados
+    const maxResults = 100;
+    let startAt = 3080;
+    let isLast = false;
+    let epicsJira = [];
 
     while (!isLast) {
       const response = await axios.get(

@@ -48,6 +48,17 @@ const RetrospectivaGeneral: FC<RetrospectivaGeneralProps> = ({
   const [fechaFinFormat, setFechaFinFormat] = useState<string>('');
   const location = useLocation().pathname;
 
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    const day = date.getUTCDate().toString().padStart(2, '0');
+    const month = (date.getUTCMonth() + 1)
+      .toString()
+      .padStart(2, '0');
+    const year = date.getUTCFullYear().toString();
+
+    return `${day}/${month}/${year}`;
+  };
+
   useEffect(() => {
     if (
       location.includes('responder') ||
@@ -67,35 +78,12 @@ const RetrospectivaGeneral: FC<RetrospectivaGeneralProps> = ({
   };
 
   useEffect(() => {
-    const fecha_inicio = new Date(fechaInicio);
-
-    const dia_inicio = fecha_inicio
-      .getUTCDate()
-      .toString()
-      .padStart(2, '0');
-    const mes_inicio = (fecha_inicio.getUTCMonth() + 1)
-      .toString()
-      .padStart(2, '0');
-    const anio_inicio = fecha_inicio.getUTCFullYear().toString();
-
-    setFechaInicioFormat(
-      `${dia_inicio}/${mes_inicio}/${anio_inicio}`
-    );
+    setFechaInicioFormat(formatDate(fechaInicio));
   }, [fechaInicio]);
 
   useEffect(() => {
     if (fechaFin) {
-      const fecha_fin = new Date(fechaFin);
-      const dia_fin = fecha_fin
-        .getUTCDate()
-        .toString()
-        .padStart(2, '0');
-      const mes_fin = (fecha_fin.getUTCMonth() + 1)
-        .toString()
-        .padStart(2, '0');
-      const anio_fin = fecha_fin.getUTCFullYear().toString();
-
-      setFechaFinFormat(`${dia_fin}/${mes_fin}/${anio_fin}`);
+      setFechaFinFormat(formatDate(fechaFin));
     }
   }, [fechaFin]);
 
@@ -178,7 +166,7 @@ const RetrospectivaGeneral: FC<RetrospectivaGeneralProps> = ({
             <p>Fecha de fin: {fechaFinFormat}</p>
           )}
           {!isInResponder && (
-            <div className='lg:visible invisible'>
+            <div className="lg:visible invisible">
               <ChevronRightLargeIcon
                 label="flecha"
                 primaryColor="#1D7AFC "

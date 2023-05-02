@@ -30,9 +30,15 @@ exports.fetchIssuesJiraUpdated = async (req, res, next) => {
 };
 
 exports.postIssuesJira = async (req, res, next) => {
+<<<<<<< HEAD
   await axios.post('http://localhost:8000/usuarios_jira');
   await axios.post('http://localhost:8000/epics');
   await axios.post('http://localhost:8000/sprints');
+=======
+  axios.post(`${process.env.BACKEND_URI}/usuarios_jira`);
+  axios.post(`${process.env.BACKEND_URI}/epics`);
+  axios.post(`${process.env.BACKEND_URI}/sprints`);
+>>>>>>> aws/deploy
 
   let issuesDB = await issuesModel.getIssues();
   let countIssuesDB = await issuesModel.countIssues();

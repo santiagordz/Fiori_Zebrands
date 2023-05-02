@@ -24,7 +24,7 @@ function CustomTooltip({ payload, label, active }: any) {
   if (payload && payload.length > 0 && label !== undefined) {
     return (
       <div className="bg-white p-2 text-xs border-2 rounded">
-        <p>Sprint: {label}</p>
+        <p>Estado: {label}</p>
         <p>Story Points: {payload[0].value} </p>
       </div>
     );

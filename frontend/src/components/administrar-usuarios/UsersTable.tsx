@@ -12,6 +12,7 @@ import {
   ResponsableIcon,
 } from './icons';
 import { getUsersContext } from './local-contexts';
+import Spinner from '../design-template/spinner/Spinner';
 
 interface UsersTableProps {}
 
@@ -99,13 +100,15 @@ const UsersTable: FC<UsersTableProps> = ({}) => {
     })
   );
 
+  if (userRows == null) return <div>Mi verga</div>;
+
   return (
     <div className="bg-white rounded-sm w-full px-12 py-6 text-sm">
       <DynamicTable
         head={TableHead}
         rows={tableRows}
         emptyView={
-          <div className="text-3xl">No hay usuarios para mostrar</div>
+          <Spinner message="Cargando usuarios..." gap={6}></Spinner>
         }
         rowsPerPage={20}
       />
